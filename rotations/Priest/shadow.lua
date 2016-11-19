@@ -90,7 +90,7 @@ local inCombat = {
   {"!Dispersion", "player.health <= 20 & !player.buff(193223)"},
   {"Mind Sear", "keybind(shift) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"},
   {Voidform, 'player.buff(Voidform)', '!player.channeling(Void Torrent)'},
-  {ST, '!player.buff(Voidform)'},
+  {ST, '!player.buff(Voidform) & !player.channeling(Void Eruption)'},
 
   --Surrender to madness
    {"193223", "player.debuff(206005)"}, -- Dream State Xavius
