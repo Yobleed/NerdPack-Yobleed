@@ -38,16 +38,16 @@ local Voidform = {
    {'!Dispersion', 'player.buff(voidform).count >= 90 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30'},
   
 
-   {"Void Torrent", {"player.buff(Voidform) & !talent(Power Infusion) & player.spell(Mindbender).cooldown <= 45 & talent(Mindbender) & player.buff(193223)"}}, -- Void Torrent on CD When Bender isn't active
-   {"Void Torrent", {"player.buff(Voidform) & talent(Power Infusion) & !player.buff(Power Infusion) & player.buff(193223)"}}, -- Void Torrent on CD StM
+   {"!Void Torrent", {"player.buff(Voidform) & !talent(Power Infusion) & !player.channeling(Void Torrent) & player.spell(Mindbender).cooldown <= 45 & talent(Mindbender) & player.buff(193223)"}}, -- Void Torrent on CD When Bender isn't active
+   {"!Void Torrent", {"player.buff(Voidform) & talent(Power Infusion) & !player.channeling(Void Torrent) &  !player.buff(Power Infusion) & player.buff(193223)"}}, -- Void Torrent on CD StM
 
-   {"Void Torrent", {"player.buff(194249) & !talent(Power Infusion) & !player.buff(193223) & !player.channeling(Void Torrent)"}},
-   {"Void Torrent", {"player.buff(Voidform) & talent(Power Infusion) & !player.buff(193223)"}}, -- Void Torrent on CD
+   {"!Void Torrent", {"player.buff(194249) & !player.channeling(Void Torrent) & !talent(Power Infusion) & !player.buff(193223) & !player.channeling(Void Torrent)"}},
+   {"!Void Torrent", {"player.buff(Voidform) & !player.channeling(Void Torrent) & !player.buff(Power Infusion) & talent(Power Infusion) & !player.buff(193223)"}}, -- Void Torrent on CD
 
    {"!Shadow Word: Death", {"player.buff(Surrender to Madness) & target.health <= 35 & !player.channeling(Void Torrent) & player.buff(Voidform) & player.buff(voidform).count < 20 & player.spell(Shadow Word: Death).cooldown = 0"}},  -- SW:D Dump below 35
    {"!Shadow Word: Death", {"player.buff(Surrender to Madness) & target.health <= 35 & !player.channeling(Void Torrent) & player.insanity <= 40 & player.buff(Voidform) & player.spell(Shadow Word: Death).cooldown = 0 & !lastcast(Shadow Word: Death)"}},  -- Keeping up Surrender to madness
 
-   {"!Mind Blast", {"player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(228260).cooldown > 0.5 & !player.channeling(Mind Sear)"}}, --Voidbolt before Mindblast
+   {"!Mind Blast", {"player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0.5 & !player.channeling(Mind Sear)"}}, --Voidbolt before Mindblast
    {"Shadow Word: Pain", {"!target.debuff(Shadow Word: Pain) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- SW:P check
    {"Vampiric Touch", {"!target.debuff(Vampiric Touch) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- VT check
 
@@ -68,10 +68,12 @@ local ST = {
    {"!Shadow Word: Death", "target.health <= 35 & !player.channeling(Void Torrent) & player.spell(Shadow Word: Death).cooldown = 0 & player.insanity <= 65"},
    {"!Shadow Word: Death", "target.health <= 35 & !player.channeling(Void Torrent) & player.spell(Shadow Word: Death).cooldown = 0 & player.moving"},
 
-   {"!Void Eruption"},
-   {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Shadow Word: Pain).duration <= 6"}, -- SW:P refresh going into Stm
-   {"Vampiric Touch", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Vampiric Touch).duration <= 6" }, -- VT refresh going into Stm
+   {"!Void Eruption", "target.debuff(Vampiric Touch).duration > 7 & target.debuff(Shadow Word: Pain).duration > 7"},
+   {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Shadow Word: Pain).duration <= 7 & talent(Legacy of the Void)"}, -- SW:P refresh going into voidform
+   {"Vampiric Touch", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Vampiric Touch).duration <= 7 & talent(Legacy of the Void)" }, -- VT refresh going voidform
 
+   {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Shadow Word: Pain).duration <= 7 & talent(Surrender to Madness)"}, -- SW:P refresh going into Stm
+   {"Vampiric Touch", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Vampiric Touch).duration <= 7 & talent(Surrender to Madness)"}, -- VT refresh going into Stm
 
    {"!Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption)"},
    {"Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3" }, -- SW:P refresh
@@ -82,7 +84,6 @@ local ST = {
 }
 
 local inCombat = {
-  {"!Void Eruption", "!player.channeling(Void Torrent)"},
    -- Shadowy insight
   {"!Mindblast", {"player.buff(Shadowy Insight) & !player.channeling(Void Torrent) & !spell(Void Eruption).cooldown = 0"}}, 
   {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
