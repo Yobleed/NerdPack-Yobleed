@@ -30,34 +30,12 @@ end
 local Voidform = {
  -- Body and Soul
  {"17", {"player.moving & !player.buff(193223) & !player.channeling(Void Torrent) & player.movingfor >= 1 & talent(Body and Soul)" }},
-
- --Trinket
-
-     --Remove Mastery
-     --{"#trinket1", { "toggle(cooldowns) & player.buff(227396) & player.buff(Voidform) & !player.channeling(Void Torrent)" }}, --Eyasu's Mulligan's crit or haste
-     --{"#trinket2", { "toggle(cooldowns) & player.buff(227396) & player.buff(Voidform) & !player.channeling(Void Torrent)" }}, --Eyasu's Mulligan's crit or haste
-
-
-     --Remove Versatility
-     --{"#trinket1", { "toggle(cooldowns) & player.buff(227397) & player.buff(Voidform) & !player.channeling(Void Torrent)" }}, --Eyasu's Mulligan's crit or haste
-     --{"#trinket2", { "toggle(cooldowns) & player.buff(227397) & player.buff(Voidform) & !player.channeling(Void Torrent)" }}, --Eyasu's Mulligan's crit or haste
-
-     --Remove Crit
-    -- {"#trinket1", { "toggle(cooldowns) & player.buff(227389) & player.buff(Voidform) & !player.channeling(Void Torrent)" }}, --Eyasu's Mulligan's crit or haste
-     --{"#trinket2", { "toggle(cooldowns) & player.buff(227389) & player.buff(Voidform) & !player.channeling(Void Torrent)" }}, --Eyasu's Mulligan's crit or haste
-
-
-     --{"#trinket1", { "toggle(cooldowns) & player.buff(voidform).count >= 55 & player.insanity >= 70 & player.buff(Voidform) & !player.channeling(Void Torrent)" }},
-     --{"#trinket2", { "toggle(cooldowns) & player.buff(voidform).count >= 55 & player.insanity >= 70 & player.buff(Voidform) & !player.channeling(Void Torrent)" }},
-
-
-    -- {"#trinket1", { "toggle(cooldowns)","player.buff(Voidform) & !player.channeling(Void Torrent) & !player.buff(193223) & player.buff(voidform).count >= 10" }},
-     --{"#trinket2", { "toggle(cooldowns)","player.buff(Voidform) & !player.channeling(Void Torrent) & !player.buff(193223) & player.buff(voidform).count >= 10" }},
-
-   
+    
+   {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40'}, -- Meh can't make it :(
    {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 75 & !player.channeling(Void Torrent)'}, -- PI last resort
    {"Mindbender", {"talent(Mindbender) & !player.channeling(Void Torrent)"}}, -- CD
    {'!Dispersion', 'player.buff(voidform).count >= 99 & !player.channeling(Void Torrent)'},
+   {'!Dispersion', 'player.buff(voidform).count >= 90 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30'},
   
 
    {"Void Torrent", {"player.buff(Voidform) & !talent(Power Infusion) & player.spell(Mindbender).cooldown <= 45 & talent(Mindbender) & player.buff(193223)"}}, -- Void Torrent on CD When Bender isn't active
@@ -66,8 +44,8 @@ local Voidform = {
    {"Void Torrent", {"player.buff(194249) & !talent(Power Infusion) & !player.buff(193223) & !player.channeling(Void Torrent)"}},
    {"Void Torrent", {"player.buff(Voidform) & talent(Power Infusion) & !player.buff(193223)"}}, -- Void Torrent on CD
 
-   {"!Shadow Word: Death", {"target.health <= 35 & !player.channeling(Void Torrent) & player.buff(Voidform) & player.buff(voidform).count < 20 & player.spell(Shadow Word: Death).cooldown = 0"}},  -- SW:D Dump below 35
-   {"!Shadow Word: Death", {"target.health <= 35 & !player.channeling(Void Torrent) & player.insanity <= 40 & player.buff(Voidform) & player.spell(Shadow Word: Death).cooldown = 0 & !lastcast(Shadow Word: Death)"}},  -- Keeping up Surrender to madness
+   {"!Shadow Word: Death", {"player.buff(Surrender to Madness) & target.health <= 35 & !player.channeling(Void Torrent) & player.buff(Voidform) & player.buff(voidform).count < 20 & player.spell(Shadow Word: Death).cooldown = 0"}},  -- SW:D Dump below 35
+   {"!Shadow Word: Death", {"player.buff(Surrender to Madness) & target.health <= 35 & !player.channeling(Void Torrent) & player.insanity <= 40 & player.buff(Voidform) & player.spell(Shadow Word: Death).cooldown = 0 & !lastcast(Shadow Word: Death)"}},  -- Keeping up Surrender to madness
 
    {"!Mind Blast", {"player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(228260).cooldown > 0.5 & !player.channeling(Mind Sear)"}}, --Voidbolt before Mindblast
    {"Shadow Word: Pain", {"!target.debuff(Shadow Word: Pain) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- SW:P check
@@ -77,7 +55,6 @@ local Voidform = {
    {"Mind Flay", {"player.spell(228260).cooldown > 0 & player.spell(8092).cooldown > 0 & !player.channeling(Mind Flay) & !player.channeling(Void Torrent) & !toggle(AOE) & !player.channeling(Mind Blast) & !player.channeling(Mind Sear)"}},
 
    {"!Void Eruption", "!player.channeling(Void Torrent) & !player.channeling(Mind blast)"},
-
 
 }
 
@@ -96,22 +73,19 @@ local ST = {
    {"Vampiric Touch", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Vampiric Touch).duration <= 6" }, -- VT refresh going into Stm
 
 
-   {"!Mind Blast", "!player.buff(Voidform)"},
+   {"!Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption)"},
    {"Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3" }, -- SW:P refresh
    {"Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3" }, -- VT refresh
    {"Mind Sear", "toggle(AOE) & !player.buff(Voidform) & !player.channeling(Mind Sear)"}, -- Replace Mind Flay Filler
    {"Mind Flay", "player.spell(8092).cooldown > 0 & !player.buff(Voidform) & !toggle(AOE) & !player.channeling(Mind Flay)"}, --Mindlay filler no voidform
   
-{"!Void Eruption"},
-
-
 }
 
 local inCombat = {
   {"!Void Eruption", "!player.channeling(Void Torrent)"},
    -- Shadowy insight
   {"!Mindblast", {"player.buff(Shadowy Insight) & !player.channeling(Void Torrent) & !spell(Void Eruption).cooldown = 0"}}, 
-  {'!Dispersion', 'player.spell(Shadow Word: Death).charges = 0 & player.buff(voidform).count >= 95'},
+  {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
   {"!Dispersion", "player.health <= 20 & !player.buff(193223)"},
   {"Mind Sear", "keybind(shift) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"},
   {Voidform, 'player.buff(Voidform)', '!player.channeling(Void Torrent)'},
@@ -140,10 +114,14 @@ local inCombat = {
 
 
    -- Cooldowns
-   {"!Power Infusion", "talent(Power Infusion) & toggle(cooldowns) & player.buff(Voidform) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 15" },
+   {"!Shadow Word: Death", {"target.health <= 35 & & player.insanity <= 65 & !player.buff(Surrender to Madness)"}}, 
+   {'!Dispersion', 'toggle(cooldowns) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 35 & spell(Shadow Word: Death).charges < 1 & !player.buff(Surrender to Madness) & player.insanity <= 30'},
+   {'!Dispersion', 'toggle(cooldowns) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 39 & spell(Shadow Word: Death).charges < 1 & !player.buff(Surrender to Madness)'},
+   {"!Power Infusion", "talent(Power Infusion) & toggle(cooldowns) & player.buff(Voidform) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 15 & target.health > 35" },
+   {"!Power Infusion", "talent(Power Infusion) & toggle(cooldowns) & player.buff(Voidform) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 20 & target.health <= 35" },
    {"!Shadowfiend",  "toggle(cooldowns) & player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0 & player.buff(voidform).count > 10"},
    {"!Mindbender", "talent(Mindbender) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(193223) & player.buff(voidform).count > 5 & !player.channeling(Void Torrent)"},
-    {"!Void Eruption", "!player.channeling(Void Torrent)"},
+   {"!Void Eruption", "!player.channeling(Void Torrent)"},
 
    -- Keybinds
      -- {"!32375 & keybind(lalt) & tank.advancedground"}, -- Mass Dispel (Enable if on Dispel Duty)
