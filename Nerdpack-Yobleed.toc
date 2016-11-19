@@ -1,7 +1,0 @@
-## Title: |r[|c5F2061Yobleed|r] Combat rotations
-## Notes: Priest Rotations for Nerdpack
-## Dependencies: NerdPack
-## Interface: 70100
-## Author: Yobleed
-
-files.xml
