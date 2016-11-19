@@ -115,12 +115,13 @@ local inCombat = {
 
 
    -- Cooldowns
-   {"!Shadow Word: Death", {"target.health <= 35 & & player.insanity <= 65 & !player.buff(Surrender to Madness)"}}, 
+   {"!Shadow Word: Death", {"target.health <= 35 & & player.insanity <= 65 & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent)"}}, 
    {'!Dispersion', 'toggle(cooldowns) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 35 & spell(Shadow Word: Death).charges < 1 & !player.buff(Surrender to Madness) & player.insanity <= 30'},
    {'!Dispersion', 'toggle(cooldowns) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 39 & spell(Shadow Word: Death).charges < 1 & !player.buff(Surrender to Madness)'},
    {"!Power Infusion", "talent(Power Infusion) & toggle(cooldowns) & player.buff(Voidform) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 15 & target.health > 35" },
    {"!Power Infusion", "talent(Power Infusion) & toggle(cooldowns) & player.buff(Voidform) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 20 & target.health <= 35" },
-   {"!Shadowfiend",  "toggle(cooldowns) & player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0 & player.buff(voidform).count > 10"},
+   {"!Shadowfiend",  "toggle(cooldowns) & player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0 & !spell(Mind Blast).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)"},
+   {"!Shadowfiend",  "toggle(cooldowns) & player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0 & !spell(Mind Blast).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion)"},
    {"!Mindbender", "talent(Mindbender) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(193223) & player.buff(voidform).count > 5 & !player.channeling(Void Torrent)"},
    {"!Void Eruption", "!player.channeling(Void Torrent)"},
 
