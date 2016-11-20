@@ -11,6 +11,7 @@ Automated Shadow Priest Rotation
 - Recognizes Xavius boss fight Dream State
 - Out of Combat Body and Soul
 - Update 10/10/"16: You can now set Keybindings in WoW for Nerdpack to toggle toggles ON/OFF
+- Update 20/11/"16: UI added and DPS tweaked
 
 Tip: There is no automated StM usage yet (except for Xavius dream state) so use Surrender to Madness Wisely and if Void Torrent is off Cooldown. 
 
