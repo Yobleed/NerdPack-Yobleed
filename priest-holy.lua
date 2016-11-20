@@ -1,37 +1,22 @@
 
 
-local GUI = {  
-        --[[ Header Texture ]]
-		{ 
-			type = "texture",
-			texture = "Interface\\AddOns\\Nerdpack-Yobleed\\media\\holy.blp",
-			width = 512, 
-			height = 256, 
-			offset = 90, 
-			y = 42, 
-			center = true 
-		},
-
-	
-     --Dispel
-	{type = 'header', text = 'Dispel All when toggled on', align = 'center'},
-	{type = 'checkbox', text = 'Dispel All', key = 'Dispel', default = false},
-	{type = 'ruler'},{type = 'spacer'},
-
+local GUI = {
 	--Cooldowns
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
 	{type = 'checkspin', text = 'Use Guardian Spirit', key = 'c_GS', default_check = false, default_spin = 20},
 	{type = 'ruler'},{type = 'spacer'},
 
-  --TRINKETS
-  {type = 'header', text = 'Trinkets', align = 'center'},
-  {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
-  {type = 'checkbox', text = 'Bottom Trinket', key = 'Trinket_2', default = false},
-  {type = 'ruler'},{type = 'spacer'},
+	--TRINKETS
+	{type = 'header', text = 'Trinkets', align = 'center'},
+	{type = 'checkbox', text = 'Use Trinkets', key = 'u_T', default = false},
+	{type = 'text', text = 'Check to Enable Trinkets', align = 'center'},
+	{type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
+	{type = 'checkbox', text = 'Bottom Trinket', key = 'Trinket_2', default = false},
+	{type = 'ruler'},{type = 'spacer'},
 
 	--KEYBINDS
 	{type = 'header', text = 'Keybinds', align = 'center'},
-	{type = 'text', text = 'Left Shift: Holy Word: Sanctify|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+	{type = 'text', text = 'Left Shift: Holy Word: Sanctify | Left Ctrl: Mass Dispel	| Alt: Pause', align = 'center'},
 	{type = 'checkbox', text = 'Holy Word: Sanctify', key = 'k_HWS', default = false},
 	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', default = false},
 	{type = 'checkbox', text = 'Pause', key = 'k_P', default = false},
@@ -82,25 +67,14 @@ local GUI = {
 	{type = 'ruler'},{type = 'spacer'},
 
 	--MOVING
-	{type = 'header', text = 'Movement', align = 'center'},
-	{type = 'checkbox', text = 'Angelic Feather', key = 'm_AF', default = false},
-	{type = 'checkbox', text = 'Body and Mind', key = 'm_Body', default = false},
+	{type = 'header', text = 'Moving', align = 'center'},
+	{type = 'text', text = 'Movement speed', align = 'center'},
+	{type = 'checkbox', text = 'Angelic Feather enabled', key = 'm_AF', default = false},
 	{type = 'text', text = 'Lowest health and moving values', align = 'center'},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'm_HWSE', default = 60},
 	{type = 'spinner', text = 'Flash Heal Surge of Light', key = 'm_FH', default = 70},
 	{type = 'spinner', text = 'Renew', key = 'm_Ren', default = 80},
 }
-
-local exeOnLoad = function()
-	
-    
-	print('|cffFACC2E Holy Priest Rotation loaded|r')
-	print('|cffFACC2E For Settings Right-Click the MasterToggle and go to Combat Routines Settings |r')
-	print('|cffFACC2E Have a nice day!|r')
-
-	
-
-end
 
 local Cooldowns = {
 	--Guardian Spirit if lowest health is below or if UI value and checked.
@@ -209,22 +183,19 @@ local Moving = {
 	--Flash Heal when Surge of Light is active, Lowest Health  is below or if UI value.
 	{'Flash Heal', 'player.buff(Surge of Light) & lowest.health <= UI(m_FH)', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
-	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
-	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
-	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
+	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'}
 
 }
 
 local inCombat = {
 	--Fade when you get aggro.
 	{'fade', 'aggro'},
-	{'%dispelall', 'UI(Dispel) & !player.channeling(Divine Hymn)'},
 	{Cooldowns, 'toggle(cooldowns)'},
-	{Trinkets, '!player.channeling(Divine Hymn)'},
+	{Trinkets, 'UI(u_T)'},
 	{Keybinds},
 	{Potions},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption)'},
-	 
+	{DispelAll}, 
 	{{
 		{Tank, 'tank.health < 100'},
 		{Player, 'health < 100'},
@@ -238,12 +209,11 @@ local inCombat = {
 local outCombat = {
 	{Keybinds},
 	{Moving, 'moving'},
-	{"%ressdead(Resurrection)", (function() return F('auto_res') end) },
 }
 
 
 NeP.CR:Add(257, {
-    name = '|cffFACC2E [Yobleed]|r Priest - |cffFACC2EHoly|r',
+    name = ' [Yobleed] Priest - Holy',
       ic = inCombat,
      ooc = outCombat,
      gui = GUI,
