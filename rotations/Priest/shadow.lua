@@ -90,11 +90,11 @@ local Keybinds = {
 }
 
 local Voidform = {
-    
+   {"17", "player.moving & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.movingfor >= 1 & UI(m_Body) & talent(Body and Soul) & player.spell(Void Eruption).cooldown > 0.5" },
    {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40'}, -- Meh can't make it :(
    {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 75 & !player.channeling(Void Torrent)'}, -- PI last resort
    {"Mindbender", {"talent(Mindbender) & !player.channeling(Void Torrent)"}}, -- CD
-   {'!Dispersion', 'lastcast(Void Torrent) & player.buff(Surrender to Madness)'},
+   {'!Dispersion', 'lastcast(Void Torrent) & player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
    {'!Dispersion', 'player.buff(voidform).count >= 99 & !player.channeling(Void Torrent)'},
    {'!Dispersion', 'player.buff(voidform).count >= 90 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30'},
   
@@ -110,41 +110,46 @@ local Voidform = {
    {"!Shadow Word: Death", {"player.buff(Surrender to Madness) & target.health <= 35 & !player.channeling(Void Torrent) & player.buff(Voidform) & player.buff(voidform).count < 20 & player.spell(Shadow Word: Death).cooldown = 0"}},  -- SW:D Dump below 35
    {"!Shadow Word: Death", {"player.buff(Surrender to Madness) & target.health <= 35 & !player.channeling(Void Torrent) & player.insanity <= 40 & player.buff(Voidform) & player.spell(Shadow Word: Death).cooldown = 0 & !lastcast(Shadow Word: Death)"}},  -- Keeping up Surrender to madness
 
-   {"!Mind Blast", {"player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0.5 & !player.channeling(Mind Sear)"}}, --Voidbolt before Mindblast
+   
+   {"!Mind Blast", {"player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0.5 & !player.channeling(Mind Sear) & !spell(Void Torrent).cooldown = 0, !lastcast(Void Torrent)"}}, --Voidbolt before Mindblast
    {"Shadow Word: Pain", {"!target.debuff(Shadow Word: Pain) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- SW:P check
    {"Vampiric Touch", {"!target.debuff(Vampiric Touch) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- VT check
 
-   {"Mind Sear", "toggle(AOE) & player.buff(Voidform) & !player.channeling(Void Torrent) & target.area(15).enemies >= 4"}, -- Replace Mind Flay Filler
-   {"Mind Flay", {"player.spell(228260).cooldown > 0 & player.spell(8092).cooldown > 0 & !player.channeling(Mind Flay) & !player.channeling(Void Torrent) & !player.channeling(Mind Blast) & !player.channeling(Mind Sear)"}},
+   {"Mind Sear", "toggle(AOE) & player.buff(Voidform) & !player.channeling(Void Torrent)"}, -- Replace Mind Flay Filler
+   {"Mind Flay", {"player.spell(228260).cooldown > 0 & player.spell(8092).cooldown > 0 & !player.channeling(Mind Flay) & !toggle(AOE) & !player.channeling(Void Torrent) & !player.channeling(Mind Blast) & !player.channeling(Mind Sear)"}},
 
    {"!Void Eruption", "!player.channeling(Void Torrent) & !player.channeling(Mind blast)"},
 
 }
 
 local ST = {
-   
+   {"17", "player.moving & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.movingfor >= 1 & UI(m_Body) & talent(Body and Soul)" }, --Moving no Voidform
    {"Shadowform", "!player.buff(Voidform) & !player.buff(Shadowform)"},
 
    {"!Shadow Word: Death", "target.health <= 35 & !player.channeling(Void Torrent) & player.spell(Shadow Word: Death).cooldown = 0 & player.insanity <= 65"},
    {"!Shadow Word: Death", "target.health <= 35 & !player.channeling(Void Torrent) & player.spell(Shadow Word: Death).cooldown = 0 & player.moving"},
 
-   {"!Void Eruption", "target.debuff(Vampiric Touch).duration > 7 & target.debuff(Shadow Word: Pain).duration > 7"},
-   {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Shadow Word: Pain).duration <= 7 & talent(Legacy of the Void) "}, -- SW:P refresh going into voidform
-   {"Vampiric Touch", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Vampiric Touch).duration <= 7 & talent(Legacy of the Void) " }, -- VT refresh going voidform
+   {"Void Eruption", "target.debuff(Vampiric Touch).duration > 11 & target.debuff(Shadow Word: Pain).duration > 11 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)"},
+   {"Void Eruption", "target.debuff(Vampiric Touch).duration > 6 & target.debuff(Shadow Word: Pain).duration > 6 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)"},
 
-   {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Shadow Word: Pain).duration <= 7 & talent(Surrender to Madness)"}, -- SW:P refresh going into Stm
-   {"Vampiric Touch", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Vampiric Touch).duration <= 7 & talent(Surrender to Madness)"}, -- VT refresh going into Stm
+   {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Shadow Word: Pain).duration <= 6 & !player.buff(Surrender to Madness) "}, -- SW:P refresh going into voidform
+   {"Vampiric Touch", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Vampiric Touch).duration <= 6 & !player.buff(Surrender to Madness) " }, -- VT refresh going voidform
+
+   {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Shadow Word: Pain).duration <= 11 & player.buff(Surrender to Madness)"}, -- SW:P refresh going into Stm
+   {"Vampiric Touch", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Vampiric Touch).duration <= 11 & player.buff(Surrender to Madness)"}, -- VT refresh going into Stm
 
    {"!Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption) & player.channeling(Mind Flay)"},
    {"Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption)"},
    {"Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3" }, -- SW:P refresh
    {"Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3" }, -- VT refresh
-   {"Mind Sear", "toggle(AOE) & !player.buff(Voidform) & !player.channeling(Mind Sear) & target.area(15).enemies >= 4"}, -- Replace Mind Flay Filler
-   {"Mind Flay", "player.spell(8092).cooldown > 0 & !player.buff(Voidform) & !player.channeling(Mind Flay)"}, --Mindlay filler no voidform
+   {"Mind Sear", "toggle(AOE) & !player.buff(Voidform) & !player.channeling(Mind Sear)"}, -- Replace Mind Flay Filler
+   {"Mind Flay", "player.spell(8092).cooldown > 0 & !player.buff(Voidform) & !player.channeling(Mind Flay) & !toggle(AOE)"}, --Mindlay filler no voidform
   
 }
 
 local inCombat = {
+ {"Surrender to Madness", "player.debuff(Dream Simulacrum)"},
+
    -- Shadowy insight
   {"!Mindblast", {"player.buff(Shadowy Insight) & !player.channeling(Void Torrent) & !spell(Void Eruption).cooldown = 0"}}, 
   {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
@@ -155,7 +160,7 @@ local inCombat = {
   {ST, '!player.buff(Voidform) & !player.channeling(Void Eruption)'},
 
   --Surrender to madness
-   {"193223", "player.debuff(206005)"}, -- Dream State Xavius
+    -- Dream State Xavius
 
 
 
@@ -175,7 +180,7 @@ local inCombat = {
    {"!59544", "lowest.health <= UI(sup_GotN_spin) & UI(sup_GotN_check) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)", "lowest"}, -- support Gift of the Naaru
    {"17", "player.health <= 30 & !player.buff(193223) & !player.channeling(Void Torrent)"}, --Power Word: Shield
    {"!17", "lowest.health <= UI(sup_PWS_spin) & UI(sup_PWS_check) & !player.buff(193223) & !player.channeling(Void Torrent)", "lowest"}, -- support Power Word: Shield
-   {"17", "player.moving & !player.buff(193223) & !player.channeling(Void Torrent) & player.movingfor >= 1 & UI(m_Body) & talent(Body and Soul)" }, --Moving no Voidform
+  
 
 
    -- Cooldowns
@@ -199,7 +204,7 @@ local inCombat = {
 local outCombat = {
  {Keybinds},
  {"Shadowform", "!player.buff(Shadowform)"},
- {"17", "player.movingfor >= 1 & !player.buff(180545) & talent(Body and Soul) & UI(m_Body)", "player"}, -- Body and Soul
+ {"17", "player.movingfor >= 1 & !player.buff(180545) & talent(Body and Soul) & UI(m_Body) & !player.buff(Surrender to Madness)", "player"}, -- Body and Soul
  {"%ressdead(Resurrection)"},
 
 }
