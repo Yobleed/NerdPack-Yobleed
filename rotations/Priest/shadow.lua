@@ -94,6 +94,7 @@ local Voidform = {
    {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40'}, -- Meh can't make it :(
    {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 75 & !player.channeling(Void Torrent)'}, -- PI last resort
    {"Mindbender", {"talent(Mindbender) & !player.channeling(Void Torrent)"}}, -- CD
+   {'!Dispersion', 'lastcast(Void Torrent) & player.buff(Surrender to Madness)'},
    {'!Dispersion', 'player.buff(voidform).count >= 99 & !player.channeling(Void Torrent)'},
    {'!Dispersion', 'player.buff(voidform).count >= 90 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30'},
   
@@ -114,7 +115,7 @@ local Voidform = {
    {"Vampiric Touch", {"!target.debuff(Vampiric Touch) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- VT check
 
    {"Mind Sear", "toggle(AOE) & player.buff(Voidform) & !player.channeling(Void Torrent) & target.area(15).enemies >= 4"}, -- Replace Mind Flay Filler
-   {"Mind Flay", {"player.spell(228260).cooldown > 0 & player.spell(8092).cooldown > 0 & !player.channeling(Mind Flay) & !player.channeling(Void Torrent) & !target.area(15).enemies >= 4 & !player.channeling(Mind Blast) & !player.channeling(Mind Sear)"}},
+   {"Mind Flay", {"player.spell(228260).cooldown > 0 & player.spell(8092).cooldown > 0 & !player.channeling(Mind Flay) & !player.channeling(Void Torrent) & !player.channeling(Mind Blast) & !player.channeling(Mind Sear)"}},
 
    {"!Void Eruption", "!player.channeling(Void Torrent) & !player.channeling(Mind blast)"},
 
@@ -139,7 +140,7 @@ local ST = {
    {"Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3" }, -- SW:P refresh
    {"Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3" }, -- VT refresh
    {"Mind Sear", "toggle(AOE) & !player.buff(Voidform) & !player.channeling(Mind Sear) & target.area(15).enemies >= 4"}, -- Replace Mind Flay Filler
-   {"Mind Flay", "player.spell(8092).cooldown > 0 & !player.buff(Voidform) & !target.area(15).enemies >= 4 & !player.channeling(Mind Flay)"}, --Mindlay filler no voidform
+   {"Mind Flay", "player.spell(8092).cooldown > 0 & !player.buff(Voidform) & !player.channeling(Mind Flay)"}, --Mindlay filler no voidform
   
 }
 
