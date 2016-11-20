@@ -25,7 +25,8 @@ local GUI = {
   {type = 'header', text = 'DPS cooldown', align = 'center'},
   {type = 'text', text = 'No Surrender to Madness Active', align = 'center'},
   {type = 'text', text = 'Check and Choose Stacks', align = 'center'},
-  {type = 'checkspin', text = 'Dispersion', key = 'dps_D', default_check = false, default_spin = 35},
+  {type = 'checkspin', text = 'Dispersion <= 35% HP', key = 'dps_D', default_check = false, default_spin = 35},
+  {type = 'checkspin', text = 'Dispersion > 35% HP', key = 'dps_D2', default_check = false, default_spin = 30},
   {type = 'ruler'},{type = 'spacer'},
 
   --TRINKETS
@@ -97,7 +98,7 @@ local Voidform = {
    {'!Dispersion', 'player.buff(voidform).count >= 90 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30'},
   
    {'!Dispersion', '!player.channeling(Void Torrent) & player.buff(voidform).count >= UI(dps_D_spin) & UI(dps_D_check) & spell(Shadow Word: Death).charges < 1 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health <= 35'},
-   {'!Dispersion', '!player.channeling(Void Torrent) & player.buff(voidform).count >= UI(dps_D_spin) & UI(dps_D_check) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
+   {'!Dispersion', '!player.channeling(Void Torrent) & player.buff(voidform).count >= UI(dps_D2_spin) & UI(dps_D2_check) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
 
    {"!Void Torrent", {"player.buff(Voidform) & !talent(Power Infusion) & !player.channeling(Void Torrent) & player.spell(Mindbender).cooldown <= 45 & talent(Mindbender) & player.buff(193223)"}}, -- Void Torrent on CD When Bender isn't active
    {"!Void Torrent", {"player.buff(Voidform) & talent(Power Infusion) & !player.channeling(Void Torrent) &  !player.buff(Power Infusion) & player.buff(193223)"}}, -- Void Torrent on CD StM
@@ -112,7 +113,7 @@ local Voidform = {
    {"Shadow Word: Pain", {"!target.debuff(Shadow Word: Pain) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- SW:P check
    {"Vampiric Touch", {"!target.debuff(Vampiric Touch) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- VT check
 
-   {"Mind Sear", "toggle(AOE) & player.buff(Voidform) & !player.channeling(Mind Sear) & !player.channeling(Void Torrent) & target.area(15).enemies >= 4"}, -- Replace Mind Flay Filler
+   {"Mind Sear", "toggle(AOE) & player.buff(Voidform) & !player.channeling(Void Torrent) & target.area(15).enemies >= 4"}, -- Replace Mind Flay Filler
    {"Mind Flay", {"player.spell(228260).cooldown > 0 & player.spell(8092).cooldown > 0 & !player.channeling(Mind Flay) & !player.channeling(Void Torrent) & !toggle(AOE) & !player.channeling(Mind Blast) & !player.channeling(Mind Sear)"}},
 
    {"!Void Eruption", "!player.channeling(Void Torrent) & !player.channeling(Mind blast)"},
@@ -137,7 +138,7 @@ local ST = {
    {"Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption)"},
    {"Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3" }, -- SW:P refresh
    {"Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3" }, -- VT refresh
-   {"Mind Sear", "toggle(AOE) & !player.buff(Voidform) & !player.channeling(Mind Sear)"}, -- Replace Mind Flay Filler
+   {"Mind Sear", "toggle(AOE) & !player.buff(Voidform) & !player.channeling(Mind Sear) & target.area(15).enemies >= 4"}, -- Replace Mind Flay Filler
    {"Mind Flay", "player.spell(8092).cooldown > 0 & !player.buff(Voidform) & !toggle(AOE) & !player.channeling(Mind Flay)"}, --Mindlay filler no voidform
   
 }
@@ -147,7 +148,6 @@ local inCombat = {
   {"!Mindblast", {"player.buff(Shadowy Insight) & !player.channeling(Void Torrent) & !spell(Void Eruption).cooldown = 0"}}, 
   {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
   {"!Dispersion", "player.health <= UI(s_D_spin) & UI(s_D_check) & !player.buff(193223)"},
-  {"Mind Sear", "keybind(shift) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"},
   {Keybinds},
   {Trinkets, '!player.channeling(Void Torrent)'},
   {Voidform, 'player.buff(Voidform)', '!player.channeling(Void Torrent)'},
