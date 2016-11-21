@@ -115,8 +115,8 @@ local Voidform = {
    {"Shadow Word: Pain", {"!target.debuff(Shadow Word: Pain) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- SW:P check
    {"Vampiric Touch", {"!target.debuff(Vampiric Touch) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- VT check
 
-   {"Mind Sear", "toggle(AOE) & player.buff(Voidform) & !player.channeling(Void Torrent)"}, -- Replace Mind Flay Filler
-   {"Mind Flay", {"player.spell(228260).cooldown > 0 & player.spell(8092).cooldown > 0 & !player.channeling(Mind Flay) & !toggle(AOE) & !player.channeling(Void Torrent) & !player.channeling(Mind Blast) & !player.channeling(Mind Sear)"}},
+  {"Mind Sear", "toggle(AOE) & player.buff(Voidform) & !player.channeling(Void Torrent) & target.area(10).enemies >=3"}, 
+  {"Mind Flay", {"player.spell(Void Eruption).cooldown > 0 & player.spell(Mind Blast).cooldown > 0 & !target.area(10).enemies >=3"}},
 
    {"!Void Eruption", "!player.channeling(Void Torrent) & !player.channeling(Mind blast) & player.buff(Voidform)"},
 
@@ -142,8 +142,8 @@ local ST = {
    {"Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption)"},
    {"Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3" }, -- SW:P refresh
    {"Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3" }, -- VT refresh
-   {"Mind Sear", "toggle(AOE) & !player.buff(Voidform) & !player.channeling(Mind Sear)"}, -- Replace Mind Flay Filler
-   {"Mind Flay", "player.spell(8092).cooldown > 0 & !player.buff(Voidform) & !player.channeling(Mind Flay) & !toggle(AOE)"}, --Mindlay filler no voidform
+   {"Mind Sear", "toggle(AOE) & target.area(10).enemies >=3"}, 
+   {"Mind Flay", {"player.spell(Mind Blast).cooldown > 0 & !target.area(10).enemies >=3"}},
   
 }
 
