@@ -132,10 +132,10 @@ local ST = {
   {"!Void Eruption", "target.debuff(Vampiric Touch).duration > 13 & target.debuff(Shadow Word: Pain).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)"},
   {"!Void Eruption", "target.debuff(Vampiric Touch).duration > 6 & target.debuff(Shadow Word: Pain).duration > 6 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)"},
 
-   {"!Shadow Word: Pain", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Shadow Word: Pain).duration <= 6 & !player.buff(Surrender to Madness) & lastcast(Vampiric Touch) & !player.channeling(Vampiric Touch)"}, -- SW:P refresh going into voidform
+   {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Shadow Word: Pain).duration <= 6 & !player.buff(Surrender to Madness) & lastcast(Vampiric Touch) & !player.channeling(Vampiric Touch)"}, -- SW:P refresh going into voidform
    {"!Vampiric Touch", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Vampiric Touch).duration <= 6 & !player.buff(Surrender to Madness) " }, -- VT refresh going voidform
 
-   {"!Shadow Word: Pain", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Shadow Word: Pain).duration <= 13 & player.buff(Surrender to Madness) & lastcast(Vampiric Touch) & !player.channeling(Vampiric Touch)"}, -- SW:P refresh going into Stm
+   {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Shadow Word: Pain).duration <= 13 & player.buff(Surrender to Madness) & lastcast(Vampiric Touch) & !player.channeling(Vampiric Touch)"}, -- SW:P refresh going into Stm
    {"!Vampiric Touch", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Vampiric Touch).duration <= 13 & player.buff(Surrender to Madness)"}, -- VT refresh going into Stm
 
    {"!Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption) & player.channeling(Mind Flay)"},
