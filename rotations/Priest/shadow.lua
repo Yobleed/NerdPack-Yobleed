@@ -96,7 +96,7 @@ local Keybinds = {
 }
 
 local Voidform = {
-   {"17", "player.moving & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.movingfor >= 1 & UI(m_Body) & talent(Body and Soul) & player.spell(Void Eruption).cooldown > 0.5" },
+   {"17", "player.moving & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.movingfor >= 1 & UI(m_Body) & talent(Body and Soul) & !player.spell(Void Eruption).cooldown = 0" },
    {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40'}, -- Meh can't make it :(
    {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 75 & !player.channeling(Void Torrent)'}, -- PI last resort
    {"Mindbender", {"talent(Mindbender) & !player.channeling(Void Torrent)"}}, -- CD
@@ -139,15 +139,15 @@ local ST = {
   {"!Void Eruption", "target.debuff(Vampiric Touch).duration > 6 & target.debuff(Shadow Word: Pain).duration > 6 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)"},
 
    {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Shadow Word: Pain).duration <= 6 & !player.buff(Surrender to Madness) & lastcast(Vampiric Touch) & !player.channeling(Vampiric Touch)"}, -- SW:P refresh going into voidform
-   {"!Vampiric Touch", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Vampiric Touch).duration <= 6 & !player.buff(Surrender to Madness) " }, -- VT refresh going voidform
+   {"!Vampiric Touch", "!player.buff(Voidform) & player.insanity >= 70 & target.debuff(Vampiric Touch).duration <= 6 & !player.buff(Surrender to Madness) & !lastcast(Vampiric Touch) " }, -- VT refresh going voidform
 
    {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Shadow Word: Pain).duration <= 13 & player.buff(Surrender to Madness) & lastcast(Vampiric Touch) & !player.channeling(Vampiric Touch)"}, -- SW:P refresh going into Stm
-   {"!Vampiric Touch", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Vampiric Touch).duration <= 13 & player.buff(Surrender to Madness)"}, -- VT refresh going into Stm
+   {"!Vampiric Touch", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Vampiric Touch).duration <= 13 & player.buff(Surrender to Madness) & !lastcast(Vampiric Touch)"}, -- VT refresh going into Stm
 
    {"!Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption) & player.channeling(Mind Flay)"},
    {"Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption)"},
    {"Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3" }, -- SW:P refresh
-   {"Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3" }, -- VT refresh
+   {"Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3 & !lastcast(Vampiric Touch)" }, -- VT refresh
    {"Mind Sear", "toggle(AOE) & target.area(10).enemies >= UI(AoE_MS) & target.debuff(Shadow Word: Pain)"}, 
    {"Mind Flay", {"player.spell(Mind Blast).cooldown > 0 & !target.area(10).enemies >= UI(AoE_MS) & target.debuff(Shadow Word: Pain)"}},
   
