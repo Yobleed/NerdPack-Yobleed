@@ -23,11 +23,11 @@ local GUI = {
 	{type = 'checkspin', text = 'Use Guardian Spirit', key = 'c_GS', default_check = false, default_spin = 20},
 	{type = 'ruler'},{type = 'spacer'},
 
-  --TRINKETS
-  {type = 'header', text = 'Trinkets', align = 'center'},
-  {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
-  {type = 'checkbox', text = 'Bottom Trinket', key = 'Trinket_2', default = false},
-  {type = 'ruler'},{type = 'spacer'},
+    --TRINKETS
+    {type = 'header', text = 'Trinkets', align = 'center'},
+    {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
+    {type = 'checkbox', text = 'Bottom Trinket', key = 'Trinket_2', default = false},
+    {type = 'ruler'},{type = 'spacer'},
 
 	--KEYBINDS
 	{type = 'header', text = 'Keybinds', align = 'center'},
@@ -40,7 +40,7 @@ local GUI = {
 	--POTIONS
 	{type = 'header', text = 'Potions', align = 'center'},
 	{type = 'text', text = 'Check to enable Potions', align = 'center'},
-	{type = 'checkspin', text = 'HealthStone', key = 'p_HS', default_check = false, default_spin = 20},
+	{type = 'checkspin', text = 'Healthstone', key = 'p_HS', default_check = false, default_spin = 20},
 	{type = 'checkspin', text = 'Ancient Healing Potion', key = 'p_AHP', default_check = false, default_spin = 20},
 	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', default_check = false, default_spin = 10},
 	{type = 'ruler'},{type = 'spacer'},
@@ -102,10 +102,6 @@ local exeOnLoad = function()
 
 end
 
-local Cooldowns = {
-	--Guardian Spirit if lowest health is below or if UI value and checked.
-	{'!Guardian Spirit', 'UI(c_GS_check) & lowest.health <= UI(c_GS_spin)', 'lowest'}
-}
 
 local Trinkets = {
 	--Top Trinket usage if UI enables it.
@@ -116,16 +112,16 @@ local Trinkets = {
 
 local Keybinds = {
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
-	{'Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'cursor.ground'},
+	{'/cast [@cursor]Mass Dispel', 'keybind(lcontrol) & UI(k_MD)'},
 	--Holy Word: Sanctify on Mouseover target left shift when checked in UI.
-	{'Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS)', 'cursor.ground'},
+	{'/cast [@cursor] Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS)'},
 	-- Pause on left alt when checked in UI.
 	{'%pause', 'keybind(lalt)& UI(k_P)'}
 }
 
 local Potions = {
 	--Health Stone below 20% health. Active when NOT channeling Divine Hymn.
-	{'#Health Stone', 'UI(p_HS_check) & player.health <= UI(p_HS_spin) & !player.channeling(Divine Hymn)'},
+	{'#Healthstone', 'UI(p_HS_check) & player.health <= UI(p_HS_spin) & !player.channeling(Divine Hymn)'},
 	--Ancient Healing Potion below 20% health. Active when NOT channeling Divine Hymn.
 	{'#Ancient Healing Potion', 'UI(p_AHP_check) & player.health <= UI(p_AHP_spin) & !player.channeling(Divine Hymn)'},
 	--Ancient Mana Potion below 20% mana. Active when NOT channeling Divine Hymn.
@@ -171,10 +167,6 @@ local Player = {
 	{'Prayer of Mending', '!player.buff(Prayer of Mending) & player.health <= UI(p_PoM)', 'player'},
 	--Renew if player missing Renew and player health is below or if UI value.
 	{'Renew', '!player.buff(Renew) & player.health <= UI(p_Ren)', 'player'},
-	--Prayer of Healing if player and 4 or more others at 20yds are below or if 65% health
-	{'Prayer of Healing', 'player.area(20, 65).heal >= 4 ', 'lowest'},
-	--Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
-	{'Holy Nova', 'player.area(10, 90).heal >= 4', 'player'},
 
 }
 
@@ -218,12 +210,21 @@ local Moving = {
 local inCombat = {
 	--Fade when you get aggro.
 	{'fade', 'aggro'},
-	{'%dispelall', 'UI(Dispel) & !player.channeling(Divine Hymn)'},
-	{Cooldowns, 'toggle(cooldowns)'},
-	{Trinkets, '!player.channeling(Divine Hymn)'},
+    {Trinkets, '!player.channeling(Divine Hymn)'},
 	{Keybinds},
 	{Potions},
+    --Guardian Spirit if lowest health is below or if UI value and checked.
+	{'!Guardian Spirit', 'UI(c_GS_check) & lowest.health <= UI(c_GS_spin) & toggle(cooldowns)', 'lowest'},
+	--Prayer of Healing if player and 4 or more others at 20yds are below or if 65% health
+	{'Prayer of Healing', 'player.area(20, 65).heal >= 4 ', 'lowest'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption)'},
+    --Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
+	{'Holy Nova', 'player.area(10, 90).heal >= 4', 'player'},
+
+	--Dispell All if checked
+	{'%dispelall', 'UI(Dispel) & !player.channeling(Divine Hymn)'},
+	
+	{Moving, 'moving'},
 	 
 	{{
 		{Tank, 'tank.health < 100'},
@@ -231,7 +232,7 @@ local inCombat = {
 		{Lowest, 'lowest.health < 100'},
 		{DPS, 'lowest.health > 90'},
 	}, '!moving & !player.channeling(Divine Hymn)'},
-	{Moving, 'moving'},
+	
 
 }
 

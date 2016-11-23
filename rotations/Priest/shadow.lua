@@ -16,7 +16,7 @@ local GUI = {
   {type = 'header', text = 'Survival/Potions', align = 'center'},
   {type = 'checkbox', text = 'Fade', key = 's_F', default= false},
   {type = 'checkspin', text = 'Dispersion Usage', key = 's_D', default_check = false, default_spin = 20},
-  {type = 'checkspin', text = 'HealthStone', key = 's_HS', default_check = false, default_spin = 20},
+  {type = 'checkspin', text = 'Healthstone', key = 's_HS', default_check = false, default_spin = 20},
   {type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', default_check = false, default_spin = 20},
   {type = 'checkbox', text = 'Hero Potion of Prolonged Power', key = 's_PP', default= false},
   {type = 'ruler'},{type = 'spacer'},
@@ -25,8 +25,8 @@ local GUI = {
   {type = 'header', text = 'DPS cooldown', align = 'center'},
   {type = 'text', text = 'No Surrender to Madness Active', align = 'center'},
   {type = 'text', text = 'Check and Choose Stacks', align = 'center'},
-  {type = 'checkspin', text = 'Dispersion <= 35% HP', key = 'dps_D', default_check = false, default_spin = 35},
-  {type = 'checkspin', text = 'Dispersion > 35% HP', key = 'dps_D2', default_check = false, default_spin = 30},
+  {type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_D', default_check = false, default_spin = 35},
+  {type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2', default_check = false, default_spin = 30},
   {type = 'ruler'},{type = 'spacer'},
 
   --AOE
@@ -181,7 +181,7 @@ local inCombat = {
    
 
    -- Survival / Movement
-   {'Fade', 'target.threat = 100', '!player.channeling(Void Torrent) & UI(s_F)',  'player' },
+   {'Fade', 'target.threat = 100', '!player.channeling(Void Torrent) & UI(s_F)'},
    {"59544", "player.health <= 40 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness) "}, -- Gift of the Naaru
    {"!59544", "lowest.health <= UI(sup_GotN_spin) & UI(sup_GotN_check) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)", "lowest"}, -- support Gift of the Naaru
    {"17", "player.health <= 30 & !player.buff(193223) & !player.channeling(Void Torrent)"}, --Power Word: Shield
@@ -222,3 +222,6 @@ NeP.CR:Add(258, {
     load = exeOnLoad
 })
 --NeP.CR:Add(258, '[Yobleed] Priest - |r[|c5F2061Shadow|r]', inCombat, outCombat, exeOnLoad, GUI)
+
+--NOTES:
+ --equipped('item_name') or equipped (itemID)
