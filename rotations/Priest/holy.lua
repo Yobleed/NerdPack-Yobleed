@@ -13,14 +13,17 @@ local GUI = {
 		},
 
 	
+
+	
      --Dispel
 	{type = 'header', text = 'Dispel All when toggled on', align = 'center'},
+	{type = 'text', text = 'Dont use it. Still Bugged', align = 'center'},
 	{type = 'checkbox', text = 'Dispel All', key = 'Dispel', default = false},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--Cooldowns
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
-	{type = 'checkspin', text = 'Use Guardian Spirit', key = 'c_GS', default_check = false, default_spin = 20},
+	{type = 'checkspin', text = 'Use Guardian Spirit', key = 'c_GS', default_check = false, default_spin = 25},
 	{type = 'ruler'},{type = 'spacer'},
 
     --TRINKETS
@@ -40,9 +43,9 @@ local GUI = {
 	--POTIONS
 	{type = 'header', text = 'Potions', align = 'center'},
 	{type = 'text', text = 'Check to enable Potions', align = 'center'},
-	{type = 'checkspin', text = 'Healthstone', key = 'p_HS', default_check = false, default_spin = 20},
-	{type = 'checkspin', text = 'Ancient Healing Potion', key = 'p_AHP', default_check = false, default_spin = 20},
-	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', default_check = false, default_spin = 10},
+	{type = 'checkspin', text = 'Healthstone', key = 'p_HS', default_check = false, default_spin = 25},
+	{type = 'checkspin', text = 'Ancient Healing Potion', key = 'p_AHP', default_check = false, default_spin = 25},
+	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', default_check = false, default_spin = 20},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--DPS
@@ -56,7 +59,7 @@ local GUI = {
 	{type = 'header', text = 'Tank', align = 'center'},
 	{type = 'text', text = 'Tank health values', align = 'center'},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 't_HWSE', default = 60},
-	{type = 'spinner', text = 'Flash Heal', key = 't_FH', default = 70},
+	{type = 'spinner', text = 'Flash Heal', key = 't_FH', default = 75},
 	{type = 'spinner', text = 'Prayer of Mending', key = 't_PoM', default = 100},
 	{type = 'spinner', text = 'Renew', key = 't_Ren', default = 100},
 	{type = 'ruler'},{type = 'spacer'},
@@ -65,7 +68,7 @@ local GUI = {
 	{type = 'header', text = 'Player', align = 'center'},
 	{type = 'text', text = 'Player health values', align = 'center'},
 	{type = 'spinner', text = 'Gift of the Naaru', key = 'p_Gift', default = 20},
-	{type = 'spinner', text = 'Holy Word: Serenity', key = 'p_HWSE', default = 60},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 'p_HWSE', default = 40},
 	{type = 'spinner', text = 'Flash Heal', key = 'p_FH', default = 70},
 	{type = 'spinner', text = 'Prayer of Mending', key = 'p_PoM', default = 100},
 	{type = 'spinner', text = 'Renew', key = 'p_Ren', default = 100},
@@ -75,7 +78,7 @@ local GUI = {
 	{type = 'header', text = 'Lowest', align = 'center'},
 	{type = 'text', text = 'Lowest health values', align = 'center'},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'l_HWSE', default = 60},
-	{type = 'spinner', text = 'Flash Heal', key = 'l_FH', default = 70},
+	{type = 'spinner', text = 'Flash Heal', key = 'l_FH', default = 75},
 	{type = 'spinner', text = 'Prayer of Mending', key = 'l_PoM', default = 100},
 	{type = 'spinner', text = 'Renew', key = 'l_Ren', default = 80},
 	{type = 'spinner', text = 'Heal', key = 'l_H', default = 90},
@@ -88,7 +91,7 @@ local GUI = {
 	{type = 'text', text = 'Lowest health and moving values', align = 'center'},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'm_HWSE', default = 60},
 	{type = 'spinner', text = 'Flash Heal Surge of Light', key = 'm_FH', default = 70},
-	{type = 'spinner', text = 'Renew', key = 'm_Ren', default = 80},
+	{type = 'spinner', text = 'Renew', key = 'm_Ren', default = 90},
 }
 
 local exeOnLoad = function()
@@ -98,7 +101,12 @@ local exeOnLoad = function()
 	print('|cffFACC2E For Settings Right-Click the MasterToggle and go to Combat Routines Settings |r')
 	print('|cffFACC2E Have a nice day!|r')
 
-	
+		NeP.Interface:AddToggle({
+		key = 'xDPS',
+		name = 'DPS',
+		text = 'ON/OFF using Full DPS in rotation',
+		icon = 'Interface\\ICONS\\spell_holy_holysmite', --toggle(xDPS)
+	})
 
 end
 
@@ -142,6 +150,17 @@ local DPS = {
 	{'Holy Fire', 'UI(d_HF)' , 'target'},
 	--Smite on cooldown if not healing.
 	{'Smite', nil, 'target'}
+}
+
+local FullDPS = {--Holy Word: Chastise on cooldown if not healing when checked in UI.
+	{'Holy Word: Chastise', nil, 'target'},
+	--Holy Fire on cooldown if not healing when checked in UI.
+	{'Holy Fire', nil, 'target'},
+	--Smite on cooldown if not healing.
+	{'Smite', nil, 'target'},
+	--Holy Nova if 4 or more enemies within 10yds.
+	{'Holy Nova', 'player.area(10).enemies >= 4', 'player'},
+
 }
 
 local Tank = {
@@ -208,18 +227,18 @@ local Moving = {
 }
 
 local inCombat = {
+    {Potions},
 	--Fade when you get aggro.
 	{'fade', 'aggro'},
+	 --Guardian Spirit if lowest health is below or if UI value and checked.
+	{'!Guardian Spirit', 'UI(c_GS_check) & lowest.health <= UI(c_GS_spin) & toggle(cooldowns)', 'lowest'},
     {Trinkets, '!player.channeling(Divine Hymn)'},
 	{Keybinds},
-	{Potions},
-    --Guardian Spirit if lowest health is below or if UI value and checked.
-	{'!Guardian Spirit', 'UI(c_GS_check) & lowest.health <= UI(c_GS_spin) & toggle(cooldowns)', 'lowest'},
 	--Prayer of Healing if player and 4 or more others at 20yds are below or if 65% health
-	{'Prayer of Healing', 'player.area(20, 65).heal >= 4 ', 'lowest'},
+	{'Prayer of Healing', 'target.area(20, 65).heal >= 4 & toggle(AOE)', 'lowest'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption)'},
     --Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
-	{'Holy Nova', 'player.area(10, 90).heal >= 4', 'player'},
+	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE)', 'player'},
 
 	--Dispell All if checked
 	{'%dispelall', 'UI(Dispel) & !player.channeling(Divine Hymn)'},
@@ -231,6 +250,7 @@ local inCombat = {
 		{Player, 'health < 100'},
 		{Lowest, 'lowest.health < 100'},
 		{DPS, 'lowest.health > 90'},
+		{FullDPS, 'toggle(xDPS)'},
 	}, '!moving & !player.channeling(Divine Hymn)'},
 	
 
