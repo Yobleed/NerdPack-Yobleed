@@ -263,7 +263,10 @@ local inCombat = {
 
 local outCombat = {
 	{Keybinds},
-	{Moving, 'moving'},
+    --Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
+	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
+	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
+	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
 	{"%ressdead(Resurrection)", (function() return F('auto_res') end) },
 }
 
