@@ -156,8 +156,11 @@ local FullDPS = {--Holy Word: Chastise on cooldown if not healing when checked i
 	{'Holy Word: Chastise', nil, 'target'},
 	--Holy Fire on cooldown if not healing when checked in UI.
 	{'Holy Fire', nil, 'target'},
+    --Smite on cooldown if not healing.
+	{'Smite', nil, 'target'},
 	--Holy Nova if 4 or more enemies within 10yds.
 	{'Holy Nova', 'player.area(10).enemies >= 4', 'player'},
+
 
 }
 
@@ -222,11 +225,12 @@ local Moving = {
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
 	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
 	-- Full DPS when activated.
-	{FullDPS, 'toggle(xDPS) & lowest.health > 90'},
+	{FullDPS, 'toggle(xDPS)'},
 
 }
 
 local inCombat = {
+
     {Potions},
 	--Fade when you get aggro.
 	{'fade', 'aggro'},
@@ -235,24 +239,23 @@ local inCombat = {
     {Trinkets, '!player.channeling(Divine Hymn)'},
 	{Keybinds},
 	--Circle of healing if tarhet and 4 or more others at 30yds are below or if 85% health.
-	{'Circle of Healing', 'target.area(30, 85).heal >= 4 & toggle(AOE) & talent(Circle of Healing', 'lowest'},
+	{'Circle of Healing', 'target.area(30, 85).heal >= 4 & toggle(AOE) & talent(Circle of Healing & !toggle(xDPS)', 'lowest'},
 	--Prayer of Healing if target and 4 or more others at 20yds are below or if 65% health
-	{'Prayer of Healing', 'target.area(20, 65).heal >= 4 & toggle(AOE)', 'lowest'},
+	{'Prayer of Healing', 'target.area(20, 65).heal >= 4 & toggle(AOE) & !toggle(xDPS)', 'lowest'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption)'},
     --Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
-	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE)', 'player'},
+	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)', 'player'},
 
 	--Dispell All if checked
 	{'%dispelall', 'UI(Dispel) & !player.channeling(Divine Hymn)'},
-	
 	{Moving, 'moving'},
-	{FullDPS, 'toggle(xDPS'},
 	{{
-		{Tank, 'tank.health < 100'},
-		{Player, 'health < 100'},
-		{Lowest, 'lowest.health < 100'},
-		{DPS, 'lowest.health > 90'},
-	}, '!moving & !player.channeling(Divine Hymn) & !toggle(xDPS)'},
+		{Tank, 'tank.health < 100 & !toggle(xDPS)'},
+		{Player, 'health < 100 & !toggle(xDPS)'},
+		{Lowest, 'lowest.health < 100 & !toggle(xDPS)'},
+		{FullDPS, 'toggle(xDPS)'},
+		{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
+	}, '!moving & !player.channeling(Divine Hymn)'},
 	
 
 }
