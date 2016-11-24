@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="Full DPS" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
+        NeP.Interface:toggleToggle('xDPS')
+    </Binding>
+</Bindings>

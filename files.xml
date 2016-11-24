@@ -4,6 +4,7 @@
   <!-- Core Files -->
   <Script file="core.lua" />
   <Script file="conditions.lua" />
+  <Script file="fakeunits.lua" />
 
   <!-- Basic Rotations -->
   

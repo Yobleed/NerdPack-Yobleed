@@ -248,7 +248,7 @@ local inCombat = {
 	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)', 'player'},
 
 	--Dispell All if checked
-	{'%dispelall', 'UI(Dispel) & !player.channeling(Divine Hymn)'},
+	{'!Purify', 'canDispell.health < 100 & !player.channeling(Divine Hymn) & UI(Dispel)', 'canDispell'},
 	{Moving, 'moving'},
 	{{
 		{Tank, 'tank.health < 100 & !toggle(xDPS)'},
