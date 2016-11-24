@@ -1,5 +1,4 @@
-
-NeP.FakeUnits:Add('canDispell' function(spell)
+NeP.FakeUnits:Add('canDispell', function(spell)
     local tempTable = {}
     for _, Obj in pairs(NeP.OM:GetRoster()) do
       if LibDispellable:CanDispelWith(Obj.key, GetSpellID(spell)) then
