@@ -156,10 +156,11 @@ local FullDPS = {--Holy Word: Chastise on cooldown if not healing when checked i
 	{'Holy Word: Chastise', nil, 'target'},
 	--Holy Fire on cooldown if not healing when checked in UI.
 	{'Holy Fire', nil, 'target'},
-    --Smite on cooldown if not healing.
-	{'Smite', nil, 'target'},
 	--Holy Nova if 4 or more enemies within 10yds.
-	{'Holy Nova', 'player.area(10).enemies >= 4', 'player'},
+	{'!Holy Nova', 'player.area(10).enemies >= 4 & toggle(AOE)', 'player'},
+    --Smite on cooldown if not healing.
+	{'Smite', '!moving', 'target'},
+	
 
 
 }
@@ -225,7 +226,7 @@ local Moving = {
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
 	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
 	-- Full DPS when activated.
-	{FullDPS, 'toggle(xDPS)'},
+	{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 
 }
 
@@ -253,7 +254,7 @@ local inCombat = {
 		{Tank, 'tank.health < 100 & !toggle(xDPS)'},
 		{Player, 'health < 100 & !toggle(xDPS)'},
 		{Lowest, 'lowest.health < 100 & !toggle(xDPS)'},
-		{FullDPS, 'toggle(xDPS)'},
+		{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
 	}, '!moving & !player.channeling(Divine Hymn)'},
 	
