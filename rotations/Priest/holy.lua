@@ -246,7 +246,7 @@ local inCombat = {
 	{'%dispelall', 'UI(Dispel) & !player.channeling(Divine Hymn)'},
 	
 	{Moving, 'moving'},
-	{FullDPS, 'toggle(xDPS) & lowest.health > 90'},
+	{FullDPS, 'toggle(xDPS'},
 	{{
 		{Tank, 'tank.health < 100'},
 		{Player, 'health < 100'},
