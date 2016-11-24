@@ -213,9 +213,9 @@ local Moving = {
 	--Gift of the Naaru if lowest health is below or if 20% and has Guardian Spirit.
 	{'Gift of the Naaru', 'lowest.health <= 20 & lowest.buff(Guardian Spirit)', 'lowest'},
 	--Holy Word: Serenity if lowest health  is below or if UI value.
-	{'Holy Word: Serenity', 'lowest.health <= UI(m_HWSE)', 'lowest'},
+	{'Holy Word: Serenity', 'lowest.health <= UI(m_HWSE) ', 'lowest'},
 	--Renew if lowest health is missing Renew and Lowest health is below or if UI value.
-	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(m_Ren)', 'lowest'},
+	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(m_Ren) & !toggle(xDPS)', 'lowest'},
 	--Flash Heal charge Dump if Surge of Light duration is less or equal to 3 seconds and moving
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	--Flash Heal when Surge of Light is active, Lowest Health  is below or if UI value.
