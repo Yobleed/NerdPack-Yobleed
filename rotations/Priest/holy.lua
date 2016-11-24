@@ -49,7 +49,7 @@ local GUI = {
 	{type = 'ruler'},{type = 'spacer'},
 
 	--DPS
-	{type = 'header', text = 'DPS mode', align = 'center'},
+	{type = 'header', text = 'Extra DPS', align = 'center'},
 	{type = 'text', text = 'Check to enable extra DPS', align = 'center'},
 	{type = 'checkbox', text = 'Holy Word: Chastise', key = 'd_HWC', default = false},
 	{type = 'checkbox', text = 'Holy Fire', key = 'd_HF', default = false},
@@ -103,7 +103,7 @@ local exeOnLoad = function()
 
 		NeP.Interface:AddToggle({
 		key = 'xDPS',
-		name = 'DPS',
+		name = 'Full DPS!',
 		text = 'ON/OFF using Full DPS in rotation',
 		icon = 'Interface\\ICONS\\spell_holy_holysmite', --toggle(xDPS)
 	})
@@ -156,8 +156,6 @@ local FullDPS = {--Holy Word: Chastise on cooldown if not healing when checked i
 	{'Holy Word: Chastise', nil, 'target'},
 	--Holy Fire on cooldown if not healing when checked in UI.
 	{'Holy Fire', nil, 'target'},
-	--Smite on cooldown if not healing.
-	{'Smite', nil, 'target'},
 	--Holy Nova if 4 or more enemies within 10yds.
 	{'Holy Nova', 'player.area(10).enemies >= 4', 'player'},
 
@@ -223,6 +221,8 @@ local Moving = {
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
 	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
+	-- Full DPS when activated.
+	{FullDPS, 'toggle(xDPS) & lowest.health > 90'},
 
 }
 
@@ -234,7 +234,9 @@ local inCombat = {
 	{'!Guardian Spirit', 'UI(c_GS_check) & lowest.health <= UI(c_GS_spin) & toggle(cooldowns)', 'lowest'},
     {Trinkets, '!player.channeling(Divine Hymn)'},
 	{Keybinds},
-	--Prayer of Healing if player and 4 or more others at 20yds are below or if 65% health
+	--Circle of healing if tarhet and 4 or more others at 30yds are below or if 85% health.
+	{'Circle of Healing', 'target.area(30, 85).heal >= 4 & toggle(AOE)', 'lowest'},
+	--Prayer of Healing if target and 4 or more others at 20yds are below or if 65% health
 	{'Prayer of Healing', 'target.area(20, 65).heal >= 4 & toggle(AOE)', 'lowest'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption)'},
     --Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
@@ -249,8 +251,8 @@ local inCombat = {
 		{Tank, 'tank.health < 100'},
 		{Player, 'health < 100'},
 		{Lowest, 'lowest.health < 100'},
+		{FullDPS, 'toggle(xDPS) & lowest.health > 90'},
 		{DPS, 'lowest.health > 90'},
-		{FullDPS, 'toggle(xDPS)'},
 	}, '!moving & !player.channeling(Divine Hymn)'},
 	
 
