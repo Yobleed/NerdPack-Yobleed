@@ -235,7 +235,7 @@ local inCombat = {
     {Trinkets, '!player.channeling(Divine Hymn)'},
 	{Keybinds},
 	--Circle of healing if tarhet and 4 or more others at 30yds are below or if 85% health.
-	{'Circle of Healing', 'target.area(30, 85).heal >= 4 & toggle(AOE)', 'lowest'},
+	{'Circle of Healing', 'target.area(30, 85).heal >= 4 & toggle(AOE) & talent(Circle of Healing', 'lowest'},
 	--Prayer of Healing if target and 4 or more others at 20yds are below or if 65% health
 	{'Prayer of Healing', 'target.area(20, 65).heal >= 4 & toggle(AOE)', 'lowest'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption)'},
