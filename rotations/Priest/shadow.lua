@@ -154,56 +154,39 @@ local ST = {
 }
 
 local inCombat = {
+
  {"Surrender to Madness", "player.debuff(Dream Simulacrum)"},
-
-   -- Shadowy insight
-  {"!Mindblast", {"player.buff(Shadowy Insight) & !player.channeling(Void Torrent) & !spell(Void Eruption).cooldown = 0"}}, 
-  {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
-  {"!Dispersion", "player.health <= UI(s_D_spin) & UI(s_D_check) & !player.buff(193223)"},
-  {Keybinds},
-  {Trinkets, '!player.channeling(Void Torrent)'},
-  {Voidform, 'player.buff(Voidform) & !player.channeling(Void Torrent)'},
-  {ST, '!player.buff(Voidform) & !player.channeling(Void Eruption)'},
-
-  --Surrender to madness
-    -- Dream State Xavius
-
-
-
-
-  -- Interrupts
-   {"15487", "toggle(Interrupts) & player.spell(15487).cooldown = 0 & !player.channeling(Void Torrent)"},
-
-    -- Potions
-   {"#Healthstone", "player.health <= UI(s_HS_spin) & UI(s_HS_check) & !player.channeling(Void Torrent)"}, --Healthstone
-   {"#Ancient Healing Potion", "player.health <= UI(s_AHP_spin) & UI(s_AHP_check) & !player.channeling(Void Torrent)"}, -- Ancient Healing Potion
-   {"#142117", "player.hashero & !player.buff(156426) & !player.channeling(Void Torrent) & UI(s_PP)"}, --DPS potion Doesn't support Potion of Deadly grace
-   
-
-   -- Survival / Movement
-   {'Fade', 'target.threat = 100', '!player.channeling(Void Torrent) & UI(s_F)'},
-   {"59544", "player.health <= 40 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness) "}, -- Gift of the Naaru
-   {"!59544", "lowest.health <= UI(sup_GotN_spin) & UI(sup_GotN_check) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)", "lowest"}, -- support Gift of the Naaru
-   {"17", "player.health <= 30 & !player.buff(193223) & !player.channeling(Void Torrent)"}, --Power Word: Shield
-   {"!17", "lowest.health <= UI(sup_PWS_spin) & UI(sup_PWS_check) & !player.buff(193223) & !player.channeling(Void Torrent)", "lowest"}, -- support Power Word: Shield
-  
-
-
-   -- Cooldowns
-   {"!Shadow Word: Death", {"target.health <= 35 & & player.insanity <= 65 & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent)"}}, 
-   {"!Power Infusion", "talent(Power Infusion) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 15 & target.health > 35" },
-   {"!Power Infusion", "talent(Power Infusion) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 20 & target.health <= 35" },
-   {"!Shadowfiend",  "toggle(cooldowns) & player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0 & !spell(Mind Blast).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion) & player.channeling(Mind Flay)"},
-   {"!Shadowfiend",  "toggle(cooldowns) & player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0 & !spell(Mind Blast).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion) & player.channeling(Mind Flay)"},
-   {"!Mindbender", "talent(Mindbender) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(193223) & player.buff(voidform).count > 5 & !player.channeling(Void Torrent)"},
+ -- Potions
+ {"#Healthstone", "player.health <= UI(s_HS_spin) & UI(s_HS_check) & !player.channeling(Void Torrent)"}, --Healthstone
+ {"#Ancient Healing Potion", "player.health <= UI(s_AHP_spin) & UI(s_AHP_check) & !player.channeling(Void Torrent)"}, -- Ancient Healing Potion
+ {"#142117", "player.hashero & !player.buff(156426) & !player.channeling(Void Torrent) & UI(s_PP)"}, --DPS potion Doesn't support Potion of Deadly grace
+ -- Interrupts
+ {"15487", "toggle(Interrupts) & player.spell(15487).cooldown = 0 & !player.channeling(Void Torrent)"},
+ -- Cooldowns
+ {"!Shadow Word: Death", {"target.health <= 35 & & player.insanity <= 65 & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent)"}}, 
+ {"!Power Infusion", "talent(Power Infusion) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 15 & target.health > 35" },
+ {"!Power Infusion", "talent(Power Infusion) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 20 & target.health <= 35" },
+ {"!Shadowfiend",  "toggle(cooldowns) & player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0 & !spell(Mind Blast).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)"},
+ {"!Shadowfiend",  "toggle(cooldowns) & player.buff(Voidform) & !player.channeling(Void Torrent) & player.spell(Void Eruption).cooldown > 0 & !spell(Mind Blast).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion)"},
+ {"!Mindbender", "talent(Mindbender) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(193223) & player.buff(voidform).count > 5 & !player.channeling(Void Torrent)"},
+ -- Survival / Movement
+ {'Fade', 'target.threat = 100', '!player.channeling(Void Torrent) & UI(s_F)'},
+ {"59544", "player.health <= 40 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness) "}, -- Gift of the Naaru
+ {"!59544", "lowest.health <= UI(sup_GotN_spin) & UI(sup_GotN_check) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)", "lowest"}, -- support Gift of the Naaru
+ {"17", "player.health <= 30 & !player.buff(193223) & !player.channeling(Void Torrent)"}, --Power Word: Shield
+ {"!17", "lowest.health <= UI(sup_PWS_spin) & UI(sup_PWS_check) & !player.buff(193223) & !player.channeling(Void Torrent)", "lowest"}, -- support Power Word: Shield
+ -- Shadowy insight
+ {"!Mindblast", {"player.buff(Shadowy Insight) & !player.channeling(Void Torrent) & !spell(Void Eruption).cooldown = 0"}}, 
+ {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
+ {"!Dispersion", "player.health <= UI(s_D_spin) & UI(s_D_check) & !player.buff(193223)"},
+ {Keybinds},
+ {Trinkets, '!player.channeling(Void Torrent)'},
+ {Voidform, 'player.buff(Voidform) & !player.channeling(Void Torrent)'},
+ {ST, '!player.buff(Voidform) & !player.channeling(Void Eruption)'},
 
    -- Keybinds
      -- {"!32375 & keybind(lalt) & tank.advancedground"}, -- Mass Dispel (Enable if on Dispel Duty)
     -- AOE Shift button
-
-
-
-
 }
 
 local outCombat = {
@@ -225,3 +208,4 @@ NeP.CR:Add(258, {
 
 --NOTES:
  --equipped('item_name') or equipped (itemID)
+ --'advanced' --advanced unlocker condition
