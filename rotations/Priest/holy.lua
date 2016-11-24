@@ -253,7 +253,7 @@ local inCombat = {
 		{Lowest, 'lowest.health < 100'},
 		{FullDPS, 'toggle(xDPS) & lowest.health > 90'},
 		{DPS, 'lowest.health > 90'},
-	}, '!moving & !player.channeling(Divine Hymn)'},
+	}, '!moving & !player.channeling(Divine Hymn) & !toggle(xDPS)'},
 	
 
 }
