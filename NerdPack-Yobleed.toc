@@ -1,4 +1,4 @@
-## Title: |r[|c5F2061Yobleed|r] Combat rotations
+## Title: Yobleed Combat rotations
 ## Notes: Priest Rotations for Nerdpack
 ## Dependencies: NerdPack
 ## Interface: 70100
