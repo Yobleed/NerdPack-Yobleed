@@ -120,12 +120,12 @@ local Trinkets = {
 
 local Keybinds = {
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
-	{'/cast [@cursor]Mass Dispel', 'keybind(lcontrol) & UI(k_MD)'},
+	{'/cast [@cursor] Mass Dispel', 'keybind(lcontrol) & UI(k_MD)'},
 	--Holy Word: Sanctify on Mouseover target left shift when checked in UI.
 	{'/cast [@cursor] Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS)'},
 	-- Pause on left alt when checked in UI.
 	{'%pause', 'keybind(lalt)& UI(k_P)'}
-}
+} 
 
 local Potions = {
 	--Health Stone below 20% health. Active when NOT channeling Divine Hymn.
@@ -244,9 +244,8 @@ local inCombat = {
 	--Prayer of Healing if target and 4 or more others at 20yds are below or if 65% health
 	{'Prayer of Healing', 'target.area(20, 65).heal >= 4 & toggle(AOE) & !toggle(xDPS)', 'lowest'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption)'},
-    --Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
-	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)', 'player'},
-
+	--Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
+	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health < 60', 'player'},
 	--Dispell All if checked
 	--{'!Purify', 'canDispell.health < 100 & !player.channeling(Divine Hymn) & UI(Dispel)', 'canDispell'},
 	{Moving, 'moving'},
@@ -257,6 +256,7 @@ local inCombat = {
 		{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
 	}, '!moving & !player.channeling(Divine Hymn)'},
+
 	
 
 }
