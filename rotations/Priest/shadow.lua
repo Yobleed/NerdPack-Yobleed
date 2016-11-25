@@ -109,7 +109,8 @@ local Voidform = {
    {"!Mindbender", "talent(Mindbender) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(193223) & player.buff(voidform).count > 5 & !player.channeling(Void Torrent)"},
    
    {'!Dispersion', 'lastcast(Void Torrent) & player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
-   {'!Dispersion', 'player.buff(voidform).count >= 99 & !player.channeling(Void Torrent)'},
+   {'!Dispersion', 'player.buff(voidform).count >= 99 & !player.channeling(Void Torrent) & target.health > 35'},
+   {'!Dispersion', 'player.buff(voidform).count >= 99 & !player.channeling(Void Torrent) & target.health <= 35 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 50'},
    {'!Dispersion', 'player.buff(voidform).count >= 90 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30'},
    {'!Dispersion', '!player.channeling(Void Torrent) & player.buff(voidform).count >= UI(dps_D_spin) & UI(dps_D_check) & spell(Shadow Word: Death).charges < 1 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health <= 35'},
    {'!Dispersion', '!player.channeling(Void Torrent) & player.buff(voidform).count >= UI(dps_D2_spin) & UI(dps_D2_check) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
