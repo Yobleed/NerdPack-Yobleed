@@ -1,6 +1,6 @@
 local LibDispellable = LibStub('LibDispellable-1.0')
 
-NeP.FakeUnits:Add('canDispell', function(Purify)
+NeP.FakeUnits:Add('canDispell', function(spell)
     local tempTable = {}
     for _, Obj in pairs(NeP.OM:GetRoster()) do
       if LibDispellable:CanDispelWith(Obj.key, GetSpellID('Purify')) then
