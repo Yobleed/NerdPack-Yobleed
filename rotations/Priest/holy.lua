@@ -138,9 +138,9 @@ local Potions = {
 
 local SpiritOfRedemption = {
 	--Holy Word: Serenity when lowest health is below 50%.
-	{'Holy Word: Serenity', 'lowest.health < 50', 'lowest'},
+	{'!Holy Word: Serenity', 'lowest.health < 50', 'lowest'},
 	--Flash Heal when lowest health is below 100%.
-	{'Flash Heal', 'lowest.health < 100' , 'lowest'}
+	{'!Flash Heal', 'lowest.health < 100' , 'lowest'}
 }
 
 local DPS = {
@@ -167,9 +167,9 @@ local FullDPS = {--Holy Word: Chastise on cooldown if not healing when checked i
 
 local Tank = {
 	--Holy Word: Serenity if tank health is below or if UI value.
-	{'Holy Word: Serenity', 'tank.health <= UI(t_HWSE)', 'tank'},
+	{'!Holy Word: Serenity', 'tank.health <= UI(t_HWSE)', 'tank'},
 	--Flash heal if tank health is below or if UI value.
-	{'Flash Heal', 'tank.health <= UI(t_FH)', 'tank'},
+	{'!Flash Heal', 'tank.health <= UI(t_FH)', 'tank'},
 	--Prayer of Mending if tank missing Prayer of Mending and when tank health is below or if UI value.
 	{'Prayer of Mending', '!tank.buff(Prayer of Mending) & tank.health <= UI(t_PoM)', 'tank'},
 	--Renew if tank missing Renew and when tank health is below or if UI value.
@@ -181,9 +181,9 @@ local Player = {
 	--Gift of the Naaru if player health is below or if UI value.
 	{'Gift of the Naaru', 'player.health <= UI(p_Gift)', 'player'},
 	--Holy Word: Serenity if player health is below or if UI value.
-	{'Holy Word: Serenity', 'player.health <= UI(p_HWSE)', 'player'},
+	{'!Holy Word: Serenity', 'player.health <= UI(p_HWSE)', 'player'},
 	--Flash Heal if player health is below or if UI value.
-	{'Flash Heal', 'player.health <= UI(p_FH)', 'player'},
+	{'!Flash Heal', 'player.health <= UI(p_FH)', 'player'},
 	--Prayer of Mending if player missing Prayer of Mending and player health is below or if UI value.
 	{'Prayer of Mending', '!player.buff(Prayer of Mending) & player.health <= UI(p_PoM)', 'player'},
 	--Renew if player missing Renew and player health is below or if UI value.
@@ -193,13 +193,13 @@ local Player = {
 
 local Lowest = {
 	--Flash Heal charge Dump if Surge of Light duration is less or equal to 3 seconds.
-	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
+	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	--Gift of the Naaru if lowest health is below or if 20% and has Guardian Spirit.
 	{'Gift of the Naaru', 'lowest.health <= 20 & lowest.buff(Guardian Spirit)', 'lowest'},
 	--Holy Word: Serenity if lowest health is below or if UI value.
-	{'Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
+	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
 	--Flash Heal if lowest health is below or if UI value.
-	{'Flash Heal', 'lowest.health <= UI(l_FH)', 'lowest'},
+	{'!Flash Heal', 'lowest.health <= UI(l_FH)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
 	{'Prayer of Healing', 'lowest.area(20, 65).heal >= 4' , 'lowest'},
 	--Prayer of Mending if lowest health missing Prayer of Mending and is below or if UI value.
@@ -214,13 +214,13 @@ local Moving = {
 	--Gift of the Naaru if lowest health is below or if 20% and has Guardian Spirit.
 	{'Gift of the Naaru', 'lowest.health <= 20 & lowest.buff(Guardian Spirit)', 'lowest'},
 	--Holy Word: Serenity if lowest health  is below or if UI value.
-	{'Holy Word: Serenity', 'lowest.health <= UI(m_HWSE) ', 'lowest'},
+	{'!Holy Word: Serenity', 'lowest.health <= UI(m_HWSE) ', 'lowest'},
 	--Renew if lowest health is missing Renew and Lowest health is below or if UI value.
 	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(m_Ren) & !toggle(xDPS)', 'lowest'},
 	--Flash Heal charge Dump if Surge of Light duration is less or equal to 3 seconds and moving
-	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
+	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	--Flash Heal when Surge of Light is active, Lowest Health  is below or if UI value.
-	{'Flash Heal', 'player.buff(Surge of Light) & lowest.health <= UI(m_FH)', 'lowest'},
+	{'!Flash Heal', 'player.buff(Surge of Light) & lowest.health <= UI(m_FH)', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
