@@ -130,7 +130,8 @@ local Voidform = {
    {"Vampiric Touch", {"!target.debuff(Vampiric Touch) & player.buff(Voidform) & !player.channeling(Void Torrent) & !player.channeling(Mind Sear)"}}, -- VT check
 
   {"Mind Sear", "toggle(AOE) & player.buff(Voidform) & !player.channeling(Void Torrent) & target.area(10).enemies >= UI(AoE_MS) & target.debuff(Shadow Word: Pain)"}, 
-  {"Mind Flay", {"player.spell(Void Eruption).cooldown > 0 & player.spell(Mind Blast).cooldown > 0 & !target.area(10).enemies >= UI(AoE_MS) &  target.debuff(Shadow Word: Pain)"}},
+  {"Mind Flay", {"player.spell(Void Eruption).cooldown > 0 & player.spell(Mind Blast).cooldown > 0 & !target.area(10).enemies >= UI(AoE_MS) &  target.debuff(Shadow Word: Pain) & toggle(AOE)"}},
+  {"Mind Flay", "player.spell(Void Eruption).cooldown > 0 & player.spell(Mind Blast).cooldown > 0 & target.debuff(Shadow Word: Pain) & !toggle(AOE)"},
 
    {"!Void Eruption", "!player.channeling(Void Torrent) & !player.channeling(Mind blast) & player.buff(Voidform)"},
 
@@ -158,8 +159,8 @@ local ST = {
    {"Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3" }, -- SW:P refresh
    {"Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3 & !lastcast(Vampiric Touch)" }, -- VT refresh
    {"Mind Sear", "toggle(AOE) & target.area(10).enemies >= UI(AoE_MS) & target.debuff(Shadow Word: Pain)"}, 
-   {"Mind Flay", {"player.spell(Mind Blast).cooldown > 0 & !target.area(10).enemies >= UI(AoE_MS) & target.debuff(Shadow Word: Pain)"}},
-  
+   {"Mind Flay", "player.spell(Mind Blast).cooldown > 0 & !target.area(10).enemies >= UI(AoE_MS) & target.debuff(Shadow Word: Pain) & toggle(AOE)" },
+   {"Mind Flay", "player.spell(Mind Blast).cooldown > 0 & target.debuff(Shadow Word: Pain) & !toggle(AOE)"},
 }
 
 local inCombat = {
