@@ -59,7 +59,7 @@ local GUI = {
 	{type = 'header', text = 'Tank', align = 'center'},
 	{type = 'text', text = 'Tank health values', align = 'center'},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 't_HWSE', default = 60},
-	{type = 'spinner', text = 'Flash Heal', key = 't_FH', default = 75},
+	{type = 'spinner', text = 'Flash Heal', key = 't_FH', default = 85},
 	{type = 'spinner', text = 'Prayer of Mending', key = 't_PoM', default = 100},
 	{type = 'spinner', text = 'Renew', key = 't_Ren', default = 100},
 	{type = 'ruler'},{type = 'spacer'},
@@ -69,19 +69,19 @@ local GUI = {
 	{type = 'text', text = 'Player health values', align = 'center'},
 	{type = 'spinner', text = 'Gift of the Naaru', key = 'p_Gift', default = 20},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'p_HWSE', default = 40},
-	{type = 'spinner', text = 'Flash Heal', key = 'p_FH', default = 70},
+	{type = 'spinner', text = 'Flash Heal', key = 'p_FH', default = 85},
 	{type = 'spinner', text = 'Prayer of Mending', key = 'p_PoM', default = 100},
-	{type = 'spinner', text = 'Renew', key = 'p_Ren', default = 100},
+	{type = 'spinner', text = 'Renew', key = 'p_Ren', default = 0},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--LOWEST
 	{type = 'header', text = 'Lowest', align = 'center'},
 	{type = 'text', text = 'Lowest health values', align = 'center'},
-	{type = 'spinner', text = 'Holy Word: Serenity', key = 'l_HWSE', default = 60},
-	{type = 'spinner', text = 'Flash Heal', key = 'l_FH', default = 75},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 'l_HWSE', default = 50},
+	{type = 'spinner', text = 'Flash Heal', key = 'l_FH', default = 85},
 	{type = 'spinner', text = 'Prayer of Mending', key = 'l_PoM', default = 100},
-	{type = 'spinner', text = 'Renew', key = 'l_Ren', default = 80},
-	{type = 'spinner', text = 'Heal', key = 'l_H', default = 90},
+	{type = 'spinner', text = 'Renew', key = 'l_Ren', default = 0},
+	{type = 'spinner', text = 'Heal', key = 'l_H', default = 95},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--MOVING
@@ -91,7 +91,7 @@ local GUI = {
 	{type = 'text', text = 'Lowest health and moving values', align = 'center'},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'm_HWSE', default = 60},
 	{type = 'spinner', text = 'Flash Heal Surge of Light', key = 'm_FH', default = 70},
-	{type = 'spinner', text = 'Renew', key = 'm_Ren', default = 90},
+	{type = 'spinner', text = 'Renew', key = 'm_Ren', default = 95},
 }
 
 local exeOnLoad = function()
@@ -137,6 +137,13 @@ local Potions = {
 }
 
 local SpiritOfRedemption = {
+	--Holy Word: Serenity when lowest health is below 50%.
+	{'!Holy Word: Serenity', 'lowest.health < 50', 'lowest'},
+	--Flash Heal when lowest health is below 100%.
+	{'!Flash Heal', 'lowest.health < 100' , 'lowest'}
+}
+
+local SymbolOfHope = {
 	--Holy Word: Serenity when lowest health is below 50%.
 	{'!Holy Word: Serenity', 'lowest.health < 50', 'lowest'},
 	--Flash Heal when lowest health is below 100%.
@@ -222,9 +229,9 @@ local Moving = {
 	--Flash Heal when Surge of Light is active, Lowest Health  is below or if UI value.
 	{'!Flash Heal', 'player.buff(Surge of Light) & lowest.health <= UI(m_FH)', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
-	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
+	{'!Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
-	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
+	{'!Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
 	-- Full DPS when activated.
 	{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 
@@ -239,29 +246,34 @@ local inCombat = {
 	{'!Guardian Spirit', 'UI(c_GS_check) & lowest.health <= UI(c_GS_spin) & toggle(cooldowns)', 'lowest'},
     {Trinkets, '!player.channeling(Divine Hymn)'},
 	{Keybinds},
-	--Circle of healing if tarhet and 4 or more others at 30yds are below or if 85% health.
-	{'Circle of Healing', 'target.area(30, 85).heal >= 4 & toggle(AOE) & talent(Circle of Healing) & !toggle(xDPS)', 'lowest'},
-	--Prayer of Healing if target and 4 or more others at 20yds are below or if 65% health
-	{'Prayer of Healing', 'target.area(20, 65).heal >= 4 & toggle(AOE) & !toggle(xDPS)', 'lowest'},
-	{SpiritOfRedemption, 'player.buff(Spirit of Redemption)'},
+	--Holy Word: Sanctify if lowest and 4 or more others at 40yds are below or if 80% health and if unlocked with advanced.
+	{'Holy Word: Sanctify', 'lowest.area(40, 80) >= 4 & advanced','lowest.ground'},
+	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
+	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(Circle of Healing) & !toggle(xDPS)', 'lowest'},
+	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
+	{'Prayer of Healing', 'lowest.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40', 'lowest'},
+	{SymbolOfHope, 'player.buff(Symbol of Hope) & & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
+	{SpiritOfRedemption, 'player.buff(Spirit of Redemption) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	--Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
 	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health < 60', 'player'},
 	--Dispell All if checked
 	--{'!Purify', 'canDispell.health < 100 & !player.channeling(Divine Hymn) & UI(Dispel)', 'canDispell'},
-	{Moving, 'moving'},
+	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{{
 		{Tank, 'tank.health < 100 & !toggle(xDPS)'},
 		{Player, 'health < 100 & !toggle(xDPS)'},
 		{Lowest, 'lowest.health < 100 & !toggle(xDPS)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
-	}, '!moving & !player.channeling(Divine Hymn)'},
+	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing)'},
 
 	
 
 }
 
 local outCombat = {
+    {'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
+    {'Renew', '!lowest.buff(Renew) & lowest.health < 100', 'lowest'},
 	{Keybinds},
     --Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},

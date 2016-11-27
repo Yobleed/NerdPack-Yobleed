@@ -176,7 +176,7 @@ local inCombat = {
  {"15487", "toggle(Interrupts) & player.spell(15487).cooldown = 0 & !player.channeling(Void Torrent)"},
  
  -- Survival / Movement
- {'Fade', 'target.threat = 100', '!player.channeling(Void Torrent) & UI(s_F)'},
+ {'Fade', 'target.threat = 100 & !player.channeling(Void Torrent) & UI(s_F)'},
  {"Gift of the Naaru", "player.health <= 40 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness) "}, -- Gift of the Naaru
  {"!Gift of the Naaru", "lowest.health <= UI(sup_GotN_spin) & UI(sup_GotN_check) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)", "lowest"}, -- support Gift of the Naaru
  {"17", "player.health <= 30 & !player.buff(193223) & !player.channeling(Void Torrent)"}, --Power Word: Shield
