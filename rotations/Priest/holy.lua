@@ -147,9 +147,10 @@ local SymbolOfHope = {
 	--Holy Word: Serenity when lowest health is below 50%.
 	{'!Holy Word: Serenity', 'lowest.health < 50', 'lowest'},
 	--Flash Heal when lowest health is below 100%.
-	{'Flash Heal', 'lowest.health < 100' , 'lowest'}
+	{'Flash Heal', 'lowest.health < 100' , 'lowest'},
 	--Renew if lowest health is missing Renew and Lowest health is below or if UI value.
-	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(m_Ren) & !toggle(xDPS) & moving', 'lowest'},
+	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(m_Ren) & !toggle(xDPS) & moving', 'lowest'}
+
 }
 
 local DPS = {
