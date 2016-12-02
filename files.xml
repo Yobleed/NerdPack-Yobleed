@@ -10,5 +10,6 @@
   
   <!-- Rotations -->
   <Script file="rotations\priest\shadow.lua" />
+  <Script file="rotations\priest\shadowtest.lua"/>
   <Script file="rotations\priest\holy.lua" />
   </Ui>
