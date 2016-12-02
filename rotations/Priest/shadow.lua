@@ -100,7 +100,7 @@ local Voidform = {
    
    {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & !player.channeling(Void Torrent) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40'}, -- Meh can't make it :(
    {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 75 & !player.channeling(Void Torrent)'}, -- PI last resort
-   {"!Power Infusion", "talent(Power Infusion) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 15 & target.health > 35" },
+   {"!Power Infusion", "talent(Power Infusion) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 10 & target.health > 35" },
    {"!Power Infusion", "talent(Power Infusion) & player.buff(Voidform) & toggle(cooldowns) & !player.buff(Dispersion) & !player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & player.buff(voidform).count >= 20 & target.health <= 35" }, 
    
    {"Mindbender", {"talent(Mindbender) & !player.channeling(Void Torrent)"}}, -- CD
@@ -153,11 +153,18 @@ local ST = {
 
    {"Shadow Word: Pain", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Shadow Word: Pain).duration <= 13 & player.buff(Surrender to Madness) & lastcast(Vampiric Touch) & !player.channeling(Vampiric Touch)"}, -- SW:P refresh going into Stm
    {"!Vampiric Touch", "!player.buff(Voidform) & player.insanity = 100 & target.debuff(Vampiric Touch).duration <= 13 & player.buff(Surrender to Madness) & !lastcast(Vampiric Touch)"}, -- VT refresh going into Stm
+   
+   --Legendary Belt
+   {"Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption) & equipped(Mangaza's Madness) & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.insanity >= 70 & talent(legacy of the void)"},
+   {"Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption) & equipped(Mangaza's Madness) & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.insanity = 100 & talent(surrender to madness)"},
+   {"!Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption) & equipped(Mangaza's Madness) & !target.debuff(Shadow Word: Pain) & !target.debuff(Vampiric Touch) & player.spell(Mind Blast).charges = 3"},
+   
+   --No Legendary
+   {"!Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption) & player.channeling(Mind Flay) & !prev_off_gcd(Mind Blast) & !equipped(Mangaza's Madness)"},
+   {"Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption) & !prev_off_gcd(Mind Blast) & !equipped(Mangaza's Madness)"},
 
-   {"!Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption) & player.channeling(Mind Flay)"},
-   {"Mind Blast", "!player.buff(Voidform) & !player.channeling(Void Eruption)"},
-   {"Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)" }, -- SW:P refresh
-   {"Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3 || !target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch) " }, -- VT refresh
+   {"!Shadow Word: Pain", "!player.buff(Voidform) & target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)" }, -- SW:P refresh
+   {"!Vampiric Touch", "!player.buff(Voidform) & target.debuff(Vampiric Touch).duration < 3 || !target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch) " }, -- VT refresh
    {"Mind Sear", "toggle(AOE) & target.area(10).enemies >= UI(AoE_MS) & target.debuff(Shadow Word: Pain)"}, 
    {"Mind Flay", "player.spell(Mind Blast).cooldown > 0 & !target.area(10).enemies >= UI(AoE_MS) & target.debuff(Shadow Word: Pain) & toggle(AOE)" },
    {"Mind Flay", "player.spell(Mind Blast).cooldown > 0 & target.debuff(Shadow Word: Pain) & !toggle(AOE)"},
@@ -184,7 +191,7 @@ local inCombat = {
  -- Shadowy insight
  {"!Mindblast", {"player.buff(Shadowy Insight) & !player.channeling(Void Torrent) & !spell(Void Eruption).cooldown = 0"}}, 
  {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
- {"!Dispersion", "player.health <= UI(s_D_spin) & UI(s_D_check) & !player.buff(193223)"},
+ {'!Dispersion', 'player.health <= UI(s_D_spin) & UI(s_D_check) & !player.buff(surrender to madness)'},
  {Keybinds},
  {Trinkets, '!player.channeling(Void Torrent)'},
  {Voidform, 'player.buff(Voidform) & !player.channeling(Void Torrent)'},
