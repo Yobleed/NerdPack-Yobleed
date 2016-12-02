@@ -29,11 +29,6 @@ local GUI = {
   {type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2', default_check = false, default_spin = 30},
   {type = 'ruler'},{type = 'spacer'},
 
-  --AOE
-  {type = 'header', text = 'AoE', align = 'center'},
-  {type = 'text', text = 'When AoE is toggled on', align = 'center'},
-  {type ='spinner', text = 'Mind Sear', key = 'AoE_MS', default = 3},
-  {type = 'ruler'},{type = 'spacer'},
 
   --TRINKETS
   {type = 'header', text = 'Trinkets', align = 'center'},
@@ -156,6 +151,30 @@ local cooldowns = {
   {'!Shadowfiend', '!spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)'},
   --Shadowfiend if Void Bolt is on CD and VF stacks are above or equal to 15 and Power Infusion talent is active.
   {'!Shadowfiend', '!spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion)'},
+
+}
+
+local AOE = {
+   --Torrent on CD.
+  {'!Void Torrent'},
+  --Voidbolt on CD
+  {'!Void Eruption', 'player.buff(voidform)'},
+  --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
+  {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
+  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 6 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  --MB if channeling Mind flay or Mind Sear
+  {'!Mind Blast', 'player.channeling(Mind Flay) || player.channeling(Mind Sear)'},
+  --Mind Blast on CD.
+  {'Mind Blast', '{!player.insanity >= 70 & talent(Legacy of the Void) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {!player.insanity = 100 & talent(Surrender to Madness) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } & player.buff(voidform)'},
+  --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
+  {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
+  --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
+  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'},
+  --Mind Sear if 3 or more targets within 10yd range of target with dots up.
+  {'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
+  --Mind Flay if 2 or less targets within 10yd range of target with dots up. 
+  {'Mind Flay', 'target.area(10).enemies <= 2 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'}, 
 
 }
 
@@ -312,6 +331,7 @@ local inCombat = {
   {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
   {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"}, 
   {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"}, 
+  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent)'},
   {Moving, '!player.buff(voidform) || {talent(Surrender to Madness) & !player.buff(Surrender to Madness)}'},
 
 }
