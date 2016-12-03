@@ -38,7 +38,8 @@ local GUI = {
 
   --KEYBINDS
   {type = 'header', text = 'Keybinds', align = 'center'},
-  {type = 'text', text = 'Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+  {type = 'text', text = 'Left Shift: Mind Sear|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+  {type = 'checkbox', text = 'Mind Sear', key = 'k_MS', default = false},
   {type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', default = false},
   {type = 'checkbox', text = 'Pause', key = 'k_P', default = false},
   {type = 'ruler'},{type = 'spacer'},
@@ -72,6 +73,13 @@ local exeOnLoad = function()
   print('|cff5F2061 For Settings Right-Click the MasterToggle and go to Combat Routines Settings |r')
   print('|cff5F2061 Have a nice day!|r')
 
+  NeP.Interface:AddToggle({
+    key = 'xMind',
+    name = 'Mind Bomb AOE',
+    text = 'ON/OFF using Mind Bomb in AOE rotation',
+    icon = 'Interface\\ICONS\\Spell_shadow_mindbomb', --toggle(xMind)
+  })
+
 	
 
 end
@@ -84,6 +92,8 @@ local Trinkets = {
 }
 
 local Keybinds = {
+  --Mind Sear on target if Left shift when checked in UI.
+  {'!Mind Sear', 'keybind(lshift) & UI(k_MS)'},
   --Mass Dispel on cursor ground. Left Control when checked in UI.
   {'/cast [@cursor] !Mass Dispel', 'keybind(lcontrol) & UI(k_MD)'},
   --Pause on left alt when checked in UI.
@@ -124,7 +134,7 @@ local Insight = {
 
 local Moving = {
   --Power Word: Shield if player is moving for 1 or more and talent body and soul is active when UI checked.
-  {'Power Word: Shield', 'player.movingfor >= 1 & talent(Body and Soul) & UI(m_Body)', 'player'},
+  {'!Power Word: Shield', 'player.movingfor >= 1 & talent(Body and Soul) & UI(m_Body)', 'player'},
 
 }
 
@@ -150,7 +160,7 @@ local cooldowns = {
   --Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
   {'!Shadowfiend', '!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)'},
   --Shadowfiend if Void Bolt is on CD and VF stacks are above or equal to 15 and Power Infusion talent is active.
-  {'!Shadowfiend', '{!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion) & spell(Power Infusion).cooldown = 0} || {!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 5 & talent(Power Infusion) & !spell(Power Infusion).cooldown = 0}'},
+  {'!Shadowfiend', '{!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15z & talent(Power Infusion) & spell(Power Infusion).cooldown = 0} || {!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 5 & talent(Power Infusion) & !spell(Power Infusion).cooldown = 0}'},
 
 }
 
@@ -172,7 +182,7 @@ local AOE = {
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'},
+  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || !target.debuff(Vampiric Touch)'},
   --Mind Sear if 3 or more targets within 10yd range of target with dots up.
   {'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
   --Mind Flay if 2 or less targets within 10yd range of target with dots up. 
@@ -202,7 +212,7 @@ local AOEs2m = {
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'},
+  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || !target.debuff(Vampiric Touch)'},
   --Mind Sear if 3 or more targets within 10yd range of target with dots up.
   {'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
   --Mind Flay if 2 or less targets within 10yd range of target with dots up. 
@@ -224,14 +234,14 @@ local ST1 = {
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'}, 
+  {'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || !target.debuff(Vampiric Touch)'}, 
   --Mind Flay if Mind Blast is on cooldown
   {'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !toggle(AOE)'},
 
 }
 
 local lotv1 = {
-  {Moving},
+  {Moving, '!player.spell(Void Eruption).cooldown = 0'},
   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D_spin) & UI(dps_D_check) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
@@ -293,14 +303,14 @@ local ST2 = {
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'}, 
+  {'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || !target.debuff(Vampiric Touch)'}, 
   --Mind Flay if Mind Blast is on cooldown
   {'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & !toggle(AOE)'},
 
 }
 
 local lotv2 = {
-  {Moving},
+  {Moving, '!player.spell(Void Eruption).cooldown = 0'},
   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D_spin) & UI(dps_D_check) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
@@ -352,6 +362,7 @@ local inCombat = {
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform)'},
   -- S2M when in Xavius Dreamstate.
   {"Surrender to Madness", "player.debuff(Dream Simulacrum)"},
+  {'Mind Bomb', 'toggle(xMind) & toggle(AOE) & target.area(10).enemies >= 3'},
   {Emergency, '!player.channeling(Void Torrent)'},
   {Potions, '!player.channeling(Void Torrent)'},
   {SurMov, '!player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
@@ -373,8 +384,8 @@ local inCombat = {
 
 local outCombat = {
   {'Shadowform', '!player.buff(Shadowform)'},
-  {Keybinds},
   {Moving}, 
+  {Keybinds},
   {"%ressdead(Resurrection)"},
 
 }
