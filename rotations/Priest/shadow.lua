@@ -27,6 +27,10 @@ local GUI = {
   {type = 'text', text = 'Check and Choose Stacks', align = 'center'},
   {type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_D', default_check = false, default_spin = 35},
   {type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2', default_check = false, default_spin = 30},
+  {type = 'spacer'},
+  {type = 'text', text = '--AOE--', align = 'center'},
+  {type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_DAOE', default_check = false, default_spin = 35},
+  {type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2AOE', default_check = false, default_spin = 30},
   {type = 'ruler'},{type = 'spacer'},
 
 
@@ -165,6 +169,10 @@ local cooldowns = {
 }
 
 local AOE = {
+   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_DAOE_spin) & UI(dps_DAOE_check) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
+  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2AOE_spin) & UI(dps_D2AOE_check) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
    --Torrent on CD.
   {'!Void Torrent'},
   --Voidbolt on CD
