@@ -380,7 +380,7 @@ local outCombat = {
 }
 
 NeP.CR:Add(258, {
-    name = '|cff5F2061 [Yobleed]|r Priest - |cff5F2061Shadowtest|r', 
+    name = '|cff5F2061 [Yobleed]|r Priest - |cff5F2061Shadow|r', 
       ic = inCombat,
      ooc = outCombat,
      gui = GUI,
