@@ -178,6 +178,30 @@ local AOE = {
 
 }
 
+local AOEs2m = {
+  --Dispersion after Void Torrent.
+  {'!Dispersion', 'lastcast(Void Torrent)'},
+  --Torrent on CD.
+  {'!Void Torrent'},
+  --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
+  {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 20  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
+  --SWD if insanity is below 40%.
+  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 40 & !lastcast(Shadow Word: Death)'}, 
+  --Void Bolt on CD not interrupting casting MB.
+  {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
+  --Mind Blast on CD if VB is on CD.
+  {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
+  --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
+  {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
+  --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
+  {'!Vampiric Touch', 'target.debuff(Vampiric Touch).duration <= 3 || !target.debuff(Vampiric Touch)'}, 
+  --Mind Sear if 3 or more targets within 10yd range of target with dots up.
+  {'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
+  --Mind Flay if 2 or less targets within 10yd range of target with dots up. 
+  {'Mind Flay', 'target.area(10).enemies <= 2 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'}, 
+
+}
+
 local ST1 = {
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
   {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
@@ -223,6 +247,7 @@ local lotv1 = {
 }
 
 local s2m1 = {
+  --Dispersion after Void Torrent.
   {'!Dispersion', 'lastcast(Void Torrent)'},
   --Torrent on CD.
   {'!Void Torrent'},
@@ -290,6 +315,7 @@ local lotv2 = {
 }
 
 local s2m2 = {
+  --Dispersion after Void Torrent.
   {'!Dispersion', 'lastcast(Void Torrent)'},
   --Torrent on CD.
   {'!Void Torrent'},
@@ -330,8 +356,9 @@ local inCombat = {
   {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
   {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
   {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"}, 
-  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"}, 
-  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent)'},
+  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"},
+  {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
+  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
   {Moving, '!player.buff(voidform) || {talent(Surrender to Madness) & !player.buff(Surrender to Madness)}'},
 
 }
