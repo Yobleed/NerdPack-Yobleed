@@ -251,7 +251,7 @@ local lotv1 = {
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 65%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 65'},
   --Void Bolt on CD not interrupting casting MB.
-  {'!Void Eruption', '!player.channeling(Mind Blast) & '}, 
+  {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
   --Mind Blast on CD if VB is on CD.
   {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
