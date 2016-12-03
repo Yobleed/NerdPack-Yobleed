@@ -150,7 +150,7 @@ local cooldowns = {
   --Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
   {'!Shadowfiend', '!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)'},
   --Shadowfiend if Void Bolt is on CD and VF stacks are above or equal to 15 and Power Infusion talent is active.
-  {'!Shadowfiend', '!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion)'},
+  {'!Shadowfiend', '{!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion) & spell(Power Infusion).cooldown = 0} || {!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 5 & talent(Power Infusion) & !spell(Power Infusion).cooldown = 0}'},
 
 }
 
