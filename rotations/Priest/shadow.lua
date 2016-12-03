@@ -29,8 +29,8 @@ local GUI = {
   {type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2', default_check = false, default_spin = 30},
   {type = 'spacer'},
   {type = 'text', text = '--AOE--', align = 'center'},
-  {type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_DAOE', default_check = false, default_spin = 35},
-  {type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2AOE', default_check = false, default_spin = 30},
+  {type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_DAOE', default_check = false, default_spin = 40},
+  {type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2AOE', default_check = false, default_spin = 37},
   {type = 'ruler'},{type = 'spacer'},
 
 
