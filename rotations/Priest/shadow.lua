@@ -148,9 +148,9 @@ local cooldowns = {
   --Mind Bender if talent is active and not in S2M if VF stacks are above 5.
   {'!Mindbender', 'talent(Mindbender) & !player.buff(Surrender to Madness) & player.buff(voidform).count > 5'},
   --Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
-  {'!Shadowfiend', '!spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)'},
+  {'!Shadowfiend', '!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)'},
   --Shadowfiend if Void Bolt is on CD and VF stacks are above or equal to 15 and Power Infusion talent is active.
-  {'!Shadowfiend', '!spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion)'},
+  {'!Shadowfiend', '!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion)'},
 
 }
 
