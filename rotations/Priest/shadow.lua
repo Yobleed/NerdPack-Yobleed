@@ -366,8 +366,17 @@ local inCombat = {
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform)'},
   -- S2M when in Xavius Dreamstate.
   {"Surrender to Madness", "player.debuff(Dream Simulacrum)"},
+	{'Mind Bomb', 'toggle(xMind) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
   {Emergency, '!player.channeling(Void Torrent)'},
-  {cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
+	{Potions, '!player.channeling(Void Torrent)'},
+	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
+	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
+	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
+	{Insight, 'player.buff(Shadowy Insight) & !player.channeling(Void Torrent)'},
+	{Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
+	{Keybinds},
+	{Trinkets, '!player.channeling(Void Torrent)'},
+	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
   {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
@@ -376,16 +385,6 @@ local inCombat = {
   {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"},
   {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
   {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
-
-	{Insight, 'player.buff(Shadowy Insight) & !player.channeling(Void Torrent)'},
-	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
-	{Potions, '!player.channeling(Void Torrent)'},
-	{Trinkets, '!player.channeling(Void Torrent)'},
-	{Keybinds},
-	{Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
-	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
-	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
-	{'Mind Bomb', 'toggle(xMind) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
 }
 
 local outCombat = {
