@@ -83,7 +83,7 @@ local Survival = {
 	-- Fade usage if enabled in UI.
 	{'Fade', 'target.threat = 100 & UI(s_F)'},
 	-- Power Word: Shield usage if enabled in UI.
-	{'Power Word: Shield', 'player.health <= UI(s_PWS_spin) & UI(s_PWS_check)'},
+	{'Power Word: Shield', 'player.health <= UI(s_PWS_spin) & UI(s_PWS_check)', 'player'},
 	-- Dispersion usage if enabled in UI.
 	{'!Dispersion', 'player.health <= UI(s_D_spin) & UI(s_D_check)'},
 	-- Gift of the Naaru usage if enabled in UI.
