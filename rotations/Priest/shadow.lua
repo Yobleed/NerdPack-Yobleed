@@ -65,8 +65,7 @@ local exeOnLoad = function()
 	print('|cff6c00ff --- |rPriest: |cff6c00ffSHADOW|r')
 	print('|cff6c00ff --- |rRecommended Talents: 1/1 - 2/2 - 3/1 - 4/2 - 5/3 - 6/3 - 7/3')
 	print('|cff6c00ff --- |rRecommended Talents: 1/1 - 2/2 - 3/1 - 4/2 - 5/2 - 6/1 - 7/3')
-  print('|cff6c00ff --- |rRecommended Talents Legendary: 1/1 - 2/2 - 3/1 - 4/2 - 5/3 - 6/1 - 7/3 or 7/1')
-
+	print('|cff6c00ff --- |cffff6800Mangaza\'s Madness |rTalents: 1/1 - 2/2 - 3/1 - 4/2 - 5/3 - 6/1 - 7/3 or 7/1')
 	print('|cff6c00ff ----------------------------------------------------------------------|r')
 	print('|cffff0000 Configuration: |rRight-click the MasterToggle and go to Combat Routines Settings|r')
 
