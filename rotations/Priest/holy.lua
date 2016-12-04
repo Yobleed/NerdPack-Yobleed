@@ -217,7 +217,7 @@ local Lowest = {
 	--Renew if lowest health is missing Renew and is below or if UI value.
 	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(l_Ren)', 'lowest'},
 	--Heal if Lowest Healt is below or if UI value.
-	{'Heal', 'lowest.health <= UI(l_H)', 'lowest'}
+	{'Heal', 'lowest.health <= UI(l_H) & !lowest.health <= UI(l_FH)', 'lowest'}
 }
 
 local Moving = {
@@ -262,7 +262,7 @@ local inCombat = {
 	{SymbolOfHope, 'player.buff(Symbol of Hope) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	--Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
-	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health < 60', 'player'},
+	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= UI(l_FH)', 'player'},
 	--Dispell All if checked
 	--{'!Purify', 'canDispell.health < 100 & !player.channeling(Divine Hymn) & UI(Dispel)', 'canDispell'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
