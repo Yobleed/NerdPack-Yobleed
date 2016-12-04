@@ -115,7 +115,7 @@ local Keybinds = {
 
 local Movement = {
 	-- Body and Soul usage if enabled in UI.
-	{'!Power Word: Shield', 'talent(2,2) & player.movingfor >= 1 & UI(m_Body)', 'player'},
+	{'!Power Word: Shield', 'talent(Body and Soul) & player.movingfor >= 1 & UI(m_Body)', 'player'},
 }
 
 local Support = {
