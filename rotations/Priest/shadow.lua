@@ -1,146 +1,144 @@
 local GUI = { 
+	-- GUI Header 
+{
+	type = 'texture',
+	texture = 'Interface\\AddOns\\Nerdpack-Yobleed\\media\\shadow.blp',
+	width = 512,
+	height = 256,
+	offset = 90,
+	y = 42,
+	center = true
+},
 
-            
-        --[[ Header Texture ]]
-		{ 
-			type = "texture",
-			texture = "Interface\\AddOns\\Nerdpack-Yobleed\\media\\shadow.blp",
-			width = 512, 
-			height = 256, 
-			offset = 90, 
-			y = 42, 
-			center = true 
-		},
+	-- GUI Survival & Potions
+	{type = 'header', text = 'Survival & Potions', align = 'center'},
+	{type = 'checkbox', text = 'Fade', key = 's_F', default= false},
+	{type = 'checkspin', text = 'Power Word: Shield', key = 's_PWS', default_check = false, default_spin = 40},
+	{type = 'checkspin', text = 'Dispersion', key = 's_D', default_check = false, default_spin = 20},
+	{type = 'checkspin', text = 'Gift of the Naaru', key = 's_GotN', default_check = false, default_spin = 40},
+	{type = 'checkspin', text = 'Healthstone', key = 's_HS', default_check = false, default_spin = 20},
+	{type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', default_check = false, default_spin = 20},
+	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', default= false},
+	{type = 'ruler'}, {type = 'spacer'},
 
-  --Survival/Potions
-  {type = 'header', text = 'Survival/Potions', align = 'center'},
-  {type = 'checkbox', text = 'Fade', key = 's_F', default= false},
-  {type = 'checkspin', text = 'Dispersion Usage', key = 's_D', default_check = false, default_spin = 20},
-  {type = 'checkspin', text = 'Healthstone', key = 's_HS', default_check = false, default_spin = 20},
-  {type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', default_check = false, default_spin = 20},
-  {type = 'checkbox', text = 'Hero Potion of Prolonged Power', key = 's_PP', default= false},
-  {type = 'ruler'},{type = 'spacer'},
+	-- GUI DPS Cooldown
+	{type = 'header', text = 'DPS Cooldown', align = 'center'},
+	{type = 'text', text = 'No Surrender to Madness Active', align = 'center'},
+	{type = 'text', text = 'Check and Choose Stacks', align = 'center'},
+	{type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_D', default_check = false, default_spin = 35},
+	{type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2', default_check = false, default_spin = 30},
+	{type = 'spacer'},
+	{type = 'text', text = '--AOE--', align = 'center'},
+	{type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_DAOE', default_check = false, default_spin = 40},
+	{type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2AOE', default_check = false, default_spin = 37},
+	{type = 'ruler'}, {type = 'spacer'},
 
-  --DPS Cooldown
-  {type = 'header', text = 'DPS cooldown', align = 'center'},
-  {type = 'text', text = 'No Surrender to Madness Active', align = 'center'},
-  {type = 'text', text = 'Check and Choose Stacks', align = 'center'},
-  {type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_D', default_check = false, default_spin = 35},
-  {type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2', default_check = false, default_spin = 30},
-  {type = 'spacer'},
-  {type = 'text', text = '--AOE--', align = 'center'},
-  {type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_DAOE', default_check = false, default_spin = 40},
-  {type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2AOE', default_check = false, default_spin = 37},
-  {type = 'ruler'},{type = 'spacer'},
+	-- GUI Trinkets
+	{type = 'header', text = 'Trinkets', align = 'center'},
+	{type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
+	{type = 'checkbox', text = 'Bottom Trinket', key = 'Trinket_2', default = false},
+	{type = 'ruler'}, {type = 'spacer'},
 
+	-- GUI Keybinds
+	{type = 'header', text = 'Keybinds', align = 'center'},
+	{type = 'text', text = 'Left Shift: Mind Sear|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+	{type = 'checkbox', text = 'Mind Sear', key = 'k_MS', default = false},
+	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', default = false},
+	{type = 'checkbox', text = 'Pause', key = 'k_P', default = false},
+	{type = 'ruler'}, {type = 'spacer'},
 
-  --TRINKETS
-  {type = 'header', text = 'Trinkets', align = 'center'},
-  {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
-  {type = 'checkbox', text = 'Bottom Trinket', key = 'Trinket_2', default = false},
-  {type = 'ruler'},{type = 'spacer'},
+	-- GUI Moving
+	{type = 'header', text = 'Movement', align = 'center'},
+	{type = 'checkbox', text = 'Body and Soul', key = 'm_Body', default = false},
+	{type = 'ruler'}, {type = 'spacer'},
 
-  --KEYBINDS
-  {type = 'header', text = 'Keybinds', align = 'center'},
-  {type = 'text', text = 'Left Shift: Mind Sear|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
-  {type = 'checkbox', text = 'Mind Sear', key = 'k_MS', default = false},
-  {type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', default = false},
-  {type = 'checkbox', text = 'Pause', key = 'k_P', default = false},
-  {type = 'ruler'},{type = 'spacer'},
-
-  --MOVING
-  {type = 'header', text = 'Movement', align = 'center'},
-  {type = 'checkbox', text = 'Body and Soul', key = 'm_Body', default = false},
-  {type = 'ruler'},{type = 'spacer'},
-
-  --SUPPORT
-  {type = 'header', text = 'Support', align = 'center'},
-  {type = 'text', text = 'Protect your Allies like a good guildie ;)', align = 'center'},
-  {type = 'checkspin', text = 'Gift of the Naaru', key = 'sup_GotN', default_check = false, default_spin = 20},
-  {type = 'checkspin', text = 'Power Word: Shield', key = 'sup_PWS', default_check = false, default_spin = 20},
-
-
-
-
-  
-		
+	-- GUI Party Support
+	{type = 'header', text = 'Party Support', align = 'center'},
+	{type = 'text', text = 'Attempt to save members of your party.', align = 'center'},
+	{type = 'checkspin', text = 'Gift of the Naaru', key = 'sup_GotN', default_check = false, default_spin = 20},
+	{type = 'checkspin', text = 'Power Word: Shield', key = 'sup_PWS', default_check = false, default_spin = 20},
 }
 
 local exeOnLoad = function()
-	
-     ---------CREDITS GO TO XEER-----------
-	print('|cff5F2061 ----------------------------------------------------------------------|r')
-	print('|cff5F2061 --- |rPRIEST |cff5F2061Shadowtest |r')
-	print('|cff5F2061 --- |rRecommended Talents1: 1/1 - 2/2 - 3/1 - 4/2 - 5/3 - 6/3 - 7/3')
-	print('|cff5F2061 --- |rRecommended Talents2: 1/1 - 2/2 - 3/1 - 4/2 - 5/2 - 6/1 - 7/3')
-	print('|cff5F2061 ----------------------------------------------------------------------|r')
-  print('|cff5F2061 For Settings Right-Click the MasterToggle and go to Combat Routines Settings |r')
-  print('|cff5F2061 Have a nice day!|r')
+	-- Rotation loaded message.
+	print('|cff6c00ff ----------------------------------------------------------------------|r')
+	print('|cff6c00ff --- |rPriest: |cff6c00ffSHADOW|r')
+	print('|cff6c00ff --- |rRecommended Talents: 1/1 - 2/2 - 3/1 - 4/2 - 5/3 - 6/3 - 7/3')
+	print('|cff6c00ff --- |rRecommended Talents: 1/1 - 2/2 - 3/1 - 4/2 - 5/2 - 6/1 - 7/3')
+	print('|cff6c00ff ----------------------------------------------------------------------|r')
+	print('|cffff0000 Configuration: |rRight-click the MasterToggle and go to Combat Routines Settings|r')
 
-  NeP.Interface:AddToggle({
-    key = 'xMind',
-    name = 'Mind Bomb AOE',
-    text = 'ON/OFF using Mind Bomb in AOE rotation',
-    icon = 'Interface\\ICONS\\Spell_shadow_mindbomb', --toggle(xMind)
-  })
-
-	
-
+	NeP.Interface:AddToggle({
+		-- Mind Bomb toggle only active with AoE.
+		key = 'xMind',
+		name = 'Mind Bomb AoE',
+		text = 'Enable/Disable: Mind Bomb in AOE rotation.',
+		icon = 'Interface\\ICONS\\Spell_shadow_mindbomb',
+	})
 end
 
-local Trinkets = {
-  --Top Trinket usage if UI enables it.
-  {'#trinket1', 'UI(trinket_1)'},
-  --Bottom Trinket usage if UI enables it.
-  {'#trinket2', 'UI(trinket_2)'}
-}
-
-local Keybinds = {
-  --Mind Sear on target if Left shift when checked in UI.
-  {'!Mind Sear', 'keybind(lshift) & UI(k_MS)'},
-  --Mass Dispel on cursor ground. Left Control when checked in UI.
-  {'/cast [@cursor] !Mass Dispel', 'keybind(lcontrol) & UI(k_MD)'},
-  --Pause on left alt when checked in UI.
-  {'%pause', 'keybind(lalt)& UI(k_P)'}
+local Survival = {
+	-- Fade usage if enabled in UI.
+	{'Fade', 'target.threat = 100 & UI(s_F)'},
+	-- Power Word: Shield usage if enabled in UI.
+	{'Power Word: Shield', 'player.health <= UI(s_PWS_spin) & UI(s_PWS_check)'},
+	-- Dispersion usage if enabled in UI.
+	{'!Dispersion', 'player.health <= UI(s_D_spin) & UI(s_D_check)'},
+	-- Gift of the Naaru usage if enabled in UI.
+	{'Gift of the Naaru', 'player.health <= UI(s_GotN_spin) & UI(s_GotN_check)'},
+	-- Healthstone usage if enabled in UI.
+	{'#Healthstone', 'player.health <= UI(s_HS_spin) & UI(s_HS_check)'},
+	-- Ancient Healing Potion usage if enabled in UI.
+	{'#Ancient Healing Potion', 'player.health <= UI(s_AHP_spin) & UI(s_AHP_check)'},
 }
 
 local Potions = {
-  --Healthstone when player below or if UI value and checked when not casting Void Torrent.
-  {"#Healthstone", "player.health <= UI(s_HS_spin) & UI(s_HS_check) & !player.channeling(Void Torrent)"},
-  --Ancient Healing Potion when player below or if UI value and checked when not casting Void Torrent.
-  {"#Ancient Healing Potion", "player.health <= UI(s_AHP_spin) & UI(s_AHP_check) & !player.channeling(Void Torrent)"},
-  --Potion of Prolonged Power if player has hero/bloodlust and checked in UI with no Potion of Prolonged Power buff. 
-  {"#Potion of Prolonged Power", "player.hashero & !player.buff(Potion of Prolonged Power) & !player.channeling(Void Torrent) & UI(s_PP)"},
-
+	-- Potion of Prolonged Power usage if enabled in UI.
+	{'#Potion of Prolonged Power', 'player.hashero & !player.buff(Potion of Prolonged Power) & UI(s_PP)'},
 }
 
-local SurMov = {
-  --Dispersion when Player health is below or if UI value.
-  {'!Dispersion', 'player.health <= UI(s_D_spin) & UI(s_D_check)'},
-  --Fade when you have threat on target and is checked in UI.
-  {'Fade', 'target.threat = 100 & UI(s_F)'},
-  --Gift of the Naaru when player health below or 40% Health.
-  {'Gift of the Naaru', 'player.health <= 40'},
-  --Gift of the Naaru support if Lowest Health is below or equal to UI value and checked.
-  {'Gift of the Naaru', 'lowest.health <= UI(sup_GotN_spin) & UI(sup_GotN_check)', 'lowest'},
-  --Power Word: Shield if player health is below or 30% Health.
-  {'Power Word: Shield', 'player.health <= 30'},
-  --Power Word: Shield support if lowest Health is below or equal to UI value and checked.
-  {'Power Word: Shield', 'lowest.health <= UI(sup_PWS_spin) & UI(sup_PWS_check)', 'lowest'},
+local Trinkets = {
+	-- Top Trinket usage if enabled in UI.
+	{'#trinket1', 'UI(trinket_1)'},
+	-- Bottom Trinket usage if enabled in UI.
+	{'#trinket2', 'UI(trinket_2)'},
+}
 
+local Keybinds = {
+	-- Mind Sear on target if Left-Shift if enabled in UI.
+	{'!Mind Sear', 'keybind(lshift) & UI(k_MS)'},
+	-- Mass Dispel at cursor on Left-Control if enabled in UI.
+	{'/cast [@cursor] !Mass Dispel', 'keybind(lcontrol) & UI(k_MD)'},
+	-- Pause on Left-Alt if enabled in UI.
+	{'%pause', 'keybind(lalt) & UI(k_P)'},
+}
+
+local Movement = {
+	-- Body and Soul usage if enabled in UI.
+	{'!Power Word: Shield', 'talent(Body and Soul) & player.movingfor >= 1 & UI(m_Body)', 'player'},
+}
+
+local Support = {
+	-- Gift of the Naaru usage if enabled in UI.
+	{'!Gift of the Naaru', 'lowest.health <= UI(sup_GotN_spin) & UI(sup_GotN_check)', 'lowest'},
+	-- Power Word: Shield usage if enabled in UI.
+	{'!Power Word: Shield', 'lowest.health <= UI(sup_PWS_spin) & UI(sup_PWS_check)', 'lowest'},
+}
+
+local Interrupts = {
+	-- Silence selected target.
+	{'Silence'},
+	-- Arcane Torrent if within 8 yard range of selected target when Silence is on cooldown.
+	{'Arcane Torrent', 'target.range <= 8 & spell(Silence).cooldown > gcd & !lastgcd(Silence)'},
 }
 
 local Insight = { 
-  --Mind Blast on CD when Voidbolt is on CD.
-  {'!Mindblast', '!spell(Void Eruption).cooldown = 0'}, 
-
+	-- Mind Blast when buffed with Shadowy Insight only when Voidbolt is on CD.
+	{'!Mindblast', '!spell(Void Eruption).cooldown = 0'}, 
 }
 
-local Moving = {
-  --Power Word: Shield if player is moving for 1 or more and talent body and soul is active when UI checked.
-  {'!Power Word: Shield', 'player.movingfor >= 1 & talent(Body and Soul) & UI(m_Body)', 'player'},
 
-}
+
 
 local Emergency = {
   --Dispersion when SWD charges are 0 and VF stacks are 95 or higher and insanity is below or equal to 50%.
@@ -368,15 +366,8 @@ local inCombat = {
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform)'},
   -- S2M when in Xavius Dreamstate.
   {"Surrender to Madness", "player.debuff(Dream Simulacrum)"},
-  {'Mind Bomb', 'toggle(xMind) & toggle(AOE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
   {Emergency, '!player.channeling(Void Torrent)'},
-  {Potions, '!player.channeling(Void Torrent)'},
-  {SurMov, '!player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
   {cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
-  {Insight, 'player.buff(Shadowy Insight) & !player.channeling(Void Torrent)'},
-  {Moving, '!player.buff(voidform) || {player.buff(voidform) & !player.buff(Surrender to Madness)}'},
-  {Keybinds},
-  {Trinkets, '!player.channeling(Void Torrent)'},
   {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
@@ -386,25 +377,28 @@ local inCombat = {
   {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
   {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
 
+	{Insight, 'player.buff(Shadowy Insight) & !player.channeling(Void Torrent)'},
+	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
+	{Potions, '!player.channeling(Void Torrent)'},
+	{Trinkets, '!player.channeling(Void Torrent)'},
+	{Keybinds},
+	{Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
+	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'}
+	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
+	{'Mind Bomb', 'toggle(xMind) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
 }
 
 local outCombat = {
-  {'Shadowform', '!player.buff(Shadowform)'},
-  {Moving}, 
-  {Keybinds},
-  {"%ressdead(Resurrection)"},
-
+	{'Shadowform', '!player.buff(Shadowform)'},
+	{Keybinds},
+	{Movement},
+	{'%ressdead(Resurrection)'},
 }
 
 NeP.CR:Add(258, {
-    name = '|cff5F2061 [Yobleed]|r Priest - |cff5F2061Shadow|r', 
-      ic = inCombat,
-     ooc = outCombat,
-     gui = GUI,
-    load = exeOnLoad
+	name = '|cff6c00ff [Yobleed]|r Priest - |cff6c00ffShadow|r',
+	ic = inCombat,
+	ooc = outCombat,
+	gui = GUI,
+	load = exeOnLoad
 })
-
-
---NOTES:
- --equipped('item_name') or equipped (itemID)
- --'advanced' --advanced unlocker condition
