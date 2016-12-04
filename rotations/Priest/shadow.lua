@@ -371,7 +371,7 @@ local inCombat = {
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
 	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
-	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
+  {cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
 	{Insight, 'player.buff(Shadowy Insight) & !player.channeling(Void Torrent)'},
 	{Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
 	{Keybinds},
@@ -389,8 +389,8 @@ local inCombat = {
 
 local outCombat = {
 	{'Shadowform', '!player.buff(Shadowform)'},
-	{Keybinds},
 	{Movement},
+	{Keybinds},
 	{'%ressdead(Resurrection)'},
 }
 
