@@ -383,7 +383,7 @@ local inCombat = {
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Keybinds},
 	{Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
-	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'}
+	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
 	{'Mind Bomb', 'toggle(xMind) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
 }
