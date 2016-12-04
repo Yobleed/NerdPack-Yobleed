@@ -128,9 +128,9 @@ local Support = {
 
 local Interrupts = {
 	-- Silence selected target.
-	{'Silence'},
+	{'!Silence'},
 	-- Arcane Torrent if within 8 yard range of selected target when Silence is on cooldown.
-	{'Arcane Torrent', 'target.range <= 8 & spell(Silence).cooldown > gcd & !lastgcd(Silence)'},
+	{'!Arcane Torrent', 'target.range <= 8 & spell(Silence).cooldown > gcd & !lastgcd(Silence)'},
 }
 
 local Insight = { 
