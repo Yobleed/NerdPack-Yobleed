@@ -171,6 +171,10 @@ local AOE = {
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_DAOE_spin) & UI(dps_DAOE_check) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2AOE_spin) & UI(dps_D2AOE_check) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
+  --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health and if surrounded by 2 or less enemies.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D_spin) & UI(dps_D_check) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35 & target.area(10).enemies <= 2'},
+  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health and if surrounded by 2 or less enemies.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2_spin) & UI(dps_D2_check) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35 & target.area(10).enemies <= 2'},
    --Torrent on CD.
   {'!Void Torrent'},
   --Voidbolt on CD
@@ -371,7 +375,7 @@ local inCombat = {
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
 	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
-  {cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
+	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
 	{Insight, 'player.buff(Shadowy Insight) & !player.channeling(Void Torrent)'},
 	{Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
 	{Keybinds},
@@ -389,8 +393,8 @@ local inCombat = {
 
 local outCombat = {
 	{'Shadowform', '!player.buff(Shadowform)'},
-	{Movement},
 	{Keybinds},
+	{Movement},
 	{'%ressdead(Resurrection)'},
 }
 
