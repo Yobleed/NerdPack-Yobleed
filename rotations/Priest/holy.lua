@@ -53,7 +53,15 @@ local GUI = {
 	{type = 'text', text = 'Check to enable extra DPS', align = 'center'},
 	{type = 'checkbox', text = 'Holy Word: Chastise', key = 'd_HWC', default = false},
 	{type = 'checkbox', text = 'Holy Fire', key = 'd_HF', default = false},
-	 {type = 'ruler'},{type = 'spacer'},
+	{type = 'ruler'},{type = 'spacer'},
+
+	--Full DPS
+	{type = 'header', text = 'Full DPS', align = 'center'},
+	{type = 'text', text = 'Player health values', align = 'center'},
+	{type = 'spinner', text = 'Gift of the Naaru', key = 'full_Gift', default = 20},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 'full_HWSE', default = 40},
+	{type = 'spinner', text = 'Flash Heal', key = 'full_FH', default = 50},
+	{type = 'ruler'},{type = 'spacer'},
 
 	--TANK
 	{type = 'header', text = 'Tank', align = 'center'},
@@ -164,11 +172,11 @@ local DPS = {
 
 local FullDPS = {
     --Gift of the Naaru if player health is below or if UI value.
-	{'Gift of the Naaru', 'player.health <= UI(p_Gift)', 'player'},
+	{'Gift of the Naaru', 'player.health <= UI(full_Gift)', 'player'},
 	--Holy Word: Serenity if player health is below or if UI value.
-	{'!Holy Word: Serenity', 'player.health <= UI(p_HWSE)', 'player'},
+	{'!Holy Word: Serenity', 'player.health <= UI(full_HWSE)', 'player'},
 	--Flash Heal if player health is below or if UI value.
-	{'Flash Heal', 'player.health <= UI(p_FH)', 'player'},
+	{'Flash Heal', 'player.health <= UI(full_FH)', 'player'},
     --Holy Word: Chastise on cooldown if not healing when checked in UI.
 	{'Holy Word: Chastise', nil, 'target'},
 	--Holy Fire on cooldown if not healing when checked in UI.
