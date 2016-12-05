@@ -178,7 +178,7 @@ local FullDPS = {
 	--Flash Heal if player health is below or if UI value.
 	{'Flash Heal', 'player.health <= UI(full_FH)', 'player'},
     --Holy Word: Chastise on cooldown if not healing when checked in UI.
-	{'Holy Word: Chastise', nil, 'target'},
+	{'Holy Word: Chastise', 'target.range <= 30', 'target'},
 	--Holy Fire on cooldown if not healing when checked in UI.
 	{'Holy Fire', nil, 'target'},
 	--Holy Nova if 4 or more enemies within 10yds.
