@@ -271,7 +271,7 @@ local inCombat = {
 	--Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
 	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= UI(l_FH)', 'player'},
 	--Dispell All if checked
-	{'!Purify', 'canDispell(Purify).health <= 100 & !player.channeling(Divine Hymn) & UI(Dispel)', 'canDispell(Purify)'},
+	{'!Purify', 'CanDispell(Purify).health <= 100 & !player.channeling(Divine Hymn) & UI(Dispel)', 'CanDispell(Purify)'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{{
 		{Tank, 'tank.health < 100 & !toggle(xDPS)'},
