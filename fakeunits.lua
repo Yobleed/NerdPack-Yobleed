@@ -3,7 +3,7 @@ local LibDispellable = LibStub('LibDispellable-1.0')
 NeP.FakeUnits:Add('canDispell', function(spell)
     local tempTable = {}
     for _, Obj in pairs(NeP.OM:GetRoster()) do
-      if LibDispellable:CanDispelWith(Obj.key, GetSpellID('Purify')) then
+      if LibDispellable:CanDispelWith(Obj.key, 527) then
         tempTable[#tempTable+1] = {
                 key = Obj.key,
                 health = Obj.health
