@@ -21,16 +21,17 @@ local GUI = {
 	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
-	-- GUI DPS Cooldown
-	{type = 'header', text = 'DPS Cooldown', align = 'center'},
-	{type = 'text', text = 'No Surrender to Madness Active', align = 'center'},
-	{type = 'text', text = 'Check and Choose Stacks', align = 'center'},
-	{type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_D', default_check = false, default_spin = 35},
-	{type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2', default_check = false, default_spin = 30},
+	-- GUI Dispersion DPS Cooldown
+	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
+	{type = 'text', text = 'No S2M Active', align = 'center'},
+	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'dps_D', default= false},
+	{type = 'text', text = 'Choose Stacks', align = 'center'},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', default = 35},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', default = 30},
 	{type = 'spacer'},
 	{type = 'text', text = '--AOE--', align = 'center'},
-	{type = 'checkspin', text = 'Dispersion: Target <= 35%', key = 'dps_DAOE', default_check = false, default_spin = 40},
-	{type = 'checkspin', text = 'Dispersion: Target > 35%', key = 'dps_D2AOE', default_check = false, default_spin = 37},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_DAOEspin', align = 'left', default = 40},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2AOEspin', align = 'left', default = 37},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Trinkets
@@ -84,7 +85,7 @@ local Survival = {
 	-- Power Word: Shield usage if enabled in UI.
 	{'Power Word: Shield', 'player.health <= UI(s_PWS_spin) & UI(s_PWS_check)', 'player'},
 	-- Dispersion usage if enabled in UI.
-	{'!Dispersion', 'player.health <= UI(s_D_spin) & UI(s_D_check)'},
+	{'&Dispersion', 'player.health <= UI(s_D_spin) & UI(s_D_check)'},
 	-- Gift of the Naaru usage if enabled in UI.
 	{'Gift of the Naaru', 'player.health <= UI(s_GotN_spin) & UI(s_GotN_check)'},
 	-- Healthstone usage if enabled in UI.
@@ -143,7 +144,7 @@ local Insight = {
 
 local Emergency = {
   --Dispersion when SWD charges are 0 and VF stacks are 95 or higher and insanity is below or equal to 50%.
-  {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
+  {'&Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
   --Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
   {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 50'},
   --Power Infusion if talent active and VF stacks are 75 or higher.
@@ -169,13 +170,13 @@ local cooldowns = {
 
 local AOE = {
    --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_DAOE_spin) & UI(dps_DAOE_check) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_DAOEspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2AOE_spin) & UI(dps_D2AOE_check) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2AOEspin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health and if surrounded by 2 or less enemies.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D_spin) & UI(dps_D_check) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35 & target.area(10).enemies <= 2'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35 & target.area(10).enemies <= 2'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health and if surrounded by 2 or less enemies.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2_spin) & UI(dps_D2_check) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35 & target.area(10).enemies <= 2'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35 & target.area(10).enemies <= 2'},
    --Torrent on CD.
   {'!Void Torrent'},
   --Voidbolt on CD
@@ -252,10 +253,10 @@ local ST1 = {
 }
 
 local lotv1 = {
-  --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D_spin) & UI(dps_D_check) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
-  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2_spin) & UI(dps_D2_check) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
+   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health and if surrounded by 2 or less enemies.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35 & target.area(10).enemies <= 2'},
+  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health and if surrounded by 2 or less enemies.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35 & target.area(10).enemies <= 2'},
   --Torrent on CD.
   {'!Void Torrent'},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 65%.
@@ -276,7 +277,7 @@ local lotv1 = {
 
 local s2m1 = {
   --Dispersion after Void Torrent.
-  {'!Dispersion', 'lastcast(Void Torrent)'},
+  {'&Dispersion', 'lastcast(Void Torrent)'},
   --Torrent on CD.
   {'!Void Torrent'},
   --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
@@ -320,10 +321,10 @@ local ST2 = {
 }
 
 local lotv2 = {
-  --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D_spin) & UI(dps_D_check) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
+   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2_spin) & UI(dps_D2_check) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
   --Torrent on CD.
   {'!Void Torrent'},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 65%.
