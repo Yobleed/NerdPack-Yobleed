@@ -89,15 +89,16 @@ local Survival = {
 	{'!Dispersion', 'player.health <= UI(s_Dspin) & UI(s_D)'},
 	-- Gift of the Naaru usage if enabled in UI.
 	{'Gift of the Naaru', 'player.health <= UI(s_GotN_spin) & UI(s_GotN_check)'},
-	-- Healthstone usage if enabled in UI.
-	{'#Healthstone', 'player.health <= UI(s_HS_spin) & UI(s_HS_check)'},
-	-- Ancient Healing Potion usage if enabled in UI.
-	{'#Ancient Healing Potion', 'player.health <= UI(s_AHP_spin) & UI(s_AHP_check)'},
+
 }
 
 local Potions = {
 	-- Potion of Prolonged Power usage if enabled in UI.
 	{'#Potion of Prolonged Power', 'player.hashero & !player.buff(Potion of Prolonged Power) & UI(s_PP)'},
+	-- Healthstone usage if enabled in UI.
+	{'#Healthstone', 'player.health <= UI(s_HS_spin) & UI(s_HS_check)'},
+	-- Ancient Healing Potion usage if enabled in UI.
+	{'#Ancient Healing Potion', 'player.health <= UI(s_AHP_spin) & UI(s_AHP_check)'},
 }
 
 local Trinkets = {
@@ -204,8 +205,8 @@ local AOE = {
 }
 
 local AOEs2m = {
-  --Dispersion after Void Torrent.
-  {'!Dispersion', 'lastcast(Void Torrent)'},
+  --Dispersion after Void Torrent and Void Bolt
+  {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10'},
   --Torrent on CD.
   {'!Void Torrent'},
    --Voidbolt on CD
