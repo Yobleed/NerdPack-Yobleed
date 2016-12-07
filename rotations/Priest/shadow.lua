@@ -22,6 +22,14 @@ local GUI = {
 	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
+	--Before Pull
+	{type = 'header', text = 'Pull Timer', align = 'center'},
+	{type = 'text', text = 'Before Pull. Dont use yet', align = 'center'},
+	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_PPull', default= false},
+	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', default= false},
+	{type = 'ruler'}, {type = 'spacer'},
+
+
 	-- GUI Dispersion DPS Cooldown
 	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
 	{type = 'text', text = 'No S2M Active', align = 'center'},
@@ -391,6 +399,10 @@ local outCombat = {
 	{'Shadowform', '!player.buff(Shadowform)'},
 	{Keybinds},
 	{Movement},
+	-- Mind Blast before Pull.
+	{'Mind Blast', 'pull_timer < 1.2 & UI(pull_MB)'},
+	-- Potion of Prolonged Power usage before pull if enabled in UI.
+    {'#Potion of Prolonged Power', 'pull_timer < 2 & !player.buff(Potion of Prolonged Power) & UI(s_PPull)'},
 	{'%ressdead(Resurrection)'},
 }
 
