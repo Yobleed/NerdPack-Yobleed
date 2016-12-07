@@ -145,7 +145,7 @@ local Insight = {
 
 local Emergency = {
   --Dispersion when SWD charges are 0 and VF stacks are 95 or higher and insanity is below or equal to 50%.
-  {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
+  {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 99 & player.insanity <= 35'},
   --Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
   {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 50'},
   --Power Infusion if talent active and VF stacks are 75 or higher.
@@ -277,8 +277,8 @@ local lotv1 = {
 }
 
 local s2m1 = {
-  --Dispersion after Void Torrent.
-  {'&Dispersion', 'lastcast(Void Torrent)'},
+  --Dispersion after Void Torrent and Void Bolt
+  {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10'},
   --Torrent on CD.
   {'!Void Torrent'},
   --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
@@ -344,8 +344,8 @@ local lotv2 = {
 }
 
 local s2m2 = {
-  --Dispersion after Void Torrent.
-  {'!Dispersion', 'lastcast(Void Torrent)'},
+  --Dispersion after Void Torrent and Void Bolt
+  {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10'},
   --Torrent on CD.
   {'!Void Torrent'},
   --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
