@@ -29,10 +29,6 @@ local GUI = {
 	{type = 'text', text = 'Choose Stacks', align = 'center'},
 	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', default = 35},
 	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', default = 30},
-	{type = 'spacer'},
-	{type = 'text', text = '--AOE--', align = 'center'},
-	{type = 'spinner', text = 'Target <= 35%', key = 'dps_DAOEspin', align = 'left', default = 40},
-	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2AOEspin', align = 'left', default = 37},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Trinkets
@@ -171,14 +167,10 @@ local cooldowns = {
 }
 
 local AOE = {
-   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_DAOEspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
+  --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2AOEspin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
-  --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health and if surrounded by 2 or less enemies.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35 & target.area(10).enemies <= 2'},
-  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health and if surrounded by 2 or less enemies.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35 & target.area(10).enemies <= 2'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
    --Torrent on CD.
   {'!Void Torrent'},
   --Voidbolt on CD

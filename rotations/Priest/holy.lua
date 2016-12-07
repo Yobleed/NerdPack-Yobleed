@@ -256,7 +256,7 @@ local Moving = {
 }                                                                               
 
 local inCombat = {
-
+    {'!Purify', 'CanDispell(Purify).health <= 100 & !player.channeling(Divine Hymn) & UI(Dispel)', 'CanDispell(Purify)'},
     {Potions},
 	--Fade when you get aggro.
 	{'fade', 'aggro'},
@@ -273,13 +273,11 @@ local inCombat = {
 	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
 	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(Circle of Healing) & !toggle(xDPS)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
-	{'Prayer of Healing', 'lowest.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40', 'lowest'},
+	{'!Prayer of Healing', 'lowest.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40', 'lowest'},
 	{SymbolOfHope, 'player.buff(Symbol of Hope) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	--Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
 	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= UI(l_FH)', 'player'},
-	--Dispell All if checked
-	{'!Purify', 'CanDispell(Purify).health <= 100 & !player.channeling(Divine Hymn) & UI(Dispel)', 'CanDispell(Purify)'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{{
 		{Tank, 'tank.health < 100 & !toggle(xDPS)'},
