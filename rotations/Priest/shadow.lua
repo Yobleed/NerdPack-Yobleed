@@ -82,6 +82,14 @@ local exeOnLoad = function()
 		text = 'Enable/Disable: Mind Bomb in AOE rotation.',
 		icon = 'Interface\\ICONS\\Spell_shadow_mindbomb',
 	})
+
+		NeP.Interface:AddToggle({
+		-- Surrender to Madness toggle.
+		key = 's2m',
+		name = 'Surrender to Madness',
+		text = 'Enable/Disable: Automatic S2M',
+		icon = 'Interface\\ICONS\\Achievement_boss_generalvezax_01',
+	})
 end
 
 local Survival = {
@@ -138,6 +146,13 @@ local Interrupts = {
 	{'!Silence'},
 	-- Arcane Torrent if within 8 yard range of selected target when Silence is on cooldown.
 	{'!Arcane Torrent', 'target.range <= 8 & spell(Silence).cooldown > gcd & !lastgcd(Silence)'},
+}
+
+local Surrender = {
+	--Surrender to Madness if player has talent and BOSS is dying within 1:40 (100 stacks) and toggled.
+    {'!Surrender to Madness', 'talent(Surrender to Madness) & target.deathin <= 100 & toggle(s2m) & !player.buff(Surrender to Madness) & target.boss & boss.exists'},
+    -- S2M when in Xavius Dreamstate.
+    {'!Surrender to Madness', 'talent(Surrender to Madness) & player.debuff(Dream Simulacrum) & toggle(s2m) & !player.buff(Surrender to Madness)'},
 }
 
 local Insight = { 
@@ -372,9 +387,8 @@ local inCombat = {
 
   --Shadowform if no voidform and no shadowform.
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform)'},
-  -- S2M when in Xavius Dreamstate.
-  {"Surrender to Madness", "player.debuff(Dream Simulacrum)"},
-	{'Mind Bomb', 'toggle(xMind) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
+  {Surrender, '!player.channeling(Void Torrent)'}, 
+  {'Mind Bomb', 'toggle(xMind) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
   {Emergency, '!player.channeling(Void Torrent)'},
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
@@ -400,9 +414,9 @@ local outCombat = {
 	{Keybinds},
 	{Movement},
 	-- Mind Blast before Pull.
-	{'Mind Blast', 'pull_timer < 1.2 & UI(pull_MB)'},
+	{'Mind Blast', '!pull_timer = 0 & pull_timer < 1.2 & UI(pull_MB)'},
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
-    {'#Potion of Prolonged Power', 'pull_timer < 2 & !player.buff(Potion of Prolonged Power) & UI(s_PPull)'},
+    {'#Potion of Prolonged Power', 'pull_timer > 0 & pull_timer < 2 & !player.buff(Potion of Prolonged Power) & UI(s_PPull)'},
 	{'%ressdead(Resurrection)'},
 }
 
