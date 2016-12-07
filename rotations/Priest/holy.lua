@@ -269,7 +269,7 @@ local inCombat = {
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE)'},
 	--Holy Word: Sanctify if lowest and 3 or more others at 40yds are below or if 80% health and if unlocked with advanced.
-	{'!Holy Word: Sanctify', 'lowest.area(10, 75).heal >= 3 & !player.channeling(Divine Hymn)','lowest.ground'},
+	{'!Holy Word: Sanctify', 'lowest.area(10, 75).heal >= 5 & !player.channeling(Divine Hymn)','lowest.ground'},
 	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
 	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(Circle of Healing) & !toggle(xDPS) & !player.channeling(Divine Hymn)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
