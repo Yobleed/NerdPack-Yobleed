@@ -14,7 +14,8 @@ local GUI = {
 	{type = 'header', text = 'Survival & Potions', align = 'center'},
 	{type = 'checkbox', text = 'Fade', key = 's_F', default= false},
 	{type = 'checkspin', text = 'Power Word: Shield', key = 's_PWS', default_check = false, default_spin = 40},
-	{type = 'checkspin', text = 'Dispersion', key = 's_D', default_check = false, default_spin = 20},
+	{type = 'checkbox', text = 'Dispersion', key = 's_D', default = false},
+	{type = 'spinner', text = '', key = 's_Dspin', align = 'left', default = 20},
 	{type = 'checkspin', text = 'Gift of the Naaru', key = 's_GotN', default_check = false, default_spin = 40},
 	{type = 'checkspin', text = 'Healthstone', key = 's_HS', default_check = false, default_spin = 20},
 	{type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', default_check = false, default_spin = 20},
@@ -85,7 +86,7 @@ local Survival = {
 	-- Power Word: Shield usage if enabled in UI.
 	{'Power Word: Shield', 'player.health <= UI(s_PWS_spin) & UI(s_PWS_check)', 'player'},
 	-- Dispersion usage if enabled in UI.
-	{'&Dispersion', 'player.health <= UI(s_D_spin) & UI(s_D_check)'},
+	{'!Dispersion', 'player.health <= UI(s_Dspin) & UI(s_D)'},
 	-- Gift of the Naaru usage if enabled in UI.
 	{'Gift of the Naaru', 'player.health <= UI(s_GotN_spin) & UI(s_GotN_check)'},
 	-- Healthstone usage if enabled in UI.
@@ -144,7 +145,7 @@ local Insight = {
 
 local Emergency = {
   --Dispersion when SWD charges are 0 and VF stacks are 95 or higher and insanity is below or equal to 50%.
-  {'&Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
+  {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 95 & player.insanity <= 50'},
   --Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
   {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 50'},
   --Power Infusion if talent active and VF stacks are 75 or higher.
