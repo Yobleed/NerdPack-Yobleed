@@ -191,9 +191,9 @@ local cooldowns = {
 
 local AOE = {
   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35 & !player.buff(Power Infusion)'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35 & !player.buff(Power Infusion)'},
    --Torrent on CD.
   {'!Void Torrent'},
   --Voidbolt on CD
@@ -270,10 +270,10 @@ local ST1 = {
 }
 
 local lotv1 = {
-   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health and if surrounded by 2 or less enemies.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35 & target.area(10).enemies <= 2'},
-  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health and if surrounded by 2 or less enemies.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35 & target.area(10).enemies <= 2'},
+   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35 & !player.buff(Power Infusion)'},
+  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35 & !player.buff(Power Infusion)'},
   --Torrent on CD.
   {'!Void Torrent'},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 65%.
@@ -339,9 +339,9 @@ local ST2 = {
 
 local lotv2 = {
    --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 40 & target.health <= 35 & !player.buff(Power Infusion)'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 40 & target.health > 35 & !player.buff(Power Infusion)'},
   --Torrent on CD.
   {'!Void Torrent'},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 65%.
@@ -390,15 +390,15 @@ local inCombat = {
   {Surrender, '!player.channeling(Void Torrent)'}, 
   {'Mind Bomb', 'toggle(xMind) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
   {Emergency, '!player.channeling(Void Torrent)'},
-	{Potions, '!player.channeling(Void Torrent)'},
-	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
-	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
-	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
-	{Insight, 'player.buff(Shadowy Insight) & !player.channeling(Void Torrent)'},
-	{Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
-	{Keybinds},
-	{Trinkets, '!player.channeling(Void Torrent)'},
-	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
+  {Potions, '!player.channeling(Void Torrent)'},
+  {Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
+  {Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
+  {cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
+  {Insight, 'player.buff(Shadowy Insight) & !player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 70} || {talent(Surrender to Madness) & !player.insanity = 100}'},
+  {Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
+  {Keybinds},
+  {Trinkets, '!player.channeling(Void Torrent)'},
+  {Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
   {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
