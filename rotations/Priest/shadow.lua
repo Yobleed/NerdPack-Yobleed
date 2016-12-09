@@ -106,11 +106,11 @@ local Survival = {
 
 local Potions = {
 	-- Potion of Prolonged Power usage if enabled in UI.
-	{'#Potion of Prolonged Power', 'player.hashero & !player.buff(Potion of Prolonged Power) & UI(s_PP)'},
+	{'#142117', 'player.hashero & !player.buff(229206) & UI(s_PP)'},
 	-- Healthstone usage if enabled in UI.
-	{'#Healthstone', 'player.health <= UI(s_HS_spin) & UI(s_HS_check)'},
+	{'#5512', 'player.health <= UI(s_HS_spin) & UI(s_HS_check)'},
 	-- Ancient Healing Potion usage if enabled in UI.
-	{'#Ancient Healing Potion', 'player.health <= UI(s_AHP_spin) & UI(s_AHP_check)'},
+	{'#127834', 'player.health <= UI(s_AHP_spin) & UI(s_AHP_check)'},
 }
 
 local Trinkets = {
