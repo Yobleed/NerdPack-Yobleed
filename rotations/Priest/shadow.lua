@@ -413,10 +413,10 @@ local outCombat = {
 	{'Shadowform', '!player.buff(Shadowform)'},
 	{Keybinds},
 	{Movement},
-	-- Potion of Prolonged Power usage before pull if enabled in UI.
-    {'#Potion of Prolonged Power', 'pull_timer < 3 & UI(s_PPull)'},
+	-- Potion of Prolonged Power usage before pull if enabled in UI. (142117 ID)
+    {'#142117', 'pull_timer < 3 & UI(s_PPull) & !player.buff(229206)'},
 	-- Mind Blast before Pull.
-	{'Mind Blast', 'pull_timer <= 1.2 & UI(pull_MB)'},
+	{'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
 	{'%ressdead(Resurrection)'},
 }
 
