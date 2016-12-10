@@ -48,6 +48,13 @@ local GUI = {
 	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', default_check = false, default_spin = 20},
 	{type = 'ruler'},{type = 'spacer'},
 
+	--Before Pull
+	{type = 'header', text = 'Pull Timer', align = 'center'},
+	{type = 'text', text = 'Cast on Tank.', align = 'center'},
+	{type = 'checkbox', text = 'Renew ', key = 'pull_Ren', default= false},
+	{type = 'checkbox', text = 'Prayer of Mending', key = 'pull_PoM', default= false},
+	{type = 'ruler'}, {type = 'spacer'},
+
 	--DPS
 	{type = 'header', text = 'Extra DPS', align = 'center'},
 	{type = 'text', text = 'Check to enable extra DPS', align = 'center'},
@@ -77,18 +84,18 @@ local GUI = {
 	{type = 'text', text = 'Player health values', align = 'center'},
 	{type = 'spinner', text = 'Gift of the Naaru', key = 'p_Gift', default = 20},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'p_HWSE', default = 40},
-	{type = 'spinner', text = 'Flash Heal', key = 'p_FH', default = 85},
+	{type = 'spinner', text = 'Flash Heal', key = 'p_FH', default = 70},
 	{type = 'spinner', text = 'Prayer of Mending', key = 'p_PoM', default = 100},
-	{type = 'spinner', text = 'Renew', key = 'p_Ren', default = 0},
+	--{type = 'spinner', text = 'Renew', key = 'p_Ren', default = 0},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--LOWEST
 	{type = 'header', text = 'Lowest', align = 'center'},
 	{type = 'text', text = 'Lowest health values', align = 'center'},
-	{type = 'spinner', text = 'Holy Word: Serenity', key = 'l_HWSE', default = 50},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 'l_HWSE', default = 60},
 	{type = 'spinner', text = 'Flash Heal', key = 'l_FH', default = 85},
 	{type = 'spinner', text = 'Prayer of Mending', key = 'l_PoM', default = 100},
-	{type = 'spinner', text = 'Renew', key = 'l_Ren', default = 0},
+	--{type = 'spinner', text = 'Renew', key = 'l_Ren', default = 0},
 	{type = 'spinner', text = 'Heal', key = 'l_H', default = 95},
 	{type = 'ruler'},{type = 'spacer'},
 
@@ -97,9 +104,9 @@ local GUI = {
 	{type = 'checkbox', text = 'Angelic Feather', key = 'm_AF', default = false},
 	{type = 'checkbox', text = 'Body and Mind', key = 'm_Body', default = false},
 	{type = 'text', text = 'Lowest health and moving values', align = 'center'},
-	{type = 'spinner', text = 'Holy Word: Serenity', key = 'm_HWSE', default = 60},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 'm_HWSE', default = 50},
 	{type = 'spinner', text = 'Flash Heal Surge of Light', key = 'm_FH', default = 70},
-	{type = 'spinner', text = 'Renew', key = 'm_Ren', default = 95},
+	{type = 'spinner', text = 'Renew', key = 'm_Ren', default = 90},
 }
 
 local exeOnLoad = function()
@@ -212,7 +219,7 @@ local Player = {
 	--Prayer of Mending if player missing Prayer of Mending and player health is below or if UI value.
 	{'Prayer of Mending', '!player.buff(Prayer of Mending) & player.health <= UI(p_PoM)', 'player'},
 	--Renew if player missing Renew and player health is below or if UI value.
-	{'Renew', '!player.buff(Renew) & player.health <= UI(p_Ren)', 'player'},
+	--{'Renew', '!player.buff(Renew) & player.health <= UI(p_Ren)', 'player'},
 
 }
 
@@ -230,7 +237,7 @@ local Lowest = {
 	--Prayer of Mending if lowest health missing Prayer of Mending and is below or if UI value.
 	{'Prayer of Mending', '!lowest.buff(Prayer of Mending) & lowest.health <= UI(l_PoM)', 'lowest'},
 	--Renew if lowest health is missing Renew and is below or if UI value.
-	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(l_Ren)', 'lowest'},
+	--{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(l_Ren)', 'lowest'},
 	--Heal if Lowest Healt is below or if UI value.
 	{'Heal', 'lowest.health <= UI(l_H) & !lowest.health <= UI(l_FH)', 'lowest'}
 }
@@ -256,8 +263,8 @@ local Moving = {
 }                                                                               
 
 local inCombat = {
-    {'!Purify', 'CanDispell(Purify).health <= 100 & !player.channeling(Divine Hymn) & UI(Dispel)', 'CanDispell(Purify)'},
     {Potions},
+    {'%dispelall', 'UI(Dispel) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !player.channeling(Divine Hymn)'},
 	 --Guardian Spirit if lowest health is below or if UI value and checked.
@@ -292,6 +299,8 @@ local inCombat = {
 }
 
 local outCombat = {
+    {'Renew', '!tank.buff(Renew) & pull_timer <= 1 & UI(pull_Ren)', 'tank'},
+    {'Prayer of Mending', '!tank.buff(Prayer of Mending) & pull_timer <= 3 & UI(pull_PoM)', 'tank'},
     {'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
     {'Renew', '!lowest.buff(Renew) & lowest.health < 100', 'lowest'},
 	{Keybinds},
