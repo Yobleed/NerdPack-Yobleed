@@ -127,8 +127,8 @@ local Trinkets = {
 local Keybinds = {
 	-- Mind Sear on target if Left-Shift if enabled in UI.
 	{'!Mind Sear', 'keybind(lshift) & UI(k_MS)'},
-	-- Mass Dispel at cursor on Left-Control if enabled in UI.
-	{'/cast [@cursor] !Mass Dispel', 'keybind(lcontrol) & UI(k_MD)'},
+	--Mass Dispel on Mouseover target Left Control when checked in UI.
+	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'cursor.ground' },
 	-- Pause on Left-Alt if enabled in UI.
 	{'%pause', 'keybind(lalt) & UI(k_P)'},
 }
