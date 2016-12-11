@@ -268,7 +268,7 @@ local Moving = {
 
 local inCombat = {
     {Potions},
-    {'%dispelall', 'toggle(disp) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
+    {'%dispelall', 'toggle(1disp) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !player.channeling(Divine Hymn)'},
 	 --Guardian Spirit if lowest health is below or if UI value and checked.
@@ -307,7 +307,6 @@ local outCombat = {
     {'Prayer of Mending', '!tank.buff(Prayer of Mending) & pull_timer <= 3 & UI(pull_PoM)', 'tank'},
     {'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
     {'Renew', '!lowest.buff(Renew) & lowest.health < 100', 'lowest'},
-	{Keybinds},
     --Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.

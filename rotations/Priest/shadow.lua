@@ -79,7 +79,7 @@ local exeOnLoad = function()
 
 	NeP.Interface:AddToggle({
 		-- Mind Bomb toggle only active with AoE.
-		key = 'xMind',
+		key = 'abc',
 		name = 'Mind Bomb AoE',
 		text = 'Enable/Disable: Mind Bomb in AOE rotation.',
 		icon = 'Interface\\ICONS\\Spell_shadow_mindbomb',
@@ -392,7 +392,7 @@ local inCombat = {
   --Shadowform if no voidform and no shadowform.
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform)'},
   {Surrender, '!player.channeling(Void Torrent)'}, 
-  {'Mind Bomb', 'toggle(xMind) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
+  {'Mind Bomb', 'toggle(abc) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
   {Emergency, '!player.channeling(Void Torrent)'},
   {Potions, '!player.channeling(Void Torrent)'},
   {Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
@@ -415,9 +415,10 @@ local inCombat = {
 
 local outCombat = {
 	{'Shadowform', '!player.buff(Shadowform)'},
-	{Keybinds},
 	{Movement},
-	-- Potion of Prolonged Power usage before pull if enabled in UI. (142117 ID)
+  -- Potion of Prolonged Power usage before pull if enabled in UI and Mind Blast isn't.
+    {'#142117', 'pull_timer <= 1 & UI(s_PPull) & !UI(pull_MB) & !player.buff(229206)'},
+	-- Potion of Prolonged Power usage before pull if enabled in UI.
     {'#142117', 'pull_timer < 3 & UI(s_PPull) & !player.buff(229206)'},
 	-- Mind Blast before Pull.
 	{'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},

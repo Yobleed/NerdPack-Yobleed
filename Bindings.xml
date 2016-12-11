@@ -4,7 +4,7 @@
         NeP.Interface:toggleToggle('xDPS')
     </Binding>
 <Binding name="Mind Bomb AOE" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
-        NeP.Interface:toggleToggle('xMind')
+        NeP.Interface:toggleToggle('abc')
     </Binding>
 
 <Binding name="Dispell" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
