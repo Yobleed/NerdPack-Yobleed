@@ -268,7 +268,7 @@ local Moving = {
 
 local inCombat = {
     {Potions},
-    {'%dispelall', 'toggle(1disp) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
+    {'%dispelall', 'toggle(disp) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !player.channeling(Divine Hymn)'},
 	 --Guardian Spirit if lowest health is below or if UI value and checked.
