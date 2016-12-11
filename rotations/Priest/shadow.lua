@@ -199,7 +199,7 @@ local AOE = {
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
    --Torrent on CD.
-  {'!Void Torrent'},
+  {'!Void Torrent', 'toggle(cooldowns)'},
   --Voidbolt on CD
   {'!Void Eruption', 'player.buff(voidform)'},
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
@@ -279,7 +279,7 @@ local lotv1 = {
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
   --Torrent on CD.
-  {'!Void Torrent'},
+  {'!Void Torrent', 'toggle(cooldowns)'},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 65%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 65'},
   --Void Bolt on CD not interrupting casting MB.
@@ -300,7 +300,7 @@ local s2m1 = {
   --Dispersion after Void Torrent and Void Bolt
   {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10'},
   --Torrent on CD.
-  {'!Void Torrent'},
+  {'!Void Torrent', 'toggle(cooldowns)'},
   --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
   {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 20  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
   --SWD if insanity is below 40%.
@@ -347,7 +347,7 @@ local lotv2 = {
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
   --Torrent on CD.
-  {'!Void Torrent'},
+  {'!Void Torrent', 'toggle(cooldowns)'},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 65%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 65'},
   --Void Bolt on CD not interrupting casting MB.
@@ -367,7 +367,7 @@ local s2m2 = {
   --Dispersion after Void Torrent and Void Bolt
   {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10'},
   --Torrent on CD.
-  {'!Void Torrent'},
+  {'!Void Torrent', 'toggle(cooldowns)'},
   --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
   {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 20  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
   --SWD if insanity is below 40%.
