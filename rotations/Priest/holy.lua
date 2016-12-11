@@ -12,14 +12,6 @@ local GUI = {
 			center = true 
 		},
 
-	
-
-	
-     --Dispel
-	{type = 'header', text = 'Dispel All when toggled on', align = 'center'},
-	{type = 'text', text = 'Dont use it. Still Bugged', align = 'center'},
-	{type = 'checkbox', text = 'Dispel All', key = 'Dispel', default = false},
-	{type = 'ruler'},{type = 'spacer'},
 
 	--Cooldowns
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
@@ -122,6 +114,14 @@ local exeOnLoad = function()
 		text = 'ON/OFF using Full DPS in rotation',
 		icon = 'Interface\\ICONS\\spell_holy_holysmite', --toggle(xDPS)
 	})
+
+	NeP.Interface:AddToggle({
+		key = 'disp',
+		name = 'Dispell',
+		text = 'ON/OFF Dispel All',
+		icon = 'Interface\\ICONS\\spell_holy_dispelmagic', --toggle(disp)
+	})
+
 
 end
 
@@ -264,7 +264,7 @@ local Moving = {
 
 local inCombat = {
     {Potions},
-    {'%dispelall', 'UI(Dispel) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
+    {'%dispelall', 'toggle(disp) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !player.channeling(Divine Hymn)'},
 	 --Guardian Spirit if lowest health is below or if UI value and checked.

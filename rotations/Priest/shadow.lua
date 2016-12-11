@@ -20,6 +20,8 @@ local GUI = {
 	{type = 'checkspin', text = 'Healthstone', key = 's_HS', default_check = false, default_spin = 20},
 	{type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', default_check = false, default_spin = 20},
 	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', default= false},
+	{type = 'checkbox', text = 'Potion of Prolonged Power TTD Boss', key = 's_PPttd', default= false},
+
 	{type = 'ruler'}, {type = 'spacer'},
 
 	--Before Pull
@@ -105,6 +107,8 @@ local Survival = {
 }
 
 local Potions = {
+    -- Potion of Prolonged Power usage if enabled in UI.
+	{'#142117', 'target.boss & boss.exists & target.deathin <= 60 & !player.buff(229206) & UI(s_PPttd)'},
 	-- Potion of Prolonged Power usage if enabled in UI.
 	{'#142117', 'player.hashero & !player.buff(229206) & UI(s_PP)'},
 	-- Healthstone usage if enabled in UI.

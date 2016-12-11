@@ -7,4 +7,8 @@
         NeP.Interface:toggleToggle('xMind')
     </Binding>
 
+<Binding name="Dispell" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
+        NeP.Interface:toggleToggle('disp')
+    </Binding>
+
 </Bindings>
