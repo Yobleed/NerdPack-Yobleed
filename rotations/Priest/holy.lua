@@ -12,6 +12,10 @@ local GUI = {
 			center = true 
 		},
 
+    --Resurrection
+	{type = 'header', text = 'Ressurection', align = 'center'},
+	{type = 'checkbox', text = 'Auto Ress out of combat', key = 'rezz', default = false},
+	{type = 'ruler'},{type = 'spacer'},
 
 	--Cooldowns
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
@@ -287,9 +291,9 @@ local inCombat = {
 	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= UI(l_FH) & !player.channeling(Divine Hymn)', 'player'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{{
+	    {Lowest, 'lowest.health < 100 & !toggle(xDPS)'},
 		{Tank, 'tank.health < 100 & !toggle(xDPS)'},
 		{Player, 'health < 100 & !toggle(xDPS)'},
-		{Lowest, 'lowest.health < 100 & !toggle(xDPS)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
 	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing)'},
@@ -308,7 +312,7 @@ local outCombat = {
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
 	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
-	{"%ressdead(Resurrection)", (function() return F('auto_res') end) },
+	{'%ressdead(Resurrection)', 'UI(rezz)'},
 }
 
 
