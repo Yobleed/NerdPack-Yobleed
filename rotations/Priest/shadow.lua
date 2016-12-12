@@ -21,7 +21,6 @@ local GUI = {
 	{type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', default_check = false, default_spin = 20},
 	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', default= false},
 	{type = 'checkbox', text = 'Potion of Prolonged Power TTD Boss', key = 's_PPttd', default= false},
-	
 	{type = 'ruler'}, {type = 'spacer'},
 
 	--Before Pull
