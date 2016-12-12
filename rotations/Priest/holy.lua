@@ -139,9 +139,11 @@ local Trinkets = {
 
 local Keybinds = {
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
-	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'cursor.ground' },
+	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground' },
+	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground' },
 	--Holy Word: Sanctify on Mouseover target left shift when checked in UI.
-	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS)', 'cursor.ground'},
+	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS) & !advanced', 'cursor.ground'},
+	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS)', 'mouseover.ground'},
 	-- Pause on left alt when checked in UI.
 	{'%pause', 'keybind(lalt)& UI(k_P)'}
 } 
@@ -303,6 +305,7 @@ local inCombat = {
 }
 
 local outCombat = {
+    {Keybinds},
     {'Renew', '!tank.buff(Renew) & pull_timer <= 1 & UI(pull_Ren)', 'tank'},
     {'Prayer of Mending', '!tank.buff(Prayer of Mending) & pull_timer <= 3 & UI(pull_PoM)', 'tank'},
     {'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
