@@ -128,7 +128,8 @@ local Keybinds = {
 	-- Mind Sear on target if Left-Shift if enabled in UI.
 	{'!Mind Sear', 'keybind(lshift) & UI(k_MS)'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
-	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'cursor.ground' },
+	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground' },
+  {'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground' },
 	-- Pause on Left-Alt if enabled in UI.
 	{'%pause', 'keybind(lalt) & UI(k_P)'},
 }
