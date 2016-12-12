@@ -21,7 +21,7 @@ local GUI = {
 	{type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', default_check = false, default_spin = 20},
 	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', default= false},
 	{type = 'checkbox', text = 'Potion of Prolonged Power TTD Boss', key = 's_PPttd', default= false},
-
+	
 	{type = 'ruler'}, {type = 'spacer'},
 
 	--Before Pull
@@ -39,6 +39,11 @@ local GUI = {
 	{type = 'text', text = 'Choose Stacks', align = 'center'},
 	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', default = 35},
 	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', default = 30},
+	{type = 'ruler'}, {type = 'spacer'},
+
+	-- GUI Arcane Torrent as last Resort
+	{type = 'header', text = 'Arcane Torrent StM', align = 'center'},
+	{type = 'checkbox', text = 'arcane torrent', key = 'dps_at', default= true},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Trinkets
@@ -239,6 +244,8 @@ local AOEs2m = {
   {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 20  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
   --SWD if insanity is below 40%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 40 & !lastcast(Shadow Word: Death)'},
+  --arcane torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
+  {'!arcane torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
   --MB if channeling Mind flay or Mind Sear
   {'!Mind Blast', 'player.channeling(Mind Flay) || player.channeling(Mind Sear)'},
   --Mind Blast on CD.
@@ -306,6 +313,8 @@ local s2m1 = {
   {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 20  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
   --SWD if insanity is below 40%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 40 & !lastcast(Shadow Word: Death)'}, 
+  --arcane torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
+  {'!arcane torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
   --Void Bolt on CD not interrupting casting MB.
   {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
   --Mind Blast on CD if VB is on CD.
