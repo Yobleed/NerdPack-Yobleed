@@ -21,7 +21,6 @@ local GUI = {
 	{type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', default_check = false, default_spin = 20},
 	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', default= false},
 	{type = 'checkbox', text = 'Potion of Prolonged Power TTD Boss', key = 's_PPttd', default= false},
-
 	{type = 'ruler'}, {type = 'spacer'},
 
 	--Before Pull
@@ -39,6 +38,11 @@ local GUI = {
 	{type = 'text', text = 'Choose Stacks', align = 'center'},
 	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', default = 35},
 	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', default = 30},
+	{type = 'ruler'}, {type = 'spacer'},
+
+	-- GUI Arcane Torrent as last Resort
+	{type = 'header', text = 'Arcane Torrent StM', align = 'center'},
+	{type = 'checkbox', text = 'arcane torrent', key = 'dps_at', default= true},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Trinkets
@@ -171,6 +175,8 @@ local Insight = {
 local Emergency = {
   --Dispersion when SWD charges are 0 and VF stacks are 95 or higher and insanity is below or equal to 50%.
   {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 99 & player.insanity <= 35'},
+   --Arcane Torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
+  {'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
   --Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
   {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 50'},
   --Power Infusion if talent active and VF stacks are 75 or higher.
@@ -415,16 +421,16 @@ local inCombat = {
 }
 
 local outCombat = {
-	{'Shadowform', '!player.buff(Shadowform)'},
+  {'Shadowform', '!player.buff(Shadowform)'},
   --No Body and Soul from Class Hall.
-	{Movement, '!player.buff(Body and Soul)'},
+  {Movement, '!player.buff(Body and Soul)'},
   -- Potion of Prolonged Power usage before pull if enabled in UI and Mind Blast isn't.
   {'#142117', 'pull_timer <= 1 & UI(s_PPull) & !UI(pull_MB) & !player.buff(229206)'},
-	-- Potion of Prolonged Power usage before pull if enabled in UI.
+  -- Potion of Prolonged Power usage before pull if enabled in UI.
   {'#142117', 'pull_timer < 3 & UI(s_PPull) & !player.buff(229206)'},
-	-- Mind Blast before Pull.
-	{'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
-	{'%ressdead(Resurrection)'},
+  -- Mind Blast before Pull.
+  {'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
+  {'%ressdead(Resurrection)'},
 }
 
 NeP.CR:Add(258, {
