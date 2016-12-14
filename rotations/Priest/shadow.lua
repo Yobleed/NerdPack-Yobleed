@@ -10,6 +10,12 @@ local GUI = {
 	center = true
 },
 
+
+  --Resurrection
+  {type = 'header', text = 'Ressurection', align = 'center'},
+  {type = 'checkbox', text = 'Auto Ress out of combat', key = 'rezz', default = false},
+  {type = 'ruler'},{type = 'spacer'},
+
 	-- GUI Survival & Potions
 	{type = 'header', text = 'Survival & Potions', align = 'center'},
 	{type = 'checkbox', text = 'Fade', key = 's_F', default= false},
@@ -430,7 +436,7 @@ local outCombat = {
   {'#142117', 'pull_timer < 3 & UI(s_PPull) & !player.buff(229206)'},
   -- Mind Blast before Pull.
   {'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
-  {'%ressdead(Resurrection)'},
+  {'%ressdead(Resurrection)', 'UI(rezz)'},
 }
 
 NeP.CR:Add(258, {
