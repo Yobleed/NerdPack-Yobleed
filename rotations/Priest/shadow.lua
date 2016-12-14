@@ -175,6 +175,8 @@ local Insight = {
 local Emergency = {
   --Dispersion when SWD charges are 0 and VF stacks are 95 or higher and insanity is below or equal to 50%.
   {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 99 & player.insanity <= 35'},
+   --Arcane Torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
+  {'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
   --Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
   {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 50'},
   --Power Infusion if talent active and VF stacks are 75 or higher.
@@ -243,8 +245,6 @@ local AOEs2m = {
   {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 20  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
   --SWD if insanity is below 40%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 40 & !lastcast(Shadow Word: Death)'},
-  --arcane torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
-  {'!arcane torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
   --MB if channeling Mind flay or Mind Sear
   {'!Mind Blast', 'player.channeling(Mind Flay) || player.channeling(Mind Sear)'},
   --Mind Blast on CD.
@@ -312,8 +312,6 @@ local s2m1 = {
   {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 20  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
   --SWD if insanity is below 40%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 40 & !lastcast(Shadow Word: Death)'}, 
-  --arcane torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
-  {'!arcane torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
   --Void Bolt on CD not interrupting casting MB.
   {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
   --Mind Blast on CD if VB is on CD.
@@ -423,16 +421,16 @@ local inCombat = {
 }
 
 local outCombat = {
-	{'Shadowform', '!player.buff(Shadowform)'},
+  {'Shadowform', '!player.buff(Shadowform)'},
   --No Body and Soul from Class Hall.
-	{Movement, '!player.buff(Body and Soul)'},
+  {Movement, '!player.buff(Body and Soul)'},
   -- Potion of Prolonged Power usage before pull if enabled in UI and Mind Blast isn't.
   {'#142117', 'pull_timer <= 1 & UI(s_PPull) & !UI(pull_MB) & !player.buff(229206)'},
-	-- Potion of Prolonged Power usage before pull if enabled in UI.
+  -- Potion of Prolonged Power usage before pull if enabled in UI.
   {'#142117', 'pull_timer < 3 & UI(s_PPull) & !player.buff(229206)'},
-	-- Mind Blast before Pull.
-	{'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
-	{'%ressdead(Resurrection)'},
+  -- Mind Blast before Pull.
+  {'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
+  {'%ressdead(Resurrection)'},
 }
 
 NeP.CR:Add(258, {
