@@ -195,7 +195,7 @@ local Lowest = {
 	--Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', 'player.area(40, 100).heal > 2 & !lowest1.buff(Atonement) & !lowest2.buff(Atonement) & !lowest3.buff(Atonement)', 'lowest'},
+	{'Power Word: Radiance', '!lowest1.buff(Atonement) & !lowest2.buff(Atonement) & !lowest3.buff(Atonement)', 'lowest'},
     --Power Word: Shield on CD if not Atonement.
     {'Power Word: Shield', 'lowest1.health <= 100 & !lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
     {'Power Word: Shield', 'lowest2.health <= 100 & !lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
