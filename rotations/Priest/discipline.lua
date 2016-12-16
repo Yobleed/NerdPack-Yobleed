@@ -12,6 +12,12 @@ local GUI = {
 			center = true 
 		},
 
+
+    --Cooldowns
+	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
+	{type = 'checkbox', text = 'Use Pain Suppression', key = 'c_PS', default = false},
+	{type = 'ruler'},{type = 'spacer'},
+
     -- GUI Moving
 	{type = 'header', text = 'Movement', align = 'center'},
 	{type = 'checkbox', text = 'Angelic Feather', key = 'm_AF', default = false},
@@ -68,6 +74,7 @@ local GUI = {
 	{type = 'text', text = 'Lowest health values', align = 'center'},
 	{type = 'spinner', text = 'Power Word: Shield', key = 'l_PWS', default = 70},
 	{type = 'spinner', text = 'Shadow Mend', key = 'l_mend', default = 60},
+	{type = 'spinner', text = 'Plea', key = 'l_plea', default = 20},
 	{type = 'ruler'},{type = 'spacer'},
 
 }
@@ -95,6 +102,8 @@ local exeOnLoad = function()
 
 
 end
+
+
 
 
 local Trinkets = {
@@ -171,28 +180,31 @@ local Atonement = {
 }
 
 local Lowest = {
-	
+	--Pain Suppression if lowest health is below or equal to 20% and checked.
+	{'!Pain Suppression', 'UI(c_PS) & lowest.health <= 20 & toggle(cooldowns)', 'lowest'},
 	--Gift of the Naaru if lowest health is below or if 20%.
 	{'Gift of the Naaru', 'lowest.health <= 20 ', 'lowest'},
 	--Power Word: Shield on UI value if Atonement won't make it.
     {'!Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
+    --Plea on UI value if no 6 atonements are active.
+    {'Plea', 'lowest.health <= UI(l_plea) & spell(Plea).charges <= 6', 'lowest'},
 	--Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
-    --Plea on UI value if no 6 atonements are active.
-    --{'!Plea', 'lowest.health <= UI(l_plea) & {!lowest1.buff(Atonement) & !lowest2.buff(Atonement) & !lowest3.buff(Atonement) &!lowest4.buff(Atonement) &!lowest5.buff(Atonement) &!lowest6.buff(Atonement)}', 'lowest'},
-
     --Power Word: Shield on CD if not Atonement.
-    {'!Power Word: Shield', 'lowest1.health <= 100 & !lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
-    {'!Power Word: Shield', 'lowest2.health <= 100 & !lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
-    {'!Power Word: Shield', 'lowest3.health <= 100 & !lowest3.buff(Atonement) & UI(l_appPWS)', 'lowest3'},
-    {'!Power Word: Shield', 'lowest4.health <= 100 & !lowest4.buff(Atonement) & UI(l_appPWS)', 'lowest4'},
-    {'!Power Word: Shield', 'lowest5.health <= 100 & !lowest5.buff(Atonement) & UI(l_appPWS)', 'lowest5'},
+    {'Power Word: Shield', 'lowest1.health <= 100 & !lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
+    {'Power Word: Shield', 'lowest2.health <= 100 & !lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
+    {'Power Word: Shield', 'lowest3.health <= 100 & !lowest3.buff(Atonement) & UI(l_appPWS)', 'lowest3'},
+    {'Power Word: Shield', 'lowest4.health <= 100 & !lowest4.buff(Atonement) & UI(l_appPWS)', 'lowest4'},
+    {'Power Word: Shield', 'lowest5.health <= 100 & !lowest5.buff(Atonement) & UI(l_appPWS)', 'lowest5'},
+    --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
+	{'Power Word: Radiance', 'lowest.area(40, 100).heal > 2 & !lowest1.buff(Atonement) & !lowest2.buff(Atonement) & !lowest3.buff(Atonement)', 'lowest'},
     --Plea to reaplly Atonement if Power Word: Shield dropped off.
-    {'!Plea', 'lowest1.health <= 100 & lowest1.buff(Atonement).duration <= 2 & !lowest1.buff(Power Word: Shield) & UI(l_appplea)', 'lowest1'},
-    {'!Plea', 'lowest2.health <= 100 & lowest2.buff(Atonement).duration <= 2 & !lowest2.buff(Power Word: Shield) & UI(l_appplea)', 'lowest2'},
-    {'!Plea', 'lowest3.health <= 100 & lowest3.buff(Atonement).duration <= 2 & !lowest3.buff(Power Word: Shield) & UI(l_appplea)', 'lowest3'},
-    {'!Plea', 'lowest4.health <= 100 & lowest4.buff(Atonement).duration <= 2 & !lowest4.buff(Power Word: Shield) & UI(l_appplea)', 'lowest4'},
-    {'!Plea', 'lowest5.health <= 100 & lowest5.buff(Atonement).duration <= 2 & !lowest5.buff(Power Word: Shield) & UI(l_appplea)', 'lowest5'},
+    {'Plea', 'lowest1.health <= 100 & lowest1.buff(Atonement) & lowest1.buff(Atonement).duration <= 2 & !lowest1.buff(Power Word: Shield) & UI(l_appplea)', 'lowest1'},
+    {'Plea', 'lowest2.health <= 100 & lowest2.buff(Atonement) & lowest2.buff(Atonement).duration <= 2 & !lowest2.buff(Power Word: Shield) & UI(l_appplea)', 'lowest2'},
+    {'Plea', 'lowest3.health <= 100 & lowest3.buff(Atonement) & lowest3.buff(Atonement).duration <= 2 & !lowest3.buff(Power Word: Shield) & UI(l_appplea)', 'lowest3'},
+    {'Plea', 'lowest4.health <= 100 & lowest4.buff(Atonement) & lowest4.buff(Atonement).duration <= 2 & !lowest4.buff(Power Word: Shield) & UI(l_appplea)', 'lowest4'},
+    {'Plea', 'lowest5.health <= 100 & lowest5.buff(Atonement) & lowest5.buff(Atonement).duration <= 2 & !lowest5.buff(Power Word: Shield) & UI(l_appplea)', 'lowest5'},
+   
 }
 
 local Moving = {
@@ -206,14 +218,13 @@ local Moving = {
                                           
 
 local inCombat = { --194384 Atonement
+
     {Potions},
     {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & UI(fade)'},
     {Trinkets},
 	{Keybinds},
-	--Power Word: Radiance if lowest and 2 or more arround lowest have 85% health or below.
-	{'Power Word: Radiance', 'lowest.area(20, 95).heal > 2 & toggle(AOE) & !toggle(xDPS) & !lowest1.buff(Atonement) & !lowest2.buff(Atonement) & !lowest3.buff(Atonement)', 'lowest'},
 	{Moving, 'moving'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
