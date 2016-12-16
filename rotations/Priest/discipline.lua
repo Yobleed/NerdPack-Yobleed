@@ -36,7 +36,7 @@ local GUI = {
 
 	--KEYBINDS
 	{type = 'header', text = 'Keybinds', align = 'center'},
-	{type = 'text', text = '|Left Shift: Power Word: Barrier|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+	{type = 'text', text = 'Left Shift: Power Word: Barrier|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
 	{type = 'checkbox', text = 'Power Word: Barrier', key = 'k_PWB', default = false},
 	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', default = false},
 	{type = 'checkbox', text = 'Pause', key = 'k_P', default = false},
@@ -178,6 +178,9 @@ local Lowest = {
     {'!Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
 	--Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
+    --Plea on UI value if no 6 atonements are active.
+    --{'!Plea', 'lowest.health <= UI(l_plea) & {!lowest1.buff(Atonement) & !lowest2.buff(Atonement) & !lowest3.buff(Atonement) &!lowest4.buff(Atonement) &!lowest5.buff(Atonement) &!lowest6.buff(Atonement)}', 'lowest'},
+
     --Power Word: Shield on CD if not Atonement.
     {'!Power Word: Shield', 'lowest1.health <= 100 & !lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
     {'!Power Word: Shield', 'lowest2.health <= 100 & !lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
@@ -210,12 +213,12 @@ local inCombat = { --194384 Atonement
     {Trinkets},
 	{Keybinds},
 	--Power Word: Radiance if lowest and 2 or more arround lowest have 85% health or below.
-	{'Power Word: Radiance', 'lowest.area(20, 85).heal >= 3 & toggle(AOE) & !toggle(xDPS)', 'lowest'},
+	{'Power Word: Radiance', 'lowest.area(20, 95).heal > 2 & toggle(AOE) & !toggle(xDPS) & !lowest1.buff(Atonement) & !lowest2.buff(Atonement) & !lowest3.buff(Atonement)', 'lowest'},
 	{Moving, 'moving'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
-    {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE)'},
+    {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
     {Lowest, '!toggle(xDPS)'},
     {Atonement, '!lowest.health <= UI(l_mend) & !toggle(xDPS)'},
     {FullDPS, 'toggle(xDPS)'},
