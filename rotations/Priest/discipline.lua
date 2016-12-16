@@ -12,6 +12,17 @@ local GUI = {
 			center = true 
 		},
 
+    -- GUI Moving
+	{type = 'header', text = 'Movement', align = 'center'},
+	{type = 'checkbox', text = 'Angelic Feather', key = 'm_AF', default = false},
+	{type = 'checkbox', text = 'Body and Soul', key = 'm_Body', default = false},
+	{type = 'ruler'}, {type = 'spacer'},
+
+    --Fade
+    {type = 'header', text = 'Survival', align = 'center'},
+	{type = 'checkbox', text = 'Fade on Aggro', key = 'fade', default = false},
+	{type = 'ruler'},{type = 'spacer'},
+
     --Resurrection
 	{type = 'header', text = 'Ressurection', align = 'center'},
 	{type = 'checkbox', text = 'Auto Ress out of combat', key = 'rezz', default = false},
@@ -25,7 +36,8 @@ local GUI = {
 
 	--KEYBINDS
 	{type = 'header', text = 'Keybinds', align = 'center'},
-	{type = 'text', text = 'Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+	{type = 'text', text = '|Left Shift: Power Word: Barrier|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+	{type = 'checkbox', text = 'Power Word: Barrier', key = 'k_PWB', default = false},
 	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', default = false},
 	{type = 'checkbox', text = 'Pause', key = 'k_P', default = false},
 	{type = 'ruler'},{type = 'spacer'},
@@ -45,12 +57,18 @@ local GUI = {
 	{type = 'spinner', text = 'Shadow Mend', key = 'full_mend', default = 40},
 	{type = 'spinner', text = 'Power Word: Shield', key = 'full_PWS', default = 60},
 	{type = 'ruler'},{type = 'spacer'},
+    
 
-	-- GUI Moving
-	{type = 'header', text = 'Movement', align = 'center'},
-	{type = 'checkbox', text = 'Angelic Feather', key = 'm_AF', default = false},
-	{type = 'checkbox', text = 'Body and Soul', key = 'm_Body', default = false},
-	{type = 'ruler'}, {type = 'spacer'},
+	--LOWEST
+	{type = 'header', text = 'Lowest', align = 'center'},
+	{type = 'text', text = 'apply Atonement', align = 'center'},
+	{type = 'checkbox', text = 'Power Word: Shield', key = 'l_appPWS', default = false},
+	{type = 'text', text = 'Try to reapply Atonement', align = 'center'},
+	{type = 'checkbox', text = 'Plea', key = 'l_appplea', default = false},
+	{type = 'text', text = 'Lowest health values', align = 'center'},
+	{type = 'spinner', text = 'Power Word: Shield', key = 'l_PWS', default = 70},
+	{type = 'spinner', text = 'Shadow Mend', key = 'l_mend', default = 60},
+	{type = 'ruler'},{type = 'spacer'},
 
 }
 
@@ -87,8 +105,14 @@ local Trinkets = {
 }
 
 local Keybinds = {
+    -- Power Word: Barrier on left shift when checked in UI.
+    {'!Power Word: Barrier', 'keybind(lshift) & UI(k_PWB)', 'mouseover.ground' },
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
-	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'cursor.ground' },
+	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_PWB)', 'mouseover.ground' },
+	-- Power Word: Barrier on left shift when checked in UI.
+    {'!Power Word: Barrier', 'keybind(lshift) & UI(k_MD) & !advanced', 'cursor.ground' },
+	--Mass Dispel on Mouseover target Left Control when checked in UI.
+	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground' },
 	-- Pause on left alt when checked in UI.
 	{'%pause', 'keybind(lalt)& UI(k_P)'}
 } 
@@ -105,6 +129,8 @@ local Potions = {
 local FullDPS = {
     --PI on CD if toggled.
 	{'Power Infusion', 'talent(Power Infusion) & toggle(cooldowns)', 'target'},
+	--Shadowfiend on CD if toggled.
+	{'Shadowfiend', 'toggle(cooldowns)', 'target'},
     --PWS if player health is below or if UI value.
 	{'Power Word: Shield', 'player.health <= UI(full_PWS)', 'player'},
     --Shadow Mend if player health is below or if UI value.
@@ -114,7 +140,7 @@ local FullDPS = {
     --Purge the Wicked if talent and not on target.
 	{'Purge the Wicked', 'talent(Purge the Wicked) & !target.debuff(Purge the Wicked)', 'target'},
 	--Schism on cooldown.
-	{'Schism', 'talent(Schism)', 'target'},
+	{'Schism', 'talent(Schism) & !moving', 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
     --Power Word: Solace on cooldown if talent.
@@ -124,6 +150,46 @@ local FullDPS = {
 	--Smite on CD.
 	{'Smite', nil, 'target'},
 	
+}
+
+local Atonement = {
+	--Shadowfiend on CD if toggled.
+	{'Shadowfiend', 'toggle(cooldowns)', 'target'},
+    --Purge the Wicked if talent and not on target.
+	{'Purge the Wicked', 'talent(Purge the Wicked) & !target.debuff(Purge the Wicked)', 'target'},
+	--Schism on cooldown.
+	{'Schism', 'talent(Schism) & !moving', 'target'},
+	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
+	{'Penance', 'target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
+    --Power Word: Solace on cooldown if talent.
+	{'Power Word: Solace', 'talent(Power Word: Solace)', 'target'},
+	--Divine Star if moving.
+	{'Divine Star', 'talent(Divine Star) & player.area(24).enemies.infront >= 1 & moving'},
+	--Smite on CD.
+	{'Smite', nil, 'target'},
+
+}
+
+local Lowest = {
+	
+	--Gift of the Naaru if lowest health is below or if 20%.
+	{'Gift of the Naaru', 'lowest.health <= 20 ', 'lowest'},
+	--Power Word: Shield on UI value if Atonement won't make it.
+    {'!Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
+	--Shadow Mend on UI value if PWS don't make it.
+    {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
+    --Power Word: Shield on CD if not Atonement.
+    {'!Power Word: Shield', 'lowest1.health <= 100 & !lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
+    {'!Power Word: Shield', 'lowest2.health <= 100 & !lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
+    {'!Power Word: Shield', 'lowest3.health <= 100 & !lowest3.buff(Atonement) & UI(l_appPWS)', 'lowest3'},
+    {'!Power Word: Shield', 'lowest4.health <= 100 & !lowest4.buff(Atonement) & UI(l_appPWS)', 'lowest4'},
+    {'!Power Word: Shield', 'lowest5.health <= 100 & !lowest5.buff(Atonement) & UI(l_appPWS)', 'lowest5'},
+    --Plea to reaplly Atonement if Power Word: Shield dropped off.
+    {'!Plea', 'lowest1.health <= 100 & lowest1.buff(Atonement).duration <= 2 & !lowest1.buff(Power Word: Shield) & UI(l_appplea)', 'lowest1'},
+    {'!Plea', 'lowest2.health <= 100 & lowest2.buff(Atonement).duration <= 2 & !lowest2.buff(Power Word: Shield) & UI(l_appplea)', 'lowest2'},
+    {'!Plea', 'lowest3.health <= 100 & lowest3.buff(Atonement).duration <= 2 & !lowest3.buff(Power Word: Shield) & UI(l_appplea)', 'lowest3'},
+    {'!Plea', 'lowest4.health <= 100 & lowest4.buff(Atonement).duration <= 2 & !lowest4.buff(Power Word: Shield) & UI(l_appplea)', 'lowest4'},
+    {'!Plea', 'lowest5.health <= 100 & lowest5.buff(Atonement).duration <= 2 & !lowest5.buff(Power Word: Shield) & UI(l_appplea)', 'lowest5'},
 }
 
 local Moving = {
@@ -136,18 +202,22 @@ local Moving = {
 
                                           
 
-local inCombat = {
+local inCombat = { --194384 Atonement
     {Potions},
     {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
-	{'fade', 'aggro'},
+	{'fade', 'aggro & UI(fade)'},
     {Trinkets},
 	{Keybinds},
+	--Power Word: Radiance if lowest and 2 or more arround lowest have 85% health or below.
+	{'Power Word: Radiance', 'lowest.area(20, 85).heal >= 3 & toggle(AOE) & !toggle(xDPS)', 'lowest'},
 	{Moving, 'moving'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE)'},
+    {Lowest, '!toggle(xDPS)'},
+    {Atonement, '!lowest.health <= UI(l_mend) & !toggle(xDPS)'},
     {FullDPS, 'toggle(xDPS)'},
 
 	--{{
@@ -163,6 +233,7 @@ local inCombat = {
 }
 
 local outCombat = {
+
 	{Keybinds},
 	{Moving, 'moving'},
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
