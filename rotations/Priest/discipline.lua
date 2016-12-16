@@ -24,11 +24,6 @@ local GUI = {
 	{type = 'checkbox', text = 'Body and Soul', key = 'm_Body', default = false},
 	{type = 'ruler'}, {type = 'spacer'},
 
-    --Fade
-    {type = 'header', text = 'Survival', align = 'center'},
-	{type = 'checkbox', text = 'Fade on Aggro', key = 'fade', default = false},
-	{type = 'ruler'},{type = 'spacer'},
-
     --Resurrection
 	{type = 'header', text = 'Ressurection', align = 'center'},
 	{type = 'checkbox', text = 'Auto Ress out of combat', key = 'rezz', default = false},
@@ -104,7 +99,12 @@ local exeOnLoad = function()
 end
 
 
-
+local Emergency = {
+	--Power Infusion if 5 or more people are below 40% Health and cooldown is toggled on.
+	{'!Power Infusion', 'player.area(40, 40).heal >= 5 & toggle(cooldowns)', 'player'},
+	--Rapture if 5 ore more people are below 30% health and cooldown is toggled on.
+	{'!Rapture', 'player.area(40, 30).heal >= 5 & spell(Power Word: Shield).cooldown > 0 & toggle(cooldowns)', 'player'},
+}
 
 local Trinkets = {
 	--Top Trinket usage if UI enables it.
@@ -136,6 +136,8 @@ local Potions = {
 }
 
 local FullDPS = {
+    --LW on CD if toggled.
+	{"Light's Wrath", 'toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism)', 'target'},
     --PI on CD if toggled.
 	{'Power Infusion', 'talent(Power Infusion) & toggle(cooldowns)', 'target'},
 	--Shadowfiend on CD if toggled.
@@ -162,6 +164,8 @@ local FullDPS = {
 }
 
 local Atonement = {
+    --LW on CD if toggled.
+	{"Light's Wrath", 'toggle(cooldowns) & target.debuff(Schism) & player.buff(Atonement)', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns)', 'target'},
     --Purge the Wicked if talent and not on target.
@@ -190,20 +194,20 @@ local Lowest = {
     {'Plea', 'lowest.health <= UI(l_plea) & spell(Plea).charges <= 6', 'lowest'},
 	--Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
+    --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
+	{'Power Word: Radiance', 'player.area(40, 100).heal > 2 & !lowest1.buff(Atonement) & !lowest2.buff(Atonement) & !lowest3.buff(Atonement)', 'lowest'},
     --Power Word: Shield on CD if not Atonement.
     {'Power Word: Shield', 'lowest1.health <= 100 & !lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
     {'Power Word: Shield', 'lowest2.health <= 100 & !lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
     {'Power Word: Shield', 'lowest3.health <= 100 & !lowest3.buff(Atonement) & UI(l_appPWS)', 'lowest3'},
     {'Power Word: Shield', 'lowest4.health <= 100 & !lowest4.buff(Atonement) & UI(l_appPWS)', 'lowest4'},
     {'Power Word: Shield', 'lowest5.health <= 100 & !lowest5.buff(Atonement) & UI(l_appPWS)', 'lowest5'},
-    --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', 'lowest.area(40, 100).heal > 2 & !lowest1.buff(Atonement) & !lowest2.buff(Atonement) & !lowest3.buff(Atonement)', 'lowest'},
     --Plea to reaplly Atonement if Power Word: Shield dropped off.
-    {'Plea', 'lowest1.health <= 100 & lowest1.buff(Atonement) & lowest1.buff(Atonement).duration <= 2 & !lowest1.buff(Power Word: Shield) & UI(l_appplea)', 'lowest1'},
-    {'Plea', 'lowest2.health <= 100 & lowest2.buff(Atonement) & lowest2.buff(Atonement).duration <= 2 & !lowest2.buff(Power Word: Shield) & UI(l_appplea)', 'lowest2'},
-    {'Plea', 'lowest3.health <= 100 & lowest3.buff(Atonement) & lowest3.buff(Atonement).duration <= 2 & !lowest3.buff(Power Word: Shield) & UI(l_appplea)', 'lowest3'},
-    {'Plea', 'lowest4.health <= 100 & lowest4.buff(Atonement) & lowest4.buff(Atonement).duration <= 2 & !lowest4.buff(Power Word: Shield) & UI(l_appplea)', 'lowest4'},
-    {'Plea', 'lowest5.health <= 100 & lowest5.buff(Atonement) & lowest5.buff(Atonement).duration <= 2 & !lowest5.buff(Power Word: Shield) & UI(l_appplea)', 'lowest5'},
+    {'!Plea', 'lowest1.health > UI(l_mend) & lowest1.buff(Atonement) & lowest1.buff(Atonement).duration <= 2 & !lowest1.buff(Power Word: Shield) & UI(l_appplea)', 'lowest1'},
+    {'!Plea', 'lowest2.health > UI(l_mend) & lowest2.buff(Atonement) & lowest2.buff(Atonement).duration <= 2 & !lowest2.buff(Power Word: Shield) & UI(l_appplea)', 'lowest2'},
+    {'!Plea', 'lowest3.health > UI(l_mend) & lowest3.buff(Atonement) & lowest3.buff(Atonement).duration <= 2 & !lowest3.buff(Power Word: Shield) & UI(l_appplea)', 'lowest3'},
+    {'!Plea', 'lowest4.health > UI(l_mend) & lowest4.buff(Atonement) & lowest4.buff(Atonement).duration <= 2 & !lowest4.buff(Power Word: Shield) & UI(l_appplea)', 'lowest4'},
+    {'!Plea', 'lowest5.health > UI(l_mend) & lowest5.buff(Atonement) & lowest5.buff(Atonement).duration <= 2 & !lowest5.buff(Power Word: Shield) & UI(l_appplea)', 'lowest5'},
    
 }
 
@@ -218,11 +222,12 @@ local Moving = {
                                           
 
 local inCombat = { --194384 Atonement
-
+    
     {Potions},
+    {Emergency}, 
     {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
-	{'fade', 'aggro & UI(fade)'},
+	{'fade', 'aggro'},
     {Trinkets},
 	{Keybinds},
 	{Moving, 'moving'},
@@ -247,7 +252,9 @@ local inCombat = { --194384 Atonement
 }
 
 local outCombat = {
-
+    {'Power Word: Shield', 'tank.health <= 100 & !tank.buff(Power Word: Shield)', 'tank'},
+    {'Plea', 'lowest.health < 100 & moving', 'lowest'},
+    {'Shadow Mend', 'lowest.health < 100 & !moving', 'lowest'},
 	{Keybinds},
 	{Moving, 'moving'},
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
