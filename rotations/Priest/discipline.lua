@@ -103,7 +103,14 @@ local exeOnLoad = function()
 
 end
 local Rapture = {
-	 {'Power Word: Shield', '!lowest.buff(Power Word: Shield)', 'lowest'},
+	  --Power Word: Shield on CD.
+	{'Power Word: Shield', '!tank.buff(Power Word: Shield)', 'tank'},
+    {'Power Word: Shield', '!lowest1.buff(Power Word: Shield)', 'lowest1'},
+    {'Power Word: Shield', '!lowest2.buff(Power Word: Shield)', 'lowest2'},
+    {'Power Word: Shield', '!lowest3.buff(Power Word: Shield)', 'lowest3'},
+    {'Power Word: Shield', '!lowest4.buff(Power Word: Shield)', 'lowest4'},
+    {'Power Word: Shield', '!lowest5.buff(Power Word: Shield)', 'lowest5'},
+    {'Power Word: Shield', '!lowest5.buff(Power Word: Shield)', 'lowest6'},
 
 }
 
@@ -255,10 +262,10 @@ local inCombat = { --194384 Atonement
     
     {Potions},
     {Emergency},
-    {Rapture, 'player.buff(Rapture)'},
     {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
 	{'fade', 'aggro'},
+	{Rapture, 'player.buff(Rapture)'},
     {Trinkets},
 	{Keybinds},
 	{Moving, 'moving'},
