@@ -214,22 +214,20 @@ local Lowest = {
 	--Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', '{lowest.health <= UI(l_mend)}', 'lowest'},
     --Power Word: Shield on CD if not Atonement on 6 people max.
-    {'Power Word: Shield', 'tank.health <= 100 & !tank.buff(Atonement) & UI(l_appPWS)', 'tank'},
-    {'Power Word: Shield', 'lowest1.health <= 100 & !lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
-    {'Power Word: Shield', 'lowest2.health <= 100 & !lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
-    {'Power Word: Shield', 'lowest3.health <= 100 & !lowest3.buff(Atonement) & UI(l_appPWS)', 'lowest3'},
-    {'Power Word: Shield', 'lowest4.health <= 100 & !lowest4.buff(Atonement) & UI(l_appPWS)', 'lowest4'},
-    {'Power Word: Shield', 'lowest5.health <= 100 & !lowest5.buff(Atonement) & UI(l_appPWS)', 'lowest5'},
+    {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
+    {'Power Word: Shield', '!lowest1.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest1'},
+    {'Power Word: Shield', '!lowest2.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest2'},
+    {'Power Word: Shield', '!lowest3.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest3'},
+    {'Power Word: Shield', '!lowest4.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest4'},
+    {'Power Word: Shield', '!lowest5.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest5'},
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', 'spell(plea).count < 3', 'lowest'},
+	{'Power Word: Radiance', 'spell(plea).count < 3 & !lowest.buff(atonement)', 'lowest'},
     --Plea to reaplly Atonement if Power Word: Shield dropped off on 6 people max.
-    {'!Plea', 'tank.health > UI(l_mend) & tank.buff(Atonement) & tank.buff(Atonement).duration <= gcd & !tank.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'tank'},
-    {'!Plea', 'lowest1.health > UI(l_mend) & lowest1.buff(Atonement) & lowest1.buff(Atonement).duration <= gcd & !lowest1.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest1'},
-    {'!Plea', 'lowest2.health > UI(l_mend) & lowest2.buff(Atonement) & lowest2.buff(Atonement).duration <= gcd & !lowest2.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest2'},
-    {'!Plea', 'lowest3.health > UI(l_mend) & lowest3.buff(Atonement) & lowest3.buff(Atonement).duration <= gcd & !lowest3.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest3'},
-    {'!Plea', 'lowest4.health > UI(l_mend) & lowest4.buff(Atonement) & lowest4.buff(Atonement).duration <= gcd & !lowest4.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest4'},
-    {'!Plea', 'lowest5.health > UI(l_mend) & lowest5.buff(Atonement) & lowest5.buff(Atonement).duration <= gcd & !lowest5.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest5'},
-}
+    {'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest1'},
+    {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest2'},
+    {'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest3'},
+    {'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest4'},
+    {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest5'},
 
 local Moving = {
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
@@ -268,18 +266,17 @@ local outCombat = {
 {{
     {'Plea', 'lowest.health < l_plea & moving', 'lowest'},
     {'Shadow Mend', 'lowest.health < l_mend & !moving', 'lowest'},
-    {'Plea', 'tank.health > UI(l_mend) & tank.buff(Atonement) & tank.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'tank'},
-    {'Plea', 'lowest1.health > UI(l_mend) & lowest1.buff(Atonement) & lowest1.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest1'},
-    {'Plea', 'lowest2.health > UI(l_mend) & lowest2.buff(Atonement) & lowest2.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest2'},
-    {'Plea', 'lowest3.health > UI(l_mend) & lowest3.buff(Atonement) & lowest3.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest3'},
-    {'Plea', 'lowest4.health > UI(l_mend) & lowest4.buff(Atonement) & lowest4.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest4'},
-    {'Plea', 'lowest5.health > UI(l_mend) & lowest5.buff(Atonement) & lowest5.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest5'},
+    {'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest1'},
+    {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest2'},
+    {'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest3'},
+    {'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest4'},
+    {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest5'},
     {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
-    {'Power Word: Shield', '!lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
-    {'Power Word: Shield', '!lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
-    {'Power Word: Shield', '!lowest3.buff(Atonement) & UI(l_appPWS)', 'lowest3'},
-    {'Power Word: Shield', '!lowest4.buff(Atonement) & UI(l_appPWS)', 'lowest4'},
-    {'Power Word: Shield', '!lowest5.buff(Atonement) & UI(l_appPWS)', 'lowest5'},
+    {'Power Word: Shield', '!lowest1.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest1'},
+    {'Power Word: Shield', '!lowest2.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest2'},
+    {'Power Word: Shield', '!lowest3.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest3'},
+    {'Power Word: Shield', '!lowest4.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest4'},
+    {'Power Word: Shield', '!lowest5.buff(Atonement) & UI(l_appPWS) & spell(Plea).charges >= 5', 'lowest5'},
 }, 'UI(OOC)'}, 
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
 }
