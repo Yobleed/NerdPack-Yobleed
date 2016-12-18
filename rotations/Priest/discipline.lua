@@ -231,6 +231,8 @@ local Lowest = {
     {'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest4'},
     {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest5'},
 
+}
+
 local Moving = {
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
