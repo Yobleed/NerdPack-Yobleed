@@ -197,6 +197,8 @@ local Atonement = {
 	{'Penance', 'target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
     --Power Word: Solace on cooldown if talent.
 	{'Power Word: Solace', 'talent(Power Word: Solace)', 'target'},
+	--Divine Star if mobs are 3 or more.
+	{'Divine Star', 'talent(Divine Star) & player.area(24).enemies.infront >= 3'},
 	--Divine Star if moving.
 	{'Divine Star', 'talent(Divine Star) & player.area(24).enemies.infront >= 1 & moving'},
 	--Smite on CD.
