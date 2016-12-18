@@ -52,7 +52,7 @@ local GUI = {
 	{type = 'ruler'},{type = 'spacer'},
     
     --OOC Healing
-	{type = 'header', text = 'Out of Combat healing', align = 'center'},
+	{type = 'header', text = 'OOC healing & Atonement Spread', align = 'center'},
 	{type = 'checkbox', text = 'ON/OFF', key = 'OOC', default = false},
 	{type = 'ruler'}, {type = 'spacer'},
 
@@ -119,6 +119,10 @@ local Emergency = {
 	{'!Power Infusion', 'player.area(40, 40).heal >= 5 & toggle(cooldowns)', 'player'},
 	--Rapture if 5 ore more people are below 30% health and cooldown is toggled on.
 	{'!Rapture', 'player.area(40, 30).heal >= 5 & spell(Power Word: Shield).cooldown > 0 & toggle(cooldowns)', 'player'},
+	--Pain Suppression if lowest health is below or equal to 20% and checked.
+	{'!Pain Suppression', 'UI(c_PS) & lowest.health <= 20 & toggle(cooldowns)', 'lowest'},
+	--Gift of the Naaru if lowest health is below or if 20%.
+	{'Gift of the Naaru', 'lowest.health <= 20 & toggle(cooldowns) ', 'lowest'},
 }
 
 local Trinkets = {
@@ -200,59 +204,38 @@ local Atonement = {
 
 }
 
-local Lowest = {
-                                                                         -- if lnbuff Works -- Quote: "its {'Spell', 'lnbuff(Role, Buff).condition', lnbuff(Role, Buff)},
-                                                                                                --example, {'Renew', 'lnbuff(TANK, Renew).health<80', 'lnbuff(TANK, Renew)'},"
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
-    --{'Power Word: Shield', '{lowest.health <= UI(l_PWS) & lnbuff(Power Word: Shield)} || {lnbuff(Atonement) & UI(l_appPWS)}', 'lowest'},
+local Lowest = {  
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	--{'Power Word: Radiance', 'spell(plea).count < 3 & lnbuff1(HEALER,Atonement)', 'lnbuff1(HEALER,Atonement)'},
-    --Plea on UI value if no 6 atonements are active.
-    --{'Plea', 'lowest.health <= UI(l_plea) & spell(Plea).count <= 6 & lnbuff(Atonement)', 'lowest'},
-	--Shadow Mend on UI value if PWS don't make it.
-    --{'!Shadow Mend', '{lowest.health <= UI(l_mend) & player.mana <= 50} || {spell(Plea).count > 6 & lowest.health <= UI(l_plea)}', 'lowest'},
-    --Plea to reaplly Atonement if Power Word: Shield dropped off.
-    --{'!Plea', 'lowest.health > UI(l_mend) & lowest.buff(Atonement) & lowest.buff(Atonement).duration <= 2 & lnbuff(Power Word: Shield) & UI(l_appplea)', 'lowest1'},
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
-	
-	--Pain Suppression if lowest health is below or equal to 20% and checked.
-	{'!Pain Suppression', 'UI(c_PS) & lowest.health <= 20 & toggle(cooldowns)', 'lowest'},
-	--Gift of the Naaru if lowest health is below or if 20%.
-	{'Gift of the Naaru', 'lowest.health <= 20 ', 'lowest'},
+	{'Power Word: Radiance', 'spell(plea).count > 6 & spell(plea).count < 10 & player.buff(Power Infusion) & lowest.area(40,75).heal >= 10', 'lowest'},
     --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
     {'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
     --Plea on UI value if no 6 atonements are active.
-    {'Plea', 'lowest.health <= UI(l_plea) & lowest.health > UI(l_mend) & spell(Plea).charges <= 5', 'lowest'},
+    {'Plea', 'lowest.health <= UI(l_plea) & lowest.health >= 70 & spell(Plea).charges <= 6', 'lowest'},
 	--Shadow Mend on UI value if PWS don't make it.
-    {'!Shadow Mend', '{lowest.health <= UI(l_mend)} || {spell(Plea).count > 5 & lowest.health <= UI(l_plea)}', 'lowest'},
-    --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', 'spell(plea).count < 3', 'lowest'},
-    --Power Word: Shield on CD if not Atonement.
+    {'!Shadow Mend', '{lowest.health <= UI(l_mend)}', 'lowest'},
+    --Power Word: Shield on CD if not Atonement on 6 people max.
+    {'Power Word: Shield', 'tank.health <= 100 & !tank.buff(Atonement) & UI(l_appPWS)', 'tank'},
     {'Power Word: Shield', 'lowest1.health <= 100 & !lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
     {'Power Word: Shield', 'lowest2.health <= 100 & !lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
     {'Power Word: Shield', 'lowest3.health <= 100 & !lowest3.buff(Atonement) & UI(l_appPWS)', 'lowest3'},
     {'Power Word: Shield', 'lowest4.health <= 100 & !lowest4.buff(Atonement) & UI(l_appPWS)', 'lowest4'},
     {'Power Word: Shield', 'lowest5.health <= 100 & !lowest5.buff(Atonement) & UI(l_appPWS)', 'lowest5'},
-    {'Power Word: Shield', 'lowest5.health <= 100 & !lowest5.buff(Atonement) & UI(l_appPWS)', 'lowest6'},
-
-    --Plea to reaplly Atonement if Power Word: Shield dropped off.
-    {'Plea', 'lowest1.health > UI(l_mend) & lowest1.buff(Atonement) & lowest1.buff(Atonement).duration <= 2 & !lowest1.buff(Power Word: Shield) & UI(l_appplea)', 'lowest1'},
-    {'Plea', 'lowest2.health > UI(l_mend) & lowest2.buff(Atonement) & lowest2.buff(Atonement).duration <= 2 & !lowest2.buff(Power Word: Shield) & UI(l_appplea)', 'lowest2'},
-    {'Plea', 'lowest3.health > UI(l_mend) & lowest3.buff(Atonement) & lowest3.buff(Atonement).duration <= 2 & !lowest3.buff(Power Word: Shield) & UI(l_appplea)', 'lowest3'},
-    {'Plea', 'lowest4.health > UI(l_mend) & lowest4.buff(Atonement) & lowest4.buff(Atonement).duration <= 2 & !lowest4.buff(Power Word: Shield) & UI(l_appplea)', 'lowest4'},
-    {'Plea', 'lowest5.health > UI(l_mend) & lowest5.buff(Atonement) & lowest5.buff(Atonement).duration <= 2 & !lowest5.buff(Power Word: Shield) & UI(l_appplea)', 'lowest5'},
-    {'Plea', 'lowest5.health > UI(l_mend) & lowest5.buff(Atonement) & lowest5.buff(Atonement).duration <= 2 & !lowest5.buff(Power Word: Shield) & UI(l_appplea)', 'lowest6'},
-
-   
-
+    --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
+	{'Power Word: Radiance', 'spell(plea).count < 3', 'lowest'},
+    --Plea to reaplly Atonement if Power Word: Shield dropped off on 6 people max.
+    {'!Plea', 'tank.health > UI(l_mend) & tank.buff(Atonement) & tank.buff(Atonement).duration <= gcd & !tank.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'tank'},
+    {'!Plea', 'lowest1.health > UI(l_mend) & lowest1.buff(Atonement) & lowest1.buff(Atonement).duration <= gcd & !lowest1.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest1'},
+    {'!Plea', 'lowest2.health > UI(l_mend) & lowest2.buff(Atonement) & lowest2.buff(Atonement).duration <= gcd & !lowest2.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest2'},
+    {'!Plea', 'lowest3.health > UI(l_mend) & lowest3.buff(Atonement) & lowest3.buff(Atonement).duration <= gcd & !lowest3.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest3'},
+    {'!Plea', 'lowest4.health > UI(l_mend) & lowest4.buff(Atonement) & lowest4.buff(Atonement).duration <= gcd & !lowest4.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest4'},
+    {'!Plea', 'lowest5.health > UI(l_mend) & lowest5.buff(Atonement) & lowest5.buff(Atonement).duration <= gcd & !lowest5.buff(Power Word: Shield) & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest5'},
 }
 
 local Moving = {
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	-- Body and Soul usage if enabled in UI.
-	{'!Power Word: Shield', 'talent(Body and Soul) & player.movingfor >= 1 & UI(m_Body)', 'player'},
+	{'!Power Word: Shield', 'talent(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance)', 'player'},
 
 }
 
@@ -273,30 +256,31 @@ local inCombat = { --194384 Atonement
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
-    {Lowest, '!toggle(xDPS) & !player.buff(Rapture)'},
+    {Lowest, '{!toggle(xDPS) & !player.buff(Rapture)} ||{lowest1.buff(Power Word: Shield) & lowest2.buff(Power Word: Shield) & lowest3.buff(Power Word: Shield) & lowest4.buff(Power Word: Shield) & lowest5.buff(Power Word: Shield)}'},
     {Atonement, '!lowest.health <= UI(l_mend) & !toggle(xDPS)'},
     {Solo, 'toggle(xDPS)'},
-
-	--{{
-	--    {Lowest, 'lowest.health < 100 & !toggle(xDPS)'},
-	--	{Tank, 'tank.health < 100 & !toggle(xDPS)'},
-	--	{Player, 'health < 100 & !toggle(xDPS)'},
-	--	{FullDPS, 'toggle(xDPS) & target.range <= 40'},
-	--	{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
-	--}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing)'},
-
-	
 
 }
 
 local outCombat = {
+   {Keybinds},
+   {Moving, 'moving'},
 {{
-    {'Power Word: Shield', 'tank.health <= 100 & !tank.buff(Power Word: Shield)', 'tank'},
-    {'Plea', 'lowest.health < 100 & moving', 'lowest'},
-    {'Shadow Mend', 'lowest.health < 100 & !moving', 'lowest'},
+    {'Plea', 'lowest.health < l_plea & moving', 'lowest'},
+    {'Shadow Mend', 'lowest.health < l_mend & !moving', 'lowest'},
+    {'Plea', 'tank.health > UI(l_mend) & tank.buff(Atonement) & tank.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'tank'},
+    {'Plea', 'lowest1.health > UI(l_mend) & lowest1.buff(Atonement) & lowest1.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest1'},
+    {'Plea', 'lowest2.health > UI(l_mend) & lowest2.buff(Atonement) & lowest2.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest2'},
+    {'Plea', 'lowest3.health > UI(l_mend) & lowest3.buff(Atonement) & lowest3.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest3'},
+    {'Plea', 'lowest4.health > UI(l_mend) & lowest4.buff(Atonement) & lowest4.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest4'},
+    {'Plea', 'lowest5.health > UI(l_mend) & lowest5.buff(Atonement) & lowest5.buff(Atonement).duration <= gcd & UI(l_appplea) & spell(Plea).charges <= 4', 'lowest5'},
+    {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
+    {'Power Word: Shield', '!lowest1.buff(Atonement) & UI(l_appPWS)', 'lowest1'},
+    {'Power Word: Shield', '!lowest2.buff(Atonement) & UI(l_appPWS)', 'lowest2'},
+    {'Power Word: Shield', '!lowest3.buff(Atonement) & UI(l_appPWS)', 'lowest3'},
+    {'Power Word: Shield', '!lowest4.buff(Atonement) & UI(l_appPWS)', 'lowest4'},
+    {'Power Word: Shield', '!lowest5.buff(Atonement) & UI(l_appPWS)', 'lowest5'},
 }, 'UI(OOC)'}, 
-	{Keybinds},
-	{Moving, 'moving'},
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
 }
 
@@ -308,3 +292,20 @@ NeP.CR:Add(256, {
      gui = GUI,
     load = exeOnLoad
 })
+
+
+--NOTES:
+                                                                         -- if lnbuff Works -- Quote: "its {'Spell', 'lnbuff(Role, Buff).condition', lnbuff(Role, Buff)},
+                                                                                                --example, {'Renew', 'lnbuff(TANK, Renew).health<80', 'lnbuff(TANK, Renew)'},"
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
+    --{'Power Word: Shield', '{lowest.health <= UI(l_PWS) & lnbuff(Power Word: Shield)} || {lnbuff(Atonement) & UI(l_appPWS)}', 'lowest'},
+    --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
+	--{'Power Word: Radiance', 'spell(plea).count < 3 & lnbuff1(HEALER,Atonement)', 'lnbuff1(HEALER,Atonement)'},
+    --Plea on UI value if no 6 atonements are active.
+    --{'Plea', 'lowest.health <= UI(l_plea) & spell(Plea).count <= 6 & lnbuff(Atonement)', 'lowest'},
+	--Shadow Mend on UI value if PWS don't make it.
+    --{'!Shadow Mend', '{lowest.health <= UI(l_mend) & player.mana <= 50} || {spell(Plea).count > 6 & lowest.health <= UI(l_plea)}', 'lowest'},
+    --Plea to reaplly Atonement if Power Word: Shield dropped off.
+    --{'!Plea', 'lowest.health > UI(l_mend) & lowest.buff(Atonement) & lowest.buff(Atonement).duration <= 2 & lnbuff(Power Word: Shield) & UI(l_appplea)', 'lowest1'},
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 
