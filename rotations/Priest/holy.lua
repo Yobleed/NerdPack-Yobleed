@@ -109,8 +109,7 @@ local exeOnLoad = function()
 	
     
 	print('|cffFACC2E Holy Priest Rotation loaded|r')
-	print('|cffFACC2E For Settings Right-Click the MasterToggle and go to Combat Routines Settings |r')
-	print('|cffFACC2E Have a nice day!|r')
+    print('|cffff0000 Configuration: |rRight-click the MasterToggle and go to Combat Routines Settings|r')
 
 		NeP.Interface:AddToggle({
 		key = 'xDPS',

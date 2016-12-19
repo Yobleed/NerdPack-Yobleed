@@ -79,11 +79,12 @@ local GUI = {
 }
 
 local exeOnLoad = function()
-	
-    
-	print('|cffFACC2E Discipline Priest Rotation loaded|r')
-	print('|cffFACC2E For Settings Right-Click the MasterToggle and go to Combat Routines Settings |r')
-	print('|cffFACC2E Have a nice day!|r')
+	-- Rotation loaded message.
+	print('|cff58FAF4 ----------------------------------------------------------------------|r')
+	print('|cff58FAF4 --- |rPriest: |cff58FAF4DISCIPLINE|r')
+	print('|cff58FAF4 --- |rRecommended Talents: 1/3 - 2/2 - 3/1 - 4/2 - 5/2 - 6/2 or 6/3 - 7/1')
+	print('|cff58FAF4 ----------------------------------------------------------------------|r')
+	print('|cffff0000 Configuration: |rRight-click the MasterToggle and go to Combat Routines Settings|r')
 
 		NeP.Interface:AddToggle({
 		key = 'xDPS',
@@ -236,12 +237,12 @@ local Lowest = {
 	{'Power Word: Radiance', 'spell(plea).count > 6 & spell(plea).count < 10 & player.buff(Power Infusion) & lowest.area(40,75).heal >= 10', 'lowest'},
     --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
     {'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
+    --Shadow Mend on UI value if PWS don't make it.
+    {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Plea on UI value if no 6 atonements are active.
     {'Plea', 'lowest.health <= UI(l_plea) & lowest.health >= 70 & !lowest.buff(Atonement) & spell(Plea).count <= 6', 'lowest'},
-	--Shadow Mend on UI value if PWS don't make it.
-    {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', 'spell(plea).count < 3', 'lowest'},
+	{'Power Word: Radiance', 'spell(plea).count < 3 !lowest.health <= UI(l_mend)', 'lowest'},
     --Power Word: Shield on CD if not Atonement on 6 people max.
     {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
     {'Power Word: Shield', '!lowest1.buff(Atonement) & spell(Plea).count >= 5', 'lowest1'},
@@ -284,8 +285,8 @@ local inCombat = { --194384 Atonement
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
     {Spread, 'UI(tog_plea) & !lowest.health <= UI(l_mend)'},
-    {Atonement, '!lowest.health <= UI(l_mend) & !toggle(xDPS)'},
     {Lowest, '{!toggle(xDPS) & !player.buff(Rapture)} ||{lowest1.buff(Power Word: Shield) & lowest2.buff(Power Word: Shield) & lowest3.buff(Power Word: Shield) & lowest4.buff(Power Word: Shield) & lowest5.buff(Power Word: Shield)}'},
+    {Atonement, '!toggle(xDPS)'},
     {Solo, 'toggle(xDPS)'},
 
 }
