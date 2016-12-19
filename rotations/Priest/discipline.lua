@@ -51,6 +51,14 @@ local GUI = {
 	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', width = 55, default_check = false, default_spin = 20},
 	{type = 'ruler'},{type = 'spacer'},
     
+    --Spreading Atonement
+	{type = 'header', text = 'Atonement Spreading', align = 'center'},
+	{type = 'text', text = 'Forces Rotation to Spread Atonement before DPS', align = 'center'},
+	{type = 'checkbox', text = 'ON/OFF', key = 'tog_plea', default = false},
+	{type = 'spinner', text = 'Number of Atonements', key = 'plea',  width = 55, step = 1, min = 0, max = 10, default = 6},
+	{type = 'ruler'},{type = 'spacer'},
+
+
 	--Solo
 	{type = 'header', text = 'Solo mode', align = 'center'},
 	{type = 'text', text = 'Player health values', align = 'center'},
@@ -153,6 +161,23 @@ local Potions = {
 	--Ancient Mana Potion below 20% mana. Active when NOT channeling Divine Hymn.
 	{'#Ancient Mana Potion', 'UI(p_AMP_check) & player.mana <= UI(p_AMP_spin) & !player.channeling(Divine Hymn)'}
 }
+
+
+local Spread = {
+	{'Power Word: Radiance', 'spell(plea).count < 3 & !lowest.buff(Atonement)', 'lowest'},
+	{'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest1'},
+    {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest2'},
+    {'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest3'},
+    {'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest4'},
+    {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest5'},
+    {'Plea', 'lowest6.health > UI(l_mend) & !lowest6.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest6'},
+    {'Plea', 'lowest7.health > UI(l_mend) & !lowest7.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest7'},
+    {'Plea', 'lowest8.health > UI(l_mend) & !lowest8.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest8'},
+    {'Plea', 'lowest9.health > UI(l_mend) & !lowest9.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest9'},
+    {'Plea', 'lowest10.health > UI(l_mend) & !lowest10.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest10'},
+    {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
+}
+
 
 local Solo = {
     --Plea to keep on Atonement.
@@ -258,6 +283,7 @@ local inCombat = { --194384 Atonement
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
+    {Spread, 'UI(tog_plea) & !lowest.health <= UI(l_mend)'},
     {Atonement, '!lowest.health <= UI(l_mend) & !toggle(xDPS)'},
     {Lowest, '{!toggle(xDPS) & !player.buff(Rapture)} ||{lowest1.buff(Power Word: Shield) & lowest2.buff(Power Word: Shield) & lowest3.buff(Power Word: Shield) & lowest4.buff(Power Word: Shield) & lowest5.buff(Power Word: Shield)}'},
     {Solo, 'toggle(xDPS)'},
