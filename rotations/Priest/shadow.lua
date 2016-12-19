@@ -54,7 +54,7 @@ local GUI = {
 	-- GUI Trinkets
 	{type = 'header', text = 'Trinkets', align = 'center'},
 	{type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
-	{type = 'checkbox', text = 'Bottom Trinket', key = 'Trinket_2', default = false},
+	{type = 'checkbox', text = 'Bottom Trinket', key = 'trinket_2', default = false},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Keybinds
