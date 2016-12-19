@@ -13,68 +13,68 @@ local GUI = {
 
   --Resurrection
   {type = 'header', text = 'Ressurection', align = 'center'},
-  {type = 'checkbox', text = 'Auto Ress out of combat', key = 'rezz', default = false},
+  {type = 'checkbox', text = 'Auto Ress out of combat', key = 'rezz', width = 55, default = false},
   {type = 'ruler'},{type = 'spacer'},
 
 	-- GUI Survival & Potions
 	{type = 'header', text = 'Survival & Potions', align = 'center'},
-	{type = 'checkbox', text = 'Fade', key = 's_F', default= false},
-	{type = 'checkspin', text = 'Power Word: Shield', key = 's_PWS', default_check = false, default_spin = 40},
-	{type = 'checkbox', text = 'Dispersion', key = 's_D', default = false},
-	{type = 'spinner', text = '', key = 's_Dspin', align = 'left', default = 20},
-	{type = 'checkspin', text = 'Gift of the Naaru', key = 's_GotN', default_check = false, default_spin = 40},
-	{type = 'checkspin', text = 'Healthstone', key = 's_HS', default_check = false, default_spin = 20},
-	{type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', default_check = false, default_spin = 20},
-	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', default= false},
-	{type = 'checkbox', text = 'Potion of Prolonged Power TTD Boss', key = 's_PPttd', default= false},
+	{type = 'checkbox', text = 'Fade', key = 's_F', width = 55, default= false},
+	{type = 'checkspin', text = 'Power Word: Shield', key = 's_PWS', width = 55, default_check = false, default_spin = 40},
+	{type = 'checkbox', text = 'Dispersion', key = 's_D', width = 55, default = false},
+	{type = 'spinner', text = '', key = 's_Dspin', align = 'left', width = 55, default = 20},
+	{type = 'checkspin', text = 'Gift of the Naaru', key = 's_GotN', width = 55, default_check = false, default_spin = 40},
+	{type = 'checkspin', text = 'Healthstone', key = 's_HS', width = 55, default_check = false, default_spin = 20},
+	{type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', width = 55, default_check = false, default_spin = 20},
+	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', width = 55, default= false},
+	{type = 'checkbox', text = 'Potion of Prolonged Power TTD Boss', key = 's_PPttd', width = 55, default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	--Before Pull
 	{type = 'header', text = 'Pull Timer', align = 'center'},
 	{type = 'text', text = 'Before Pull.', align = 'center'},
-	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_PPull', default= false},
-	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', default= false},
+	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_PPull', width = 55, default= false},
+	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', width = 55, default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
 
 	-- GUI Dispersion DPS Cooldown
 	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
 	{type = 'text', text = 'No S2M Active', align = 'center'},
-	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'dps_D', default= false},
+	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'dps_D', width = 55, default= false},
 	{type = 'text', text = 'Choose Stacks', align = 'center'},
-	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', default = 35},
-	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', default = 30},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, default = 35},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, default = 30},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Arcane Torrent as last Resort
 	{type = 'header', text = 'Arcane Torrent StM', align = 'center'},
-	{type = 'checkbox', text = 'arcane torrent', key = 'dps_at', default= true},
+	{type = 'checkbox', text = 'Arcane torrent', key = 'dps_at', width = 55, default= true},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Trinkets
 	{type = 'header', text = 'Trinkets', align = 'center'},
-	{type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
-	{type = 'checkbox', text = 'Bottom Trinket', key = 'trinket_2', default = false},
+	{type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', width = 55, default = false},
+	{type = 'checkbox', text = 'Bottom Trinket', key = 'trinket_2', width = 55, default = false},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Keybinds
 	{type = 'header', text = 'Keybinds', align = 'center'},
 	{type = 'text', text = 'Left Shift: Mind Sear|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
-	{type = 'checkbox', text = 'Mind Sear', key = 'k_MS', default = false},
-	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', default = false},
-	{type = 'checkbox', text = 'Pause', key = 'k_P', default = false},
+	{type = 'checkbox', text = 'Mind Sear', key = 'k_MS', width = 55, default = false},
+	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
+	{type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Moving
 	{type = 'header', text = 'Movement', align = 'center'},
-	{type = 'checkbox', text = 'Body and Soul', key = 'm_Body', default = false},
+	{type = 'checkbox', text = 'Body and Soul', key = 'm_Body', width = 55, default = false},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Party Support
 	{type = 'header', text = 'Party Support', align = 'center'},
 	{type = 'text', text = 'Attempt to save members of your party.', align = 'center'},
-	{type = 'checkspin', text = 'Gift of the Naaru', key = 'sup_GotN', default_check = false, default_spin = 20},
-	{type = 'checkspin', text = 'Power Word: Shield', key = 'sup_PWS', default_check = false, default_spin = 20},
+	{type = 'checkspin', text = 'Gift of the Naaru', key = 'sup_GotN', width = 55, default_check = false, default_spin = 20},
+	{type = 'checkspin', text = 'Power Word: Shield', key = 'sup_PWS', width = 55, default_check = false, default_spin = 20},
 }
 
 local exeOnLoad = function()

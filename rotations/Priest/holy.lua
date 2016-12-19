@@ -19,90 +19,90 @@ local GUI = {
 
 	--Cooldowns
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
-	{type = 'checkspin', text = 'Use Guardian Spirit', key = 'c_GS', default_check = false, default_spin = 25},
+	{type = 'checkspin', text = 'Use Guardian Spirit', key = 'c_GS', width = 55, default_check = false, default_spin = 25},
 	{type = 'ruler'},{type = 'spacer'},
 
     --TRINKETS
     {type = 'header', text = 'Trinkets', align = 'center'},
-    {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
-    {type = 'checkbox', text = 'Bottom Trinket', key = 'trinket_2', default = false},
+    {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', width = 55, default = false},
+    {type = 'checkbox', text = 'Bottom Trinket', key = 'trinket_2', width = 55, default = false},
     {type = 'ruler'},{type = 'spacer'},
 
 	--KEYBINDS
 	{type = 'header', text = 'Keybinds', align = 'center'},
 	{type = 'text', text = 'Left Shift: Holy Word: Sanctify|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
-	{type = 'checkbox', text = 'Holy Word: Sanctify', key = 'k_HWS', default = false},
-	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', default = false},
-	{type = 'checkbox', text = 'Pause', key = 'k_P', default = false},
+	{type = 'checkbox', text = 'Holy Word: Sanctify', key = 'k_HWS', width = 55, default = false},
+	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
+	{type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--POTIONS
 	{type = 'header', text = 'Potions', align = 'center'},
 	{type = 'text', text = 'Check to enable Potions', align = 'center'},
-	{type = 'checkspin', text = 'Healthstone', key = 'p_HS', default_check = false, default_spin = 25},
-	{type = 'checkspin', text = 'Ancient Healing Potion', key = 'p_AHP', default_check = false, default_spin = 25},
-	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', default_check = false, default_spin = 20},
+	{type = 'checkspin', text = 'Healthstone', key = 'p_HS', width = 55, default_check = false, default_spin = 25},
+	{type = 'checkspin', text = 'Ancient Healing Potion', key = 'p_AHP', width = 55, default_check = false, default_spin = 25},
+	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', width = 55, default_check = false, default_spin = 20},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--Before Pull
 	{type = 'header', text = 'Pull Timer', align = 'center'},
 	{type = 'text', text = 'Cast on Tank.', align = 'center'},
-	{type = 'checkbox', text = 'Renew ', key = 'pull_Ren', default= false},
-	{type = 'checkbox', text = 'Prayer of Mending', key = 'pull_PoM', default= false},
+	{type = 'checkbox', text = 'Renew ', key = 'pull_Ren', width = 55, default= false},
+	{type = 'checkbox', text = 'Prayer of Mending', key = 'pull_PoM', width = 55, default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	--DPS
 	{type = 'header', text = 'Extra DPS', align = 'center'},
 	{type = 'text', text = 'Check to enable extra DPS', align = 'center'},
-	{type = 'checkbox', text = 'Holy Word: Chastise', key = 'd_HWC', default = false},
-	{type = 'checkbox', text = 'Holy Fire', key = 'd_HF', default = false},
+	{type = 'checkbox', text = 'Holy Word: Chastise', key = 'd_HWC', width = 55, default = false},
+	{type = 'checkbox', text = 'Holy Fire', key = 'd_HF', width = 55, default = false},
 	{type = 'ruler'},{type = 'spacer'},
 
-	--Full DPS
-	{type = 'header', text = 'Full DPS', align = 'center'},
+	--Solo
+	{type = 'header', text = 'Solo mode', align = 'center'},
 	{type = 'text', text = 'Player health values', align = 'center'},
-	{type = 'spinner', text = 'Gift of the Naaru', key = 'full_Gift', default = 20},
-	{type = 'spinner', text = 'Holy Word: Serenity', key = 'full_HWSE', default = 40},
-	{type = 'spinner', text = 'Flash Heal', key = 'full_FH', default = 50},
+	{type = 'spinner', text = 'Gift of the Naaru', key = 'full_Gift', width = 55, default = 20},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 'full_HWSE', width = 55, default = 40},
+	{type = 'spinner', text = 'Flash Heal', key = 'full_FH', width = 55, default = 50},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--TANK
 	{type = 'header', text = 'Tank', align = 'center'},
 	{type = 'text', text = 'Tank health values', align = 'center'},
-	{type = 'spinner', text = 'Holy Word: Serenity', key = 't_HWSE', default = 60},
-	{type = 'spinner', text = 'Flash Heal', key = 't_FH', default = 85},
-	{type = 'spinner', text = 'Prayer of Mending', key = 't_PoM', default = 100},
-	{type = 'spinner', text = 'Renew', key = 't_Ren', default = 100},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 't_HWSE', width = 55, default = 60},
+	{type = 'spinner', text = 'Flash Heal', key = 't_FH', width = 55, default = 85},
+	{type = 'spinner', text = 'Prayer of Mending', key = 't_PoM', width = 55, default = 100},
+	{type = 'spinner', text = 'Renew', key = 't_Ren', width = 55, default = 100},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--PLAYER
 	{type = 'header', text = 'Player', align = 'center'},
 	{type = 'text', text = 'Player health values', align = 'center'},
-	{type = 'spinner', text = 'Gift of the Naaru', key = 'p_Gift', default = 20},
-	{type = 'spinner', text = 'Holy Word: Serenity', key = 'p_HWSE', default = 40},
-	{type = 'spinner', text = 'Flash Heal', key = 'p_FH', default = 70},
-	{type = 'spinner', text = 'Prayer of Mending', key = 'p_PoM', default = 100},
+	{type = 'spinner', text = 'Gift of the Naaru', key = 'p_Gift', width = 55, default = 20},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 'p_HWSE', width = 55, default = 40},
+	{type = 'spinner', text = 'Flash Heal', key = 'p_FH', width = 55, default = 70},
+	{type = 'spinner', text = 'Prayer of Mending', key = 'p_PoM', width = 55, default = 100},
 	--{type = 'spinner', text = 'Renew', key = 'p_Ren', default = 0},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--LOWEST
 	{type = 'header', text = 'Lowest', align = 'center'},
 	{type = 'text', text = 'Lowest health values', align = 'center'},
-	{type = 'spinner', text = 'Holy Word: Serenity', key = 'l_HWSE', default = 60},
-	{type = 'spinner', text = 'Flash Heal', key = 'l_FH', default = 85},
-	{type = 'spinner', text = 'Prayer of Mending', key = 'l_PoM', default = 100},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 'l_HWSE', width = 55, default = 60},
+	{type = 'spinner', text = 'Flash Heal', key = 'l_FH', width = 55, default = 85},
+	{type = 'spinner', text = 'Prayer of Mending', key = 'l_PoM', width = 55, default = 100},
 	--{type = 'spinner', text = 'Renew', key = 'l_Ren', default = 0},
-	{type = 'spinner', text = 'Heal', key = 'l_H', default = 95},
+	{type = 'spinner', text = 'Heal', key = 'l_H', width = 55, default = 95},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--MOVING
 	{type = 'header', text = 'Movement', align = 'center'},
-	{type = 'checkbox', text = 'Angelic Feather', key = 'm_AF', default = false},
-	{type = 'checkbox', text = 'Body and Mind', key = 'm_Body', default = false},
+	{type = 'checkbox', text = 'Angelic Feather', key = 'm_AF', width = 55, default = false},
+	{type = 'checkbox', text = 'Body and Mind', key = 'm_Body', width = 55, default = false},
 	{type = 'text', text = 'Lowest health and moving values', align = 'center'},
-	{type = 'spinner', text = 'Holy Word: Serenity', key = 'm_HWSE', default = 50},
-	{type = 'spinner', text = 'Flash Heal Surge of Light', key = 'm_FH', default = 70},
-	{type = 'spinner', text = 'Renew', key = 'm_Ren', default = 90},
+	{type = 'spinner', text = 'Holy Word: Serenity', key = 'm_HWSE', width = 55, default = 50},
+	{type = 'spinner', text = 'Flash Heal Surge of Light', key = 'm_FH', width = 55, default = 70},
+	{type = 'spinner', text = 'Renew', key = 'm_Ren', width = 55, default = 90},
 }
 
 local exeOnLoad = function()

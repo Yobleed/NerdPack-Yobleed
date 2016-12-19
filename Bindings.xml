@@ -1,6 +1,6 @@
 <Bindings>
     
-<Binding name="Full DPS" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
+<Binding name="Solo" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
         NeP.Interface:toggleToggle('xDPS')
     </Binding>
 <Binding name="Mind Bomb AOE" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
@@ -9,6 +9,10 @@
 
 <Binding name="Dispell" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
         NeP.Interface:toggleToggle('disp')
+    </Binding>
+
+<Binding name="OOC Atonement" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
+        NeP.Interface:toggleToggle('ato')
     </Binding>
 
 </Bindings>
