@@ -42,8 +42,8 @@ local GUI = {
 	{type = 'text', text = 'No S2M Active', align = 'center'},
 	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'dps_D', width = 55, default= false},
 	{type = 'text', text = 'Choose Stacks', align = 'center'},
-	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, default = 35},
-	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, default = 30},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, min = 25, max, 50, step = 1,  default = 35},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, min = 25, max, 50, step = 1,  default = 30},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Arcane Torrent as last Resort
