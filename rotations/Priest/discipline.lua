@@ -237,12 +237,12 @@ local Lowest = {
 	{'Power Word: Radiance', 'spell(plea).count > 6 & spell(plea).count < 10 & player.buff(Power Infusion) & lowest.area(40,75).heal >= 10', 'lowest'},
     --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
     {'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
-    --Shadow Mend on UI value if PWS don't make it.
-    {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Plea on UI value if no 6 atonements are active.
     {'Plea', 'lowest.health <= UI(l_plea) & lowest.health >= 70 & !lowest.buff(Atonement) & spell(Plea).count <= 6', 'lowest'},
+    --Shadow Mend on UI value if PWS don't make it.
+    {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', 'spell(plea).count < 3 !lowest.health <= UI(l_mend)', 'lowest'},
+	{'Power Word: Radiance', 'spell(plea).count < 3', 'lowest'},
     --Power Word: Shield on CD if not Atonement on 6 people max.
     {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
     {'Power Word: Shield', '!lowest1.buff(Atonement) & spell(Plea).count >= 5', 'lowest1'},
