@@ -165,6 +165,7 @@ local Potions = {
 
 
 local Spread = {
+--Spreading Atonement before DPS if checked.
 	{'Power Word: Radiance', 'spell(plea).count < 3 & !lowest.buff(Atonement)', 'lowest'},
 	{'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest1'},
     {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest2'},
@@ -212,7 +213,7 @@ local Solo = {
 
 local Atonement = {
      --LW on CD if toggled and if atonement stacks are 5 or higher.
-	{"Light's Wrath", 'toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 2.3 & spell(plea).count >= 5', 'target'},
+	{"!Light's Wrath", 'toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 2.3 & spell(plea).count >= 5', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns)', 'target'},
     --Purge the Wicked if talent and not on target.
@@ -238,7 +239,7 @@ local Lowest = {
     --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
     {'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
     --Plea on UI value if no 6 atonements are active.
-    {'Plea', 'lowest.health <= UI(l_plea) & lowest.health >= 70 & !lowest.buff(Atonement) & spell(Plea).count <= 6', 'lowest'},
+    {'Plea', 'lowest.health <= UI(l_plea) & lowest.health >= UI(l_mend) & !lowest.buff(Atonement) & spell(Plea).count <= 6', 'lowest'},
     --Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
@@ -263,7 +264,7 @@ local Moving = {
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	-- Body and Soul usage if enabled in UI.
-	{'!Power Word: Shield', 'talent(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance)', 'player'},
+	{'!Power Word: Shield', 'talent(Body and Soul) & !player.buff(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance)', 'player'},
 
 }
 
@@ -276,9 +277,9 @@ local inCombat = { --194384 Atonement
     {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
 	{'fade', 'aggro'},
-	{Rapture, 'player.buff(Rapture)'},
-    {Trinkets},
 	{Keybinds},
+	{Trinkets},
+	{Rapture, 'player.buff(Rapture)'},
 	{Moving, 'moving'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
