@@ -242,7 +242,7 @@ local Lowest = {
     --Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', 'spell(plea).count < 3', 'lowest'},
+	{'Power Word: Radiance', '{spell(plea).count < 3 & player.mana >= 70 & !lastcast(Power Word: Radiance)} || {spell(plea).count < 3 & lowest.area(40,95).heal >= 3 & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)}', 'lowest'},
     --Power Word: Shield on CD if not Atonement on 6 people max.
     {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
     {'Power Word: Shield', '!lowest1.buff(Atonement) & spell(Plea).count >= 5', 'lowest1'},
@@ -297,13 +297,13 @@ local outCombat = {
 {{
     {'Plea', 'lowest.health < l_plea & moving', 'lowest'},
     {'Shadow Mend', 'lowest.health < l_mend & !moving', 'lowest'},
+    {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
+    {Moving, 'moving'},
     {'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & spell(Plea).count <= 4', 'lowest1'},
     {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & spell(Plea).count <= 4', 'lowest2'},
     {'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement) & spell(Plea).count <= 4', 'lowest3'},
     {'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & spell(Plea).count <= 4', 'lowest4'},
     {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count <= 4', 'lowest5'},
-    {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
-    {Moving, 'moving'},
 }, 'toggle(ato)'}, 
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
 }
