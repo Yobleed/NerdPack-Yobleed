@@ -198,6 +198,8 @@ local Solo = {
 	{'Gift of the Naaru', 'player.health <= UI(full_Gift)', 'player'},
     --Purge the Wicked if talent and not on target.
 	{'Purge the Wicked', 'talent(Purge the Wicked) & !target.debuff(Purge the Wicked)', 'target'},
+	--Shadow Word: Pain if not on target.
+	{'Shadow Word: Pain', '!talent(Purge the Wicked) & !target.debuff(Shadow Word: Pain)', 'target'},
 	--Schism on cooldown.
 	{'Schism', 'talent(Schism) & !moving', 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
@@ -276,7 +278,7 @@ local inCombat = { --194384 Atonement
     {Emergency},
     {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 	--Fade when you get aggro.
-	{'fade', 'aggro'},
+	{'fade', 'aggro & !toggle(xDPS)'},
 	{Keybinds},
 	{Trinkets},
 	{Rapture, 'player.buff(Rapture)'},
