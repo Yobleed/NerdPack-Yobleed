@@ -194,7 +194,7 @@ local Solo = {
     --PWS if player health is below or if UI value.
 	{'Power Word: Shield', 'Player.Health <= UI(full_PWS)', 'player'},
     --LW on CD if toggled.
-	{"Light's Wrath", 'toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 2.3', 'target'},
+	{"Light's Wrath", 'toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3', 'target'},
     --PI on CD if toggled.
 	{'Power Infusion', 'talent(Power Infusion) & toggle(cooldowns)', 'target'},
 	--Shadowfiend on CD if toggled.
@@ -224,7 +224,7 @@ local Solo = {
 
 local Atonement = {
      --LW on CD if toggled and if atonement stacks are 5 or higher.
-	{"!Light's Wrath", 'toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 2.3 & spell(plea).count >= 5', 'target'},
+	{"!Light's Wrath", 'toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= 5', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns)', 'target'},
     --Purge the Wicked if talent and not on target.
