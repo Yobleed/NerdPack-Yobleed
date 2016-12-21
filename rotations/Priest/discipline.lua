@@ -235,6 +235,12 @@ local Atonement = {
 	--Smite on CD.
 	{'Smite', nil, 'target'},
 
+
+}
+local Tank = {
+    --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
+	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
+
 }
 
 local Lowest = {  
@@ -249,7 +255,6 @@ local Lowest = {
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
 	{'Power Word: Radiance', '{spell(plea).count < 3 & player.mana >= 70 & !lastcast(Power Word: Radiance)} || {spell(plea).count < 3 & lowest.area(40,95).heal >= 3 & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)}', 'lowest'},
     --Power Word: Shield on CD if not Atonement on 6 people max.
-    {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
     {'Power Word: Shield', '!lowest1.buff(Atonement) & spell(Plea).count >= 5', 'lowest1'},
     {'Power Word: Shield', '!lowest2.buff(Atonement) & spell(Plea).count >= 5', 'lowest2'},
     {'Power Word: Shield', '!lowest3.buff(Atonement) & spell(Plea).count >= 5', 'lowest3'},
@@ -283,14 +288,15 @@ local inCombat = { --194384 Atonement
 	{'fade', 'aggro & !toggle(xDPS)'},
 	{Keybinds},
 	{Trinkets},
-	{Rapture, 'player.buff(Rapture)'},
+	{Rapture, 'player.buff(Rapture) & lowest.range <= 40'},
 	{Moving, 'moving'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
-    {Spread, 'UI(tog_plea) & !lowest.health <= UI(l_mend)'},
-    {Lowest, '{!toggle(xDPS) & !player.buff(Rapture)} ||{lowest1.buff(Power Word: Shield) & lowest2.buff(Power Word: Shield) & lowest3.buff(Power Word: Shield) & lowest4.buff(Power Word: Shield) & lowest5.buff(Power Word: Shield)}'},
+    {Tank, 'tank.range <= 40'},
+    {Spread, 'UI(tog_plea) & !lowest.health <= UI(l_mend) & lowest.range <= 40'},
+    {Lowest, '{!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40} ||{lowest1.buff(Power Word: Shield) & lowest2.buff(Power Word: Shield) & lowest3.buff(Power Word: Shield) & lowest4.buff(Power Word: Shield) & lowest5.buff(Power Word: Shield) & lowest.range <= 40}'},
     {Atonement, '!toggle(xDPS)'},
     {Solo, 'toggle(xDPS)'},
 
