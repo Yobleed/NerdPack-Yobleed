@@ -220,6 +220,8 @@ local Atonement = {
 	{'Shadowfiend', 'toggle(cooldowns)', 'target'},
     --Purge the Wicked if talent and not on target.
 	{'Purge the Wicked', 'talent(Purge the Wicked) & !target.debuff(Purge the Wicked)', 'target'},
+	--Shadow Word: Pain if not on target.
+	{'Shadow Word: Pain', '!talent(Purge the Wicked) & !target.debuff(Shadow Word: Pain)', 'target'},
 	--Schism on cooldown.
 	{'Schism', 'talent(Schism) & !moving', 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
