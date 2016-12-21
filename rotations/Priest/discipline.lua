@@ -67,6 +67,13 @@ local GUI = {
 	{type = 'spinner', text = 'Power Word: Shield', key = 'full_PWS',  width = 55, default = 70},
 	{type = 'ruler'},{type = 'spacer'},
     
+    --TANK
+	{type = 'header', text = 'Tank', align = 'center'},
+	{type = 'text', text = 'Tank health values', align = 'center'},
+	{type = 'spinner', text = 'Shadow Mend', key = 't_mend',  width = 55, default = 40},
+	{type = 'spinner', text = 'Plea', key = 't_plea', min = 70, max = 90, width = 55, default = 80}, --step = 1
+	{type = 'ruler'},{type = 'spacer'},
+
 
 	--LOWEST
 	{type = 'header', text = 'Lowest', align = 'center'},
@@ -237,9 +244,14 @@ local Atonement = {
 
 
 }
+
 local Tank = {
     --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
+	--Plea on UI value if no 6 atonements are active.
+    {'Plea', 'tank.health <= UI(t_plea) & lowest.health >= 70 & !tank.buff(Atonement) & spell(Plea).count <= 6', 'tank'},
+    --Shadow Mend on UI value if PWS don't make it.
+    {'!Shadow Mend', 'tank.health <= UI(t_mend)', 'tank'},
 
 }
 
