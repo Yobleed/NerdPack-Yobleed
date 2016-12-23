@@ -15,4 +15,8 @@
         NeP.Interface:toggleToggle('ato')
     </Binding>
 
+<Binding name="OOC Healing" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
+        NeP.Interface:toggleToggle('ooc_heal')
+    </Binding>
+
 </Bindings>

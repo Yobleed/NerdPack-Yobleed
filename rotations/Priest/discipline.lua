@@ -113,7 +113,13 @@ local exeOnLoad = function()
 		text = 'ON/OFF Out of Combat Atonement Spreading',
 		icon = 'Interface\\ICONS\\ability_priest_atonement', --toggle(ato)
 	})
-
+    
+    NeP.Interface:AddToggle({
+		key = 'ooc_heal',
+		name = 'OOC Healing',
+		text = 'ON/OFF Out of Combat Healing',
+		icon = 'Interface\\ICONS\\spell_priest_plea_yellow', --toggle(ooc_heal) 
+	})
 
 end
 local Rapture = {
@@ -319,9 +325,11 @@ local inCombat = { --194384 Atonement
 local outCombat = {
    {Keybinds},
    {Moving, 'moving & !toggle(ato)'},
+{{   
+   {'Plea', 'lowest.health < 100 & moving', 'lowest'},
+   {'Shadow Mend', 'lowest.health < 100 & !moving', 'lowest'},
+}, 'toggle(ooc_heal)'},
 {{
-    {'Plea', 'lowest.health < l_plea & moving', 'lowest'},
-    {'Shadow Mend', 'lowest.health < l_mend & !moving', 'lowest'},
     {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
     {Moving, 'moving'},
     {'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & spell(Plea).count <= 4', 'lowest1'},
