@@ -196,7 +196,7 @@ local Spread = {
 
 local Solo = {
     --Plea to keep on Atonement.
-    {'!Plea', '!player.buff(Atonement) & player.health < 90', 'player'},
+    {'!Plea', "!player.buff(Atonement) & player.health < 90 || spell(Light's Wrath).cooldown = 0", 'player'},
     --PWS if player health is below or if UI value.
 	{'Power Word: Shield', 'Player.Health <= UI(full_PWS)', 'player'},
     --LW on CD if toggled.
