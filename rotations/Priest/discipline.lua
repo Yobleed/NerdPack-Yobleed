@@ -196,7 +196,7 @@ local Spread = {
 
 local Solo = {
     --Plea to keep on Atonement.
-    {'!Plea', "!player.buff(Atonement) & player.health < 90 || spell(Light's Wrath).cooldown = 0", 'player'},
+    {'!Plea', "{!player.buff(Atonement) & player.health < 90} || {!player.buff(Atonement) & spell(Light's Wrath).cooldown = 0}", 'player'},
     --PWS if player health is below or if UI value.
 	{'Power Word: Shield', 'Player.Health <= UI(full_PWS)', 'player'},
     --LW on CD if toggled.
@@ -314,7 +314,7 @@ local inCombat = { --194384 Atonement
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
-    {Tank, 'tank.range <= 40'},
+    {Tank, 'tank.range <= 40 & !toggle(xDPS)'},
     {Spread, 'UI(tog_plea) & !lowest.health <= UI(l_mend) & lowest.range <= 40'},
     {Lowest, '{!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40} ||{lowest1.buff(Power Word: Shield) & lowest2.buff(Power Word: Shield) & lowest3.buff(Power Word: Shield) & lowest4.buff(Power Word: Shield) & lowest5.buff(Power Word: Shield) & lowest.range <= 40}'},
     {Atonement, '!toggle(xDPS)'},
