@@ -263,7 +263,7 @@ local Lowest = {
     --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
     {'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
     --Plea on UI value if no 6 atonements are active.
-    {'Plea', '{lowest.health <= UI(l_plea) & lowest.health >= 70 & !lowest.buff(Atonement) & spell(Plea).count <= 6} || {!lowest.buff(Atonement) & spell(Plea).count = 4 & player.mana >= 70} ', 'lowest'},
+    {'Plea', 'lowest.health <= UI(l_plea) & lowest.health >= 70 & !lowest.buff(Atonement) & spell(Plea).count <= 6', 'lowest'},
     --Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
@@ -297,7 +297,7 @@ local inCombat = { --194384 Atonement
     
     {Potions},
     {Emergency},
-    {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
+    {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & tank.health > UI(t_mend)'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !toggle(xDPS)'},
 	{Keybinds},
