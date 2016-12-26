@@ -281,11 +281,11 @@ local Lowest = {
     {'Power Word: Shield', '!lowest4.buff(Atonement) & spell(Plea).count >= 5', 'lowest4'},
     {'Power Word: Shield', '!lowest5.buff(Atonement) & spell(Plea).count >= 5', 'lowest5'},
     --Plea to aplly Atonement if lowest is above mend value and below plea value in UI and lowest missing atonement.
-    {'Plea', 'lowest1.health > UI(l_mend) & lowest1.health <= UI(l_plea) & !lowest1.buff(Atonement) & spell(Plea).count <= 4', 'lowest1'},
-    {'Plea', 'lowest2.health > UI(l_mend) & lowest2.health <= UI(l_plea) & !lowest2.buff(Atonement) & spell(Plea).count <= 4', 'lowest2'},
-    {'Plea', 'lowest3.health > UI(l_mend) & lowest3.health <= UI(l_plea) & !lowest3.buff(Atonement) & spell(Plea).count <= 4', 'lowest3'},
-    {'Plea', 'lowest4.health > UI(l_mend) & lowest4.health <= UI(l_plea) & !lowest4.buff(Atonement) & spell(Plea).count <= 4', 'lowest4'},
-    {'Plea', 'lowest5.health > UI(l_mend) & lowest5.health <= UI(l_plea) & !lowest5.buff(Atonement) & spell(Plea).count <= 4', 'lowest5'},
+    {'Plea', 'lowest1.health > UI(l_mend) & lowest1.health <= UI(l_plea) & !lowest1.buff(Atonement) & spell(Plea).count <= 5', 'lowest1'},
+    {'Plea', 'lowest2.health > UI(l_mend) & lowest2.health <= UI(l_plea) & !lowest2.buff(Atonement) & spell(Plea).count <= 5', 'lowest2'},
+    {'Plea', 'lowest3.health > UI(l_mend) & lowest3.health <= UI(l_plea) & !lowest3.buff(Atonement) & spell(Plea).count <= 5', 'lowest3'},
+    {'Plea', 'lowest4.health > UI(l_mend) & lowest4.health <= UI(l_plea) & !lowest4.buff(Atonement) & spell(Plea).count <= 5', 'lowest4'},
+    {'Plea', 'lowest5.health > UI(l_mend) & lowest5.health <= UI(l_plea) & !lowest5.buff(Atonement) & spell(Plea).count <= 5', 'lowest5'},
 
 }
 
