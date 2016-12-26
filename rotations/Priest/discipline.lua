@@ -303,7 +303,7 @@ local inCombat = { --194384 Atonement
     
     {Potions},
     {Emergency},
-    {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & tank.health > UI(t_mend)'},
+    {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & tank.health > UI(t_mend) || {player.health > UI(l_mend) & !tank.exists}'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !toggle(xDPS)'},
 	{Keybinds},
