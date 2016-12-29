@@ -433,7 +433,7 @@ local inCombat = {
   {Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
   {Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
   {cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
-  {Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 70} || {talent(Surrender to Madness) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)} || {player.buff(Shadowy Insight) & UI(finish)}'},
+  {Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 70} || {talent(Surrender to Madness) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)} || {player.buff(Shadowy Insight) & target.deathin <= UI(TTD)}'},
   {Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
   {Keybinds},
   {Trinkets, '!player.channeling(Void Torrent)'},
