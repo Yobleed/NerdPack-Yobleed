@@ -89,7 +89,7 @@ local exeOnLoad = function()
 	-- Rotation loaded message.
 	print('|cff58FAF4 ----------------------------------------------------------------------|r')
 	print('|cff58FAF4 --- |rPriest: |cff58FAF4DISCIPLINE|r')
-	print('|cff58FAF4 --- |rRecommended Talents: 1/3 - 2/2 - 3/1 - 4/2 - 5/2 - 6/2 or 6/3 - 7/1')
+	print('|cff58FAF4 --- |rRecommended Talents: 1/3 or 1/2 - 2/2 or 2/1 - 3/1 - 4/2 or 4/3 - 5/2 or 5/3 - 6/2 or 6/3 - 7/1 or 7/2')
 	print('|cff58FAF4 ----------------------------------------------------------------------|r')
 	print('|cffff0000 Configuration: |rRight-click the MasterToggle and go to Combat Routines Settings|r')
 
@@ -139,6 +139,8 @@ local Emergency = {
 	{'!Power Infusion', 'spell(Power Word: Shield).cooldown > 0 & spell(Rapture).cooldown > 0 & spell(Pain Suppression).cooldown > 0 & tank.health <= 20', 'player'},
 	--Power Infusion if 5 or more people are below 40% Health and cooldown is toggled on.
 	{'!Power Infusion', 'player.area(40, 40).heal >= 5 & toggle(cooldowns)', 'player'},
+	--Mindbender if mana is below or if 90%.
+	{'Mindbender', 'talent(Mindbender) & player.mana <= 90 & toggle(cooldowns)', 'target'},
 	--Rapture if 5 ore more people are below 30% health and cooldown is toggled on.
 	{'!Rapture', 'player.area(40, 30).heal >= 5 & spell(Power Word: Shield).cooldown > 0 & toggle(cooldowns)', 'player'},
 	--Pain Suppression if lowest health is below or equal to 20% and checked.
@@ -200,11 +202,11 @@ local Solo = {
     --PWS if player health is below or if UI value.
 	{'Power Word: Shield', 'Player.Health <= UI(full_PWS)', 'player'},
     --LW on CD if toggled.
-	{"Light's Wrath", 'toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3', 'target'},
+	{"Light's Wrath", '{toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3} || {toggle(cooldowns) & player.buff(Atonement) & !talent(Schism)}', 'target'},
     --PI on CD if toggled.
 	{'Power Infusion', 'talent(Power Infusion) & toggle(cooldowns)', 'target'},
 	--Shadowfiend on CD if toggled.
-	{'Shadowfiend', 'toggle(cooldowns)', 'target'},
+	{'Shadowfiend', 'toggle(cooldowns) & !talent(Mindbender)', 'target'},
     --Shadow Mend if player health is below or if UI value.
 	{'Shadow Mend', 'player.health <= UI(full_mend)', 'player'},
     --Gift of the Naaru if player health is below or if UI value.
@@ -230,9 +232,9 @@ local Solo = {
 
 local Atonement = {
      --LW on CD if toggled and if atonement stacks are 5 or higher.
-	{"!Light's Wrath", 'toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= 5', 'target'},
+	{"!Light's Wrath", '{toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= 5} || {toggle(cooldowns) & player.buff(Atonement) & !talent(Schism) & spell(plea).count >= 5}', 'target'},
 	--Shadowfiend on CD if toggled.
-	{'Shadowfiend', 'toggle(cooldowns)', 'target'},
+	{'Shadowfiend', 'toggle(cooldowns) & !talent(Mindbender)', 'target'},
     --Purge the Wicked if talent and not on target.
 	{'Purge the Wicked', 'talent(Purge the Wicked) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.

@@ -36,6 +36,12 @@ local GUI = {
 	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', width = 55, default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
+	-- Finish Off Targets
+	{type = 'header', text = 'Finish Off Target', align = 'center'},
+	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'finish', width = 55, default= false},
+	{type = 'spinner', text = 'Time To Die', key = 'TTD', align = 'left', width = 55, min = 0, max = 100, default = 50},
+	{type = 'ruler'}, {type = 'spacer'},
+
 
 	-- GUI Dispersion DPS Cooldown
 	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
@@ -175,7 +181,21 @@ local Insight = {
 	{'!Mindblast', '!spell(Void Eruption).cooldown = 0'}, 
 }
 
+local finishoff = {
+--Void Torrent if cooldowns toggled ON and if Target doesn't die within 10 seconds.
+{'!Void Torrent', 'toggle(cooldowns) & !target.deathin < 10'},
+--Shadow Word: Death if target is below or 35% health.
+{'!Shadow Word: Death','target.health <= 35','target'},
+--Void Bolt if Voidform and not channeling Mind Blast.
+{'!Void Eruption','player.buff(Voidform) & !player.channeling(Mind Blast)','target'},
+--Mind Blast on CD.
+{'!Mind Blast', nil,'target'},
+--Mind Flay if Mind Blast is on CD.
+{'Mind Spike', 'spell(Mind Blast).cooldown > 0 & talent(Mind Spike)','target'},
+--Mind Flay if Mind Blast is on CD.
+{'Mind Flay', 'spell(Mind Blast).cooldown > 0 & !talent(Mind Spike)','target'},
 
+}
 
 
 local Emergency = {
@@ -416,6 +436,7 @@ local inCombat = {
   {Keybinds},
   {Trinkets, '!player.channeling(Void Torrent)'},
   {Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
+  {finishoff, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & target.deathin <= UI(TTD) & UI(finish)'},
   {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
