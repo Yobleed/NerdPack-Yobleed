@@ -38,7 +38,7 @@ local GUI = {
 
 	-- Finish Off Targets
 	{type = 'header', text = 'Finish Off Target', align = 'center'},
-	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'finish', width = 55, default= false},
+	{type = 'text', text = 'Set 0 to disable', align = 'center'},
 	{type = 'spinner', text = 'Time To Die', key = 'TTD', align = 'left', width = 55, min = 0, max = 100, default = 25},
 	{type = 'ruler'}, {type = 'spacer'},
 
@@ -438,15 +438,15 @@ local inCombat = {
   {Keybinds},
   {Trinkets, '!player.channeling(Void Torrent)'},
   {Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
-  {finishoff, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & target.deathin <= UI(TTD) & UI(finish)'},
-  {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & !UI(finish)"},
-  {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & !UI(finish)"},
-  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void) & !UI(finish)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & !UI(finish)}"}, 
-  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void) & !UI(finish)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & !UI(finish)}"}, 
-  {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE) & !UI(finish)"}, 
-  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE) & !UI(finish)"},
-  {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & !UI(finish)'},
-  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness) & !UI(finish)'},
+  {finishoff, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & target.deathin <= UI(TTD)'}, 
+  {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & target.deathin > UI(TTD)"},
+  {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & target.deathin > UI(TTD)"},
+  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void) & target.deathin > UI(TTD)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & target.deathin > UI(TTD)}"}, 
+  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void) & target.deathin > UI(TTD)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & target.deathin > UI(TTD)}"}, 
+  {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE) & target.deathin > UI(TTD)"}, 
+  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE) & target.deathin > UI(TTD)"},
+  {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & target.deathin > UI(TTD)'},
+  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness) & target.deathin > UI(TTD)'},
 }
 
 local outCombat = {
