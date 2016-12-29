@@ -145,7 +145,7 @@ local Keybinds = {
 	{'!Mind Sear', 'keybind(lshift) & UI(k_MS)'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground' },
-  {'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground' },
+    {'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground' },  
 	-- Pause on Left-Alt if enabled in UI.
 	{'%pause', 'keybind(lalt) & UI(k_P)'},
 }
@@ -192,6 +192,8 @@ local finishoff = {
 {'!Mind Blast', nil,'target'},
 --Mind Flay if Mind Blast is on CD.
 {'Mind Spike', 'spell(Mind Blast).cooldown > 0 & talent(Mind Spike)','target'},
+--Mind Sear if Mind Blast is on CD.
+{'Mind Sear', '{spell(Mind Blast).cooldown > 0 & !talent(Mind Spike) & toggle(AOE) & !advanced} || {spell(Mind Blast).cooldown > 0 & !talent(Mind Spike) & target.area(10).enemies >= 3 & toggle(AOE) & advanced}','target'},
 --Mind Flay if Mind Blast is on CD.
 {'Mind Flay', 'spell(Mind Blast).cooldown > 0 & !talent(Mind Spike)','target'},
 
@@ -431,20 +433,20 @@ local inCombat = {
   {Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
   {Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
   {cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
-  {Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 70} || {talent(Surrender to Madness) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
+  {Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 70} || {talent(Surrender to Madness) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)} || {player.buff(Shadowy Insight) & UI(finish)}'},
   {Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
   {Keybinds},
   {Trinkets, '!player.channeling(Void Torrent)'},
   {Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
   {finishoff, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & target.deathin <= UI(TTD) & UI(finish)'},
-  {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
-  {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
-  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
-  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
-  {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"}, 
-  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"},
-  {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
-  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
+  {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & !UI(finish)"},
+  {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & !UI(finish)"},
+  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void) & !UI(finish)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & !UI(finish)}"}, 
+  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void) & !UI(finish)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & !UI(finish)}"}, 
+  {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE) & !UI(finish)"}, 
+  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE) & !UI(finish)"},
+  {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & !UI(finish)'},
+  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness) & !UI(finish)'},
 }
 
 local outCombat = {
