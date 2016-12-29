@@ -39,7 +39,7 @@ local GUI = {
 	-- Finish Off Targets
 	{type = 'header', text = 'Finish Off Target', align = 'center'},
 	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'finish', width = 55, default= false},
-	{type = 'spinner', text = 'Time To Die', key = 'TTD', align = 'left', width = 55, min = 0, max = 100, default = 50},
+	{type = 'spinner', text = 'Time To Die', key = 'TTD', align = 'left', width = 55, min = 0, max = 100, default = 25},
 	{type = 'ruler'}, {type = 'spacer'},
 
 
