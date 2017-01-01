@@ -259,7 +259,7 @@ local Tank = {
     --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
 	--Plea on UI value if no 6 atonements are active.
-    {'Plea', 'tank.health <= UI(t_plea) & lowest.health >= 70 & !tank.buff(Atonement) & spell(Plea).count <= 6', 'tank'},
+    {'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count <= 6', 'tank'},
     --Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'tank.health <= UI(t_mend)', 'tank'},
 
@@ -271,7 +271,7 @@ local Lowest = {
     --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
     {'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
     --Plea on UI value if no 6 atonements are active.
-    {'Plea', 'lowest.health <= UI(l_plea) & lowest.health >= 70 & !lowest.buff(Atonement) & spell(Plea).count <= 6', 'lowest'},
+    {'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count <= 6', 'lowest'},
     --Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
