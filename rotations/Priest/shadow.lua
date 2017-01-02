@@ -293,7 +293,9 @@ local lotv1 = {
   --Void Bolt on CD not interrupting casting MB.
   {'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
   --Mind Blast on CD if VB is on CD.
-  {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
+  --Mind Blast on CD if VB is on CD.
+  {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & player.channeling(Mind Flay)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
@@ -316,7 +318,9 @@ local s2m1 = {
   --Void Bolt on CD not interrupting casting MB.
   {'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
   --Mind Blast on CD if VB is on CD.
-  {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
+  --Mind Blast on CD if VB is on CD.
+  {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & player.channeling(Mind Flay)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
@@ -361,7 +365,9 @@ local lotv2 = {
   --Void Bolt on CD not interrupting casting MB.
   {'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
   --Mind Blast on CD if VB is on CD.
-  {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
+  --Mind Blast on CD if VB is on CD.
+  {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & player.channeling(Mind Flay)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
@@ -383,7 +389,9 @@ local s2m2 = {
   --Void Bolt on CD not interrupting casting MB.
   {'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
   --Mind Blast on CD if VB is on CD.
-  {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
+  --Mind Blast on CD if VB is on CD.
+  {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & player.channeling(Mind Flay)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
