@@ -301,7 +301,7 @@ local Moving = {
 
                                           
 
-local inCombat = { --194384 Atonement
+local inCombat = { 
     
     {Potions},
     {Emergency},
@@ -351,20 +351,3 @@ NeP.CR:Add(256, {
      gui = GUI,
     load = exeOnLoad
 })
-
-
---NOTES:
-                                                                         -- if lnbuff Works -- Quote: "its {'Spell', 'lnbuff(Role, Buff).condition', lnbuff(Role, Buff)},
-                                                                                                --example, {'Renew', 'lnbuff(TANK, Renew).health<80', 'lnbuff(TANK, Renew)'},"
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
-    --{'Power Word: Shield', '{lowest.health <= UI(l_PWS) & lnbuff(Power Word: Shield)} || {lnbuff(Atonement) & UI(l_appPWS)}', 'lowest'},
-    --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	--{'Power Word: Radiance', 'spell(plea).count < 3 & lnbuff1(HEALER,Atonement)', 'lnbuff1(HEALER,Atonement)'},
-    --Plea on UI value if no 6 atonements are active.
-    --{'Plea', 'lowest.health <= UI(l_plea) & spell(Plea).count <= 6 & lnbuff(Atonement)', 'lowest'},
-	--Shadow Mend on UI value if PWS don't make it.
-    --{'!Shadow Mend', '{lowest.health <= UI(l_mend) & player.mana <= 50} || {spell(Plea).count > 6 & lowest.health <= UI(l_plea)}', 'lowest'},
-    --Plea to reaplly Atonement if Power Word: Shield dropped off.
-    --{'!Plea', 'lowest.health > UI(l_mend) & lowest.buff(Atonement) & lowest.buff(Atonement).duration <= 2 & lnbuff(Power Word: Shield) & UI(l_appplea)', 'lowest1'},
------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
