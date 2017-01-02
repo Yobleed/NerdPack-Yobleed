@@ -288,10 +288,10 @@ local lotv1 = {
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
   --Torrent on CD.
   {'!Void Torrent', 'toggle(cooldowns)'},
-  --SWD if target is below or equal to 35% Health and player insanity is below or equal to 65%.
-  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 65'},
+  --SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
+  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 40'},
   --Void Bolt on CD not interrupting casting MB.
-  {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
+  {'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
   --Mind Blast on CD if VB is on CD.
   {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
@@ -314,7 +314,7 @@ local s2m1 = {
   --SWD if insanity is below 40%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity < 30 & !lastcast(Shadow Word: Death)'}, 
   --Void Bolt on CD not interrupting casting MB.
-  {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
+  {'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
   --Mind Blast on CD if VB is on CD.
   {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
@@ -356,10 +356,10 @@ local lotv2 = {
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
   --Torrent on CD.
   {'!Void Torrent', 'toggle(cooldowns)'},
-  --SWD if target is below or equal to 35% Health and player insanity is below or equal to 65%.
-  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 65'},
+  --SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
+  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 40'},
   --Void Bolt on CD not interrupting casting MB.
-  {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
+  {'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
   --Mind Blast on CD if VB is on CD.
   {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
@@ -381,7 +381,7 @@ local s2m2 = {
   --SWD if insanity is below 40%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity < 30 & !lastcast(Shadow Word: Death)'}, 
   --Void Bolt on CD not interrupting casting MB.
-  {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
+  {'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
   --Mind Blast on CD if VB is on CD.
   {'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
