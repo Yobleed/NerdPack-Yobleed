@@ -215,7 +215,7 @@ local AOE = {
   --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
   {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 6 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --SWD when target below 35%
-  {'!Shadow Word: Death', 'target.health <= 35 & !player.channeling(Void Eruption)'},
+  {'!Shadow Word: Death', '{target.health <= 35 & !player.channeling(Void Eruption) & !player.buff(Voidform)} ||{target.health <= 35 & !player.channeling(Void Eruption) & player.insanity < 30 & player.buff(Voidform)}'},
   --MB if channeling Mind flay or Mind Sear
   {'!Mind Blast', 'player.channeling(Mind Flay) || player.channeling(Mind Sear)'},
   --Mind Blast on CD.
