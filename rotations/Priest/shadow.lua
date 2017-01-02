@@ -175,32 +175,13 @@ local Insight = {
 	{'!Mindblast', '!spell(Void Eruption).cooldown = 0'}, 
 }
 
-local finishoff = {
---Void Torrent if cooldowns toggled ON and if Target doesn't die within 10 seconds.
-{'!Void Torrent', 'toggle(cooldowns) & !target.deathin < 10'},
---Shadow Word: Death if target is below or 35% health.
-{'!Shadow Word: Death','target.health <= 35','target'},
---Void Bolt if Voidform and not channeling Mind Blast.
-{'!Void Eruption','player.buff(Voidform) & !player.channeling(Mind Blast)','target'},
---Mind Blast on CD.
-{'!Mind Blast', nil,'target'},
---Mind Flay if Mind Blast is on CD.
-{'Mind Spike', 'spell(Mind Blast).cooldown > 0 & talent(Mind Spike)','target'},
---Mind Sear if Mind Blast is on CD.
-{'Mind Sear', '{spell(Mind Blast).cooldown > 0 & !talent(Mind Spike) & toggle(AOE) & !advanced} || {spell(Mind Blast).cooldown > 0 & !talent(Mind Spike) & target.area(10).enemies >= 3 & toggle(AOE) & advanced}','target'},
---Mind Flay if Mind Blast is on CD.
-{'Mind Flay', 'spell(Mind Blast).cooldown > 0 & !talent(Mind Spike)','target'},
-
-}
-
-
 local Emergency = {
   --Dispersion when SWD charges are 0 and VF stacks are 95 or higher and insanity is below or equal to 50%.
   {'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 99 & player.insanity <= 35'},
    --Arcane Torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
   {'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
   --Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
-  {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 50'},
+  {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 60'},
 
 }
 
@@ -432,12 +413,13 @@ local inCombat = {
   {Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
   {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
-  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void) || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
-  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void) || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
+  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
+  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
   {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"}, 
   {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"},
   {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
   {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
+
 }
 
 local outCombat = {
