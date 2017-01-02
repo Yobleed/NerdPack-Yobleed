@@ -36,12 +36,6 @@ local GUI = {
 	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', width = 55, default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
-	-- Finish Off Targets
-	{type = 'header', text = 'Finish Off Target', align = 'center'},
-	{type = 'text', text = 'Set 0 to disable', align = 'center'},
-	{type = 'spinner', text = 'Time To Die', key = 'TTD', align = 'left', width = 55, min = 0, max = 100, default = 0},
-	{type = 'ruler'}, {type = 'spacer'},
-
 
 	-- GUI Dispersion DPS Cooldown
 	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
@@ -207,8 +201,6 @@ local Emergency = {
   {'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
   --Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
   {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 50'},
-  --Power Infusion if talent active and VF stacks are 75 or higher.
-  {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 75'},
 
 }
 
@@ -224,7 +216,7 @@ local cooldowns = {
   --Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
   {'!Shadowfiend', '!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)'},
   --Shadowfiend if Void Bolt is on CD and VF stacks are above or equal to 15 and Power Infusion talent is active.
-  {'!Shadowfiend', '{!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15z & talent(Power Infusion) & spell(Power Infusion).cooldown = 0} || {!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 5 & talent(Power Infusion) & !spell(Power Infusion).cooldown = 0}'},
+  {'!Shadowfiend', '{!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion) & spell(Power Infusion).cooldown = 0} || {!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 5 & talent(Power Infusion) & !spell(Power Infusion).cooldown = 0}'},
 
 }
 
@@ -339,7 +331,7 @@ local s2m1 = {
   --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
   {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 10  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
   --SWD if insanity is below 40%.
-  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 30 & !lastcast(Shadow Word: Death)'}, 
+  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity < 30 & !lastcast(Shadow Word: Death)'}, 
   --Void Bolt on CD not interrupting casting MB.
   {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
   --Mind Blast on CD if VB is on CD.
@@ -406,7 +398,7 @@ local s2m2 = {
   --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
   {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 10  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
   --SWD if insanity is below 40%.
-  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 30 & !lastcast(Shadow Word: Death)'}, 
+  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity < 30 & !lastcast(Shadow Word: Death)'}, 
   --Void Bolt on CD not interrupting casting MB.
   {'!Void Eruption', '!player.channeling(Mind Blast)'}, 
   --Mind Blast on CD if VB is on CD.
@@ -433,20 +425,19 @@ local inCombat = {
   {Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
   {Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
   {cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
-  {Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 70} || {talent(Surrender to Madness) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)} || {player.buff(Shadowy Insight) & target.deathin < UI(TTD)}'},
+  {Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 70} || {talent(Surrender to Madness) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
   {Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
   {Keybinds},
   {Trinkets, '!player.channeling(Void Torrent)'},
   {Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
   {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
   {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
-  {finishoff, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent) & target.deathin < UI(TTD)'}, 
-  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void) & target.deathin >= UI(TTD)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & target.deathin >= UI(TTD)}"}, 
-  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void) & target.deathin >= UI(TTD)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & target.deathin >= UI(TTD)}"}, 
-  {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE) & target.deathin >= UI(TTD)"}, 
-  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE) & target.deathin >= UI(TTD)"},
-  {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness) & target.deathin >= UI(TTD)'},
-  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness) & target.deathin >= UI(TTD)'},
+  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void) || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
+  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void) || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
+  {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"}, 
+  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"},
+  {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
+  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
 }
 
 local outCombat = {
