@@ -37,13 +37,13 @@ local GUI = {
 	{type = 'ruler'}, {type = 'spacer'},
 
 
-	-- GUI Dispersion DPS Cooldown
-	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
+	-- GUI Dispersion/Void Torrent DPS Cooldown
+	{type = 'header', text = 'Dispersion/Void Torrent DPS Cooldown', align = 'center'},
 	{type = 'text', text = 'No S2M Active', align = 'center'},
 	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'dps_D', width = 55, default= false},
 	{type = 'text', text = 'Choose Stacks', align = 'center'},
-	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, min = 25, max = 50, step = 1,  default = 35},
-	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, min = 25, max = 50, step = 1,  default = 30},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, min = 15, max = 50, step = 1,  default = 35},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, min = 15, max = 50, step = 1,  default = 18},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Arcane Torrent as last Resort
@@ -181,7 +181,7 @@ local Emergency = {
    --Arcane Torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
   {'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
   --Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
-  {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 70 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 60'},
+  {'!Power Infusion', 'talent(Power Infusion) & player.buff(voidform).count >= 80 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 60'},
 
 }
 
@@ -189,7 +189,7 @@ local cooldowns = {
   --Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
   {'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 20 & target.health <= 35', 'player'},
   --Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
-  {'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 10 & target.health > 35', 'player'},
+  {'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 5 & target.health > 35', 'player'},
   --Mindbender if talent is active on CD in S2M.
   {'!Mindbender', 'talent(Mindbender) & player.buff(Surrender to Madness)'},
   --Mind Bender if talent is active and not in S2M if VF stacks are above 5.
@@ -202,18 +202,18 @@ local cooldowns = {
 }
 
 local AOE = {
-  --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35'},
-  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
+  --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 20 & target.health <= 35'},
+  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 20 & target.health > 35 '},
    --Torrent on CD.
-  {'!Void Torrent', 'toggle(cooldowns)'},
+  {'!Void Torrent', '{player.buff(voidform).count >= UI(dps_Dspin) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35} || {player.buff(voidform).count >= UI(dps_D2spin) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35} '},
   --Voidbolt on CD
   {'!Void Eruption', 'player.buff(voidform)'},
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
   {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 6 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 2 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --SWD when target below 35%
   {'!Shadow Word: Death', '{target.health <= 35 & !player.channeling(Void Eruption) & !player.buff(Voidform)} ||{target.health <= 35 & player.insanity < 30 & player.buff(Voidform) || {target.health <= 35 & player.buff(voidform).count <= 15 & player.buff(Voidform) & player.insanity < 70}}'},
   --MB if channeling Mind flay or Mind Sear
@@ -265,7 +265,7 @@ local ST1 = {
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
   {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 6 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 2 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --SWD when target below 35%
   {'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 70} || {target.health <= 35 & talent(Surrender to Madness) & !player.insanity = 100}'},
   --Mind Blast if player is channeling Mind Flay.
@@ -282,12 +282,12 @@ local ST1 = {
 }
 
 local lotv1 = {
-   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35'},
-  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
+   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 20 & target.health <= 35 & !player.spell(Void Torrent).cooldown = 0'},
+  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 20 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0'},
   --Torrent on CD.
-  {'!Void Torrent', 'toggle(cooldowns)'},
+  {'!Void Torrent', '{player.buff(voidform).count >= UI(dps_Dspin) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35} || {player.buff(voidform).count >= UI(dps_D2spin) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35} '},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
   {'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
   --Void Bolt on CD not interrupting casting MB.
@@ -308,7 +308,7 @@ local lotv1 = {
 
 local s2m1 = {
   --Dispersion after Void Torrent and Void Bolt
-  {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10'},
+  {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent)'},
   --Torrent on CD.
   {'!Void Torrent', 'toggle(cooldowns)'},
   --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
@@ -335,7 +335,7 @@ local ST2 = {
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
   {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 6 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 2 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --SWD when target below 35%
   {'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 70} || {target.health <= 35 & talent(Surrender to Madness) & !player.insanity = 100}'},
   --Mind Blast if player is channeling Mind Flay.
@@ -355,11 +355,11 @@ local ST2 = {
 
 local lotv2 = {
    --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 40% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 20 & target.health <= 35'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 20 & target.health > 35'},
   --Torrent on CD.
-  {'!Void Torrent', 'toggle(cooldowns)'},
+  {'!Void Torrent', '{player.buff(voidform).count >= UI(dps_Dspin) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35} || {player.buff(voidform).count >= UI(dps_D2spin) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35} '},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
   {'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
   --Void Bolt on CD not interrupting casting MB.
@@ -379,7 +379,7 @@ local lotv2 = {
 
 local s2m2 = {
   --Dispersion after Void Torrent and Void Bolt
-  {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10'},
+  {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent)'},
   --Torrent on CD.
   {'!Void Torrent', 'toggle(cooldowns)'},
   --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
