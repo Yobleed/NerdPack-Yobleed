@@ -37,8 +37,8 @@ local GUI = {
 	{type = 'ruler'}, {type = 'spacer'},
 
 
-	-- GUI Dispersion/Void Torrent DPS Cooldown
-	{type = 'header', text = 'Dispersion/Void Torrent DPS Cooldown', align = 'center'},
+	-- GUI Dispersion DPS Cooldown
+	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
 	{type = 'text', text = 'No S2M Active', align = 'center'},
 	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'dps_D', width = 55, default= false},
 	{type = 'text', text = 'Choose Stacks', align = 'center'},
@@ -197,7 +197,7 @@ local cooldowns = {
   --Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
   {'!Shadowfiend', '!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)'},
   --Shadowfiend if Void Bolt is on CD and VF stacks are above or equal to 15 and Power Infusion talent is active.
-  {'!Shadowfiend', '{!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 15 & talent(Power Infusion) & spell(Power Infusion).cooldown = 0} || {!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 5 & talent(Power Infusion) & !spell(Power Infusion).cooldown = 0}'},
+  {'!Shadowfiend', '{!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 17 & talent(Power Infusion) & !player.buff(Surrender to Madness) & target.health > 35} || {!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= 28 & talent(Power Infusion) & !player.buff(Surrender to Madness) & target.health <= 35} '},
 
 }
 
@@ -207,7 +207,7 @@ local AOE = {
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 20 & target.health > 35 '},
    --Torrent on CD.
-  {'!Void Torrent', '{player.buff(voidform).count >= UI(dps_Dspin) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35} || {player.buff(voidform).count >= UI(dps_D2spin) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35} '},
+  {'!Void Torrent', '{player.buff(voidform).count >= 32 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35} '},
   --Voidbolt on CD
   {'!Void Eruption', 'player.buff(voidform)'},
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
@@ -287,7 +287,7 @@ local lotv1 = {
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 20 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0'},
   --Torrent on CD.
-  {'!Void Torrent', '{player.buff(voidform).count >= UI(dps_Dspin) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35} || {player.buff(voidform).count >= UI(dps_D2spin) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35} '},
+  {'!Void Torrent', '{player.buff(voidform).count >= 32 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35} '},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
   {'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
   --Void Bolt on CD not interrupting casting MB.
@@ -359,7 +359,7 @@ local lotv2 = {
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
   {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 20 & target.health > 35'},
   --Torrent on CD.
-  {'!Void Torrent', '{player.buff(voidform).count >= UI(dps_Dspin) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35} || {player.buff(voidform).count >= UI(dps_D2spin) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35} '},
+  {'!Void Torrent', '{player.buff(voidform).count >= 32 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35} '},
   --SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
   {'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
   --Void Bolt on CD not interrupting casting MB.
