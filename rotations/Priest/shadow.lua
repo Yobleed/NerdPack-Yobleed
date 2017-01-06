@@ -187,7 +187,7 @@ local Emergency = {
 
 local cooldowns = {
   --Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-  {'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 20 & target.health <= 35', 'player'},
+  {'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 15 & target.health <= 35', 'player'},
   --Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
   {'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 5 & target.health > 35', 'player'},
   --Mindbender if talent is active on CD in S2M.
@@ -213,7 +213,7 @@ local AOE = {
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
   {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 2 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --SWD when target below 35%
   {'!Shadow Word: Death', '{target.health <= 35 & !player.channeling(Void Eruption) & !player.buff(Voidform)} ||{target.health <= 35 & player.insanity < 30 & player.buff(Voidform) || {target.health <= 35 & player.buff(voidform).count <= 15 & player.buff(Voidform) & player.insanity < 70}}'},
   --MB if channeling Mind flay or Mind Sear
@@ -261,13 +261,13 @@ local AOEs2m = {
 
 }
 
-local ST1 = {
+local ST1 = {  
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
   {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 2 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --SWD when target below 35%
-  {'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 70} || {target.health <= 35 & talent(Surrender to Madness) & !player.insanity = 100}'},
+  {'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 70 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(Surrender to Madness) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
   --Mind Blast if player is channeling Mind Flay.
   {'!Mind Blast', 'player.channeling(Mind Flay)'},
   --Mind Blast on CD.
@@ -335,9 +335,9 @@ local ST2 = {
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
   {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 2 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
+  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
   --SWD when target below 35%
-  {'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 70} || {target.health <= 35 & talent(Surrender to Madness) & !player.insanity = 100}'},
+  {'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 70 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(Surrender to Madness) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
   --Mind Blast if player is channeling Mind Flay.
   {'!Mind Blast', 'player.channeling(Mind Flay)'},
   --Mind Blast if target has SWP and VT.
