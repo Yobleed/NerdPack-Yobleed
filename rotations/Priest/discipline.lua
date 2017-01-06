@@ -97,7 +97,7 @@ local exeOnLoad = function()
 		key = 'xDPS',
 		name = 'Solo',
 		text = 'ON/OFF Solo rotation',
-		icon = 'Interface\\ICONS\\spell_holy_holysmite', --toggle(xDPS)
+		icon = 'Interface\\ICONS\\ability_priest_darkarchangel', --toggle(xDPS)
 	})
 
 	NeP.Interface:AddToggle({
@@ -232,7 +232,7 @@ local Solo = {
 
 local Atonement = {
      --LW on CD if toggled and if atonement stacks are 5 or higher.
-	{"!Light's Wrath", '{toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= 5} || {toggle(cooldowns) & player.buff(Atonement) & !talent(Schism) & spell(plea).count >= 5}', 'target'},
+	{"!Light's Wrath", '{toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= 5} || {toggle(cooldowns) & !talent(Schism) & spell(plea).count >= 5}', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(Mindbender)', 'target'},
     --Purge the Wicked if talent and not on target.
