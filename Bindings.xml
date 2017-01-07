@@ -19,4 +19,9 @@
         NeP.Interface:toggleToggle('ooc_heal')
     </Binding>
 
+<Binding name="Spike Damage" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
+        NeP.Interface:toggleToggle('ramp')
+    </Binding>
+
 </Bindings>
+

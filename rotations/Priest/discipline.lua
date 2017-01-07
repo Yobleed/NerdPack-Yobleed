@@ -51,14 +51,6 @@ local GUI = {
 	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', width = 55, default_check = false, default_spin = 20},
 	{type = 'ruler'},{type = 'spacer'},
     
-    --Spreading Atonement
-	{type = 'header', text = 'Atonement Spreading', align = 'center'},
-	{type = 'text', text = 'Forces Rotation to Spread Atonement before DPS', align = 'center'},
-	{type = 'checkbox', text = 'ON/OFF', key = 'tog_plea', default = false},
-	{type = 'spinner', text = 'Number of Atonements', key = 'plea',  width = 55, step = 1, min = 0, max = 10, default = 6},
-	{type = 'ruler'},{type = 'spacer'},
-
-
 	--Solo
 	{type = 'header', text = 'Solo mode', align = 'center'},
 	{type = 'text', text = 'Player health values', align = 'center'},
@@ -108,9 +100,16 @@ local exeOnLoad = function()
 	})
 
 	NeP.Interface:AddToggle({
+		key = 'ramp',
+		name = 'Spike Damage',
+		text = 'ON/OFF Ramping up Atonements for incoming spike damage',
+		icon = 'Interface\\ICONS\\achievement_guildperk_everyones-a-hero_rank2', --toggle(ramp)
+	})
+
+	NeP.Interface:AddToggle({
 		key = 'ato',
-		name = 'OOC Atonement',
-		text = 'ON/OFF Out of Combat Atonement Spreading',
+		name = 'OOC Atonements',
+		text = 'ON/OFF Keeping up Atonements Out of Combat',
 		icon = 'Interface\\ICONS\\ability_priest_atonement', --toggle(ato)
 	})
     
@@ -179,20 +178,15 @@ local Potions = {
 }
 
 
-local Spread = {
+local Rampup = {
 --Spreading Atonement before DPS if checked.
-	{'Power Word: Radiance', 'spell(plea).count < 3 & !lowest.buff(Atonement)', 'lowest'},
-	{'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest1'},
-    {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest2'},
-    {'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest3'},
-    {'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest4'},
-    {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest5'},
-    {'Plea', 'lowest6.health > UI(l_mend) & !lowest6.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest6'},
-    {'Plea', 'lowest7.health > UI(l_mend) & !lowest7.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest7'},
-    {'Plea', 'lowest8.health > UI(l_mend) & !lowest8.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest8'},
-    {'Plea', 'lowest9.health > UI(l_mend) & !lowest9.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest9'},
-    {'Plea', 'lowest10.health > UI(l_mend) & !lowest10.buff(Atonement) & spell(Plea).count <= UI(plea)', 'lowest10'},
-    {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
+	{'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & spell(Plea).count < 5', 'lowest1'},
+    {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & spell(Plea).count < 5', 'lowest2'},
+    {'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement) & spell(Plea).count < 5', 'lowest3'},
+    {'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & spell(Plea).count < 5', 'lowest4'},
+    {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count < 5', 'lowest5'},
+    {'Power Word: Shield', '!tank.buff(Power Word: Shield) & spell(plea).count >= 5', 'tank'},
+    {'Power Word: Radiance', 'spell(plea).count >= 6 & !spell(plea).count >= 12 & !lowest.buff(Atonement)', 'lowest'},
 }
 
 
@@ -259,7 +253,7 @@ local Tank = {
     --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
 	--Plea on UI value if no 6 atonements are active.
-    {'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count <= 6', 'tank'},
+    {'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count < 5', 'tank'},
     --Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'tank.health <= UI(t_mend)', 'tank'},
 
@@ -271,7 +265,7 @@ local Lowest = {
     --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
     {'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
     --Plea on UI value if no 6 atonements are active.
-    {'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count <= 6', 'lowest'},
+    {'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 ', 'lowest'},
     --Shadow Mend on UI value if PWS don't make it.
     {'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
     --Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
@@ -317,9 +311,10 @@ local inCombat = {
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
     {Tank, 'tank.range <= 40 & !toggle(xDPS)'},
-    {Spread, 'UI(tog_plea) & !lowest.health <= UI(l_mend) & lowest.range <= 40'},
-    {Lowest, '{!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40} ||{lowest1.buff(Power Word: Shield) & lowest2.buff(Power Word: Shield) & lowest3.buff(Power Word: Shield) & lowest4.buff(Power Word: Shield) & lowest5.buff(Power Word: Shield) & lowest.range <= 40}'},
-    {Atonement, '!toggle(xDPS)'},
+    {Rampup, '!lowest.health <= UI(l_mend) & lowest.range <= 40 & !spell(plea).count >= 12 & toggle(ramp)'},
+    {Atonement, '{!toggle(xDPS) & !toggle(ramp) & !lowest.health <= UI(l_mend)} || {spell(plea).count >= 12 & player.area(40, 70).heal >= 5 & !toggle(xDPS) & toggle(ramp) &!lowest.health <= UI(l_mend)}'},
+    {Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40'},
+    
     {Solo, 'toggle(xDPS)'},
 
 }
@@ -332,13 +327,13 @@ local outCombat = {
    {'Shadow Mend', 'lowest.health < 100 & !moving', 'lowest'},
 }, 'toggle(ooc_heal)'},
 {{
-    {'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
+    {'Power Word: Shield', '!tank.buff(Power Word: Shield) & spell(Plea).count = 5', 'tank'},
     {Moving, 'moving'},
-    {'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & spell(Plea).count <= 4', 'lowest1'},
-    {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & spell(Plea).count <= 4', 'lowest2'},
-    {'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement) & spell(Plea).count <= 4', 'lowest3'},
-    {'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & spell(Plea).count <= 4', 'lowest4'},
-    {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count <= 4', 'lowest5'},
+    {'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & spell(Plea).count < 5', 'lowest1'},
+    {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & spell(Plea).count < 5', 'lowest2'},
+    {'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement) & spell(Plea).count < 5', 'lowest3'},
+    {'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & spell(Plea).count < 5', 'lowest4'},
+    {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count < 5', 'lowest5'},
 }, 'toggle(ato)'}, 
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
 }
