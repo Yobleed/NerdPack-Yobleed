@@ -331,7 +331,7 @@ local inCombat = {
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
-    {Rampup, 'toggle(ramp)'},
+    {Rampup, 'toggle(ramp) & lowest.range <= 40'},
     {Tank, 'tank.range <= 40 & !toggle(xDPS)'},
     {Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40'},
     {Atonement, '{!toggle(xDPS) & !toggle(ramp) & !lowest.health <= UI(l_mend)} || {spell(plea).count >= 12 & player.area(40, 70).heal >= 5 & !toggle(xDPS) & toggle(ramp) &!lowest.health <= UI(l_mend)}'},
