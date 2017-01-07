@@ -103,7 +103,7 @@ local exeOnLoad = function()
 		key = 'ramp',
 		name = 'Spike Damage',
 		text = 'ON/OFF Ramping up Atonements for incoming spike damage',
-		icon = 'Interface\\ICONS\\achievement_guildperk_everyones-a-hero_rank2', --toggle(ramp)
+		icon = 'Interface\\ICONS\\ability_mage_massinvisibility', --toggle(ramp)
 	})
 
 	NeP.Interface:AddToggle({
