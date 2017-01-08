@@ -223,7 +223,7 @@ local AOE = {
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || !target.debuff(Vampiric Touch)'},
+  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'},
   --Mind Sear if 3 or more targets within 10yd range of target with dots up.
   {'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
   --Mind Flay if 2 or less targets within 10yd range of target with dots up. 
@@ -299,11 +299,11 @@ local lotv1 = {
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', 'target.debuff(Vampiric Touch).duration <= 3 || !target.debuff(Vampiric Touch)'}, 
+  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'}, 
   --Mind Flay if Dots are up and VB and MB are on CD.
   {'Mind Flay', '!player.spell(Void Eruption).cooldown = 0 & !player.spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
   
-
+ 
 }
 
 local s2m1 = {
@@ -371,7 +371,7 @@ local lotv2 = {
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', 'target.debuff(Vampiric Touch).duration <= 3 || !target.debuff(Vampiric Touch)'}, 
+  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'}, 
   --Mind Flay if Dots are up and VB and MB are on CD.
   {'Mind Flay', '!player.spell(Void Eruption).cooldown = 0 & !player.spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
   
