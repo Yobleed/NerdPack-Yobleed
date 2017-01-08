@@ -203,9 +203,9 @@ local cooldowns = {
 
 local AOE = {
   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35'},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown = 0'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 '},
+  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0'},
    --Torrent on CD.
   {'!Void Torrent', '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & toggle(cooldowns)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & toggle(cooldowns)} '},
   --Voidbolt on CD
