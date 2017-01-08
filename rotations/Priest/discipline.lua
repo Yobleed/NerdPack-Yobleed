@@ -187,26 +187,6 @@ local Rampup = {
     {'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count < 5', 'lowest5'},
     {'Power Word: Shield', '!tank.buff(Power Word: Shield) & spell(plea).count >= 5', 'tank'},
     {'Power Word: Radiance', '{spell(plea).count >= 6 & !spell(plea).count >= 12 & !lowest.buff(Atonement)} || {spell(plea).count = 5 & !spell(Power Word: Shield).cooldown = 0 & !lowest.buff(Atonement)} ', 'lowest'},
-    --LW on CD if toggled and if atonement stacks are 5 or higher.
-	{"Light's Wrath", '{toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= 5 & spell(plea).count >= 12} || {toggle(cooldowns) & !talent(Schism) & spell(plea).count >= 5 & spell(plea).count >= 12}', 'target'},
-	--Shadowfiend on CD if toggled.
-	{'Shadowfiend', 'toggle(cooldowns) & !talent(Mindbender) & spell(plea).count >= 12', 'target'},
-    --Purge the Wicked if talent and not on target.
-	{'Purge the Wicked', 'talent(Purge the Wicked) & !target.debuff(Purge the Wicked) & spell(plea).count >= 12', 'target'},
-	--Shadow Word: Pain if not on target.
-	{'Shadow Word: Pain', '!talent(Purge the Wicked) & !target.debuff(Shadow Word: Pain) & spell(plea).count >= 12', 'target'},
-	--Schism on cooldown.
-	{'Schism', "talent(Schism) & {!moving || player.buff(Norgannon's Foresight)} & spell(plea).count >= 12", 'target'},
-	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', '{target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)} & spell(plea).count >= 12', 'target'},
-    --Power Word: Solace on cooldown if talent.
-	{'Power Word: Solace', 'talent(Power Word: Solace) & spell(plea).count >= 12', 'target'},
-	--Divine Star if mobs are 3 or more.
-	{'Divine Star', 'talent(Divine Star) & player.area(24).enemies.infront >= 3 & toggle(AOE) & spell(plea).count >= 12'},
-	--Divine Star if moving.
-	{'Divine Star', 'talent(Divine Star) & player.area(24).enemies.infront >= 1 & moving & spell(plea).count >= 12'},
-	--Smite on CD.
-	{'Smite', 'spell(plea).count >= 12', 'target'},
 	
 }
 
@@ -331,10 +311,10 @@ local inCombat = {
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
     {'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
-    {Rampup, 'toggle(ramp) & lowest.range <= 40'},
+    {Rampup, 'toggle(ramp) & lowest.range <= 40 & spell(plea).count < 10'},
     {Tank, 'tank.range <= 40 & !toggle(xDPS)'},
     {Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40'},
-    {Atonement, '{!toggle(xDPS) & !toggle(ramp) & !lowest.health <= UI(l_mend)} || {spell(plea).count >= 12 & player.area(40, 70).heal >= 5 & !toggle(xDPS) & toggle(ramp) &!lowest.health <= UI(l_mend)}'},
+    {Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend)'},
     {Solo, 'toggle(xDPS)'},
 
 }
