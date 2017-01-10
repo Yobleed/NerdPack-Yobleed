@@ -59,8 +59,8 @@ local GUI = {
 
 	-- GUI Keybinds
 	{type = 'header', text = 'Keybinds', align = 'center'},
-	{type = 'text', text = 'Left Shift: Mind Sear|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
-	{type = 'checkbox', text = 'Mind Sear', key = 'k_MS', width = 55, default = false},
+	{type = 'text', text = 'Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+	--{type = 'checkbox', text = 'Mind Sear', key = 'k_MS', width = 55, default = false},
 	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
 	{type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
 	{type = 'ruler'}, {type = 'spacer'},
@@ -136,7 +136,7 @@ local Trinkets = {
 
 local Keybinds = {
 	-- Mind Sear on target if Left-Shift if enabled in UI.
-	{'!Mind Sear', 'keybind(lshift) & UI(k_MS)'},
+	--{'!Mind Sear', 'keybind(lshift) & UI(k_MS)'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground' },
     {'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground' },  
@@ -217,7 +217,7 @@ local AOE = {
   --SWD when target below 35%
   {'!Shadow Word: Death', '{target.health <= 35 & !player.channeling(Void Eruption) & !player.buff(Voidform)} ||{target.health <= 35 & player.insanity < 30 & player.buff(Voidform) || {target.health <= 35 & player.buff(voidform).count <= 15 & player.buff(Voidform) & player.insanity < 70}}'},
   --MB if channeling Mind flay or Mind Sear
-  {'!Mind Blast', 'player.channeling(Mind Flay) || player.channeling(Mind Sear)'},
+  {'!Mind Blast', 'player.channeling(Mind Flay)'},
   --Mind Blast on CD.
   {'Mind Blast', '{!player.insanity >= 70 & talent(Legacy of the Void) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {!player.insanity = 100 & talent(Surrender to Madness) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } & player.buff(voidform)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
@@ -225,7 +225,7 @@ local AOE = {
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
   {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'},
   --Mind Sear if 3 or more targets within 10yd range of target with dots up.
-  {'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
+  --{'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
   --Mind Flay if 2 or less targets within 10yd range of target with dots up. 
   {'Mind Flay', 'target.area(10).enemies <= 2 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'}, 
 
@@ -247,7 +247,7 @@ local AOEs2m = {
   --SWD if insanity is below 40%.
   {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 30 & !lastcast(Shadow Word: Death)'},
   --MB if channeling Mind flay or Mind Sear
-  {'!Mind Blast', 'player.channeling(Mind Flay) || player.channeling(Mind Sear)'},
+  {'!Mind Blast', 'player.channeling(Mind Flay)'},
   --Mind Blast on CD.
   {'Mind Blast', '{!player.insanity >= 70 & talent(Legacy of the Void) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {!player.insanity = 100 & talent(Surrender to Madness) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } & player.buff(voidform)'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
@@ -255,7 +255,7 @@ local AOEs2m = {
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
   {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || !target.debuff(Vampiric Touch)'},
   --Mind Sear if 3 or more targets within 10yd range of target with dots up.
-  {'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
+  --{'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
   --Mind Flay if 2 or less targets within 10yd range of target with dots up. 
   {'Mind Flay', 'target.area(10).enemies <= 2 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'}, 
 
