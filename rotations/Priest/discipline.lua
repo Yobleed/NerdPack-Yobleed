@@ -292,7 +292,7 @@ local inCombat = {
 	{Keybinds},
 	{Trinkets},
 	{Rapture, 'player.buff(Rapture) & lowest.range <= 40'},
-	{Moving, 'moving'},
+	{Moving, "moving & !player.buff(Norgannon's Foresight)"},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.

@@ -336,7 +336,7 @@ local inCombat = {
 	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
 	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
 	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
-	{Movement, '!player.buff(Voidform) || player.buff(Voidform) & !player.buff(Surrender to Madness)'},
+	{Movement, "!player.buff(Voidform) || {player.buff(Voidform) & !player.buff(Surrender to Madness)} & !player.buff(Norgannon's Foresight)"},
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
