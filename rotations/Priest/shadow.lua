@@ -169,7 +169,7 @@ local Insight = {
 
 local Emergency = {
 	--Dispersion when SWD charges are 0 and VoiT is on CD and insanity below or equal to 20%.
-	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & !spell(Void Torrent).cooldown = 0 & player.insanity <= 20'},
+	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & !spell(Void Torrent).cooldown = 0 & player.insanity <= 20 & !talent(Legacy of the Void)'},
 	--Arcane Torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
 	{'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
 	--Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
@@ -178,9 +178,9 @@ local Emergency = {
 
 local cooldowns = {
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-	{'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 10 & target.health <= 35', 'player'},
+	{'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 10 & player.buff(voidform).count < 12 & target.health <= 35', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
-	{'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 5 & target.health > 35', 'player'},
+	{'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 5 & player.buff(voidform).count < 7 & target.health > 35', 'player'},
 	--Mindbender if talent is active on CD in S2M.
 	{'!Mindbender', 'talent(Mindbender) & player.buff(Surrender to Madness)'},
 	--Mind Bender if talent is active and not in S2M if VF stacks are above 5.
@@ -213,9 +213,9 @@ local ST1 = {
 
 local lotv1 = {
 	--Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
-	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown = 0'},
+	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown = 0 & !player.buff(Power Infusion) & target.debuff(shadow word: pain).duration > 4'},
 	--Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
-	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0'},
+	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0 & !player.buff(Power Infusion) & target.debuff(shadow word: pain).duration > 4'},
 	--Torrent on CD.
 	{'!Void Torrent', '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & toggle(cooldowns)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & toggle(cooldowns)} '},
 	--SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.

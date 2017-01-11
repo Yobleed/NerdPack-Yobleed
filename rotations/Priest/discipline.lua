@@ -46,6 +46,12 @@ local GUI = {
 	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', width = 55, default_check = false, default_spin = 20},
 	{type = 'ruler'},{type = 'spacer'},
 
+	--Before Pull
+	{type = 'header', text = 'Pull Timer', align = 'center'},
+	{type = 'text', text = 'Before Pull.', align = 'center'},
+	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_PPull', width = 55, default= false},
+	{type = 'ruler'}, {type = 'spacer'},
+
 	--Solo
 	{type = 'header', text = 'Solo mode', align = 'center'},
 	{type = 'text', text = 'Player health values', align = 'center'},
@@ -291,7 +297,7 @@ local inCombat = {
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
-	{Rampup, 'toggle(ramp) & lowest.range <= 40 & spell(plea).count < 10'},
+	{Rampup, 'toggle(ramp) & spell(plea).count < 10'},
 	{Tank, 'tank.range <= 40 & !toggle(xDPS)'},
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40'},
 	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend)'},
@@ -315,6 +321,12 @@ local outCombat = {
 		{'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count < 5', 'lowest5'},
 	}, 'toggle(ato)'}, 
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
+	{'#142117', 'pull_timer < 2 & UI(s_PPull) & !player.buff(229206)'},
+	{'Power Word: Shield', 'pull_timer <= gcd', 'tank'},
+	{'Power Word: Radiance', '{pull_timer  <= 6 & pull_timer >= 3} & lowest.range <= 40', 'lowest'},
+	
+	
+
 }
 
 NeP.CR:Add(256, {
