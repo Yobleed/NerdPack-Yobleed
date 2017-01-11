@@ -168,8 +168,8 @@ local Insight = {
 }
 
 local Emergency = {
-	--Dispersion when SWD charges are 0 and VF stacks are 95 or higher and insanity is below or equal to 50%.
-	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & player.buff(voidform).count >= 99 & player.insanity <= 35'},
+	--Dispersion when SWD charges are 0 and VoiT is on CD and insanity below or equal to 20%.
+	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & !spell(Void Torrent).cooldown = 0 & player.insanity <= 20'},
 	--Arcane Torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
 	{'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
 	--Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
@@ -178,7 +178,7 @@ local Emergency = {
 
 local cooldowns = {
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-	{'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 15 & target.health <= 35', 'player'},
+	{'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 10 & target.health <= 35', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
 	{'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 5 & target.health > 35', 'player'},
 	--Mindbender if talent is active on CD in S2M.
@@ -187,8 +187,8 @@ local cooldowns = {
 	{'!Mindbender', 'talent(Mindbender) & !player.buff(Surrender to Madness) & player.buff(voidform).count > 5'},
 	--Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
 	{'!Shadowfiend', '!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(Power Infusion)'},
-	--Shadowfiend if Void Bolt is on CD and VF stacks are above or equal to 15 and Power Infusion talent is active.
-	{'!Shadowfiend', '{!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(Power Infusion).duration < 13 & player.buff(Power Infusion) & talent(Power Infusion) & target.health > 35 & player.insanity >= 50} || {!talent(Mindbender) & !spell(Void Eruption).cooldown = 0 & player.buff(Power Infusion).duration < 13 & player.buff(Power Infusion) & talent(Power Infusion) & target.health <= 35 & spell(Shadow Word: Death).charges >= 1}'},
+	--Shadowfiend if PI and above 40% insanity.
+	{'!Shadowfiend', 'player.buff(Power Infusion) & player.insanity >= 40'},
 }
 
 
