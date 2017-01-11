@@ -1,4 +1,4 @@
-local GUI = { 
+local GUI = {
 	-- GUI Header 
 	{type = 'texture',
 	texture = 'Interface\\AddOns\\Nerdpack-Yobleed\\media\\shadow.blp',
@@ -165,7 +165,7 @@ local Surrender = {
 	{'!Surrender to Madness', 'talent(Surrender to Madness) & player.debuff(Dream Simulacrum) & toggle(s2m) & !player.buff(Surrender to Madness)'},
 }
 
-local Insight = { 
+local Insight = {
 	-- Mind Blast when buffed with Shadowy Insight only when Voidbolt is on CD.
 	{'!Mindblast', '!spell(Void Eruption).cooldown = 0'}, 
 }

@@ -277,8 +277,7 @@ local Moving = {
 	{'!Power Word: Shield', 'talent(Body and Soul) & !player.buff(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance)', 'player'},
 }
 
-local inCombat = { 
-
+local inCombat = {
 	{Potions},
 	{Emergency},
 	{'%dispelall', '{toggle(disp) & spell(Purify).cooldown = 0 & tank.health > UI(t_mend)} || {player.health > UI(l_mend) & !tank.exists & toggle(disp) & spell(Purify).cooldown = 0}'},
