@@ -135,8 +135,7 @@ local Trinkets = {
 }
 
 local Keybinds = {
-	-- Mind Sear on target if Left-Shift if enabled in UI.
-	--{'!Mind Sear', 'keybind(lshift) & UI(k_MS)'},
+
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground' },
     {'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground' },  
@@ -201,66 +200,6 @@ local cooldowns = {
 
 }
 
-local AOE = {
-  --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown = 0'},
-  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0'},
-   --Torrent on CD.
-  {'!Void Torrent', '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & toggle(cooldowns)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & toggle(cooldowns)} '},
-  --Voidbolt on CD
-  {'!Void Eruption', 'player.buff(voidform)'},
-  --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
-  {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
-  --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
-  --SWD when target below 35%
-  {'!Shadow Word: Death', '{target.health <= 35 & !player.channeling(Void Eruption) & !player.buff(Voidform)} ||{target.health <= 35 & player.insanity < 30 & player.buff(Voidform) || {target.health <= 35 & player.buff(voidform).count <= 15 & player.buff(Voidform) & player.insanity < 70}}'},
-  --MB if channeling Mind flay or Mind Sear
-  {'!Mind Blast', 'player.channeling(Mind Flay)'},
-  --Mind Blast on CD.
-  {'Mind Blast', '{!player.insanity >= 65 & talent(Legacy of the Void) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {!player.insanity = 100 & talent(Surrender to Madness) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } & player.buff(voidform)'},
-  --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-  {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
-  --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'},
-  --Mind Sear if 3 or more targets within 10yd range of target with dots up.
-  --{'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
-  --Mind Flay if 2 or less targets within 10yd range of target with dots up. 
-  {'Mind Flay', 'target.area(10).enemies <= 2 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'}, 
-
-}
-
-local AOEs2m = {
-  --Dispersion after Void Torrent and Void Bolt
-  {'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10'},
-  --Torrent on CD.
-  {'!Void Torrent'},
-   --Voidbolt on CD
-  {'!Void Eruption', 'player.buff(voidform)'},
-  --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
-  {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
-  --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-  {'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 6 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
-  --SWD Charge dump if below 20 stacks of VF and if DoTs are up.
-  {'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 10  & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
-  --SWD if insanity is below 40%.
-  {'!Shadow Word: Death', 'target.health <= 35 & player.insanity <= 30 & !lastcast(Shadow Word: Death)'},
-  --MB if channeling Mind flay or Mind Sear
-  {'!Mind Blast', 'player.channeling(Mind Flay)'},
-  --Mind Blast on CD.
-  {'Mind Blast', '{!player.insanity >= 65 & talent(Legacy of the Void) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {!player.insanity = 100 & talent(Surrender to Madness) & !player.buff(voidform) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } || {target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) } & player.buff(voidform)'},
-  --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-  {'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
-  --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || !target.debuff(Vampiric Touch)'},
-  --Mind Sear if 3 or more targets within 10yd range of target with dots up.
-  --{'Mind Sear', 'target.area(10).enemies >= 3 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
-  --Mind Flay if 2 or less targets within 10yd range of target with dots up. 
-  {'Mind Flay', 'target.area(10).enemies <= 2 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'}, 
-
-}
-
 local ST1 = {  
   --Void Eruption if VT on target is 13seconds or higher and SWP on target and in S2M.
   {'!Void Eruption','target.debuff(Vampiric Touch).duration > 13 & player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
@@ -277,7 +216,7 @@ local ST1 = {
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
   {'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || !target.debuff(Vampiric Touch)'}, 
   --Mind Flay if Mind Blast is on cooldown
-  {'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !toggle(AOE) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) & !player.insanity = 100}'},
+  {'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) & !player.insanity = 100}'},
 
 }
 
@@ -349,7 +288,7 @@ local ST2 = {
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
   {'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || !target.debuff(Vampiric Touch)'}, 
   --Mind Flay if Mind Blast is on cooldown
-  {'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !toggle(AOE) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) & !player.insanity = 100}'},
+  {'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) & !player.insanity = 100}'},
 
 }
 
@@ -408,7 +347,7 @@ local inCombat = {
   --Shadowform if no voidform and no shadowform.
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform)'},
   {Surrender, '!player.channeling(Void Torrent)'}, 
-  {'Mind Bomb', 'toggle(abc) & toggle(AoE) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
+  {'Mind Bomb', 'toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
   {Emergency, '!player.channeling(Void Torrent)'},
   {Potions, '!player.channeling(Void Torrent)'},
   {Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
@@ -419,14 +358,12 @@ local inCombat = {
   {Keybinds},
   {Trinkets, '!player.channeling(Void Torrent)'},
   {Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
-  {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
-  {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
-  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)  & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
-  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !toggle(AOE) & !player.channeling(Void Torrent)}"}, 
-  {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"}, 
-  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform) & !toggle(AOE)"},
-  {AOEs2m, 'toggle(AOE) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
-  {AOE, 'toggle(AOE) & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
+  {s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
+  {s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
+  {lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)  & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
+  {lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
+  {ST2, "equipped(Mangaza's Madness) & !player.buff(voidform)"}, 
+  {ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform)"},
 
 }
 
@@ -450,3 +387,21 @@ NeP.CR:Add(258, {
 	gui = GUI,
 	load = exeOnLoad
 })
+--NOTES:
+--@Yobleed HowToPriest stat suggestions while we wait for simulations to be done:
+--Haste(up to 12k) > Mastery >= Crit > Haste (post 12k) >= Int > Versatility
+
+--Raid Talent setup:
+--ToF/LI/SL/PI/LotV
+
+--Dungeon talents:
+--ToF/LI/SL/Ms/SC AS and SL are close, so run which ever you prefer.
+
+--Variations not mentioned before:
+--AS if crit rating is way higher than mastery rating.
+
+--PSA: Questions about exact values will be likely ignored
+--PSA2: Don't drop over 10 ilvls towards itemization.
+--:ok_hand:2
+--:eggplant:1
+--:100:1
