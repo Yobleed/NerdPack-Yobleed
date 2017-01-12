@@ -133,7 +133,7 @@ local Trinkets = {
 local Keybinds = {
     --Forcing AOE
     {'!Void Eruption', 'UI(k_AOE) & keybind(lshift)', 'target'},
-    {'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform)} || {!advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform)}', 'target.ground'},
+    {'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform) & !target.moving} || {!advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform) & !target.moving}', 'target.ground'},
     {'!Shadow Word: Pain', '!target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
     {'!Mind Flay', 'target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
 
@@ -178,7 +178,7 @@ local Insight = {
 
 local Emergency = {
 	--Dispersion when SWD charges are 0 and VoiT is on CD and insanity below or equal to 20%.
-	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & !spell(Void Torrent).cooldown = 0 & player.insanity <= 20 & !talent(Legacy of the Void)'},
+	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & !spell(Void Torrent).cooldown = 0 & player.insanity <= 20 & !talent(Legacy of the Void) & !talent(Shadow Crash)'},
 	--Arcane Torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
 	{'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
 	--Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
@@ -202,7 +202,7 @@ local cooldowns = {
 
 local AOE = {
 	--Shadow Crash on CD.
-	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE)} || {!advanced & toggle(AOE)}', 'target.ground'},
+	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & player.buff(Voidform) & !target.moving} || {!advanced & toggle(AOE) & player.buff(Voidform) & !target.moving}', 'target.ground'},
 
 }
 
