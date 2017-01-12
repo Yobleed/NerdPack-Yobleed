@@ -212,17 +212,17 @@ local ST1 = {
 	--Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
 	{'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
 	--SWD when target below 35
-	{'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(Surrender to Madness) ||talent(shadow crash) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
+	{'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(Surrender to Madness) ||talent(Shadow Crash) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)'},
 	--Mind Blast on CD.
-	{'Mind Blast', '{talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(shadow crash) & !player.insanity = 100}'},
+	{'Mind Blast', '{talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(Shadow Crash) & !player.insanity = 100}'},
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
 	{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(Misery)} || {!target.debuff(Shadow Word: Pain) & !talent(Misery)}'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
 	{'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {{target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(Misery)}'}, 
 	--Mind Flay if Mind Blast is on cooldown
-	{'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(shadow crash) & !player.insanity = 100}'},
+	{'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(Shadow Crash) & !player.insanity = 100}'},
 }
 
 local lotv1 = {
@@ -278,19 +278,19 @@ local ST2 = {
 	--Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
 	{'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
 	--SWD when target below 35%
-	{'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(Surrender to Madness) ||talent(shadow crash) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
+	{'!Shadow Word: Death', '{target.health <= 35 & talent(Legacy of the Void) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(Surrender to Madness) ||talent(Shadow Crash) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)'},
 	--Mind Blast if target has SWP and VT.
 	{'Mind Blast', 'target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
 	--Mind Blast if target doesnt have SWP and VT and wasn't last cast.
-	{'Mind Blast', '!target.debuff(Shadow Word: Pain) & !target.debuff(Vampiric Touch) & !lastcast(Mind Blast) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(shadow crash) & !player.insanity = 100}'},
+	{'Mind Blast', '!target.debuff(Shadow Word: Pain) & !target.debuff(Vampiric Touch) & !lastcast(Mind Blast) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(Shadow Crash) & !player.insanity = 100}'},
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
 	{'Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
 	{'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {{target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(Misery)}'}, 
 	--Mind Flay if Mind Blast is on cooldown
-	{'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(shadow crash) & !player.insanity = 100}'},
+	{'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(Shadow Crash) & !player.insanity = 100}'},
 }
 
 local lotv2 = {
@@ -349,7 +349,7 @@ local inCombat = {
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
 	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
 	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
-	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(shadow crash) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
+	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(Legacy of the Void) & !player.insanity >= 65} || {talent(Surrender to Madness) ||talent(Shadow Crash) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
 	{Movement, "!player.buff(Voidform) || {player.buff(Voidform) & !player.buff(Surrender to Madness)} & !player.buff(Norgannon's Foresight)"},
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
@@ -357,8 +357,8 @@ local inCombat = {
 	{AOE, 'talent(Shadow Crash)'}, 
 	{s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
 	{s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
-	{lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) ||talent(shadow crash) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
-	{lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) ||talent(shadow crash) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
+	{lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) ||talent(Shadow Crash) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
+	{lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) ||talent(Shadow Crash) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
 	{ST2, "equipped(Mangaza's Madness) & !player.buff(voidform)"}, 
 	{ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform)"},
 }
