@@ -55,7 +55,8 @@ local GUI = {
 
 	-- GUI Keybinds
 	{type = 'header', text = 'Keybinds', align = 'center'},
-	{type = 'text', text = 'Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+	{type = 'text', text = 'Left Shift: AOE|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+	{type = 'checkbox', text = 'Force AOE', key = 'k_AOE', width = 55, default = false},
 	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
 	{type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
 	{type = 'ruler'}, {type = 'spacer'},
@@ -130,6 +131,12 @@ local Trinkets = {
 }
 
 local Keybinds = {
+    --Forcing AOE
+    {'!Void Eruption', 'UI(k_AOE) & keybind(lshift)', 'target'},
+    {'!Shadow Word: Pain', '!target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
+    {'!Mind Flay', 'target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
+
+
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground'},
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
