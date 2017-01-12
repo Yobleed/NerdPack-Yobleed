@@ -133,6 +133,7 @@ local Trinkets = {
 local Keybinds = {
     --Forcing AOE
     {'!Void Eruption', 'UI(k_AOE) & keybind(lshift)', 'target'},
+    {'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform)} || {!advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform)}', 'target.ground'},
     {'!Shadow Word: Pain', '!target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
     {'!Mind Flay', 'target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
 
