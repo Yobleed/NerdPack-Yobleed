@@ -243,7 +243,7 @@ local lotv1 = {
 	--Mind Blast on CD if VB is on CD.
 	{'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & player.channeling(Mind Flay)'},
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-	{'!Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(Misery)} || {!target.debuff(Shadow Word: Pain) & !talent(Misery)}'},
+	{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(Misery)} || {!target.debuff(Shadow Word: Pain) & !talent(Misery)} || {moving & !target.debuff(Shadow Word: Pain)}'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
 	{'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {{target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(Misery)}'},  
 	--Mind Flay if Dots are up and VB and MB are on CD.
@@ -311,7 +311,7 @@ local lotv2 = {
 	--Mind Blast on CD if VB is on CD.
 	{'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & player.channeling(Mind Flay)'},
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-	{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(Misery)} || {!target.debuff(Shadow Word: Pain) & !talent(Misery)}'},
+	{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(Misery)} || {!target.debuff(Shadow Word: Pain) & !talent(Misery)} || {moving & !target.debuff(Shadow Word: Pain)}'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
 	{'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {{target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(Misery)}'}, 
 	--Mind Flay if Dots are up and VB and MB are on CD.
@@ -345,7 +345,7 @@ local inCombat = {
 	--Shadowform if no voidform and no shadowform.
 	{'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform)'},
 	{Surrender, '!player.channeling(Void Torrent)'}, 
-	{'Mind Bomb', 'toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness) & !player.channeling(Void Torrent)'},
+	{'Mind Bomb', '{toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness) & !player.channeling(Void Torrent) & !talent(Shadow Crash)} || {toggle(abc) & target.area(8).enemies >= 3 & talent(Shadow Crash) & spell(Shadow Crash).cooldown = 0 & player.buff(Voidform) & !player.channeling(Void Torrent)}'},
 	{Emergency, '!player.channeling(Void Torrent)'},
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
