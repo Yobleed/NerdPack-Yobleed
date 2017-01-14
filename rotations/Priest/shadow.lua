@@ -186,6 +186,8 @@ local Emergency = {
 }
 
 local cooldowns = {
+    --Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
+	{'!Power Infusion', 'talent(Power Infusion) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 45 & player.insanity >= 50 & !spell(Void Eruption).cooldown = 0 & !spell(Void Torrent).cooldown = 0 & !spell(Dispersion).cooldown = 0', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
 	{'!Power Infusion', 'talent(Power Infusion) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 10 & player.buff(voidform).count < 12 & target.health <= 35', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
@@ -343,7 +345,7 @@ local inCombat = {
 	--Shadowform if no voidform and no shadowform.
 	{'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform)'},
 	{Surrender, '!player.channeling(Void Torrent)'}, 
-	{'Mind Bomb', 'toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness)'},
+	{'Mind Bomb', 'toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness) & !player.channeling(Void Torrent)'},
 	{Emergency, '!player.channeling(Void Torrent)'},
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
@@ -354,13 +356,13 @@ local inCombat = {
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
-	{AOE, 'talent(Shadow Crash)'}, 
-	{s2m2, "equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
-	{s2m1, "!equipped(Mangaza's Madness) & talent(Surrender to Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
-	{lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) ||talent(Shadow Crash) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
-	{lotv1, "{!equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) ||talent(Shadow Crash) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
-	{ST2, "equipped(Mangaza's Madness) & !player.buff(voidform)"}, 
-	{ST1, "!equipped(Mangaza's Madness) & !player.buff(voidform)"},
+	{AOE, 'talent(Shadow Crash) & !player.channeling(Void Torrent)'}, 
+	{s2m2, "equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
+	{s2m1, 'player.buff(Voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
+	{lotv2, "{equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)} || {talent(Shadow Crash) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
+	{lotv1, "{player.buff(voidform) & !player.channeling(Void Torrent) & talent(Legacy of the Void)} || {talent(Surrender to Madness) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)} || {talent(Shadow Crash) & !player.buff(Surrender to Madness) & !equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent)}"}, 
+	{ST2, "equipped(Mangaza's Madness) & !player.buff(voidform) & !player.channeling(Void Torrent)"}, 
+	{ST1, "!player.buff(voidform) & !player.channeling(Void Torrent)"},
 }
 
 local outCombat = {
