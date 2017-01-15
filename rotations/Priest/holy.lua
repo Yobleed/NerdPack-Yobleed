@@ -265,20 +265,20 @@ local inCombat = {
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE)'},
 	--Holy Word: Sanctify if lowest and 3 or more others at 40yds are below or if 80% health and if unlocked with advanced.
-	{'!Holy Word: Sanctify', 'lowest.area(10, 75).heal >= 5 & !player.channeling(Divine Hymn)','lowest.ground'},
+	{'!Holy Word: Sanctify', 'lowest.area(10, 75).heal >= 5 & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)','lowest.ground'},
 	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
-	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(Circle of Healing) & !toggle(xDPS) & !player.channeling(Divine Hymn)', 'lowest'},
+	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(Circle of Healing) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
-	{'!Prayer of Healing', 'lowest.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40 & !player.channeling(Divine Hymn)', 'lowest'},
+	{'!Prayer of Healing', 'lowest.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40 & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	{SymbolOfHope, 'player.buff(Symbol of Hope) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
-	{SpiritOfRedemption, 'player.buff(Spirit of Redemption) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
+	{SpiritOfRedemption, 'player.buff(Spirit of Redemption) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
 	--Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
 	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= UI(l_FH) & !player.channeling(Divine Hymn)', 'player'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{{
-		{Lowest, 'lowest.health < 100 & !toggle(xDPS)'},
-		{Tank, 'tank.health < 100 & !toggle(xDPS)'},
-		{Player, 'health < 100 & !toggle(xDPS)'},
+		{Lowest, 'lowest.health < 100 & !toggle(xDPS) & !lowest.debuff(Ignite Soul)'},
+		{Tank, 'tank.health < 100 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
+		{Player, 'health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
 	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing)'},

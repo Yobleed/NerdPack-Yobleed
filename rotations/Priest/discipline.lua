@@ -177,13 +177,21 @@ local Potions = {
 
 local Rampup = {
 --Spreading Atonement before DPS if checked.
-	{'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement) & spell(Plea).count < 5', 'lowest1'},
-	{'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement) & spell(Plea).count < 5', 'lowest2'},
-	{'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement) & spell(Plea).count < 5', 'lowest3'},
-	{'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement) & spell(Plea).count < 5', 'lowest4'},
-	{'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count < 5', 'lowest5'},
-	{'Power Word: Shield', '!tank.buff(Power Word: Shield) & spell(plea).count >= 5', 'tank'},
-	{'Power Word: Radiance', '{spell(plea).count >= 6 & !spell(plea).count >= 12 & !lowest.buff(Atonement)} || {spell(plea).count = 5 & !spell(Power Word: Shield).cooldown = 0 & !lowest.buff(Atonement)} ', 'lowest'},
+	{'Power Word: Shield', '!tank1.buff(Power Word: Shield)', 'tank1'},
+	{'Power Word: Shield', '!tank2.buff(Power Word: Shield)', 'tank2'},
+	{'Power Word: Radiance', '!healer1.buff(Atonement)', 'healer1'},
+    {'Power Word: Radiance', '!healer2.buff(Atonement)', 'healer2'},
+    {'Power Word: Radiance', '!healer3.buff(Atonement)', 'healer3'},
+    {'Power Word: Radiance', '!healer4.buff(Atonement)', 'healer4'},
+    {'Power Word: Radiance', '!healer5.buff(Atonement)', 'healer5'},
+    {'Power Word: Radiance', '!lowest1.buff(Atonement)', 'lowest1'},
+    {'Power Word: Radiance', '!lowest2.buff(Atonement)', 'lowest2'},
+    {'Power Word: Radiance', '!lowest3.buff(Atonement)', 'lowest3'},
+    {'Power Word: Radiance', '!lowest4.buff(Atonement)', 'lowest4'},
+    {'Power Word: Radiance', '!lowest5.buff(Atonement)', 'lowest5'},
+    {'Power Word: Radiance', '!lowest6.buff(Atonement)', 'lowest6'},
+    {'Power Word: Radiance', '!lowest7.buff(Atonement)', 'lowest7'},
+    {'Power Word: Radiance', '!lowest8.buff(Atonement)', 'lowest8'},
 }
 
 local Solo = {
@@ -291,15 +299,15 @@ local inCombat = {
 	{'fade', 'aggro & !toggle(xDPS)'},
 	{Keybinds},
 	{Trinkets},
-	{Rapture, 'player.buff(Rapture) & lowest.range <= 40'},
+	{Rapture, 'player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Moving, "moving & !player.buff(Norgannon's Foresight)"},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
-	{Rampup, 'toggle(ramp) & spell(plea).count < 10'},
-	{Tank, 'tank.range <= 40 & !toggle(xDPS)'},
-	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40'},
+	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
+	{Tank, 'tank.range <= 40 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
+	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend)'},
 	{Solo, 'toggle(xDPS)'},
 }
