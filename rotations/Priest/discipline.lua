@@ -157,9 +157,9 @@ local Keybinds = {
 	-- Power Word: Barrier on left shift when checked in UI.
 	{'!Power Word: Barrier', 'keybind(lshift) & UI(k_PWB)', 'mouseover.ground'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
-	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_PWB)', 'mouseover.ground'},
+	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
 	-- Power Word: Barrier on left shift when checked in UI.
-	{'!Power Word: Barrier', 'keybind(lshift) & UI(k_MD) & !advanced', 'cursor.ground'},
+	{'!Power Word: Barrier', 'keybind(lshift) & UI(k_PWB) & !advanced', 'cursor.ground'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground'},
 	-- Pause on left alt when checked in UI.
