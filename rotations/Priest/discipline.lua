@@ -137,7 +137,7 @@ local Emergency = {
 	--Power Infusion if 5 or more people are below 40% Health and cooldown is toggled on.
 	{'!Power Infusion', 'player.area(40, 40).heal >= 5 & toggle(cooldowns)', 'player'},
 	--Mindbender if mana is below or if 90%.
-	{'Mindbender', 'talent(Mindbender) & player.mana <= 90 & toggle(cooldowns)', 'target'},
+	{'Mindbender', 'talent(4,3) & player.mana <= 90 & toggle(cooldowns)', 'target'},
 	--Rapture if 5 ore more people are below 30% health and cooldown is toggled on.
 	{'!Rapture', 'player.area(40, 30).heal >= 5 & spell(Power Word: Shield).cooldown > 0 & toggle(cooldowns)', 'player'},
 	--Pain Suppression if lowest health is below or equal to 20% and checked.
@@ -200,52 +200,52 @@ local Solo = {
 	--PWS if player health is below or if UI value.
 	{'Power Word: Shield', 'Player.Health <= UI(full_PWS)', 'player'},
 	--LW on CD if toggled.
-	{"Light's Wrath", '{toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3} || {toggle(cooldowns) & player.buff(Atonement) & !talent(Schism)}', 'target'},
+	{"Light's Wrath", '{toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3} || {toggle(cooldowns) & player.buff(Atonement) & !talent(1,3)}', 'target'},
 	--PI on CD if toggled.
-	{'Power Infusion', 'talent(Power Infusion) & toggle(cooldowns)', 'target'},
+	{'Power Infusion', 'talent(5,2) & toggle(cooldowns)', 'target'},
 	--Shadowfiend on CD if toggled.
-	{'Shadowfiend', 'toggle(cooldowns) & !talent(Mindbender)', 'target'},
+	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 	--Shadow Mend if player health is below or if UI value.
 	{'Shadow Mend', 'player.health <= UI(full_mend)', 'player'},
 	--Gift of the Naaru if player health is below or if UI value.
 	{'Gift of the Naaru', 'player.health <= UI(full_Gift)', 'player'},
 	--Purge the Wicked if talent and not on target.
-	{'Purge the Wicked', 'talent(Purge the Wicked) & !target.debuff(Purge the Wicked)', 'target'},
+	{'Purge the Wicked', 'talent(7,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
-	{'Shadow Word: Pain', '!talent(Purge the Wicked) & !target.debuff(Shadow Word: Pain)', 'target'},
+	{'Shadow Word: Pain', '!talent(7,1) & !target.debuff(Shadow Word: Pain)', 'target'},
 	--Schism on cooldown.
-	{'Schism', "talent(Schism) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
+	{'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
 	--Power Word: Solace on cooldown if talent.
-	{'Power Word: Solace', 'talent(Power Word: Solace)', 'target'},
+	{'Power Word: Solace', 'talent(4,1)', 'target'},
 	--Divine Star if mobs are 3 or more.
-	{'Divine Star', 'talent(Divine Star) & player.area(24).enemies.infront >= 3 & toggle(AOE)'},
+	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 3 & toggle(AOE)'},
 	--Divine Star if moving.
-	{'Divine Star', 'talent(Divine Star) & player.area(24).enemies.infront >= 1 & moving'},
+	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 1 & moving'},
 	--Smite on CD.
 	{'Smite', nil, 'target'},
 }
 
 local Atonement = {
 	 --LW on CD if toggled and if atonement stacks are 5 or higher.
-	{"!Light's Wrath", '{toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= 5} || {toggle(cooldowns) & !talent(Schism) & spell(plea).count >= 5}', 'target'},
+	{"!Light's Wrath", '{toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= 5} || {toggle(cooldowns) & !talent(1,3) & spell(plea).count >= 5}', 'target'},
 	--Shadowfiend on CD if toggled.
-	{'Shadowfiend', 'toggle(cooldowns) & !talent(Mindbender)', 'target'},
+	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 	--Purge the Wicked if talent and not on target.
-	{'Purge the Wicked', 'talent(Purge the Wicked) & !target.debuff(Purge the Wicked)', 'target'},
+	{'Purge the Wicked', 'talent(7,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
-	{'Shadow Word: Pain', '!talent(Purge the Wicked) & !target.debuff(Shadow Word: Pain)', 'target'},
+	{'Shadow Word: Pain', '!talent(7,1) & !target.debuff(Shadow Word: Pain)', 'target'},
 	--Schism on cooldown.
-	{'Schism', "talent(Schism) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
+	{'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
+	{'Penance', 'target.debuff(7,1) || target.debuff(Shadow Word: Pain)', 'target'},
 	--Power Word: Solace on cooldown if talent.
-	{'Power Word: Solace', 'talent(Power Word: Solace)', 'target'},
+	{'Power Word: Solace', 'talent(4,1)', 'target'},
 	--Divine Star if mobs are 3 or more.
-	{'Divine Star', 'talent(Divine Star) & player.area(24).enemies.infront >= 3 & toggle(AOE)'},
+	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 3 & toggle(AOE)'},
 	--Divine Star if moving.
-	{'Divine Star', 'talent(Divine Star) & player.area(24).enemies.infront >= 1 & moving'},
+	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 1 & moving'},
 	--Smite on CD.
 	{'Smite', nil, 'target'},
 }
@@ -269,7 +269,7 @@ local Lowest = {
 	--Shadow Mend on UI value if PWS don't make it.
 	{'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
 	--Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', '{spell(plea).count < 3 & player.mana >= 70 & !lastcast(Power Word: Radiance)} || {spell(plea).count < 3 & lowest.area(40,95).heal >= 3 & advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)} || {spell(plea).count < 3 & player.area(40,95).heal >= 3 & !advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)}', 'lowest'},
+	{'Power Word: Radiance', '{spell(plea).count < 3 & lowest.area(40,95).heal >= 3 & advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)} || {spell(plea).count < 3 & player.area(40,95).heal >= 3 & !advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)}', 'lowest'},
 	--Power Word: Shield on CD if not Atonement on 6 people max.
 	{'Power Word: Shield', '!lowest1.buff(Atonement) & spell(Plea).count >= 5', 'lowest1'},
 	{'Power Word: Shield', '!lowest2.buff(Atonement) & spell(Plea).count >= 5', 'lowest2'},
@@ -288,7 +288,7 @@ local Moving = {
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	-- Body and Soul usage if enabled in UI.
-	{'!Power Word: Shield', 'talent(Body and Soul) & !player.buff(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance)', 'player'},
+	{'!Power Word: Shield', 'talent(2,2) & !player.buff(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance)', 'player'},
 }
 
 local inCombat = {
@@ -302,9 +302,9 @@ local inCombat = {
 	{Rapture, 'player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Moving, "moving & !player.buff(Norgannon's Foresight)"},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
-	{'Halo','talent(Halo) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
+	{'Halo','talent(6,3) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
-	{'Divine Star', 'talent(Divine Star) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
+	{'Divine Star', 'talent(6,2) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
 	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
 	{Tank, 'tank.range <= 40 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
