@@ -99,6 +99,13 @@ local exeOnLoad = function()
 		text = 'Enable/Disable: Automatic S2M',
 		icon = 'Interface\\ICONS\\Achievement_boss_generalvezax_01',
 	})
+
+	NeP.Interface:AddToggle({
+		key = 'level',
+		name = 'Leveling',
+		text = 'Enable/Disable: Leveling',
+		icon = 'Interface\\ICONS\\icon_treasuremap',
+	})
 end
 
 local Survival = {
@@ -379,7 +386,7 @@ local inCombat = {
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
-	{Leveling, '!player.channeling(Void Torrent) & !talent(7,1) & !talent(7,2) & !talent(7,3)'},
+	{Leveling, '!player.channeling(Void Torrent) & toggle(level)'},
 	{AOE, 'talent(7,2) & !player.channeling(Void Torrent)'}, 
 	{s2m2, "equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
 	{s2m1, 'player.buff(Voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
