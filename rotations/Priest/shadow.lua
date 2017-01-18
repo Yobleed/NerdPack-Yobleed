@@ -214,13 +214,13 @@ local Leveling = {
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)'},
 	--Mind Blast on CD.
-	{'Mind Blast', '{!player.insanity = 100 & !player.buff(Voidform)} || {player.buff(Voidform) & !spell(Void Eruption).cooldown = 0}'},
+	{'Mind Blast', '!player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown = 0}'},
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
 	{'Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-	{'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'}, 
+	{'Vampiric Touch', 'target.debuff(Vampiric Touch).duration <= 3 || !target.debuff(Vampiric Touch)'}, 
 	--Mind Flay if Mind Blast is on cooldown
-	{'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.insanity = 100 & !player.buff(Voidform)'},
+	{'Mind Flay', '{!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.buff(Voidform)} || {!spell(Mind Blast).cooldown = 0 & !spell(Void Eruption).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & player.buff(Voidform)}'},
 }
 
 
