@@ -202,6 +202,29 @@ local cooldowns = {
 	{'!Shadowfiend', 'player.buff(Power Infusion) & player.insanity >= 40'},
 }
 
+local Leveling = {
+    --Power Infusion on CD.
+    {'!Power Infusion','player.buff(Voidform) & toggle(cooldowns)'},
+    --Torrent on CD.
+	{'!Void Torrent', 'player.insanity <= 30 & toggle(cooldowns) & player.buff(Voidform)'},
+	--Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
+	{'!Void Eruption', '{target.debuff(Vampiric Touch).duration > 4 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & !player.buff(Voidform)} || player.buff(Voidform)'},
+	--SWD when target below 35
+	{'!Shadow Word: Death', 'target.health <= 35 & !player.channeling(Void Eruption)'},
+	--Mind Blast if player is channeling Mind Flay.
+	{'!Mind Blast', 'player.channeling(Mind Flay)'},
+	--Mind Blast on CD.
+	{'Mind Blast', '{!player.insanity = 100 & !player.buff(Voidform)} || {player.buff(Voidform) & !spell(Void Eruption).cooldown = 0}'},
+	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
+	{'Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
+	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
+	{'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)}'}, 
+	--Mind Flay if Mind Blast is on cooldown
+	{'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.insanity = 100 & !player.buff(Voidform)'},
+}
+
+}
+
 local AOE = {
 	--Shadow Crash on CD.
 	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & player.buff(Voidform) & !target.moving} || {!advanced & toggle(AOE) & player.buff(Voidform) & !target.moving}', 'target.ground'},
@@ -356,6 +379,7 @@ local inCombat = {
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
+	{Leveling, '!player.channeling(Void Torrent) & !talent(7,1) & !talent(7,2) & !talent(7,3)'},
 	{AOE, 'talent(7,2) & !player.channeling(Void Torrent)'}, 
 	{s2m2, "equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
 	{s2m1, 'player.buff(Voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
