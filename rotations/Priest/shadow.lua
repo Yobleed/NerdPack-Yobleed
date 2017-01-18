@@ -223,7 +223,7 @@ local Leveling = {
 	{'Mind Flay', '!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.insanity = 100 & !player.buff(Voidform)'},
 }
 
-}
+
 
 local AOE = {
 	--Shadow Crash on CD.
