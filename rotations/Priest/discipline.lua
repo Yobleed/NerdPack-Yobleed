@@ -315,6 +315,7 @@ local inCombat = {
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend)'},
 	{Solo, 'toggle(xDPS)'},
+	{'Smite', nil, 'target'},
 }
 
 local outCombat = {
