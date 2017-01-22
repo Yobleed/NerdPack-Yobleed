@@ -10,7 +10,8 @@ local GUI = {
 
 	--Cooldowns
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
-	{type = 'checkbox', text = 'Use Pain Suppression', key = 'c_PS', width = 55, default = false},
+	{type = 'checkbox', text = 'Use Pain Suppression on tank', key = 'c_PSt', width = 55, default = false},
+	{type = 'checkbox', text = 'Use Pain Suppression on lowest', key = 'c_PSl', width = 55, default = false},
 	{type = 'ruler'},{type = 'spacer'},
 
 	-- GUI Moving
@@ -126,6 +127,7 @@ end
 local Rapture = {
 	--Power Word: Shield on CD.
 	{'Power Word: Shield', '!tank.buff(Power Word: Shield)', 'tank'},
+	{'Power Word: Shield', '!lowest.buff(Power Word: Shield)', 'lowest'},
 	{'Power Word: Shield', '!lowest1.buff(Power Word: Shield)', 'lowest1'},
 	{'Power Word: Shield', '!lowest2.buff(Power Word: Shield)', 'lowest2'},
 	{'Power Word: Shield', '!lowest3.buff(Power Word: Shield)', 'lowest3'},
@@ -135,16 +137,16 @@ local Rapture = {
 }
 
 local Emergency = {
+    --Mana up!
+    {'!Power Infusion', 'player.buff(Rapture) & talent(4,2) & player.mana <= 30', 'player'},
 	--Power Infusion if PWS and Rapture and Pain Suppression is on CD.
 	{'!Power Infusion', 'spell(Power Word: Shield).cooldown > 0 & spell(Rapture).cooldown > 0 & spell(Pain Suppression).cooldown > 0 & tank.health <= 20', 'player'},
-	--Power Infusion if 5 or more people are below 40% Health and cooldown is toggled on.
-	{'!Power Infusion', 'player.area(40, 40).heal >= 5 & toggle(cooldowns)', 'player'},
 	--Mindbender if mana is below or if 90%.
 	{'Mindbender', 'talent(4,3) & player.mana <= 90 & toggle(cooldowns)', 'target'},
-	--Rapture if 5 ore more people are below 30% health and cooldown is toggled on.
-	{'!Rapture', 'player.area(40, 30).heal >= 5 & spell(Power Word: Shield).cooldown > 0 & toggle(cooldowns)', 'player'},
+	--Pain Suppression if tank health is below or equal to 20% and checked.
+	{'!Pain Suppression', 'UI(c_PSt) & tank.health <= 20 & toggle(cooldowns)', 'tank'},
 	--Pain Suppression if lowest health is below or equal to 20% and checked.
-	{'!Pain Suppression', 'UI(c_PS) & lowest.health <= 20 & toggle(cooldowns)', 'lowest'},
+	{'!Pain Suppression', 'UI(c_PSl) & tank.health <= 20 & toggle(cooldowns)', 'lowest'},
 	--Gift of the Naaru if lowest health is below or if 20%.
 	{'Gift of the Naaru', 'lowest.health <= 20 & toggle(cooldowns) ', 'lowest'},
 }
