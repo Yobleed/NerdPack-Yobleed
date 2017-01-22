@@ -16,12 +16,16 @@ local GUI = {
 	-- GUI Survival & Potions
 	{type = 'header', text = 'Survival & Potions', align = 'center'},
 	{type = 'checkbox', text = 'Fade', key = 's_F', width = 55, default= false},
-	{type = 'checkspin', text = 'Power Word: Shield', key = 's_PWS', width = 55, default_check = false, default_spin = 40},
+	{type = 'checkbox', text = 'Power Word: Shield', key = 's_PWS', width = 55, default = false},
+	{type = 'spinner', text = '', key = 's_PWSspin', width = 55, default = 40},
 	{type = 'checkbox', text = 'Dispersion', key = 's_D', width = 55, default = false},
 	{type = 'spinner', text = '', key = 's_Dspin', align = 'left', width = 55, default = 20},
-	{type = 'checkspin', text = 'Gift of the Naaru', key = 's_GotN', width = 55, default_check = false, default_spin = 40},
-	{type = 'checkspin', text = 'Healthstone', key = 's_HS', width = 55, default_check = false, default_spin = 20},
-	{type = 'checkspin', text = 'Ancient Healing Potion', key = 's_AHP', width = 55, default_check = false, default_spin = 20},
+	{type = 'checkbox', text = 'Gift of the Naaru', key = 's_GotN', width = 55, default = false},
+	{type = 'spinner', text = '', key = 's_GotNspin', width = 55, default = 40},
+	{type = 'checkbox', text = 'Healthstone', key = 's_HS', width = 55, default = false},
+	{type = 'spinner', text = '', key = 's_HSspin', width = 55, default = 20},
+	{type = 'checkbox', text = 'Ancient Healing Potion', key = 's_AHP', width = 55, default = false},
+	{type = 'spinner', text = '', key = 's_AHPspin', width = 55, default = 20},
 	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', width = 55, default= false},
 	{type = 'checkbox', text = 'Potion of Prolonged Power TTD Boss', key = 's_PPttd', width = 55, default= false},
 	{type = 'ruler'}, {type = 'spacer'},
@@ -69,8 +73,10 @@ local GUI = {
 	-- GUI Party Support
 	{type = 'header', text = 'Party Support', align = 'center'},
 	{type = 'text', text = 'Attempt to save members of your party.', align = 'center'},
-	{type = 'checkspin', text = 'Gift of the Naaru', key = 'sup_GotN', width = 55, default_check = false, default_spin = 20},
-	{type = 'checkspin', text = 'Power Word: Shield', key = 'sup_PWS', width = 55, default_check = false, default_spin = 20},
+	{type = 'checkbox', text = 'Gift of the Naaru', key = 'sup_GotN', width = 55, default = false},
+	{type = 'spinner', text = '', key = 'sup_GotNspin', width = 55, default = 20},
+	{type = 'checkbox', text = 'Power Word: Shield', key = 'sup_PWS', width = 55, default = false},
+	{type = 'spinner', text = '', key = 'sup_PWSspin', width = 55, default = 20},
 }
 
 local exeOnLoad = function()
@@ -112,11 +118,11 @@ local Survival = {
 	-- Fade usage if enabled in UI.
 	{'Fade', 'target.threat = 100 & UI(s_F)'},
 	-- Power Word: Shield usage if enabled in UI.
-	{'Power Word: Shield', 'player.health <= UI(s_PWS_spin) & UI(s_PWS_check)', 'player'},
+	{'Power Word: Shield', 'player.health <= UI(s_PWSspin) & UI(s_PWS)', 'player'},
 	-- Dispersion usage if enabled in UI.
 	{'!Dispersion', 'player.health <= UI(s_Dspin) & UI(s_D)'},
 	-- Gift of the Naaru usage if enabled in UI.
-	{'Gift of the Naaru', 'player.health <= UI(s_GotN_spin) & UI(s_GotN_check)'},
+	{'Gift of the Naaru', 'player.health <= UI(s_GotNspin) & UI(s_GotN)'},
 }
 
 local Potions = {
@@ -125,9 +131,9 @@ local Potions = {
 	-- Potion of Prolonged Power usage if enabled in UI.
 	{'#142117', 'player.hashero & !player.buff(229206) & UI(s_PP)'},
 	-- Healthstone usage if enabled in UI.
-	{'#5512', 'player.health <= UI(s_HS_spin) & UI(s_HS_check)'},
+	{'#5512', 'player.health <= UI(s_HSspin) & UI(s_HS)'},
 	-- Ancient Healing Potion usage if enabled in UI.
-	{'#127834', 'player.health <= UI(s_AHP_spin) & UI(s_AHP_check)'},
+	{'#127834', 'player.health <= UI(s_AHPspin) & UI(s_AHP)'},
 }
 
 local Trinkets = {
@@ -159,9 +165,9 @@ local Movement = {
 
 local Support = {
 	-- Gift of the Naaru usage if enabled in UI.
-	{'!Gift of the Naaru', 'lowest.health <= UI(sup_GotN_spin) & UI(sup_GotN_check)', 'lowest'},
+	{'!Gift of the Naaru', 'lowest.health <= UI(sup_GotNspin) & UI(sup_GotN)', 'lowest'},
 	-- Power Word: Shield usage if enabled in UI.
-	{'!Power Word: Shield', 'lowest.health <= UI(sup_PWS_spin) & UI(sup_PWS_check)', 'lowest'},
+	{'!Power Word: Shield', 'lowest.health <= UI(sup_PWSspin) & UI(sup_PWS)', 'lowest'},
 }
 
 local Interrupts = {

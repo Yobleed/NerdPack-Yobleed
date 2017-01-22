@@ -41,9 +41,12 @@ local GUI = {
 	--POTIONS
 	{type = 'header', text = 'Potions', align = 'center'},
 	{type = 'text', text = 'Check to enable Potions', align = 'center'},
-	{type = 'checkspin', text = 'Healthstone', key = 'p_HS', width = 55, default_check = false, default_spin = 25},
-	{type = 'checkspin', text = 'Ancient Healing Potion', key = 'p_AHP', width = 55, default_check = false, default_spin = 25},
-	{type = 'checkspin', text = 'Ancient Mana Potion', key = 'p_AMP', width = 55, default_check = false, default_spin = 20},
+	{type = 'checkbox', text = 'Healthstone', key = 'p_HS', width = 55, default = false},
+	{type = 'spinner', text = '', key = 'p_HSspin', width = 55, default = 25},
+	{type = 'checkbox', text = 'Ancient Healing Potion', key = 'p_AHP', width = 55, default = false},
+	{type = 'spinner', text = '', key = 'p_AHPspin', width = 55, default = 25},
+	{type = 'checkbox', text = 'Ancient Mana Potion', key = 'p_AMP', width = 55, default = false},
+	{type = 'spinner', text = '', key = 'p_AMPspin', width = 55, default = 20},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--Before Pull
@@ -168,11 +171,11 @@ local Keybinds = {
 
 local Potions = {
 	--Health Stone below 20% health. Active when NOT channeling Divine Hymn.
-	{'#Healthstone', 'UI(p_HS_check) & player.health <= UI(p_HS_spin) & !player.channeling(Divine Hymn)'},
+	{'#Healthstone', 'UI(p_HS) & player.health <= UI(p_HSspin) & !player.channeling(Divine Hymn)'},
 	--Ancient Healing Potion below 20% health. Active when NOT channeling Divine Hymn.
-	{'#Ancient Healing Potion', 'UI(p_AHP_check) & player.health <= UI(p_AHP_spin) & !player.channeling(Divine Hymn)'},
+	{'#Ancient Healing Potion', 'UI(p_AHP) & player.health <= UI(p_AHPspin) & !player.channeling(Divine Hymn)'},
 	--Ancient Mana Potion below 20% mana. Active when NOT channeling Divine Hymn.
-	{'#Ancient Mana Potion', 'UI(p_AMP_check) & player.mana <= UI(p_AMP_spin) & !player.channeling(Divine Hymn)'},
+	{'#Ancient Mana Potion', 'UI(p_AMP) & player.mana <= UI(p_AMPspin) & !player.channeling(Divine Hymn)'},
 }
 
 local Rampup = {
