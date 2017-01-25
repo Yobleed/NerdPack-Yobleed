@@ -313,9 +313,8 @@ local inCombat = {
 	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
 	{Tank, 'tank.range <= 40 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
-	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend)'},
+	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.mana <= 15'},
 	{Solo, 'toggle(xDPS)'},
-	{'Smite', nil, 'target'},
 }
 
 local outCombat = {
