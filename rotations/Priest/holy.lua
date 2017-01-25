@@ -16,7 +16,9 @@ local GUI = {
 	--Cooldowns
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
 	{type = 'checkbox', text = 'Use Guardian Spirit', key = 'c_GS', width = 55, default = false},
-	{type = 'spinner', text = '', key = 'c_GSspin', width = 55, default = 25},
+	{type = 'spinner', text = '', key = 'c_GSspin', width = 55, default = 20}, 
+	{type = 'checkbox', text = 'Use Light of T\'uure', key = 'c_LoT', width = 55, default = false},
+	{type = 'spinner', text = '', key = 'c_LoTspin', width = 55, default = 30},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--TRINKETS
@@ -262,6 +264,8 @@ local inCombat = {
 	{'fade', 'aggro & !player.channeling(Divine Hymn)'},
 	 --Guardian Spirit if lowest health is below or if UI value and checked.
 	{'!Guardian Spirit', 'UI(c_GS) & lowest.health <= UI(c_GSspin) & toggle(cooldowns) & !player.channeling(Divine Hymn)', 'lowest'},
+	--Light of T'uure if lowest health is below or if UI value and checked.
+	{'!Light of T\'uure', 'UI(c_LoT) & lowest.health <= UI(c_LoTspin) & toggle(cooldowns) & !player.channeling(Divine Hymn) & !lowest.buff(Light of T\'uure) & !lowest.buff(Guardian Spirit)', 'lowest'},
 	{Trinkets, '!player.channeling(Divine Hymn)'},
 	{Keybinds},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
