@@ -146,7 +146,7 @@ local Emergency = {
 	--Pain Suppression if tank health is below or equal to 20% and checked.
 	{'!Pain Suppression', 'UI(c_PSt) & tank.health <= 20 & toggle(cooldowns)', 'tank'},
 	--Pain Suppression if lowest health is below or equal to 20% and checked.
-	{'!Pain Suppression', 'UI(c_PSl) & tank.health <= 20 & toggle(cooldowns)', 'lowest'},
+	{'!Pain Suppression', 'UI(c_PSl) & lowest.health <= 20 & toggle(cooldowns)', 'lowest'},
 	--Gift of the Naaru if lowest health is below or if 20%.
 	{'Gift of the Naaru', 'lowest.health <= 20 & toggle(cooldowns) ', 'lowest'},
 }
