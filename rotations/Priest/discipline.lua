@@ -137,8 +137,8 @@ local Rapture = {
 }
 
 local Emergency = {
-    --Mana up!
-    {'!Power Infusion', 'player.buff(Rapture) & talent(4,2) & player.mana <= 30', 'player'},
+	--Mana up!
+	{'!Power Infusion', 'player.buff(Rapture) & talent(4,2) & player.mana <= 30', 'player'},
 	--Power Infusion if PWS and Rapture and Pain Suppression is on CD.
 	{'!Power Infusion', 'spell(Power Word: Shield).cooldown > 0 & spell(Rapture).cooldown > 0 & spell(Pain Suppression).cooldown > 0 & tank.health <= 20', 'player'},
 	--Mindbender if mana is below or if 90%.
@@ -185,18 +185,18 @@ local Rampup = {
 	{'Power Word: Shield', '!tank1.buff(Power Word: Shield)', 'tank1'},
 	{'Power Word: Shield', '!tank2.buff(Power Word: Shield)', 'tank2'},
 	{'Power Word: Radiance', '!healer1.buff(Atonement)', 'healer1'},
-    {'Power Word: Radiance', '!healer2.buff(Atonement)', 'healer2'},
-    {'Power Word: Radiance', '!healer3.buff(Atonement)', 'healer3'},
-    {'Power Word: Radiance', '!healer4.buff(Atonement)', 'healer4'},
-    {'Power Word: Radiance', '!healer5.buff(Atonement)', 'healer5'},
-    {'Power Word: Radiance', '!lowest1.buff(Atonement)', 'lowest1'},
-    {'Power Word: Radiance', '!lowest2.buff(Atonement)', 'lowest2'},
-    {'Power Word: Radiance', '!lowest3.buff(Atonement)', 'lowest3'},
-    {'Power Word: Radiance', '!lowest4.buff(Atonement)', 'lowest4'},
-    {'Power Word: Radiance', '!lowest5.buff(Atonement)', 'lowest5'},
-    {'Power Word: Radiance', '!lowest6.buff(Atonement)', 'lowest6'},
-    {'Power Word: Radiance', '!lowest7.buff(Atonement)', 'lowest7'},
-    {'Power Word: Radiance', '!lowest8.buff(Atonement)', 'lowest8'},
+	{'Power Word: Radiance', '!healer2.buff(Atonement)', 'healer2'},
+	{'Power Word: Radiance', '!healer3.buff(Atonement)', 'healer3'},
+	{'Power Word: Radiance', '!healer4.buff(Atonement)', 'healer4'},
+	{'Power Word: Radiance', '!healer5.buff(Atonement)', 'healer5'},
+	{'Power Word: Radiance', '!lowest1.buff(Atonement)', 'lowest1'},
+	{'Power Word: Radiance', '!lowest2.buff(Atonement)', 'lowest2'},
+	{'Power Word: Radiance', '!lowest3.buff(Atonement)', 'lowest3'},
+	{'Power Word: Radiance', '!lowest4.buff(Atonement)', 'lowest4'},
+	{'Power Word: Radiance', '!lowest5.buff(Atonement)', 'lowest5'},
+	{'Power Word: Radiance', '!lowest6.buff(Atonement)', 'lowest6'},
+	{'Power Word: Radiance', '!lowest7.buff(Atonement)', 'lowest7'},
+	{'Power Word: Radiance', '!lowest8.buff(Atonement)', 'lowest8'},
 }
 
 local Solo = {
@@ -337,9 +337,6 @@ local outCombat = {
 	{'#142117', 'pull_timer < 2 & UI(s_PPull) & !player.buff(229206)'},
 	{'Power Word: Shield', 'pull_timer <= gcd', 'tank'},
 	{'Power Word: Radiance', '{pull_timer  <= 6 & pull_timer >= 3} & lowest.range <= 40', 'lowest'},
-	
-	
-
 }
 
 NeP.CR:Add(256, {

@@ -189,10 +189,10 @@ local FullDPS = {
 	{'Holy Word: Chastise', 'target.range <= 30', 'target'},
 	--Holy Nova if 4 or more enemies within 10yds.
 	{'!Holy Nova', 'player.area(10).enemies >= 4 & toggle(AOE)', 'player'},
-	--Smite on cooldown if not healing.
-	{'Smite', '!moving', 'target'},
 	--Holy Fire on cooldown if not healing when checked in UI.
-	{'Holy Fire', nil, 'target'},
+	{'Holy Fire', '!moving', 'target'},
+	--Smite on cooldown if not healing.
+	{'Smite', nil, 'target'},
 }
 
 local Tank = {

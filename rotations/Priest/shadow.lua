@@ -144,13 +144,11 @@ local Trinkets = {
 }
 
 local Keybinds = {
-    --Forcing AOE
-    {'!Void Eruption', 'UI(k_AOE) & keybind(lshift)', 'target'},
-    {'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform) & !target.moving} || {!advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform) & !target.moving}', 'target.ground'},
-    {'!Shadow Word: Pain', '!target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
-    {'!Mind Flay', 'target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
-
-
+	--Forcing AOE
+	{'!Void Eruption', 'UI(k_AOE) & keybind(lshift)', 'target'},
+	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform) & !target.moving} || {!advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform) & !target.moving}', 'target.ground'},
+	{'!Shadow Word: Pain', '!target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
+	{'!Mind Flay', 'target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground'},
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
@@ -199,7 +197,7 @@ local Emergency = {
 }
 
 local cooldowns = {
-    --Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
+	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
 	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown = 0 & !spell(Void Torrent).cooldown = 0 & !spell(Dispersion).cooldown = 0', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
 	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 10 & player.buff(voidform).count < 12 & target.health <= 35', 'player'},
@@ -216,9 +214,9 @@ local cooldowns = {
 }
 
 local Leveling = {
-    --Power Infusion on CD.
-    {'!Power Infusion','player.buff(Voidform) & toggle(cooldowns)'},
-    --Torrent on CD.
+	--Power Infusion on CD.
+	{'!Power Infusion','player.buff(Voidform) & toggle(cooldowns)'},
+	--Torrent on CD.
 	{'!Void Torrent', 'player.insanity <= 30 & toggle(cooldowns) & player.buff(Voidform)'},
 	--Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
 	{'!Void Eruption', '{target.debuff(Vampiric Touch).duration > 4 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & !player.buff(Voidform) & player.insanity = 100} || player.buff(Voidform)'},
@@ -236,12 +234,9 @@ local Leveling = {
 	{'Mind Flay', '{!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.buff(Voidform)} || {!spell(Mind Blast).cooldown = 0 & !spell(Void Eruption).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & player.buff(Voidform)}'},
 }
 
-
-
 local AOE = {
 	--Shadow Crash on CD.
 	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & player.buff(Voidform) & !target.moving} || {!advanced & toggle(AOE) & player.buff(Voidform) & !target.moving}', 'target.ground'},
-
 }
 
 local ST1 = {
@@ -404,7 +399,7 @@ local inCombat = {
 }
 
 local outCombat = {
-    -- Potion of Prolonged Power usage before pull if enabled in UI and Mind Blast isn't.
+	-- Potion of Prolonged Power usage before pull if enabled in UI and Mind Blast isn't.
 	{'#142117', 'pull_timer <= 1 & UI(s_PPull) & !UI(pull_MB)'},
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3'},
