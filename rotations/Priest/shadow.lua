@@ -206,9 +206,9 @@ local cooldowns = {
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
 	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown = 0 & !spell(Void Torrent).cooldown = 0 & !spell(Dispersion).cooldown = 0', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_PIspin1) & target.health <= 35', 'player'},
+	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count = UI(dps_PIspin1) & target.health <= 35', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
-	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_PIspin2) & target.health > 35', 'player'},
+	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count = UI(dps_PIspin2) & target.health > 35', 'player'},
 	--Mindbender if talent is active on CD in S2M.
 	{'!Mindbender', 'talent(6,3) & player.buff(Surrender to Madness)'},
 	--Mind Bender if talent is active and not in S2M if VF stacks are above 5.
