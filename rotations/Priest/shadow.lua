@@ -41,9 +41,15 @@ local GUI = {
 	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
 	{type = 'text', text = 'No S2M Active', align = 'center'},
 	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'dps_D', width = 55, default= false},
-	{type = 'text', text = 'Choose Stacks', align = 'center'},
 	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 35},
 	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 18},
+	{type = 'ruler'}, {type = 'spacer'},
+
+	-- GUI Power Infusion
+	{type = 'header', text = 'Power Infusion', align = 'center'},
+	{type = 'text', text = 'No S2M Active & CD is toggled', align = 'center'},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_PIspin1', align = 'left', width = 55, step = 1, default = 12},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_PIspin2', align = 'left', width = 55, step = 1, default = 6},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Arcane Torrent as last Resort
@@ -200,9 +206,9 @@ local cooldowns = {
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
 	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown = 0 & !spell(Void Torrent).cooldown = 0 & !spell(Dispersion).cooldown = 0', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 10 & player.buff(voidform).count < 12 & target.health <= 35', 'player'},
+	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_PIspin1) & target.health <= 35', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
-	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= 5 & player.buff(voidform).count < 7 & target.health > 35', 'player'},
+	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_PIspin2) & target.health > 35', 'player'},
 	--Mindbender if talent is active on CD in S2M.
 	{'!Mindbender', 'talent(6,3) & player.buff(Surrender to Madness)'},
 	--Mind Bender if talent is active and not in S2M if VF stacks are above 5.
@@ -210,7 +216,7 @@ local cooldowns = {
 	--Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
 	{'!Shadowfiend', '!talent(6,3) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(6,1)'},
 	--Shadowfiend if PI and above 40% insanity.
-	{'!Shadowfiend', 'player.buff(Power Infusion) & player.insanity >= 40'},
+	{'!Shadowfiend', 'player.buff(Power Infusion) & player.buff(Power Infusion).duration < 13'},
 }
 
 local Leveling = {
