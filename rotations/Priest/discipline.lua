@@ -334,7 +334,8 @@ local outCombat = {
 		{'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement) & spell(Plea).count < 5', 'lowest5'},
 	}, 'toggle(ato)'}, 
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
-	{'#142117', 'pull_timer < 2 & UI(s_PPull) & !player.buff(229206)'},
+	-- Potion of Prolonged Power usage before pull if enabled in UI.
+	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Power Word: Shield', 'pull_timer <= gcd', 'tank'},
 	{'Power Word: Radiance', '{pull_timer  <= 6 & pull_timer >= 3} & lowest.range <= 40', 'lowest'},
 }
