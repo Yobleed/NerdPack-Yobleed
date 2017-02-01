@@ -259,7 +259,7 @@ local Tank = {
 	--Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
 	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count < 5', 'tank'},
+	{'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count < 5 & !player.mana <= 15', 'tank'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'!Shadow Mend', 'tank.health <= UI(t_mend)', 'tank'},
 }
@@ -270,7 +270,7 @@ local Lowest = {
 	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
 	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 ', 'lowest'},
+	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 &  !player.mana <= 15', 'lowest'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
 	--Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
@@ -282,11 +282,11 @@ local Lowest = {
 	{'Power Word: Shield', '!lowest4.buff(Atonement) & spell(Plea).count >= 5', 'lowest4'},
 	{'Power Word: Shield', '!lowest5.buff(Atonement) & spell(Plea).count >= 5', 'lowest5'},
 	--Plea to aplly Atonement if lowest is above mend value and below plea value in UI and lowest missing atonement.
-	{'Plea', 'lowest1.health > UI(l_mend) & lowest1.health <= UI(l_plea) & !lowest1.buff(Atonement) & spell(Plea).count <= 5', 'lowest1'},
-	{'Plea', 'lowest2.health > UI(l_mend) & lowest2.health <= UI(l_plea) & !lowest2.buff(Atonement) & spell(Plea).count <= 5', 'lowest2'},
-	{'Plea', 'lowest3.health > UI(l_mend) & lowest3.health <= UI(l_plea) & !lowest3.buff(Atonement) & spell(Plea).count <= 5', 'lowest3'},
-	{'Plea', 'lowest4.health > UI(l_mend) & lowest4.health <= UI(l_plea) & !lowest4.buff(Atonement) & spell(Plea).count <= 5', 'lowest4'},
-	{'Plea', 'lowest5.health > UI(l_mend) & lowest5.health <= UI(l_plea) & !lowest5.buff(Atonement) & spell(Plea).count <= 5', 'lowest5'},
+	{'Plea', 'lowest1.health > UI(l_mend) & lowest1.health <= UI(l_plea) & !lowest1.buff(Atonement) & spell(Plea).count <= 5 & !player.mana <= 15', 'lowest1'},
+	{'Plea', 'lowest2.health > UI(l_mend) & lowest2.health <= UI(l_plea) & !lowest2.buff(Atonement) & spell(Plea).count <= 5 & !player.mana <= 15', 'lowest2'},
+	{'Plea', 'lowest3.health > UI(l_mend) & lowest3.health <= UI(l_plea) & !lowest3.buff(Atonement) & spell(Plea).count <= 5 & !player.mana <= 15', 'lowest3'},
+	{'Plea', 'lowest4.health > UI(l_mend) & lowest4.health <= UI(l_plea) & !lowest4.buff(Atonement) & spell(Plea).count <= 5 & !player.mana <= 15', 'lowest4'},
+	{'Plea', 'lowest5.health > UI(l_mend) & lowest5.health <= UI(l_plea) & !lowest5.buff(Atonement) & spell(Plea).count <= 5 & !player.mana <= 15', 'lowest5'},
 }
 
 local Moving = {
