@@ -258,10 +258,11 @@ local Atonement = {
 local Tank = {
 	--Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
-	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count < 5 & !player.mana <= 15', 'tank'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'!Shadow Mend', 'tank.health <= UI(t_mend)', 'tank'},
+	--Plea on UI value if no 6 atonements are active.
+	{'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count < 5 & !player.mana <= 15', 'tank'},
+	
 }
 
 local Lowest = {
@@ -269,10 +270,10 @@ local Lowest = {
 	{'Power Word: Radiance', '{spell(plea).count > 5 & spell(plea).count < 10 & player.buff(Power Infusion) & lowest.area(40,75).heal >= 10 & advanced} || {spell(plea).count > 5 & spell(plea).count < 10 & player.buff(Power Infusion) & player.area(40,75).heal >= 10 & !advanced}', 'lowest'},
 	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
-	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 &  !player.mana <= 15', 'lowest'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
+	--Plea on UI value if no 6 atonements are active.
+	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 &  !player.mana <= 15', 'lowest'},
 	--Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
 	{'Power Word: Radiance', '{spell(plea).count < 3 & lowest.area(40,70).heal >= 3 & advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)} || {spell(plea).count < 3 & player.area(40,70).heal >= 3 & !advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)}', 'lowest'},
 	--Power Word: Shield on CD if not Atonement on 6 people max.
@@ -315,6 +316,8 @@ local inCombat = {
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.mana <= 15'},
 	{Solo, 'toggle(xDPS)'},
+	--Shadowfiend on CD if toggled.
+	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 }
 
 local outCombat = {

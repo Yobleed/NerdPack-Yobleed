@@ -1,0 +1,23 @@
+lndebuff is lowest without debuff, its a fakeunit so use it like you would any other unit.  It calculated the lowest hp party or raid member that does not have the specified buff.  Similarly you can extend its functionality by specifying a role as well
+the syntax is lnbuff(ROLE,buff)
+so use it like ('spell', 'lnbuff(ROLE,buff).condition', 'lnbuff(ROLE,buff'},
+ROLE does not need to be specified and if no role is specified than the lowest is always chosen
+example. {'Lifebloom', 'lnbuff(TANK,Lifebloom).health<90', 'lnbuff(TANK,Lifebloom)'},
+a good start but let me explain whats happening here
+The spell lifebloom is cast if conditional is met
+conditional is of the lowest hp tank does not have lifebloom HOT and also has hp less than 90 then cast Lifebloom, the target in this cast is the lowest tank without HOT lifebloom
+Why its bad - in most raids there are 2 tanks so we need to add additional conditions, we need to specify that all tanks do not have lifebloom then cast on lowest tank.
+To cast something like Rejuv, lets use-
+{'Rejuvenation', 'lnbuff(Rejuvenation).health<70', 'lnbuff(Rejuvenation'},
+its more usefull because it wont cast your hot on someone that already has it an therefore not waste mana
+__
+lowestpredicted, is similar to lowest but it adds incoming heals to thier hp, useful for Raiding, less usefull for Mythic+ and parties(only 1 healer)
+This is also a fake unit so {'Spell', 'lowestpredicted.condition', 'lowestpredicted'},
+___(edited)
+health.predicted- Returns the health in percent of a unit with incoming heals added in
+its a conditional this time not a fake unit
+so syntax is
+{'Spell', 'unit.health.predicted<xx', 'unit'},
+example ('Flash Heal', 'lowest.health.predicted<50', 'lowest'},
+-----
+those are the 3 major changes i made in the last few days, if there are any questions you can post now
