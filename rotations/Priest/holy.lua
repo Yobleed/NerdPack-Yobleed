@@ -79,7 +79,6 @@ local GUI = {
 	{type = 'text', text = 'Tank health values', align = 'center'},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 't_HWSE', width = 55, default = 60},
 	{type = 'spinner', text = 'Flash Heal', key = 't_FH', width = 55, default = 85},
-	{type = 'spinner', text = 'Prayer of Mending', key = 't_PoM', width = 55, default = 100},
 	{type = 'spinner', text = 'Renew', key = 't_Ren', width = 55, default = 100},
 	{type = 'ruler'},{type = 'spacer'},
 
@@ -89,7 +88,6 @@ local GUI = {
 	{type = 'spinner', text = 'Gift of the Naaru', key = 'p_Gift', width = 55, default = 20},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'p_HWSE', width = 55, default = 40},
 	{type = 'spinner', text = 'Flash Heal', key = 'p_FH', width = 55, default = 70},
-	{type = 'spinner', text = 'Prayer of Mending', key = 'p_PoM', width = 55, default = 100},
 	--{type = 'spinner', text = 'Renew', key = 'p_Ren', default = 0},
 	{type = 'ruler'},{type = 'spacer'},
 
@@ -98,7 +96,6 @@ local GUI = {
 	{type = 'text', text = 'Lowest health values', align = 'center'},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'l_HWSE', width = 55, default = 60},
 	{type = 'spinner', text = 'Flash Heal', key = 'l_FH', width = 55, default = 85},
-	{type = 'spinner', text = 'Prayer of Mending', key = 'l_PoM', width = 55, default = 100},
 	--{type = 'spinner', text = 'Renew', key = 'l_Ren', default = 0},
 	{type = 'spinner', text = 'Heal', key = 'l_H', width = 55, default = 95},
 	{type = 'ruler'},{type = 'spacer'},
@@ -204,8 +201,8 @@ local FullDPS = {
 local Tank = {
 	--Holy Word: Serenity if tank health is below or if UI value.
 	{'!Holy Word: Serenity', 'tank.health <= UI(t_HWSE)', 'tank'},
-	--Prayer of Mending if tank missing Prayer of Mending and when tank health is below or if UI value.
-	{'Prayer of Mending', '!tank.buff(Prayer of Mending) & tank.health <= UI(t_PoM)', 'tank'},
+	--Prayer of Mending if tank missing Prayer of Mending.
+	{'Prayer of Mending', '!tank.buff(Prayer of Mending)', 'tank'},
 	--Flash heal if tank health is below or if UI value.
 	{'Flash Heal', 'tank.health <= UI(t_FH)', 'tank'},
 	--Renew if tank missing Renew and when tank health is below or if UI value.
@@ -213,8 +210,8 @@ local Tank = {
 }
 
 local Player = {
-    --Prayer of Mending if player missing Prayer of Mending and player health is below or if UI value.
-	{'Prayer of Mending', '!player.buff(Prayer of Mending) & player.health <= UI(p_PoM)', 'player'},
+    --Prayer of Mending if player missing Prayer of Mending.
+	{'Prayer of Mending', '!player.buff(Prayer of Mending)', 'player'},
 	--Gift of the Naaru if player health is below or if UI value.
 	{'!Gift of the Naaru', 'player.health <= UI(p_Gift)', 'player'},
 	--Holy Word: Serenity if player health is below or if UI value.
@@ -224,8 +221,8 @@ local Player = {
 }
 
 local Lowest = {
-    --Prayer of Mending if lowest health missing Prayer of Mending and is below or if UI value.
-	{'Prayer of Mending', '!lowest.buff(Prayer of Mending) & lowest.health <= UI(l_PoM)', 'lowest'},
+    --Prayer of Mending if lowest health missing Prayer of Mending.
+	{'Prayer of Mending', '!lowest.buff(Prayer of Mending)', 'lowest'},
 	--Flash Heal charge Dump if Surge of Light duration is less or equal to 3 seconds.
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	--Gift of the Naaru if lowest health is below or if 20% and has Guardian Spirit.
