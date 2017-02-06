@@ -270,6 +270,7 @@ local inCombat = {
 	--Light of T'uure if lowest health is below or if UI value and checked.
 	{'!Light of T\'uure', 'UI(c_LoTt) & tank.health <= UI(c_LoTspint) & toggle(cooldowns) & !player.channeling(Divine Hymn) & !tank.buff(Light of T\'uure) & !tank.buff(Guardian Spirit)', 'tank'},
 	{'!Light of T\'uure', 'UI(c_LoT) & lowest.health <= UI(c_LoTspin) & toggle(cooldowns) & !player.channeling(Divine Hymn) & !lowest.buff(Light of T\'uure) & !lowest.buff(Guardian Spirit)', 'lowest'},
+	{'Arcane Torrent', 'player.mana < 97', 'player'},
 	{Trinkets, '!player.channeling(Divine Hymn)'},
 	{Keybinds},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.

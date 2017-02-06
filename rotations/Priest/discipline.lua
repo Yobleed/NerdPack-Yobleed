@@ -244,7 +244,7 @@ local Atonement = {
 	--Schism on cooldown.
 	{'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'target.debuff(7,1) || target.debuff(Shadow Word: Pain)', 'target'},
+	{'Penance', 'target.debuff(Purge The Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
 	--Power Word: Solace on cooldown if talent.
 	{'Power Word: Solace', 'talent(4,1)', 'target'},
 	--Divine Star if mobs are 3 or more.
@@ -303,6 +303,7 @@ local inCombat = {
 	{'%dispelall', '{toggle(disp) & spell(Purify).cooldown = 0 & tank.health > UI(t_mend)} || {player.health > UI(l_mend) & !tank.exists & toggle(disp) & spell(Purify).cooldown = 0}'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !toggle(xDPS)'},
+	{'Arcane Torrent', 'player.mana < 97', 'player'},
 	{Keybinds},
 	{Trinkets},
 	{Rapture, 'player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
