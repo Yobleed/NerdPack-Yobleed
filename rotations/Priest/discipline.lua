@@ -199,13 +199,6 @@ local Potions = {
 
 local Rampup = {
 --Spreading Atonement before DPS if checked.
-	{'Power Word: Shield', '!tank1.buff(Power Word: Shield)', 'tank1'},
-	{'Power Word: Shield', '!tank2.buff(Power Word: Shield)', 'tank2'},
-	{'Power Word: Radiance', '!healer1.buff(Atonement)', 'healer1'},
-	{'Power Word: Radiance', '!healer2.buff(Atonement)', 'healer2'},
-	{'Power Word: Radiance', '!healer3.buff(Atonement)', 'healer3'},
-	{'Power Word: Radiance', '!healer4.buff(Atonement)', 'healer4'},
-	{'Power Word: Radiance', '!healer5.buff(Atonement)', 'healer5'},
 	{'Power Word: Radiance', '!lowest1.buff(Atonement)', 'lowest1'},
 	{'Power Word: Radiance', '!lowest2.buff(Atonement)', 'lowest2'},
 	{'Power Word: Radiance', '!lowest3.buff(Atonement)', 'lowest3'},
@@ -302,16 +295,12 @@ local Player = {
 local Lowest = {
     --better use of Light's Wrath
     {"Light's Wrath", '{toggle(cooldowns) & lowest.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & lowest.health <= UI(l_LW) & spell(plea).count >= UI(lato_LW)} || {toggle(cooldowns) & lowest.buff(Atonement) & !talent(1,3) & lowest.health <= UI(l_LW) & spell(plea).count >= UI(lato_LW)}', 'target'},
-	--Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', '{spell(plea).count > 5 & spell(plea).count < 10 & player.buff(Power Infusion) & lowest.area(40,75).heal >= 10 & advanced} || {spell(plea).count > 5 & spell(plea).count < 10 & player.buff(Power Infusion) & player.area(40,75).heal >= 10 & !advanced}', 'lowest'},
 	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', 'lowest.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'lowest'},
-	--Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
-	{'Power Word: Radiance', '{spell(plea).count < 3 & lowest.area(40,70).heal >= 3 & advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)} || {spell(plea).count < 3 & player.area(40,70).heal >= 3 & !advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)}', 'lowest'},
 	--Plea on UI value if no 6 atonements are active.
 	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 &  !player.mana <= 15', 'lowest'},
 	--Power Word: Shield on CD if not Atonement on 6 people max.
@@ -347,7 +336,7 @@ local inCombat = {
 	{Rapture, 'player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Moving, "moving & !player.buff(Norgannon's Foresight)"},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
-	{'Halo','talent(6,3) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
+	{'Halo','talent(6,3) & player.area(30, 60).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(6,2) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
 	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
