@@ -12,7 +12,9 @@ local GUI = {
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
 	{type = 'checkbox', text = 'Use Pain Suppression on tank', key = 'c_PSt', width = 55, default = false},
 	{type = 'checkbox', text = 'Use Pain Suppression on lowest', key = 'c_PSl', width = 55, default = false},
-	{type = 'ruler'},{type = 'spacer'},
+	{type = 'checkbox', text = 'Use Light\'s Wrath', key = 'LW', width = 55, default = false},
+	{type = 'spinner', text = 'LW Atonements', key = 'ato_LW', width = 55, step = 1, max = 20, default = 5},
+    {type = 'ruler'},{type = 'spacer'},
 
 	-- GUI Moving
 	{type = 'header', text = 'Movement', align = 'center'},
@@ -67,13 +69,27 @@ local GUI = {
 	--TANK
 	{type = 'header', text = 'Tank', align = 'center'},
 	{type = 'text', text = 'Tank health values', align = 'center'},
+	{type = 'spinner', text = 'Light\'s Wrath', key = 't_LW', width = 55, default = 50},
+	{type = 'spinner', text = 'LW Atonements', key = 'tato_LW', width = 55, step = 1, max = 20, default = 5},
 	{type = 'spinner', text = 'Shadow Mend', key = 't_mend', width = 55, default = 40},
 	{type = 'spinner', text = 'Plea', key = 't_plea', min = 70, max = 90, width = 55, default = 80}, --step = 1
+	{type = 'ruler'},{type = 'spacer'},
+
+    --PLAYER
+	{type = 'header', text = 'Player', align = 'center'},
+	{type = 'text', text = 'Player health values', align = 'center'},
+	{type = 'spinner', text = 'Light\'s Wrath', key = 'p_LW', width = 55, default = 50},
+	{type = 'spinner', text = 'LW Atonements', key = 'pato_LW', width = 55, step = 1, max = 20, default = 5},
+	{type = 'spinner', text = 'Power Word: Shield', key = 'p_PWS', width = 55, default = 90},
+	{type = 'spinner', text = 'Shadow Mend', key = 'p_mend', width = 55, default = 40},
+	{type = 'spinner', text = 'Plea', key = 'p_plea', min = 70, max = 90, width = 55, default = 80}, --step = 1
 	{type = 'ruler'},{type = 'spacer'},
 
 	--LOWEST
 	{type = 'header', text = 'Lowest', align = 'center'},
 	{type = 'text', text = 'Lowest health values', align = 'center'},
+	{type = 'spinner', text = 'Light\'s Wrath', key = 'l_LW', width = 55, default = 50},
+	{type = 'spinner', text = 'LW Atonements', key = 'lato_LW', width = 55, step = 1, max = 20, default = 5},
 	{type = 'spinner', text = 'Power Word: Shield', key = 'l_PWS', width = 55, default = 90},
 	{type = 'spinner', text = 'Shadow Mend', key = 'l_mend', width = 55, default = 40},
 	{type = 'spinner', text = 'Plea', key = 'l_plea', min = 70, max = 90, width = 55, default = 80}, --step = 1
@@ -233,8 +249,8 @@ local Solo = {
 }
 
 local Atonement = {
-	 --LW on CD if toggled and if atonement stacks are 5 or higher.
-	{"!Light's Wrath", '{toggle(cooldowns) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= 5} || {toggle(cooldowns) & !talent(1,3) & spell(plea).count >= 5}', 'target'},
+    --Lights Wrath on CD if toggled in UI.
+    {"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 	--Purge the Wicked if talent and not on target.
@@ -256,22 +272,43 @@ local Atonement = {
 }
 
 local Tank = {
+    --better use of Light's Wrath
+    {"Light's Wrath", '{toggle(cooldowns) & tank.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & tank.health <= UI(t_LW) & spell(plea).count >= UI(tato_LW)} || {toggle(cooldowns) & tank.buff(Atonement) & !talent(1,3) & tank.health <= UI(t_LW) & spell(plea).count >= UI(tato_LW)}', 'target'},
 	--Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
+	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
+	{'Penance', 'tank.health <= UI(t_mend) & tank.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
-	{'!Shadow Mend', 'tank.health <= UI(t_mend)', 'tank'},
+	{'!Shadow Mend', 'tank.health <= UI(t_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'tank'},
 	--Plea on UI value if no 6 atonements are active.
 	{'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count < 5 & !player.mana <= 15', 'tank'},
 	
 }
 
+local Player = {
+    --better use of Light's Wrath
+    {"Light's Wrath", '{toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & player.health <= UI(p_LW) & spell(plea).count >= UI(pato_LW)} || {toggle(cooldowns) & player.buff(Atonement) & !talent(1,3) & player.health <= UI(p_LW) & spell(plea).count >= UI(pato_LW)}', 'target'},
+	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
+	{'Power Word: Shield', 'player.health <= UI(p_PWS) & !player.buff(Power Word: Shield)', 'player'},
+	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
+	{'Penance', 'player.health <= UI(p_mend) & player.buff(Atonement)', 'target'},
+	--Shadow Mend on UI value if PWS don't make it.
+	{'!Shadow Mend', 'player.health <= UI(p_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'player'},
+	--Plea on UI value if no 6 atonements are active.
+	{'Plea', 'player.health <= UI(p_plea) & !player.buff(Atonement) & spell(Plea).count < 5 & !player.mana <= 15', 'player'},
+}
+
 local Lowest = {
+    --better use of Light's Wrath
+    {"Light's Wrath", '{toggle(cooldowns) & lowest.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & lowest.health <= UI(l_LW) & spell(plea).count >= UI(lato_LW)} || {toggle(cooldowns) & lowest.buff(Atonement) & !talent(1,3) & lowest.health <= UI(l_LW) & spell(plea).count >= UI(lato_LW)}', 'target'},
 	--Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
 	{'Power Word: Radiance', '{spell(plea).count > 5 & spell(plea).count < 10 & player.buff(Power Infusion) & lowest.area(40,75).heal >= 10 & advanced} || {spell(plea).count > 5 & spell(plea).count < 10 & player.buff(Power Infusion) & player.area(40,75).heal >= 10 & !advanced}', 'lowest'},
 	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
+	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
+	{'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
-	{'!Shadow Mend', 'lowest.health <= UI(l_mend)', 'lowest'},
+	{'!Shadow Mend', 'lowest.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'lowest'},
 	--Plea on UI value if no 6 atonements are active.
 	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 &  !player.mana <= 15', 'lowest'},
 	--Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
@@ -294,7 +331,7 @@ local Moving = {
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	-- Body and Soul usage if enabled in UI.
-	{'!Power Word: Shield', 'talent(2,2) & !player.buff(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance)', 'player'},
+	{'Power Word: Shield', 'talent(2,2) & !player.buff(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance)', 'player'},
 }
 
 local inCombat = {
@@ -314,9 +351,11 @@ local inCombat = {
 	{'Divine Star', 'talent(6,2) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
 	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
 	{Tank, 'tank.range <= 40 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
+	{Player, '!toggle(xDPS) & !player.buff(Rapture) & !player.debuff(Ignite Soul)'},
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.mana <= 15'},
 	{Solo, 'toggle(xDPS)'},
+	{"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 }
