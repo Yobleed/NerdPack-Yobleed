@@ -56,6 +56,7 @@ local GUI = {
 	{type = 'header', text = 'Pull Timer', align = 'center'},
 	{type = 'text', text = 'Before Pull.', align = 'center'},
 	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_PPull', width = 55, default= false},
+	{type = 'checkbox', text = 'Power Word: Radiance', key = 'PWR_PPull', width = 55, default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	--Solo
@@ -279,7 +280,7 @@ local Tank = {
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'tank.health <= UI(t_mend) & tank.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
-	{'!Shadow Mend', 'tank.health <= UI(t_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'tank'},
+	{'Shadow Mend', 'tank.health <= UI(t_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'tank'},
 	--Plea on UI value if no 6 atonements are active.
 	{'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count < 5 & !player.mana <= 15', 'tank'},
 	
@@ -293,7 +294,7 @@ local Player = {
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'player.health <= UI(p_mend) & player.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
-	{'!Shadow Mend', 'player.health <= UI(p_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'player'},
+	{'Shadow Mend', 'player.health <= UI(p_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'player'},
 	--Plea on UI value if no 6 atonements are active.
 	{'Plea', 'player.health <= UI(p_plea) & !player.buff(Atonement) & spell(Plea).count < 5 & !player.mana <= 15', 'player'},
 }
@@ -308,11 +309,11 @@ local Lowest = {
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
-	{'!Shadow Mend', 'lowest.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'lowest'},
-	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 &  !player.mana <= 15', 'lowest'},
+	{'Shadow Mend', 'lowest.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'lowest'},
 	--Power Word: Radiance if lowest and 2 or more around within 40yds without atonement buff.
 	{'Power Word: Radiance', '{spell(plea).count < 3 & lowest.area(40,70).heal >= 3 & advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)} || {spell(plea).count < 3 & player.area(40,70).heal >= 3 & !advanced & !lowest.buff(Atonement) & !lastcast(Power Word: Radiance)}', 'lowest'},
+	--Plea on UI value if no 6 atonements are active.
+	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 &  !player.mana <= 15', 'lowest'},
 	--Power Word: Shield on CD if not Atonement on 6 people max.
 	{'Power Word: Shield', '!lowest1.buff(Atonement) & spell(Plea).count >= 5', 'lowest1'},
 	{'Power Word: Shield', '!lowest2.buff(Atonement) & spell(Plea).count >= 5', 'lowest2'},
@@ -380,7 +381,7 @@ local outCombat = {
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Power Word: Shield', 'pull_timer <= gcd', 'tank'},
-	{'Power Word: Radiance', '{pull_timer  <= 6 & pull_timer >= 3} & lowest.range <= 40', 'lowest'},
+	{'Power Word: Radiance', '{pull_timer  <= 6 & pull_timer >= 3} & lowest.range <= 40 & UI(PWR_PPull)', 'lowest'},
 }
 
 NeP.CR:Add(256, {

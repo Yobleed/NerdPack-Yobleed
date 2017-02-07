@@ -408,7 +408,7 @@ local outCombat = {
 	-- Potion of Prolonged Power usage before pull if enabled in UI and Mind Blast isn't.
 	{'#142117', 'pull_timer <= 2 & UI(s_PPull) & !UI(pull_MB)'},
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
-	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
+	{'#142117', 'pull_timer < 4 & UI(s_PPull)'},
 	-- Mind Blast before Pull.
 	{'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
 	{'Shadowform', '!player.buff(Shadowform)'},
