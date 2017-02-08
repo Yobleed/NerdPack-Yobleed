@@ -158,6 +158,8 @@ local Emergency = {
 	{'!Power Infusion', 'player.buff(Rapture) & talent(4,2) & player.mana <= 30', 'player'},
 	--Power Infusion if PWS and Rapture and Pain Suppression is on CD.
 	{'!Power Infusion', 'spell(Power Word: Shield).cooldown > 0 & spell(Rapture).cooldown > 0 & spell(Pain Suppression).cooldown > 0 & tank.health <= 20', 'player'},
+	--PWR if in Barrier.
+	{'Power Word: Radiance', 'lowest.buff(Power Word: Barrier) & !lowest.buff(Atonement) & lowest.health <= UI(l_plea) & !lastcast(Power Word: Radiance)', 'lowest'},
 	--Mindbender if mana is below or if 90%.
 	{'Mindbender', 'talent(4,3) & player.mana <= 90 & toggle(cooldowns)', 'target'},
 	--Pain Suppression if tank health is below or equal to 20% and checked.
@@ -259,8 +261,6 @@ local Atonement = {
 	{'Power Word: Solace', 'talent(4,1)', 'target'},
 	--Divine Star if mobs are 3 or more.
 	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 3 & toggle(AOE)'},
-	--Divine Star if moving.
-	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 1 & moving'},
 	--Smite on CD.
 	{'Smite', nil, 'target'},
 }
@@ -288,6 +288,10 @@ local Player = {
 	{'Penance', 'player.health <= UI(p_mend) & player.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', 'player.health <= UI(p_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'player'},
+	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
+	{'Halo','talent(6,3) & player.area(30, 60).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
+	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
+	{'Divine Star', 'talent(6,2) & player.area(24, 90).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
 	--Plea on UI value if no 6 atonements are active.
 	{'Plea', 'player.health <= UI(p_plea) & !player.buff(Atonement) & spell(Plea).count < 5 & !player.mana <= 15', 'player'},
 }
@@ -321,7 +325,7 @@ local Moving = {
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 	-- Body and Soul usage if enabled in UI.
-	{'Power Word: Shield', 'talent(2,2) & !player.buff(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance)', 'player'},
+	{'Power Word: Shield', 'talent(2,2) & !player.buff(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance) & !player.buff(Speed of the Pious)', 'player'},
 }
 
 local inCombat = {
@@ -335,15 +339,11 @@ local inCombat = {
 	{Trinkets},
 	{Rapture, 'player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Moving, "moving & !player.buff(Norgannon's Foresight)"},
-	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
-	{'Halo','talent(6,3) & player.area(30, 60).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
-	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
-	{'Divine Star', 'talent(6,2) & player.area(24, 95).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
 	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
-	{Tank, 'tank.range <= 40 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
+	{Tank, 'tank.range <= 40 & !player.buff(Rapture) & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
 	{Player, '!toggle(xDPS) & !player.buff(Rapture) & !player.debuff(Ignite Soul)'},
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
-	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.mana <= 15'},
+	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.buff(Rapture) & !player.mana <= 15 || lowest.buff(Atonement)'},
 	{Solo, 'toggle(xDPS)'},
 	{"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'},
 	--Shadowfiend on CD if toggled.
