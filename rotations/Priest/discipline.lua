@@ -159,7 +159,9 @@ local Emergency = {
 	--Power Infusion if PWS and Rapture and Pain Suppression is on CD.
 	{'!Power Infusion', 'spell(Power Word: Shield).cooldown > 0 & spell(Rapture).cooldown > 0 & spell(Pain Suppression).cooldown > 0 & tank.health <= 20', 'player'},
 	--PWR if in Barrier.
-	{'Power Word: Radiance', 'lowest.buff(Power Word: Barrier) & !lowest.buff(Atonement) & lowest.health <= UI(l_plea) & !lastcast(Power Word: Radiance)', 'lowest'},
+	{'Power Word: Radiance', 'lowest.buff(Power Word: Barrier) & !lowest.buff(Atonement) & lowest.area(6.5, 90).heal >= 2 & !lastcast(Power Word: Radiance)', 'lowest'},
+	--PWR if in Barrier non advanced.
+	{'Power Word: Radiance', 'lowest.buff(Power Word: Barrier) & !lowest.buff(Atonement) & lowest.health <= UI(l_plea) & !lastcast(Power Word: Radiance) & !advanced', 'lowest'},
 	--Mindbender if mana is below or if 90%.
 	{'Mindbender', 'talent(4,3) & player.mana <= 90 & toggle(cooldowns)', 'target'},
 	--Pain Suppression if tank health is below or equal to 20% and checked.
