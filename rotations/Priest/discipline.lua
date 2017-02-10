@@ -215,7 +215,7 @@ local Rampup = {
 
 local Solo = {
 	--Plea to keep on Atonement.
-	{'!Plea', "{!player.buff(Atonement) & player.health < 90} || {!player.buff(Atonement) & spell(Light's Wrath).cooldown = 0}", 'player'},
+	{'Plea', "{!player.buff(Atonement) & player.health < 90} || {!player.buff(Atonement) & spell(Light's Wrath).cooldown = 0}", 'player'},
 	--PWS if player health is below or if UI value.
 	{'Power Word: Shield', 'Player.Health <= UI(full_PWS)', 'player'},
 	--LW on CD if toggled.
@@ -225,7 +225,7 @@ local Solo = {
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 	--Shadow Mend if player health is below or if UI value.
-	{'Shadow Mend', 'player.health <= UI(full_mend)', 'player'},
+	{'Shadow Mend', "player.health <= UI(full_mend) & {!moving || player.buff(Norgannon's Foresight)}", 'player'},
 	--Gift of the Naaru if player health is below or if UI value.
 	{'Gift of the Naaru', 'player.health <= UI(full_Gift)', 'player'},
 	--Purge the Wicked if talent and not on target.
@@ -275,7 +275,7 @@ local Tank = {
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'tank.health <= UI(t_mend) & tank.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
-	{'Shadow Mend', 'tank.health <= UI(t_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'tank'},
+	{'Shadow Mend', "tank.health <= UI(t_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'tank'},
 	--Plea on UI value if no 6 atonements are active.
 	{'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & spell(Plea).count < 5 & !player.mana <= 15', 'tank'},
 	
@@ -289,7 +289,7 @@ local Player = {
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'player.health <= UI(p_mend) & player.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
-	{'Shadow Mend', 'player.health <= UI(p_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'player'},
+	{'Shadow Mend', "player.health <= UI(p_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'player'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(6,3) & player.area(30, 60).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
@@ -306,7 +306,7 @@ local Lowest = {
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement)', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
-	{'Shadow Mend', 'lowest.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath)', 'lowest'},
+	{'Shadow Mend', "lowest.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
 	--Plea on UI value if no 6 atonements are active.
 	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & spell(Plea).count < 5 &  !player.mana <= 15', 'lowest'},
 	--Power Word: Shield on CD if not Atonement on 6 people max.
@@ -356,7 +356,6 @@ local outCombat = {
 	{Keybinds},
 	{Moving, 'moving & !toggle(ato)'},
 	{{
-		{'Plea', 'lowest.health < 100 & moving', 'lowest'},
 		{'Shadow Mend', "lowest.health < 100 & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
 	}, 'toggle(ooc_heal)'},
 	{{
