@@ -218,8 +218,10 @@ local Solo = {
 	{'Plea', "{!player.buff(Atonement) & player.health < 90} || {!player.buff(Atonement) & spell(Light's Wrath).cooldown = 0}", 'player'},
 	--PWS if player health is below or if UI value.
 	{'Power Word: Shield', 'Player.Health <= UI(full_PWS)', 'player'},
-	--LW on CD if toggled.
-	{"Light's Wrath", '{toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3} || {toggle(cooldowns) & player.buff(Atonement) & !talent(1,3)}', 'target'},
+	--Schism on cooldown.
+	{'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
+	--LW.
+    {'Light\'s Wrath', 'player.buff(Atonement) & toggle(cooldowns)'}, 
 	--PI on CD if toggled.
 	{'Power Infusion', 'talent(5,2) & toggle(cooldowns)', 'target'},
 	--Shadowfiend on CD if toggled.
@@ -232,8 +234,6 @@ local Solo = {
 	{'Purge the Wicked', 'talent(7,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
 	{'Shadow Word: Pain', '!talent(7,1) & !target.debuff(Shadow Word: Pain)', 'target'},
-	--Schism on cooldown.
-	{'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
 	--Power Word: Solace on cooldown if talent.
@@ -248,7 +248,7 @@ local Solo = {
 
 local Atonement = {
     --Lights Wrath on CD if toggled in UI.
-    {"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'},
+    {"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'}, 
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 	--Purge the Wicked if talent and not on target.
@@ -342,11 +342,11 @@ local inCombat = {
 	{Rapture, 'player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Moving, "moving & !player.buff(Norgannon's Foresight)"},
 	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
+	{Solo, 'toggle(xDPS)'},
 	{Tank, 'tank.range <= 40 & !player.buff(Rapture) & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
 	{Player, '!toggle(xDPS) & !player.buff(Rapture) & !player.debuff(Ignite Soul)'},
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.buff(Rapture) & !player.mana <= 15 || lowest.buff(Atonement)'},
-	{Solo, 'toggle(xDPS)'},
 	{"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
