@@ -291,7 +291,7 @@ local Player = {
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "player.health <= UI(p_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'player'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
-	{'Halo','talent(6,3) & player.area(30, 60).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
+	{'Halo','talent(6,3) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(6,2) & player.area(24, 90).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
 	--Plea on UI value if no 6 atonements are active.
@@ -336,6 +336,10 @@ local inCombat = {
 	{'%dispelall', '{toggle(disp) & spell(Purify).cooldown = 0 & tank.health > UI(t_mend)} || {player.health > UI(l_mend) & !tank.exists & toggle(disp) & spell(Purify).cooldown = 0}'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !toggle(xDPS)'},
+	--Knock back enemies if enemies are attack you and fade on CD.
+	{'Shining Force', 'spell(fade).cooldown > 0 & player.area(10).enemies > 1 & aggro & !toggle(xDPS)', 'player'},
+	--Knock back enemies as interrupt.
+	{'!Shining Force', 'toggle(interrupts) & target.interruptAt(80) &  target.range <= 10 & !lowest.health <= UI(l_mend)', 'player'},
 	{'Arcane Torrent', 'player.mana < 97', 'player'},
 	{Keybinds},
 	{Trinkets},

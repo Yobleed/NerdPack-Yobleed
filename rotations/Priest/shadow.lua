@@ -152,7 +152,8 @@ local Trinkets = {
 local Keybinds = {
 	--Forcing AOE
 	{'!Void Eruption', 'UI(k_AOE) & keybind(lshift)', 'target'},
-	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform) & !target.moving} || {!advanced & toggle(AOE) & keybind(lshift) & player.buff(Voidform) & !target.moving}', 'target.ground'},
+	{'Shadow Crash', 'target.area(8).enemies >= 2 & advanced & keybind(lshift) & !target.moving', 'target.ground'},
+	{'Shadow Crash', '!advanced & keybind(lshift) & !target.moving', 'cursor.ground'},
 	{'!Shadow Word: Pain', '!target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
 	{'!Mind Flay', 'target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
@@ -274,11 +275,11 @@ local lotv1 = {
 	--SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
 	{'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
 	--Void Bolt on CD not interrupting casting MB.
-	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
+	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 20'}, 
 	--Mind Blast on CD if VB is on CD.
-	{'Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
+	{'Mind Blast', 'player.spell(Void Eruption).cooldown > gcd'},
 	--Mind Blast on CD if VB is on CD.
-	{'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & player.channeling(Mind Flay)'},
+	{'!Mind Blast', 'player.spell(Void Eruption).cooldown > gcd & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & player.channeling(Mind Flay)'},
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
 	{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(6,2)} || {!target.debuff(Shadow Word: Pain) & !talent(6,2)} || {moving & !target.debuff(Shadow Word: Pain)}'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
