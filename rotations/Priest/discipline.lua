@@ -304,7 +304,7 @@ local Lowest = {
 	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement)', 'target'},
+	{'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement) & !lowest.health <= 30', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "lowest.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
 	--Plea on UI value if no 6 atonements are active.
@@ -339,10 +339,13 @@ local inCombat = {
 	--Knock back enemies if enemies are attack you and fade on CD.
 	{'Shining Force', 'spell(fade).cooldown > 0 & player.area(10).enemies > 1 & aggro & !toggle(xDPS)', 'player'},
 	--Knock back enemies as interrupt.
-	{'!Shining Force', 'toggle(interrupts) & target.interruptAt(80) &  target.range <= 10 & !lowest.health <= UI(l_mend)', 'player'},
+	{'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range > 10 & !lowest.health <= UI(l_mend)', 'tank'},
+	{'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range <= 10 & !lowest.health <= UI(l_mend)', 'player'},
 	{'Arcane Torrent', 'player.mana < 97', 'player'},
 	{Keybinds},
 	{Trinkets},
+	{Tank, 'tank.range <= 40 & !toggle(xDPS) & !tank.debuff(Ignite Soul) & tank.health <= 30'},
+	{Lowest, '!toggle(xDPS) & lowest.range <= 40 & !lowest.debuff(Ignite Soul) & lowest.health <= 30'},
 	{Rapture, 'player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Moving, "moving & !player.buff(Norgannon's Foresight)"},
 	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
@@ -350,7 +353,7 @@ local inCombat = {
 	{Tank, 'tank.range <= 40 & !player.buff(Rapture) & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
 	{Player, '!toggle(xDPS) & !player.buff(Rapture) & !player.debuff(Ignite Soul)'},
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
-	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.buff(Rapture) & !player.mana <= 15 || lowest.buff(Atonement)'},
+	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.buff(Rapture) & !player.mana <= 20'},
 	{"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
