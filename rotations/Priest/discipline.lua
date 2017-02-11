@@ -337,7 +337,7 @@ local inCombat = {
 	--Fade when you get aggro.
 	{'fade', 'aggro & !toggle(xDPS)'},
 	--Knock back enemies if enemies are attack you and fade on CD.
-	{'Shining Force', 'spell(fade).cooldown > 0 & player.area(10).enemies > 1 & aggro & !toggle(xDPS)', 'player'},
+	{'Shining Force', 'spell(fade).cooldown > 0 & player.area(10).enemies > 1 & aggro & !toggle(xDPS) & player.health <= 40', 'player'},
 	--Knock back enemies as interrupt.
 	{'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range > 10 & !lowest.health <= UI(l_mend)', 'tank'},
 	{'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range <= 10 & !lowest.health <= UI(l_mend)', 'player'},
