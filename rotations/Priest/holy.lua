@@ -127,6 +127,13 @@ local exeOnLoad = function()
 		text = 'ON/OFF Dispel All',
 		icon = 'Interface\\ICONS\\spell_holy_dispelmagic', --toggle(disp)
 	})
+
+	NeP.Interface:AddToggle({
+		key = 'topup',
+		name = 'TopUp',
+		text = 'ON/OFF Top Up your Party',
+		icon = 'Interface\\ICONS\\spell_holy_prayerofspirit', --toggle(topup)
+	})
 end
 
 local Trinkets = {
@@ -197,6 +204,15 @@ local FullDPS = {
 	--Smite on cooldown if not healing.
 	{'Smite', nil, 'target'},
 }
+
+local TopUp = {
+	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
+	{'Circle of Healing', 'lowest.area(30, 99).heal >= 4 & toggle(AOE) & talent(7,3)', 'lowest'},
+	{'Prayer of Healing', 'lowest.area(20, 99).heal >= 4 & toggle(AOE)' , 'lowest'},
+	{'!Holy Word: Serenity', 'lowest.health < 100', 'lowest'},
+	{'Flash Heal', 'lowest.health < 100', 'lowest'},
+}
+
 
 local Tank = {
 	--Holy Word: Serenity if tank health is below or if UI value.
@@ -283,6 +299,7 @@ local inCombat = {
 	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(7,3) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
 	{'!Prayer of Healing', 'lowest.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40 & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
+	{TopUp, 'toggle(topup) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
 	{SymbolOfHope, 'player.buff(Symbol of Hope) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
@@ -297,6 +314,7 @@ local inCombat = {
 
 local outCombat = {
 	{Keybinds},
+	{TopUp, 'toggle(topup) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Renew', '!tank.buff(Renew) & pull_timer <= gcd & UI(pull_Ren)', 'tank'},
