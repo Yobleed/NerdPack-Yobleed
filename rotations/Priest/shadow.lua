@@ -33,7 +33,7 @@ local GUI = {
 	--Before Pull
 	{type = 'header', text = 'Pull Timer', align = 'center'},
 	{type = 'text', text = 'Before Pull.', align = 'center'},
-	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_PPull', width = 55, default= false},
+	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_pull', width = 55, default= false},
 	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', width = 55, default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
@@ -406,10 +406,8 @@ local inCombat = {
 }
 
 local outCombat = {
-	-- Potion of Prolonged Power usage before pull if enabled in UI and Mind Blast isn't.
-	{'#142117', 'pull_timer <= 2 & UI(s_PPull) & !UI(pull_MB)'},
-	-- Potion of Prolonged Power usage before pull if enabled in UI.
-	{'#142117', 'pull_timer < 4 & UI(s_PPull)'},
+		-- Potion of Prolonged Power usage before pull if enabled in UI.
+	{'#142117', 'pull_timer < 4 & UI(s_pull)'},
 	-- Mind Blast before Pull.
 	{'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
 	{'Shadowform', '!player.buff(Shadowform)'},
