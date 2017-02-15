@@ -216,7 +216,7 @@ local FullDPS = {
 local TopUp = {
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	{'Circle of Healing', 'lowest.area(30, 99).heal >= 4 & toggle(AOE) & talent(7,3)', 'lowest'},
-	{'Prayer of Healing', 'lowest.area(40, 99).heal >= 4 & toggle(AOE)' , 'lowest'},
+	{'Prayer of Healing', 'lowest.area(20, 99).heal >= 4 & toggle(AOE)' , 'lowest'},
 	{'!Holy Word: Serenity', 'lowest.health < 100', 'lowest'},
 	{'Flash Heal', 'lowest.health < 100', 'lowest'},
 }
@@ -277,7 +277,7 @@ local Lowestpred = {
 	--Flash Heal if lowest health is below or if UI value.
 	{'Flash Heal', 'lowestpredicted.health <= UI(l_FH)', 'lowestpredicted'},
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
-	{'Prayer of Healing', 'lowestpredicted.area(40, 65).heal >= 4 & toggle(AOE)' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(20, 65).heal >= 4 & toggle(AOE)' , 'lowestpredicted'},
 	--Heal if Lowest Healt is below or if UI value.
 	{'Heal', 'lowestpredicted.health <= UI(l_H) & !lowestpredicted.health <= UI(l_FH) & !lowestpredicted.debuff(Fragile Echo)', 'lowestpredicted'},
 }
@@ -294,7 +294,7 @@ local Lowest = {
 	--Flash Heal if lowest health is below or if UI value.
 	{'Flash Heal', 'lowest.health <= UI(l_FH)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
-	{'Prayer of Healing', 'lowest.area(40, 65).heal >= 4 & toggle(AOE)' , 'lowest'},
+	{'Prayer of Healing', 'lowest.area(20, 65).heal >= 4 & toggle(AOE)' , 'lowest'},
 	--Heal if Lowest Healt is below or if UI value.
 	{'Heal', 'lowest.health <= UI(l_H) & !lowest.health <= UI(l_FH) & !lowest.debuff(Fragile Echo)', 'lowest'},
 }
@@ -346,7 +346,7 @@ local inCombat = {
 	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
 	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(7,3) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
-	{'!Prayer of Healing', 'lowest.area(40, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40 & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
+	{'!Prayer of Healing', 'lowest.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40 & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	{TopUp, 'toggle(topup) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
 	{SymbolOfHope, 'player.buff(Symbol of Hope) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
