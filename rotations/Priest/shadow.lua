@@ -290,7 +290,7 @@ local lotv1 = {
 
 local s2m1 = {
 	--Dispersion after Void Torrent and Void Bolt
-	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent)'},
+	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent) & toggle(cooldowns)'},
 	--Torrent on CD.
 	{'!Void Torrent', 'toggle(cooldowns)'},
 	--SWD Charge dump if below 20 stacks of VF and if DoTs are up.
@@ -358,7 +358,7 @@ local lotv2 = {
 
 local s2m2 = {
 	--Dispersion after Void Torrent and Void Bolt
-	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent)'},
+	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent) & toggle(cooldowns)'},
 	--Torrent on CD.
 	{'!Void Torrent', 'toggle(cooldowns)'},
 	--SWD Charge dump if below 20 stacks of VF and if DoTs are up.
