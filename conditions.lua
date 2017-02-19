@@ -809,3 +809,16 @@ NeP.DSL:Register('tttlz.wipe', function()
     return wipe(Xeer.TTTL_table)
 end)
 --]]
+----------------------------------------------------------------------------------
+-----------------------------------RAID-------------------------------------------
+----------------------------------------------------------------------------------
+-- partycheck= 1 (SOLO), partycheck= 2 (PARTY), partycheck= 3 (RAID)
+NeP.DSL:Register('partycheck', function()
+        if IsInRaid() then
+            return 3
+        elseif IsInGroup() then
+            return 2
+        else
+            return 1
+        end
+end)

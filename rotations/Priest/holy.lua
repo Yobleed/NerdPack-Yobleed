@@ -136,14 +136,6 @@ local exeOnLoad = function()
 		icon = 'Interface\\ICONS\\spell_holy_prayerofspirit', --toggle(topup)
 	})
 
-	NeP.Interface:AddToggle({
-		key = 'predict',
-		name = 'Raid Mode',
-		text = 'Checks for incoming Heals',
-		icon = 'Interface\\ICONS\\achievement_dungeon_gloryoftheraider', --toggle(predict)
-	})
-end
-
 local Trinkets = {
 	--Top Trinket usage if UI enables it.
 	{'#trinket1', 'UI(trinket_1)'},
@@ -357,14 +349,14 @@ local inCombat = {
 		{Playerpred, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
-	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & toggle(predict)'},
+	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & partycheck=3'},
 	{{
 		{Lowest, 'lowest.health < 100 & !toggle(xDPS) & !lowest.debuff(Ignite Soul)'},
 		{Tank, 'tank.health < 100 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
 		{Player, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
-	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & !toggle(predict)'},
+	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & !partycheck=3'},
 }
 
 local outCombat = {
