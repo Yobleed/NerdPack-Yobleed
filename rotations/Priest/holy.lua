@@ -135,6 +135,8 @@ local exeOnLoad = function()
 		text = 'ON/OFF Top Up your Party',
 		icon = 'Interface\\ICONS\\spell_holy_prayerofspirit', --toggle(topup)
 	})
+	
+	end
 
 local Trinkets = {
 	--Top Trinket usage if UI enables it.
