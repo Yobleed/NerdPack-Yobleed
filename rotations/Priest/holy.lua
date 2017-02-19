@@ -135,7 +135,7 @@ local exeOnLoad = function()
 		text = 'ON/OFF Top Up your Party',
 		icon = 'Interface\\ICONS\\spell_holy_prayerofspirit', --toggle(topup)
 	})
-	
+
 	end
 
 local Trinkets = {
@@ -273,7 +273,7 @@ local Lowestpred = {
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
 	{'Prayer of Healing', 'lowestpredicted.area(20, 65).heal >= 4 & toggle(AOE)' , 'lowestpredicted'},
 	--Heal if Lowest Healt is below or if UI value.
-	{'Heal', 'lowestpredicted.health <= UI(l_H) & !lowestpredicted.health <= UI(l_FH) & !lowestpredicted.debuff(Fragile Echo)', 'lowestpredicted'},
+	{'Heal', 'lowestpredicted.health <= UI(l_H) & !lowestpredicted.health <= UI(l_FH) & !lowestpredicted.debuff(Fragile Echo) & lowestpredicted.health > UI(l_FH)', 'lowestpredicted'},
 }
 
 local Lowest = {
@@ -290,7 +290,7 @@ local Lowest = {
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
 	{'Prayer of Healing', 'lowest.area(20, 65).heal >= 4 & toggle(AOE)' , 'lowest'},
 	--Heal if Lowest Healt is below or if UI value.
-	{'Heal', 'lowest.health <= UI(l_H) & !lowest.health <= UI(l_FH) & !lowest.debuff(Fragile Echo)', 'lowest'},
+	{'Heal', 'lowest.health <= UI(l_H) & !lowest.health <= UI(l_FH) & !lowest.debuff(Fragile Echo) & lowest.health > UI(l_FH)', 'lowest'},
 }
 
 local Moving = {
@@ -359,6 +359,7 @@ local inCombat = {
 		{FullDPS, 'toggle(xDPS) & target.range <= 40'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS)'},
 	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & !partycheck=3'},
+	{'smite', 'target.infront', 'target'},
 }
 
 local outCombat = {
