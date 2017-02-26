@@ -20,4 +20,7 @@ so syntax is
 {'Spell', 'unit.health.predicted<xx', 'unit'},
 example ('Flash Heal', 'lowest.health.predicted<50', 'lowest'},
 -----
-those are the 3 major changes i made in the last few days, if there are any questions you can post now
+incdmg is average of how much damage per second your taking, useful for tanks
+{'CD Spell', 'incdmg(time in seconds)>variable', 'player'},
+{'Barkskin', 'incdmg(5)>player.health.missingpredicted', 'player'},
+------------------

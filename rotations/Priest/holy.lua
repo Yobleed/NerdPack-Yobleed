@@ -166,6 +166,8 @@ local Potions = {
 }
 
 local SpiritOfRedemption = {
+    --Holy Word: Sanctify if lowest and 3 or more others at 40yds are below or if 80% health and if unlocked with advanced.
+	{'Holy Word: Sanctify', 'lowest.area(10, 80).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)','lowest.ground'},
 	--Holy Word: Serenity when lowest health is below 50%.
 	{'!Holy Word: Serenity', 'lowest.health < 50', 'lowest'},
 	--Flash Heal when lowest health is below 100%.
@@ -183,7 +185,7 @@ local SymbolOfHope = {
 
 local DPS = {
 	--Holy Word: Chastise on cooldown if not healing when checked in UI.
-	{'Holy Word: Chastise', 'UI(d_HWC)' , 'target'},
+	{'Holy Word: Chastise', 'UI(d_HWC) & target.range <= 30' , 'target'},
 	--Holy Fire on cooldown if not healing when checked in UI.
 	{'Holy Fire', 'UI(d_HF)' , 'target'},
 	--Smite on cooldown if not healing.
@@ -210,8 +212,9 @@ local FullDPS = {
 local TopUp = {
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	{'Circle of Healing', 'lowest.area(30, 99).heal >= 4 & toggle(AOE) & talent(7,3)', 'lowest'},
+	{'Holy Word: Sanctify', 'lowest.area(10, 80).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn)','lowest.ground'},
 	{'Prayer of Healing', 'lowest.area(20, 99).heal >= 4 & toggle(AOE)' , 'lowest'},
-	{'!Holy Word: Serenity', 'lowest.health < 100', 'lowest'},
+	{'Holy Word: Serenity', 'lowest.health < 100', 'lowest'},
 	{'Flash Heal', 'lowest.health < 100', 'lowest'},
 }
 
@@ -219,7 +222,7 @@ local Tankpred = {
 	--Holy Word: Serenity if tank health is below or if UI value.
 	{'!Holy Word: Serenity', 'tank.health.predicted <= UI(t_HWSE)', 'tank'},
 	--Prayer of Mending if tank missing Prayer of Mending.
-	{'Prayer of Mending', '!tank.buff(Prayer of Mending)', 'tank'},
+	{'Prayer of Mending', '!tank.buff(Prayer of Mending) & !lowest.health <= 40', 'tank'},
 	--Flash heal if tank health is below or if UI value.
 	{'Flash Heal', 'tank.health.predicted <= UI(t_FH)', 'tank'},
 	--Renew if tank missing Renew and when tank health is below or if UI value.
@@ -230,7 +233,7 @@ local Tank = {
 	--Holy Word: Serenity if tank health is below or if UI value.
 	{'!Holy Word: Serenity', 'tank.health <= UI(t_HWSE)', 'tank'},
 	--Prayer of Mending if tank missing Prayer of Mending.
-	{'Prayer of Mending', '!tank.buff(Prayer of Mending)', 'tank'},
+	{'Prayer of Mending', '!tank.buff(Prayer of Mending) & !lowest.health <= 40', 'tank'},
 	--Flash heal if tank health is below or if UI value.
 	{'Flash Heal', 'tank.health <= UI(t_FH)', 'tank'},
 	--Renew if tank missing Renew and when tank health is below or if UI value.
@@ -238,36 +241,36 @@ local Tank = {
 }
 
 local Playerpred = {
+    --Holy Word: Serenity if player health is below or if UI value.
+	{'!Holy Word: Serenity', 'player.health.predicted <= UI(p_HWSE)', 'player'},
     --Prayer of Mending if player missing Prayer of Mending.
-	{'Prayer of Mending', '!player.buff(Prayer of Mending)', 'player'},
+	{'Prayer of Mending', '!player.buff(Prayer of Mending) & !lowest.health <= 40', 'player'},
 	--Gift of the Naaru if player health is below or if UI value.
 	{'!Gift of the Naaru', 'player.health.predicted <= UI(p_Gift)', 'player'},
-	--Holy Word: Serenity if player health is below or if UI value.
-	{'!Holy Word: Serenity', 'player.health.predicted <= UI(p_HWSE)', 'player'},
 	--Flash Heal if player health is below or if UI value.
 	{'Flash Heal', 'player.health.predicted <= UI(p_FH)', 'player'},
 }
 
 local Player = {
+    --Holy Word: Serenity if player health is below or if UI value.
+	{'!Holy Word: Serenity', 'player.health <= UI(p_HWSE)', 'player'},
     --Prayer of Mending if player missing Prayer of Mending.
 	{'Prayer of Mending', '!player.buff(Prayer of Mending)', 'player'},
 	--Gift of the Naaru if player health is below or if UI value.
 	{'!Gift of the Naaru', 'player.health <= UI(p_Gift)', 'player'},
-	--Holy Word: Serenity if player health is below or if UI value.
-	{'!Holy Word: Serenity', 'player.health <= UI(p_HWSE)', 'player'},
 	--Flash Heal if player health is below or if UI value.
 	{'Flash Heal', 'player.health <= UI(p_FH)', 'player'},
 }
 
 local Lowestpred = {
+    --Holy Word: Serenity if lowest health is below or if UI value.
+	{'!Holy Word: Serenity', 'lowestpredicted.health <= UI(l_HWSE)', 'lowestpredicted'},
     --Prayer of Mending if lowest health missing Prayer of Mending.
-	{'Prayer of Mending', '!lowestpredicted.buff(Prayer of Mending)', 'lowestpredicted'},
+	{'Prayer of Mending', '!lowest.buff(Prayer of Mending) & !lowest.health <= 40', 'lowest'},
 	--Flash Heal charge Dump if Surge of Light duration is less or equal to 3 seconds.
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowestpredicted.health < 100', 'lowestpredicted'},
 	--Gift of the Naaru if lowest health is below or if 20% and has Guardian Spirit.
 	{'!Gift of the Naaru', 'lowestpredicted.health <= 20 & lowestpredicted.buff(Guardian Spirit)', 'lowestpredicted'},
-	--Holy Word: Serenity if lowest health is below or if UI value.
-	{'!Holy Word: Serenity', 'lowestpredicted.health <= UI(l_HWSE)', 'lowestpredicted'},
 	--Flash Heal if lowest health is below or if UI value.
 	{'Flash Heal', 'lowestpredicted.health <= UI(l_FH)', 'lowestpredicted'},
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
@@ -277,14 +280,14 @@ local Lowestpred = {
 }
 
 local Lowest = {
+    --Holy Word: Serenity if lowest health is below or if UI value.
+	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
     --Prayer of Mending if lowest health missing Prayer of Mending.
-	{'Prayer of Mending', '!lowest.buff(Prayer of Mending)', 'lowest'},
+	{'Prayer of Mending', '!lowest.buff(Prayer of Mending) & !lowest.health <= 40', 'lowest'},
 	--Flash Heal charge Dump if Surge of Light duration is less or equal to 3 seconds.
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	--Gift of the Naaru if lowest health is below or if 20% and has Guardian Spirit.
 	{'!Gift of the Naaru', 'lowest.health <= 20 & lowest.buff(Guardian Spirit)', 'lowest'},
-	--Holy Word: Serenity if lowest health is below or if UI value.
-	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
 	--Flash Heal if lowest health is below or if UI value.
 	{'Flash Heal', 'lowest.health <= UI(l_FH)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
@@ -331,12 +334,13 @@ local inCombat = {
 	{'!Light of T\'uure', 'UI(c_LoTt) & tank2.health <= UI(c_LoTspint) & toggle(cooldowns) & !player.channeling(Divine Hymn) & !tank2.buff(Light of T\'uure) & !tank2.buff(Guardian Spirit)', 'tank2'},
 	{'!Light of T\'uure', 'UI(c_LoT) & lowest.health <= UI(c_LoTspin) & toggle(cooldowns) & !player.channeling(Divine Hymn) & !lowest.buff(Light of T\'uure) & !lowest.buff(Guardian Spirit)', 'lowest'},
 	{'Arcane Torrent', 'player.mana < 97', 'player'},
+	{'!Holy Word: Chastise', 'toggle(interrupts) & target.interruptAt(70) & target.range <= 30 & !lowest.health <= 40', 'target'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(6,3) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !player.channeling(Divine Hymn)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(6,2) & player.area(24, 95).heal.infront >= 3 & toggle(AOE)'},
 	--Holy Word: Sanctify if lowest and 3 or more others at 40yds are below or if 80% health and if unlocked with advanced.
-	{'!Holy Word: Sanctify', 'lowest.area(10, 75).heal >= 5 & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)','lowest.ground'},
+	{'Holy Word: Sanctify', 'lowest.area(10, 80).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)','lowest.ground'},
 	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
 	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(7,3) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
