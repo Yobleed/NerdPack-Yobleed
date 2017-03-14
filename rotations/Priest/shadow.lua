@@ -152,8 +152,8 @@ local Trinkets = {
 local Keybinds = {
 	--Forcing AOE
 	{'!Void Eruption', 'UI(k_AOE) & keybind(lshift)', 'target'},
-	{'Shadow Crash', 'target.area(8).enemies >= 2 & advanced & keybind(lshift) & !target.moving', 'target.ground'},
-	{'Shadow Crash', '!advanced & keybind(lshift) & !target.moving', 'cursor.ground'},
+	{'!Shadow Crash', 'advanced & keybind(lshift) & !target.moving', 'target.ground'},
+	{'!Shadow Crash', '!advanced & keybind(lshift) & !target.moving', 'cursor.ground'},
 	{'!Shadow Word: Pain', '!target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
 	{'!Mind Flay', 'target.debuff(shadow word: pain) & UI(k_AOE) & keybind(lshift)', 'target'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
@@ -243,7 +243,7 @@ local Leveling = {
 
 local AOE = {
 	--Shadow Crash on CD.
-	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & player.buff(Voidform) & !target.moving} || {!advanced & toggle(AOE) & player.buff(Voidform) & !target.moving}', 'target.ground'},
+	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0} || {!advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0}', 'target.ground'},
 }
 
 local ST1 = {

@@ -226,7 +226,8 @@ local Tankpred = {
 	--Flash heal if tank health is below or if UI value.
 	{'Flash Heal', 'tank.health.predicted <= UI(t_FH)', 'tank'},
 	--Renew if tank missing Renew and when tank health is below or if UI value.
-	{'Renew', '!tank.buff(Renew) & tank.health.predicted <= UI(t_Ren)', 'tank'},
+	{'Renew', '!tank.buff(Renew) & tank1.health.predicted <= UI(t_Ren)', 'tank1'},
+	{'Renew', '!tank.buff(Renew) & tank2.health.predicted <= UI(t_Ren)', 'tank2'},
 }
 
 local Tank = {
