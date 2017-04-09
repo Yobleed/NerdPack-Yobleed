@@ -363,7 +363,7 @@ local outCombat = {
 	{Keybinds},
 	{Moving, 'moving & !toggle(ato)'},
 	{{
-		{'Shadow Mend', "lowest.health < 100 & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
+		{'Shadow Mend', "lowest.health <= 90 & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
 	}, 'toggle(ooc_heal)'},
 	{{
 		{'Power Word: Shield', '!tank.buff(Power Word: Shield) & spell(Plea).count = 5', 'tank'},

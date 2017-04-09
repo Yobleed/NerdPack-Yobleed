@@ -158,7 +158,7 @@ local Keybinds = {
 
 local Potions = {
 	--Health Stone below 20% health. Active when NOT channeling Divine Hymn.
-	{'#Healthstone', 'UI(p_HS) & player.health <= UI(p_HSspin) & !player.channeling(Divine Hymn)'},
+	{'#5512', 'UI(p_HS) & player.health <= UI(p_HSspin) & !player.channeling(Divine Hymn)'},
 	--Ancient Healing Potion below 20% health. Active when NOT channeling Divine Hymn.
 	{'#Ancient Healing Potion', 'UI(p_AHP) & player.health <= UI(p_AHPspin) & !player.channeling(Divine Hymn)'},
 	--Ancient Mana Potion below 20% mana. Active when NOT channeling Divine Hymn.

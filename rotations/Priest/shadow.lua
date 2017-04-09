@@ -45,11 +45,17 @@ local GUI = {
 	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 18},
 	{type = 'ruler'}, {type = 'spacer'},
 
-	-- GUI Power Infusion
+	-- GUI Power Infusion & Shadowfiend
 	{type = 'header', text = 'Power Infusion', align = 'center'},
 	{type = 'text', text = 'No S2M Active & CD is toggled', align = 'center'},
+    {type = 'text', text = 'Shadowfiend cast on last 12 seconds', align = 'center'},
 	{type = 'spinner', text = 'Target <= 35%', key = 'dps_PIspin1', align = 'left', width = 55, step = 1, default = 12},
 	{type = 'spinner', text = 'Target > 35%', key = 'dps_PIspin2', align = 'left', width = 55, step = 1, default = 6},
+	{type = 'ruler'}, {type = 'spacer'},
+
+	{type = 'header', text = 'Shadowfiend', align = 'center'},
+    {type = 'text', text = 'No Power Infusion Talent & CD is toggled', align = 'center'},
+    {type = 'spinner', text = 'Choose Stacks', key = 'dps_SFspin', align = 'left', width = 55, step = 1, default = 10},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Arcane Torrent as last Resort
@@ -112,12 +118,12 @@ local exeOnLoad = function()
 		icon = 'Interface\\ICONS\\Achievement_boss_generalvezax_01',
 	})
 
-	NeP.Interface:AddToggle({
-		key = 'level',
-		name = 'Leveling',
-		text = 'Enable/Disable: Leveling',
-		icon = 'Interface\\ICONS\\icon_treasuremap',
-	})
+	--NeP.Interface:AddToggle({
+	--	key = 'level',
+	--	name = 'Leveling',
+	--	text = 'Enable/Disable: Leveling',
+	--	icon = 'Interface\\ICONS\\icon_treasuremap',
+	--})
 end
 
 local Survival = {
@@ -216,31 +222,31 @@ local cooldowns = {
 	--Mind Bender if talent is active and not in S2M if VF stacks are above 5.
 	{'!Mindbender', 'talent(6,3) & !player.buff(Surrender to Madness) & player.buff(voidform).count > 5'},
 	--Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
-	{'!Shadowfiend', '!talent(6,3) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count > 10 & !talent(6,1)'},
+	{'!Shadowfiend', '!talent(6,3) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= UI(dps_SFspin) & !talent(6,1)'},
 	--Shadowfiend if PI and above 40% insanity.
 	{'!Shadowfiend', 'player.buff(Power Infusion) & player.buff(Power Infusion).duration < 13'},
 }
 
-local Leveling = {
+--local Leveling = {
 	--Power Infusion on CD.
-	{'!Power Infusion','player.buff(Voidform) & toggle(cooldowns)'},
+	--{'!Power Infusion','player.buff(Voidform) & toggle(cooldowns)'},
 	--Torrent on CD.
-	{'!Void Torrent', 'player.insanity <= 30 & toggle(cooldowns) & player.buff(Voidform)'},
+	--{'!Void Torrent', 'player.insanity <= 30 & toggle(cooldowns) & player.buff(Voidform)'},
 	--Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-	{'!Void Eruption', '{target.debuff(Vampiric Touch).duration > 4 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & !player.buff(Voidform) & player.insanity = 100} || player.buff(Voidform)'},
+	--{'!Void Eruption', '{target.debuff(Vampiric Touch).duration > 4 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & !player.buff(Voidform) & player.insanity = 100} || player.buff(Voidform)'},
 	--SWD when target below 35
-	{'!Shadow Word: Death', 'target.health <= 35 & !player.channeling(Void Eruption)'},
+	--{'!Shadow Word: Death', 'target.health <= 35 & !player.channeling(Void Eruption)'},
 	--Mind Blast if player is channeling Mind Flay.
-	{'!Mind Blast', 'player.channeling(Mind Flay)'},
+	--{'!Mind Blast', 'player.channeling(Mind Flay)'},
 	--Mind Blast on CD.
-	{'Mind Blast', '!player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown = 0}'},
+	--{'Mind Blast', '!player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown = 0}'},
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-	{'Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
+	--{'Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-	{'Vampiric Touch', 'target.debuff(Vampiric Touch).duration <= 3 || !target.debuff(Vampiric Touch)'}, 
+	--{'Vampiric Touch', 'target.debuff(Vampiric Touch).duration <= 3 || !target.debuff(Vampiric Touch)'}, 
 	--Mind Flay if Mind Blast is on cooldown
-	{'Mind Flay', '{!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.buff(Voidform)} || {!spell(Mind Blast).cooldown = 0 & !spell(Void Eruption).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & player.buff(Voidform)}'},
-}
+	--{'Mind Flay', '{!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.buff(Voidform)} || {!spell(Mind Blast).cooldown = 0 & !spell(Void Eruption).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & player.buff(Voidform)}'},
+--}
 
 local AOE = {
 	--Shadow Crash on CD.
@@ -395,7 +401,7 @@ local inCombat = {
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
-	{Leveling, '!player.channeling(Void Torrent) & toggle(level)'},
+	--{Leveling, '!player.channeling(Void Torrent) & toggle(level)'},
 	{AOE, 'talent(7,2) & !player.channeling(Void Torrent)'}, 
 	{s2m2, "equipped(Mangaza's Madness) & player.buff(voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)"},
 	{s2m1, 'player.buff(Voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
