@@ -185,7 +185,7 @@ local SymbolOfHope = {
 
 local DPS = {
 	--Holy Word: Chastise on cooldown if not healing when checked in UI.
-	{'Holy Word: Chastise', '(UI(d_HWC) & target.range <= 30' , 'target'},
+	{'Holy Word: Chastise', ' {UI(d_HWC) & !equipped(132445) & target.range <= 30} || {UI(d_HWC) & equipped(132445) & player.buff(Al\'maiesh, the Cord of Hope).count = 5 & target.range <= 30}' , 'target'}, 
 	--Holy Fire on cooldown if not healing when checked in UI.
 	{'Holy Fire', 'UI(d_HF)' , 'target'},
 	--Smite on cooldown if not healing.
@@ -200,7 +200,7 @@ local FullDPS = {
 	--Flash Heal if player health is below or if UI value.
 	{'Flash Heal', 'player.health <= UI(full_FH)', 'player'},
 	--Holy Word: Chastise on cooldown if not healing when checked in UI.
-	{'Holy Word: Chastise', 'target.range <= 30', 'target'},
+	{'Holy Word: Chastise', ' {!equipped(132445) & target.range <= 30} || {equipped(132445) & player.buff(Al\'maiesh, the Cord of Hope).count = 5 & target.range <= 30}' , 'target'},
 	--Holy Nova if 4 or more enemies within 10yds.
 	{'!Holy Nova', 'player.area(10).enemies >= 4 & toggle(AOE)', 'player'},
 	--Holy Fire on cooldown if not healing when checked in UI.
@@ -373,7 +373,8 @@ local outCombat = {
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Renew', '!tank.buff(Renew) & pull_timer <= gcd & UI(pull_Ren)', 'tank'},
-	{'Prayer of Mending', '!tank.buff(Prayer of Mending) & pull_timer <= 5 & UI(pull_PoM)', 'tank'},
+	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 10 & pull_timer <= 10 & UI(pull_PoM)', 'tank1'},
+	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 10 & pull_timer <= 10 & UI(pull_PoM)', 'tank2'},
 	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	{'Renew', '!lowest.buff(Renew) & lowest.health < 100', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
