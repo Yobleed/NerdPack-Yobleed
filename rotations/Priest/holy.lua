@@ -185,7 +185,7 @@ local SymbolOfHope = {
 
 local DPS = {
 	--Holy Word: Chastise on cooldown if not healing when checked in UI.
-	{'Holy Word: Chastise', 'UI(d_HWC) & target.range <= 30' , 'target'},
+	{'Holy Word: Chastise', '(UI(d_HWC) & target.range <= 30' , 'target'},
 	--Holy Fire on cooldown if not healing when checked in UI.
 	{'Holy Fire', 'UI(d_HF)' , 'target'},
 	--Smite on cooldown if not healing.
@@ -309,7 +309,7 @@ local Moving = {
 	--Flash Heal when Surge of Light is active, Lowest Health is below or if UI value.
 	{'Flash Heal', 'player.buff(Surge of Light) & lowest.health <= UI(m_FH)', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
-	{'!Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
+	{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
 	{'!Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
 	--Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
@@ -377,7 +377,7 @@ local outCombat = {
 	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	{'Renew', '!lowest.buff(Renew) & lowest.health < 100', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
-	{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
+	{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
 	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
 	{'%ressdead(Resurrection)', 'UI(rezz)'},

@@ -41,21 +41,21 @@ local GUI = {
 	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
 	{type = 'text', text = 'No S2M Active', align = 'center'},
 	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'dps_D', width = 55, default= false},
-	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 35},
-	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 18},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 44},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 30},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Power Infusion & Shadowfiend
 	{type = 'header', text = 'Power Infusion', align = 'center'},
 	{type = 'text', text = 'No S2M Active & CD is toggled', align = 'center'},
     {type = 'text', text = 'Shadowfiend cast on last 12 seconds', align = 'center'},
-	{type = 'spinner', text = 'Target <= 35%', key = 'dps_PIspin1', align = 'left', width = 55, step = 1, default = 12},
-	{type = 'spinner', text = 'Target > 35%', key = 'dps_PIspin2', align = 'left', width = 55, step = 1, default = 6},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_PIspin1', align = 'left', width = 55, step = 1, default = 20},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_PIspin2', align = 'left', width = 55, step = 1, default = 15},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	{type = 'header', text = 'Shadowfiend', align = 'center'},
     {type = 'text', text = 'No Power Infusion Talent & CD is toggled', align = 'center'},
-    {type = 'spinner', text = 'Choose Stacks', key = 'dps_SFspin', align = 'left', width = 55, step = 1, default = 10},
+    {type = 'spinner', text = 'Choose Stacks', key = 'dps_SFspin', align = 'left', width = 55, step = 1, default = 16},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Arcane Torrent as last Resort
@@ -139,7 +139,7 @@ local Survival = {
 
 local Potions = {
 	-- Potion of Prolonged Power usage if enabled in UI.
-	{'#142117', 'target.boss & boss.exists & target.deathin <= 60 & !player.buff(229206) & UI(s_PPttd)'},
+	{'#142117', 'target.boss & target.deathin <= 60 & !player.buff(229206) & UI(s_PPttd)'},
 	-- Potion of Prolonged Power usage if enabled in UI.
 	{'#142117', 'player.hashero & !player.buff(229206) & UI(s_PP)'},
 	-- Healthstone usage if enabled in UI.
@@ -214,9 +214,9 @@ local cooldowns = {
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
 	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown = 0 & !spell(Void Torrent).cooldown = 0 & !spell(Dispersion).cooldown = 0', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count = UI(dps_PIspin1) & target.health <= 35', 'player'},
+	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count = UI(dps_PIspin1) & target.health <= 35', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
-	{'!Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count = UI(dps_PIspin2) & target.health > 35', 'player'},
+	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count = UI(dps_PIspin2) & target.health > 35', 'player'},
 	--Mindbender if talent is active on CD in S2M.
 	{'!Mindbender', 'talent(6,3) & player.buff(Surrender to Madness)'},
 	--Mind Bender if talent is active and not in S2M if VF stacks are above 5.
@@ -274,13 +274,14 @@ local ST1 = {
 
 local lotv1 = {
 	--Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
-	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown = 0 & !player.buff(Power Infusion) & target.debuff(shadow word: pain).duration > 4'},
+	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown = 0'},
 	--Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
-	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0 & !player.buff(Power Infusion) & target.debuff(shadow word: pain).duration > 4'},
+	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0'},
 	--Torrent on CD.
-	{'!Void Torrent', '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & toggle(cooldowns)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & toggle(cooldowns)} '},
+	{'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0'}, 
+	-- '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & toggle(cooldowns)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & toggle(cooldowns)} '},
 	--SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
-	{'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
+	{'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.insanity <= 70 & talent(4,2) & spell(Shadow Word: Death).charges > 1} || {target.health <= 35 & player.insanity <= 85 & !talent(4,2) spell(Shadow Word: Death).charges > 1}'},
 	--Void Bolt on CD not interrupting casting MB.
 	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 20'}, 
 	--Mind Blast on CD if VB is on CD.
