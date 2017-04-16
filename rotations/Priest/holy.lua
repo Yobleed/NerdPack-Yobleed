@@ -222,7 +222,7 @@ local Tankpred = {
 	--Holy Word: Serenity if tank health is below or if UI value.
 	{'!Holy Word: Serenity', 'tank.health.predicted <= UI(t_HWSE)', 'tank'},
 	--Prayer of Mending if tank missing Prayer of Mending.
-	{'Prayer of Mending', '!tank.buff(Prayer of Mending) & !lowest.health <= 40', 'tank'},
+	{'Prayer of Mending', '!tank.buff(Prayer of Mending).count = 10 & !lowest.health <= 40', 'tank'},
 	--Flash heal if tank health is below or if UI value.
 	{'Flash Heal', 'tank.health.predicted <= UI(t_FH)', 'tank'},
 	--Renew if tank missing Renew and when tank health is below or if UI value.
@@ -234,7 +234,7 @@ local Tank = {
 	--Holy Word: Serenity if tank health is below or if UI value.
 	{'!Holy Word: Serenity', 'tank.health <= UI(t_HWSE)', 'tank'},
 	--Prayer of Mending if tank missing Prayer of Mending.
-	{'Prayer of Mending', '!tank.buff(Prayer of Mending) & !lowest.health <= 40', 'tank'},
+	{'Prayer of Mending', '!tank.buff(Prayer of Mending).count = 10 & !lowest.health <= 40', 'tank'},
 	--Flash heal if tank health is below or if UI value.
 	{'Flash Heal', 'tank.health <= UI(t_FH)', 'tank'},
 	--Renew if tank missing Renew and when tank health is below or if UI value.
@@ -245,7 +245,7 @@ local Playerpred = {
     --Holy Word: Serenity if player health is below or if UI value.
 	{'!Holy Word: Serenity', 'player.health.predicted <= UI(p_HWSE)', 'player'},
     --Prayer of Mending if player missing Prayer of Mending.
-	{'Prayer of Mending', '!player.buff(Prayer of Mending) & !lowest.health <= 40', 'player'},
+	{'Prayer of Mending', '!player.buff(Prayer of Mending).count = 10 & !lowest.health <= 40', 'player'},
 	--Gift of the Naaru if player health is below or if UI value.
 	{'!Gift of the Naaru', 'player.health.predicted <= UI(p_Gift)', 'player'},
 	--Flash Heal if player health is below or if UI value.
@@ -256,7 +256,7 @@ local Player = {
     --Holy Word: Serenity if player health is below or if UI value.
 	{'!Holy Word: Serenity', 'player.health <= UI(p_HWSE)', 'player'},
     --Prayer of Mending if player missing Prayer of Mending.
-	{'Prayer of Mending', '!player.buff(Prayer of Mending)', 'player'},
+	{'Prayer of Mending', '!player.buff(Prayer of Mending).count = 10', 'player'},
 	--Gift of the Naaru if player health is below or if UI value.
 	{'!Gift of the Naaru', 'player.health <= UI(p_Gift)', 'player'},
 	--Flash Heal if player health is below or if UI value.
@@ -267,7 +267,7 @@ local Lowestpred = {
     --Holy Word: Serenity if lowest health is below or if UI value.
 	{'!Holy Word: Serenity', 'lowestpredicted.health <= UI(l_HWSE)', 'lowestpredicted'},
     --Prayer of Mending if lowest health missing Prayer of Mending.
-	{'Prayer of Mending', '!lowest.buff(Prayer of Mending) & !lowest.health <= 40', 'lowest'},
+	{'Prayer of Mending', '!lowest.buff(Prayer of Mending).count = 10 & !lowest.health <= 40', 'lowest'},
 	--Flash Heal charge Dump if Surge of Light duration is less or equal to 3 seconds.
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowestpredicted.health < 100', 'lowestpredicted'},
 	--Gift of the Naaru if lowest health is below or if 20% and has Guardian Spirit.
@@ -284,7 +284,7 @@ local Lowest = {
     --Holy Word: Serenity if lowest health is below or if UI value.
 	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
     --Prayer of Mending if lowest health missing Prayer of Mending.
-	{'Prayer of Mending', '!lowest.buff(Prayer of Mending) & !lowest.health <= 40', 'lowest'},
+	{'Prayer of Mending', '!lowest.buff(Prayer of Mending).count = 10 & !lowest.health <= 40', 'lowest'},
 	--Flash Heal charge Dump if Surge of Light duration is less or equal to 3 seconds.
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	--Gift of the Naaru if lowest health is below or if 20% and has Guardian Spirit.
@@ -374,7 +374,7 @@ local outCombat = {
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Renew', '!tank.buff(Renew) & pull_timer <= gcd & UI(pull_Ren)', 'tank'},
 	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 10 & pull_timer <= 10 & UI(pull_PoM)', 'tank1'},
-	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 10 & pull_timer <= 10 & UI(pull_PoM)', 'tank2'},
+	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 10 & pull_timer <= 10 & UI(pull_PoM)', 'tank2Fpr'},
 	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	{'Renew', '!lowest.buff(Renew) & lowest.health < 100', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.

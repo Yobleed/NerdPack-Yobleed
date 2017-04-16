@@ -8,10 +8,37 @@ local GUI = {
 	y = 42,
 	center = true},
 
-	--Resurrection
-	{type = 'header', text = 'Ressurection', align = 'center'},
-	{type = 'checkbox', text = 'Auto Ress out of combat', key = 'rezz', width = 55, default = false},
-	{type = 'ruler'},{type = 'spacer'},
+	-- GENERAL
+	{type = 'header', text = 'General', align = 'center'},
+	{type = 'text', text = 'Before Pull.', align = 'center'},
+	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_pull', width = 55, default= false},
+	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', width = 55, default= false},
+	{type = 'text', text = 'Movement', align = 'center'},
+	{type = 'checkbox', text = 'Body and Soul', key = 'm_Body', width = 55, default = false},
+    {type = 'ruler'}, {type = 'spacer'},
+
+    -- COOLDOWNS
+    {type = 'header', text = 'Cooldowns', align = 'center'},
+    {type = 'checkbox', text = 'Hero Potion of Prolonged Power', key = 's_PP', width = 55, default= false},
+    {type = 'text', text = 'Trinkets', align = 'center'},
+    {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', width = 55, default = false},
+	{type = 'checkbox', text = 'Bottom Trinket', key = 'trinket_2', width = 55, default = false},
+	{type = 'text', text = 'Power Infusion', align = 'center'},
+	{type = 'checkbox', text = 'ON/OFF', key = 'dps_PI', width = 55, default= false},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_PIspin1', align = 'left', width = 55, step = 1, default = 15},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_PIspin2', align = 'left', width = 55, step = 1, default = 15},
+	{type = 'text', text = 'Shadowfiend', align = 'center'},
+	{type = 'checkbox', text = 'ON/OFF', key = 'dps_fiend', width = 55, default= false},
+    {type = 'spinner', text = 'Shadowfiend Stacks', key = 'dps_SFspin', align = 'left', width = 55, step = 1, default = 22},
+    {type = 'text', text = 'Void Torrent', align = 'center'},
+    {type = 'checkbox', text = 'ON/OFF', key = 'dps_void', width = 55, default= false}, 
+	{type = 'text', text = 'Dispersion', align = 'center'},
+	{type = 'checkbox', text = 'ON/OFF', key = 'dps_D', width = 55, default= false},
+	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 44},
+	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 30},
+	{type = 'text', text = 'Arcane Torrent', align = 'center'},
+	{type = 'checkbox', text = 'ON/OFF', key = 'dps_at', width = 55, default= true},
+	{type = 'ruler'}, {type = 'spacer'},
 
 	-- GUI Survival & Potions
 	{type = 'header', text = 'Survival & Potions', align = 'center'},
@@ -25,49 +52,15 @@ local GUI = {
 	{type = 'checkbox', text = 'Healthstone', key = 's_HS', width = 55, default = false},
 	{type = 'spinner', text = '', key = 's_HSspin', width = 55, default = 20},
 	{type = 'checkbox', text = 'Ancient Healing Potion', key = 's_AHP', width = 55, default = false},
-	{type = 'spinner', text = '', key = 's_AHPspin', width = 55, default = 20},
-	{type = 'checkbox', text = 'Potion of Prolonged Power with Lust/Hero', key = 's_PP', width = 55, default= false},
-	{type = 'checkbox', text = 'Potion of Prolonged Power TTD Boss', key = 's_PPttd', width = 55, default= false},
+	{type = 'spinner', text = '', key = 's_AHPspin', width = 55, default = 20, align = 'left'},
 	{type = 'ruler'}, {type = 'spacer'},
 
-	--Before Pull
-	{type = 'header', text = 'Pull Timer', align = 'center'},
-	{type = 'text', text = 'Before Pull.', align = 'center'},
-	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_pull', width = 55, default= false},
-	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', width = 55, default= false},
-	{type = 'ruler'}, {type = 'spacer'},
-
-	-- GUI Dispersion DPS Cooldown
-	{type = 'header', text = 'Dispersion DPS Cooldown', align = 'center'},
-	{type = 'text', text = 'No S2M Active', align = 'center'},
-	{type = 'checkbox', text = 'Toggle ON/OFF', key = 'dps_D', width = 55, default= false},
-	{type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 44},
-	{type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', width = 55, min = 15, max = 50, step = 1, default = 30},
-	{type = 'ruler'}, {type = 'spacer'},
-
-	-- GUI Power Infusion & Shadowfiend
-	{type = 'header', text = 'Power Infusion', align = 'center'},
-	{type = 'text', text = 'No S2M Active & CD is toggled', align = 'center'},
-    {type = 'text', text = 'Shadowfiend cast on last 12 seconds', align = 'center'},
-	{type = 'spinner', text = 'Target <= 35%', key = 'dps_PIspin1', align = 'left', width = 55, step = 1, default = 20},
-	{type = 'spinner', text = 'Target > 35%', key = 'dps_PIspin2', align = 'left', width = 55, step = 1, default = 15},
-	{type = 'ruler'}, {type = 'spacer'},
-
-	{type = 'header', text = 'Shadowfiend', align = 'center'},
-    {type = 'text', text = 'No Power Infusion Talent & CD is toggled', align = 'center'},
-    {type = 'spinner', text = 'Choose Stacks', key = 'dps_SFspin', align = 'left', width = 55, step = 1, default = 16},
-	{type = 'ruler'}, {type = 'spacer'},
-
-	-- GUI Arcane Torrent as last Resort
-	{type = 'header', text = 'Arcane Torrent StM', align = 'center'},
-	{type = 'checkbox', text = 'Arcane torrent', key = 'dps_at', width = 55, default= true},
-	{type = 'ruler'}, {type = 'spacer'},
-
-	-- GUI Trinkets
-	{type = 'header', text = 'Trinkets', align = 'center'},
-	{type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', width = 55, default = false},
-	{type = 'checkbox', text = 'Bottom Trinket', key = 'trinket_2', width = 55, default = false},
-	{type = 'ruler'}, {type = 'spacer'},
+	-- GUI Party Support
+	{type = 'header', text = 'Party Support', align = 'center'},
+	{type = 'checkbox', text = 'Gift of the Naaru', key = 'sup_GotN', width = 55, default = false},
+	{type = 'spinner', text = '', key = 'sup_GotNspin', width = 55, default = 20},
+	{type = 'checkbox', text = 'Power Word: Shield', key = 'sup_PWS', width = 55, default = false},
+	{type = 'spinner', text = '', key = 'sup_PWSspin', width = 55, default = 20},
 
 	-- GUI Keybinds
 	{type = 'header', text = 'Keybinds', align = 'center'},
@@ -76,19 +69,6 @@ local GUI = {
 	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
 	{type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
 	{type = 'ruler'}, {type = 'spacer'},
-
-	-- GUI Moving
-	{type = 'header', text = 'Movement', align = 'center'},
-	{type = 'checkbox', text = 'Body and Soul', key = 'm_Body', width = 55, default = false},
-	{type = 'ruler'}, {type = 'spacer'},
-
-	-- GUI Party Support
-	{type = 'header', text = 'Party Support', align = 'center'},
-	{type = 'text', text = 'Attempt to save members of your party.', align = 'center'},
-	{type = 'checkbox', text = 'Gift of the Naaru', key = 'sup_GotN', width = 55, default = false},
-	{type = 'spinner', text = '', key = 'sup_GotNspin', width = 55, default = 20},
-	{type = 'checkbox', text = 'Power Word: Shield', key = 'sup_PWS', width = 55, default = false},
-	{type = 'spinner', text = '', key = 'sup_PWSspin', width = 55, default = 20},
 }
 
 local exeOnLoad = function()
@@ -138,8 +118,6 @@ local Survival = {
 }
 
 local Potions = {
-	-- Potion of Prolonged Power usage if enabled in UI.
-	{'#142117', 'target.boss & target.deathin <= 60 & !player.buff(229206) & UI(s_PPttd)'},
 	-- Potion of Prolonged Power usage if enabled in UI.
 	{'#142117', 'player.hashero & !player.buff(229206) & UI(s_PP)'},
 	-- Healthstone usage if enabled in UI.
@@ -203,50 +181,30 @@ local Insight = {
 
 local Emergency = {
 	--Dispersion when SWD charges are 0 and VoiT is on CD and insanity below or equal to 20%.
-	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & !spell(Void Torrent).cooldown = 0 & player.insanity <= 20 & !talent(7,1) & !talent(7,2)'},
+	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & !spell(Void Torrent).cooldown = 0 & player.insanity <= 20 & !talent(7,1) & !talent(7,2) & UI(dps_D)'},
 	--Arcane Torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
 	{'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown = 0 || !target.health <= 35} & !player.spell(dispersion).cooldown = 0'}, 
 	--Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
-	{'!Power Infusion', 'talent(6,1) & player.buff(voidform).count >= 80 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 60'},
+	{'!Power Infusion', 'talent(6,1) & player.buff(voidform).count >= 80 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 60 & UI(dps_PI)'},
 }
 
 local cooldowns = {
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown = 0 & !spell(Void Torrent).cooldown = 0 & !spell(Dispersion).cooldown = 0', 'player'},
+	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown = 0 & !spell(Void Torrent).cooldown = 0 & !spell(Dispersion).cooldown = 0 & UI(dps_PI)', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count = UI(dps_PIspin1) & target.health <= 35', 'player'},
+	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_PIspin1) & target.health <= 35 & UI(dps_PI)', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
-	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count = UI(dps_PIspin2) & target.health > 35', 'player'},
+	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_PIspin2) & target.health > 35 & UI(dps_PI)', 'player'},
 	--Mindbender if talent is active on CD in S2M.
 	{'!Mindbender', 'talent(6,3) & player.buff(Surrender to Madness)'},
 	--Mind Bender if talent is active and not in S2M if VF stacks are above 5.
 	{'!Mindbender', 'talent(6,3) & !player.buff(Surrender to Madness) & player.buff(voidform).count > 5'},
 	--Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
-	{'!Shadowfiend', '!talent(6,3) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= UI(dps_SFspin) & !talent(6,1)'},
+	{'!Shadowfiend', '!talent(6,3) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= UI(dps_SFspin) & !talent(6,1) & UI(dps_fiend)'},
 	--Shadowfiend if PI and above 40% insanity.
-	{'!Shadowfiend', 'player.buff(Power Infusion) & player.buff(Power Infusion).duration < 13'},
+	{'!Shadowfiend', 'player.buff(Power Infusion) & player.buff(voidform).count >= UI(dps_SFspin) & UI(dps_fiend)'},
 }
 
---local Leveling = {
-	--Power Infusion on CD.
-	--{'!Power Infusion','player.buff(Voidform) & toggle(cooldowns)'},
-	--Torrent on CD.
-	--{'!Void Torrent', 'player.insanity <= 30 & toggle(cooldowns) & player.buff(Voidform)'},
-	--Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-	--{'!Void Eruption', '{target.debuff(Vampiric Touch).duration > 4 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & !player.buff(Voidform) & player.insanity = 100} || player.buff(Voidform)'},
-	--SWD when target below 35
-	--{'!Shadow Word: Death', 'target.health <= 35 & !player.channeling(Void Eruption)'},
-	--Mind Blast if player is channeling Mind Flay.
-	--{'!Mind Blast', 'player.channeling(Mind Flay)'},
-	--Mind Blast on CD.
-	--{'Mind Blast', '!player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown = 0}'},
-	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-	--{'Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
-	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-	--{'Vampiric Touch', 'target.debuff(Vampiric Touch).duration <= 3 || !target.debuff(Vampiric Touch)'}, 
-	--Mind Flay if Mind Blast is on cooldown
-	--{'Mind Flay', '{!spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & !player.buff(Voidform)} || {!spell(Mind Blast).cooldown = 0 & !spell(Void Eruption).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch) & player.buff(Voidform)}'},
---}
 
 local AOE = {
 	--Shadow Crash on CD.
@@ -278,10 +236,9 @@ local lotv1 = {
 	--Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
 	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0'},
 	--Torrent on CD.
-	{'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0'}, 
-	-- '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & toggle(cooldowns)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & toggle(cooldowns)} '},
+	{'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0 & UI(dps_void)'}, 
 	--SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
-	{'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.insanity <= 70 & talent(4,2) & spell(Shadow Word: Death).charges > 1} || {target.health <= 35 & player.insanity <= 85 & !talent(4,2) spell(Shadow Word: Death).charges > 1}'},
+	{'!Shadow Word: Death', '{!player.channeling(Mind Blast) & player.spell(Shadow Word: Death).charges > 1 & player.insanity <= 70} || {!player.channeling(Mind Blast) & player.insanity <= 35}'},
 	--Void Bolt on CD not interrupting casting MB.
 	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 20'}, 
 	--Mind Blast on CD if VB is on CD.
@@ -298,9 +255,9 @@ local lotv1 = {
 
 local s2m1 = {
 	--Dispersion after Void Torrent and Void Bolt
-	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent) & toggle(cooldowns)'},
+	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent) & UI(dps_D)'},
 	--Torrent on CD.
-	{'!Void Torrent', 'toggle(cooldowns)'},
+	{'!Void Torrent', 'UI(dps_void)'},
 	--SWD Charge dump if below 20 stacks of VF and if DoTs are up.
 	{'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 10 & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
 	--SWD if insanity is below 40%.
@@ -347,7 +304,7 @@ local lotv2 = {
 	--Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
 	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
 	--Torrent on CD.
-	{'!Void Torrent', '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & toggle(cooldowns)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & toggle(cooldowns)} '},
+	{'!Void Torrent', '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & UI(dps_void)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & UI(dps_void)} '},
 	--SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
 	{'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
 	--Void Bolt on CD not interrupting casting MB.
@@ -366,9 +323,9 @@ local lotv2 = {
 
 local s2m2 = {
 	--Dispersion after Void Torrent and Void Bolt
-	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent) & toggle(cooldowns)'},
+	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent) & UI(dps_D)'},
 	--Torrent on CD.
-	{'!Void Torrent', 'toggle(cooldowns)'},
+	{'!Void Torrent', 'UI(dps_void)'},
 	--SWD Charge dump if below 20 stacks of VF and if DoTs are up.
 	{'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 10 & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
 	--SWD if insanity is below 40%.
@@ -396,7 +353,7 @@ local inCombat = {
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
 	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
-	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
+	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent)'}, 
 	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(7,1) & !player.insanity >= 65} || {talent(7,3) ||talent(7,2) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
 	{Movement, "!player.buff(Voidform) || {player.buff(Voidform) & !player.buff(Surrender to Madness)} & !player.buff(Norgannon's Foresight)"},
 	{Keybinds},
@@ -421,7 +378,6 @@ local outCombat = {
 	{'Shadowform', '!player.buff(Shadowform)'},
 	--No Body and Soul from Class Hall.
 	{Movement, '!player.buff(Body and Soul)'},
-	{'%ressdead(Resurrection)', 'UI(rezz)'},
 }
 
 NeP.CR:Add(258, {
