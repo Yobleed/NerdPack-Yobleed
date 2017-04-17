@@ -373,8 +373,8 @@ local outCombat = {
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Renew', '!tank.buff(Renew) & pull_timer <= gcd & UI(pull_Ren)', 'tank'},
-	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 10 & pull_timer <= 20 & UI(pull_PoM)', 'tank1'},
-	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 10 & pull_timer <= 20 & UI(pull_PoM)', 'tank2'},
+	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 10 & {pull_timer <= 20 || target.boss} & UI(pull_PoM)', 'tank1'},
+	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 10 & {pull_timer <= 20 || target.boss} & UI(pull_PoM)', 'tank2'},
 	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	{'Renew', '!lowest.buff(Renew) & lowest.health < 100', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.

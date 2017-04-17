@@ -217,7 +217,7 @@ local ST1 = {
 	--Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
 	{'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
 	--SWD when target below 35
-	{'!Shadow Word: Death', '{target.health <= 35 & talent(7,1) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(7,3) ||talent(7,2) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
+	{'!Shadow Word: Death', '{talent(7,1) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(7,3) ||talent(7,2) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)'},
 	--Mind Blast on CD.
@@ -259,9 +259,9 @@ local s2m1 = {
 	--Torrent on CD.
 	{'!Void Torrent', 'UI(dps_void)'},
 	--SWD Charge dump if below 20 stacks of VF and if DoTs are up.
-	{'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 10 & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
+	{'!Shadow Word: Death', 'player.buff(voidform).count < 10 & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
 	--SWD if insanity is below 40%.
-	{'!Shadow Word: Death', 'target.health <= 35 & player.insanity < 30'}, 
+	{'!Shadow Word: Death', 'player.insanity < 30'}, 
 	--Void Bolt on CD not interrupting casting MB.
 	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
 	--Mind Blast on CD if VB is on CD.
@@ -283,7 +283,7 @@ local ST2 = {
 	--Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
 	{'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
 	--SWD when target below 35%
-	{'!Shadow Word: Death', '{target.health <= 35 & talent(7,1) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(7,3) ||talent(7,2) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
+	{'!Shadow Word: Death', '{talent(7,1) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(7,3) ||talent(7,2) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)'},
 	--Mind Blast if target has SWP and VT.
@@ -304,9 +304,9 @@ local lotv2 = {
 	--Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 40% and Target Health is above 35% health.
 	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35'},
 	--Torrent on CD.
-	{'!Void Torrent', '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & UI(dps_void)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & UI(dps_void)} '},
+	{'!Void Torrent', '{player.buff(voidform).count >= 23 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & UI(dps_void)} || {player.buff(voidform).count >= 16 & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & UI(dps_void)} '},
 	--SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
-	{'!Shadow Word: Death', '{target.health <= 35 & player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
+	{'!Shadow Word: Death', '{player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
 	--Void Bolt on CD not interrupting casting MB.
 	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
 	--Mind Blast on CD if VB is on CD.
@@ -327,9 +327,9 @@ local s2m2 = {
 	--Torrent on CD.
 	{'!Void Torrent', 'UI(dps_void)'},
 	--SWD Charge dump if below 20 stacks of VF and if DoTs are up.
-	{'!Shadow Word: Death', 'target.health <= 35 & player.buff(voidform).count < 10 & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
+	{'!Shadow Word: Death', 'player.buff(voidform).count < 10 & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
 	--SWD if insanity is below 40%.
-	{'!Shadow Word: Death', 'target.health <= 35 & player.insanity < 30'}, 
+	{'!Shadow Word: Death', 'player.insanity < 30'}, 
 	--Void Bolt on CD not interrupting casting MB.
 	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
 	--Mind Blast on CD if VB is on CD.
