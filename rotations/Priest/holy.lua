@@ -35,8 +35,8 @@ local GUI = {
 
 	--KEYBINDS
 	{type = 'header', text = 'Keybinds', align = 'center'},
-	{type = 'text', text = 'Left Shift: Holy Word: Sanctify|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
-	{type = 'checkbox', text = 'Holy Word: Sanctify', key = 'k_HWS', width = 55, default = false},
+	{type = 'text', text = 'Left Shift: AoE Top Up|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+	{type = 'checkbox', text = 'Top Up', key = 'k_HWS', width = 55, default = false},
 	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
 	{type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
 	{type = 'ruler'},{type = 'spacer'},
@@ -129,13 +129,6 @@ local exeOnLoad = function()
 		icon = 'Interface\\ICONS\\spell_holy_dispelmagic', --toggle(disp)
 	})
 
-	NeP.Interface:AddToggle({
-		key = 'topup',
-		name = 'TopUp',
-		text = 'ON/OFF Top Up your Party',
-		icon = 'Interface\\ICONS\\spell_holy_prayerofspirit', --toggle(topup)
-	})
-
 	end
 
 local Trinkets = {
@@ -151,7 +144,9 @@ local Keybinds = {
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
 	--Holy Word: Sanctify on Mouseover target left shift when checked in UI.
 	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS) & !advanced', 'cursor.ground'},
-	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS)', 'mouseover.ground'},
+	{'!Holy Word: Sanctify', 'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)','lowestpredicted.ground'},
+	{'Holy Word: Serenity',  'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !player.buff(Divinity)' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru)' , 'lowestpredicted'},
 	-- Pause on left alt when checked in UI.
 	{'%pause', 'keybind(lalt)& UI(k_P)'},
 }
@@ -209,14 +204,6 @@ local FullDPS = {
 	{'Smite', nil, 'target'},
 }
 
-local TopUp = {
-	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
-	{'Circle of Healing', 'lowest.area(30, 99).heal >= 4 & toggle(AOE) & talent(7,3)', 'lowest'},
-	{'Holy Word: Sanctify', 'lowest.area(10, 80).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn)','lowest.ground'},
-	{'Prayer of Healing', 'lowest.area(20, 99).heal >= 4 & toggle(AOE)' , 'lowest'},
-	{'Holy Word: Serenity', 'lowest.health < 100', 'lowest'},
-	{'Flash Heal', 'lowest.health < 100', 'lowest'},
-}
 
 local Tankpred = {
 	--Holy Word: Serenity if tank health is below or if UI value.
@@ -321,7 +308,7 @@ local Moving = {
 local inCombat = {
 	{Potions},
 	{Trinkets, '!player.channeling(Divine Hymn)'},
-	{Keybinds},
+	{Keybinds, '!player.channeling(Divine Hymn)'},
 	{'%dispelall', 'toggle(disp) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
 	{'Desperate Prayer', 'UI(c_DP) & player.health <= UI(c_DPspin) & !player.buff(Guardian Spirit)', 'player'},
 	--Fade when you get aggro.
@@ -345,8 +332,7 @@ local inCombat = {
 	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
 	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(7,3) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
-	{'!Prayer of Healing', 'lowest.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40 & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul) & {player.buff(Divinity) || player.buff(Blessing of T\'uure) || player.buff(Power of the Naaru)}', 'lowest'},
-	{TopUp, 'toggle(topup) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
+	{'!Prayer of Healing', 'lowest.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= 40 & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul) & player.buff(Power of the Naaru)', 'lowest'},
 	{SymbolOfHope, 'player.buff(Symbol of Hope) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{SpiritOfRedemption, 'player.buff(Spirit of Redemption) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
@@ -368,11 +354,12 @@ local inCombat = {
 }
 
 local outCombat = {
-	{Keybinds},
-	{TopUp, 'toggle(topup) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
+	{Keybinds, '!player.channeling(Divine Hymn)'},
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Renew', '!tank.buff(Renew) & pull_timer <= gcd & UI(pull_Ren)', 'tank'},
+	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 5 & {pull_timer <= 20 || target.boss} & UI(pull_PoM)', 'tank1'},
+	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 5 & {pull_timer <= 20 || target.boss} & UI(pull_PoM)', 'tank2'},
 	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 10 & {pull_timer <= 20 || target.boss} & UI(pull_PoM)', 'tank1'},
 	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 10 & {pull_timer <= 20 || target.boss} & UI(pull_PoM)', 'tank2'},
 	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
