@@ -218,6 +218,8 @@ local ST1 = {
 	{'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
 	--SWD when target below 35
 	{'!Shadow Word: Death', '{talent(7,1) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(7,3) ||talent(7,2) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
+	--Misery.
+	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)'}, 
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)'},
 	--Mind Blast on CD.
@@ -240,7 +242,9 @@ local lotv1 = {
 	--SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
 	{'!Shadow Word: Death', '{!player.channeling(Mind Blast) & player.spell(Shadow Word: Death).charges > 1 & player.insanity <= 70} || {!player.channeling(Mind Blast) & player.insanity <= 35}'},
 	--Void Bolt on CD not interrupting casting MB.
-	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 20'}, 
+	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 20'},
+	--Misery.
+	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)'},  
 	--Mind Blast on CD if VB is on CD.
 	{'Mind Blast', 'player.spell(Void Eruption).cooldown > gcd'},
 	--Mind Blast on CD if VB is on CD.
@@ -263,7 +267,9 @@ local s2m1 = {
 	--SWD if insanity is below 40%.
 	{'!Shadow Word: Death', 'player.insanity < 30'}, 
 	--Void Bolt on CD not interrupting casting MB.
-	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
+	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'},
+	--Misery.
+	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)'}, 
 	--Mind Blast on CD if VB is on CD.
 	{'Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
 	--Mind Blast on CD if VB is on CD.
@@ -284,6 +290,8 @@ local ST2 = {
 	{'!Void Eruption', 'target.debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
 	--SWD when target below 35%
 	{'!Shadow Word: Death', '{talent(7,1) & !player.insanity >= 65 & !player.channeling(Void Eruption)} || {target.health <= 35 & talent(7,3) ||talent(7,2) & !player.insanity = 100 & !player.channeling(Void Eruption)}'},
+	--Misery.
+	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)'}, 
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)'},
 	--Mind Blast if target has SWP and VT.
@@ -309,6 +317,8 @@ local lotv2 = {
 	{'!Shadow Word: Death', '{player.insanity <= 40} || {target.health <= 35 & player.buff(voidform).count <= 15 & player.insanity < 70}'},
 	--Void Bolt on CD not interrupting casting MB.
 	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
+	--Misery.
+	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)'}, 
 	--Mind Blast on CD if VB is on CD.
 	{'Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
 	--Mind Blast on CD if VB is on CD.
@@ -332,6 +342,8 @@ local s2m2 = {
 	{'!Shadow Word: Death', 'player.insanity < 30'}, 
 	--Void Bolt on CD not interrupting casting MB.
 	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'}, 
+	--Misery.
+	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)'}, 
 	--Mind Blast on CD if VB is on CD.
 	{'Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
 	--Mind Blast on CD if VB is on CD.
