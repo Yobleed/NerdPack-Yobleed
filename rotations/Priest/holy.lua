@@ -162,23 +162,6 @@ local Potions = {
 	{'#Ancient Mana Potion', 'UI(p_AMP) & player.mana <= UI(p_AMPspin) & !player.channeling(Divine Hymn)'},
 }
 
-local SpiritOfRedemption = {
-    --Holy Word: Sanctify if lowest and 3 or more others at 40yds are below or if 80% health and if unlocked with advanced.
-	{'Holy Word: Sanctify', 'lowest.area(10, 80).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)','lowest.ground'},
-	--Holy Word: Serenity when lowest health is below 50%.
-	{'!Holy Word: Serenity', 'lowest.health < 50', 'lowest'},
-	--Flash Heal when lowest health is below 100%.
-	{'Flash Heal', 'lowest.health < 100' , 'lowest'},
-}
-
-local SymbolOfHope = {
-	--Holy Word: Serenity when lowest health is below 50%.
-	{'!Holy Word: Serenity', 'lowest.health < 50', 'lowest'},
-	--Flash Heal when lowest health is below 100%.
-	{'Flash Heal', 'lowest.health < 100' , 'lowest'},
-	--Renew if lowest health is missing Renew and Lowest health is below or if UI value.
-	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(m_Ren) & !toggle(xDPS) & moving', 'lowest'},
-}
 
 local DPS = {
     --Holy Nova if 4 or more enemies within 10yds.
@@ -268,7 +251,7 @@ local Lowestpred = {
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
 	{'Prayer of Healing', 'lowestpredicted.area(20, 65).heal >= 4 & toggle(AOE) & {player.buff(Divinity) || player.buff(Blessing of T\'uure) || player.buff(Power of the Naaru)}' , 'lowestpredicted'},
 	--Heal if Lowest Healt is below or if UI value.
-	{'Heal', 'lowestpredicted.health <= UI(l_H) & !lowestpredicted.health <= UI(l_FH) & !lowestpredicted.debuff(Fragile Echo) & lowestpredicted.health > UI(l_FH)', 'lowestpredicted'},
+	{'Heal', 'lowestpredicted.health <= UI(l_H) & !lowestpredicted.debuff(Fragile Echo)', 'lowestpredicted'},
 }
 
 local Lowest = {
@@ -285,7 +268,7 @@ local Lowest = {
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
 	{'Prayer of Healing', 'lowest.area(20, 65).heal >= 4 & toggle(AOE) & {player.buff(Divinity) || player.buff(Blessing of T\'uure) || player.buff(Power of the Naaru)}' , 'lowest'},
 	--Heal if Lowest Healt is below or if UI value.
-	{'Heal', 'lowest.health <= UI(l_H) & !lowest.health <= UI(l_FH) & !lowest.debuff(Fragile Echo) & lowest.health > UI(l_FH)', 'lowest'},
+	{'Heal', 'lowest.health <= UI(l_H) & !lowest.debuff(Fragile Echo)', 'lowest'},
 }
 
 local Moving = {
@@ -339,8 +322,6 @@ local inCombat = {
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
 	{'Holy Word: Serenity',  'lowestpredicted.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & player.buff(Power of the Naaru)' , 'lowestpredicted'},
 	{'Prayer of Healing', 'lowestpredicted.area(20, 85).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & player.buff(Power of the Naaru) & !player.spell(Prayer of Mending).cooldown = 0', 'lowestpredicted'},
-	{SymbolOfHope, 'player.buff(Symbol of Hope) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
-	{SpiritOfRedemption, 'player.buff(Spirit of Redemption) & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{{
 		{Lowestpred, 'lowestpredicted.health < 100 & !toggle(xDPS) & !lowestpredicted.debuff(Ignite Soul)'},
@@ -364,10 +345,10 @@ local outCombat = {
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Renew', '!tank.buff(Renew) & pull_timer <= gcd & UI(pull_Ren)', 'tank'},
-	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 5 & target.boss & UI(pull_PoM)', 'tank1'},
-	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 5 & target.boss & UI(pull_PoM)', 'tank2'},
-	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 10 & target.boss & UI(pull_PoM)', 'tank1'},
-	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 10 & target.boss &  UI(pull_PoM)', 'tank2'},
+	{'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 5 & UI(pull_PoM)', 'tank1'},
+	{'Prayer of Mending', 'tank2.buff(Prayer of Mending).count = 5 & UI(pull_PoM)', 'tank2'},
+	{'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 10 & tank1.buff(Prayer of Mending).duration <= 3 & UI(pull_PoM)', 'tank1'},
+	{'Prayer of Mending', 'tank2.buff(Prayer of Mending).count = 10 & tank2.buff(Prayer of Mending).duration <= 3 &UI(pull_PoM)', 'tank2'},
 	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 5 & pull_timer <= 20 & UI(pull_PoM)', 'tank1'},
 	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 5 & pull_timer <= 20 & UI(pull_PoM)', 'tank2'},
 	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 10 & pull_timer <= 20 & UI(pull_PoM)', 'tank1'},
