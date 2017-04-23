@@ -189,6 +189,8 @@ local Emergency = {
 }
 
 local cooldowns = {
+    --Torrent on CD.
+	{'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0 & UI(dps_void)'}, 
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
 	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown = 0 & !spell(Void Torrent).cooldown = 0 & !spell(Dispersion).cooldown = 0 & UI(dps_PI)', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
@@ -237,8 +239,6 @@ local lotv1 = {
 	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown = 0'},
 	--Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
 	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0'},
-	--Torrent on CD.
-	{'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0 & UI(dps_void)'}, 
 	--SWD if target is below or equal to 35% Health and player insanity is below or equal to 40%.
 	{'!Shadow Word: Death', '{!player.channeling(Mind Blast) & player.spell(Shadow Word: Death).charges > 1 & player.insanity <= 70} || {!player.channeling(Mind Blast) & player.insanity <= 35}'},
 	--Void Bolt on CD not interrupting casting MB.
@@ -365,7 +365,7 @@ local inCombat = {
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
 	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
-	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent)'}, 
+	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
 	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(7,1) & !player.insanity >= 65} || {talent(7,3) ||talent(7,2) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
 	{Movement, "!player.buff(Voidform) || {player.buff(Voidform) & !player.buff(Surrender to Madness)} & !player.buff(Norgannon's Foresight)"},
 	{Keybinds},
