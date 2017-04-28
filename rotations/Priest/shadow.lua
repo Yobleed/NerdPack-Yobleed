@@ -18,7 +18,7 @@ local GUI = {
     {type = 'ruler'}, {type = 'spacer'},
 
     -- COOLDOWNS
-    {type = 'header', text = 'Cooldowns', align = 'center'},
+    {type = 'header', text = 'Cooldowns if Toggled', align = 'center'},
     {type = 'checkbox', text = 'Hero Potion of Prolonged Power', key = 's_PP', width = 55, default= false},
     {type = 'text', text = 'Trinkets', align = 'center'},
     {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', width = 55, default = false},
@@ -128,7 +128,7 @@ local Potions = {
 
 local Trinkets = {
 	-- Top Trinket usage if enabled in UI.
-	{'#trinket1', 'UI(trinket_1)'},
+	{'#trinket1', 'UI(trinket_1) & target.range >= 10 & target.area(20).enemies >= 3', 'target'},
 	-- Bottom Trinket usage if enabled in UI.
 	{'#trinket2', 'UI(trinket_2)'},
 }
@@ -359,6 +359,7 @@ local s2m2 = {
 local inCombat = {
 	--Shadowform if no voidform and no shadowform.
 	{'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform)'},
+	{Movement, '!player.buff(Voidform || {player.buff Voidform & !spell(Void Eruption).cooldown = 0 & !player.channeling(Void Torrent)}'},
 	{Surrender, '!player.channeling(Void Torrent)'}, 
 	{'Mind Bomb', '{toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness) & !player.channeling(Void Torrent) & !talent(7,2)} || {toggle(abc) & target.area(8).enemies >= 3 & talent(7,2) & spell(Shadow Crash).cooldown = 0 & player.buff(Voidform) & !player.channeling(Void Torrent)}'},
 	{Emergency, '!player.channeling(Void Torrent)'},
@@ -367,7 +368,6 @@ local inCombat = {
 	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
 	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
 	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(7,1) & !player.insanity >= 65} || {talent(7,3) ||talent(7,2) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
-	{Movement, "!player.buff(Voidform) || {player.buff(Voidform) & !player.buff(Surrender to Madness)} & !player.buff(Norgannon's Foresight)"},
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
