@@ -822,3 +822,12 @@ NeP.DSL:Register('partycheck', function()
             return 1
         end
 end)
+
+----------------------------------------------------------------------------------
+-----------------------------------AREA RECOGNITION-------------------------------------------
+----------------------------------------------------------------------------------
+--  inareaid = ID
+--/dump NeP.DSL:Get('inareaid')()
+NeP.DSL:Register('inareaid', function()
+    return  GetCurrentMapAreaID()
+end)
