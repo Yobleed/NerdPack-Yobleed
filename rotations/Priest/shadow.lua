@@ -128,7 +128,7 @@ local Potions = {
 
 local Trinkets = {
 	-- Top Trinket usage if enabled in UI.
-	{'#trinket1', 'UI(trinket_1) & target.range >= 10 & target.area(20).enemies >= 3', 'target'},
+	{'#trinket1', 'UI(trinket_1) & target.range >= 10 & !target.moving', 'target'},
 	-- Bottom Trinket usage if enabled in UI.
 	{'#trinket2', 'UI(trinket_2)'},
 }
@@ -150,7 +150,7 @@ local Keybinds = {
 
 local Movement = {
 	-- Body and Soul usage if enabled in UI.
-	{'!Power Word: Shield', 'talent(2,2) & player.movingfor >= 1 & UI(m_Body)', 'player'},
+	{'!Power Word: Shield', 'talent(2,2) & player.movingfor >= 1 & UI(m_Body) ', 'player'},
 }
 
 local Support = {
@@ -389,7 +389,7 @@ local outCombat = {
 	{'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
 	{'Shadowform', '!player.buff(Shadowform)'},
 	--No Body and Soul from Class Hall.
-	{Movement, '!player.buff(Body and Soul)'},
+	{Movement, '!player.buff(Body and Soul) & !inareaid = 1040'},
 }
 
 NeP.CR:Add(258, {

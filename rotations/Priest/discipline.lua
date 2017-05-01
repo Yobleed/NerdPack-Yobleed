@@ -361,7 +361,7 @@ local inCombat = {
 
 local outCombat = {
 	{Keybinds},
-	{Moving, 'moving & !toggle(ato)'},
+	{Moving, 'moving & !toggle(ato) & !inareaid = 1040'},
 	{{
 		{'Shadow Mend', "lowest.health <= 90 & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
 	}, 'toggle(ooc_heal)'},

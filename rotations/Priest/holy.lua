@@ -15,6 +15,8 @@ local GUI = {
 
 	--Cooldowns
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
+	{type = 'checkbox', text = 'Use Divine Hymn', key = 'DH', width = 55, default = false},
+	{type = 'spinner', text = 'Players below 60%', key = 'DH_spin', width = 55, max = 10, step = 1, default = 7},
 	{type = 'checkbox', text = 'Use Guardian Spirit on Tank', key = 'c_GSt', width = 55, default = false},
 	{type = 'spinner', text = '', key = 'c_GSspint', width = 55, default = 20},
 	{type = 'checkbox', text = 'Use Guardian Spirit on Lowest', key = 'c_GS', width = 55, default = false},
@@ -26,6 +28,7 @@ local GUI = {
 	{type = 'spinner', text = '', key = 'c_LoTspin', width = 55, default = 30},
 	{type = 'checkbox', text = 'Use Desperate Prayer', key = 'c_DP', width = 55, default = false},
 	{type = 'spinner', text = '', key = 'c_DPspin', width = 55, default = 30},
+
 	{type = 'ruler'},{type = 'spacer'},
 
 	--TRINKETS
@@ -135,7 +138,7 @@ local exeOnLoad = function()
 
 local Trinkets = {
 	--Top Trinket usage if UI enables it.
-	{'#trinket1', 'UI(trinket_1)'},
+	{'#trinket1', 'UI(trinket_1) & !player.channeling(Divine Hymn) & player.area(20,80).heal >= 5'},
 	--Bottom Trinket usage if UI enables it.
 	{'#trinket2', 'UI(trinket_2)'},
 }
@@ -145,17 +148,19 @@ local Keybinds = {
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground'},
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
 	--Holy Word: Sanctify on Mouseover target left shift when checked in UI.
-	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS) & !advanced', 'cursor.ground'},
-	{'!Holy Word: Sanctify', 'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)','lowestpredicted.ground'},
-	{'Holy Word: Serenity',  'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !player.buff(Divinity) & player.buff(Power of the Naaru)' , 'lowestpredicted'},
-	{'Prayer of Healing', 'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS)' , 'lowestpredicted'},
+	{'!Holy Word: Sanctify', 'lowestpredicted.health <= 100 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & keybind(lshift) & UI(k_HWS) & !advanced', 'cursor.ground'}, 
+	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & keybind(lshift) & UI(k_HWS)','lowestpredicted.ground'},
+	{'Holy Word: Serenity',  'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !player.buff(Divinity) & !advanced' , 'lowestpredicted'},
+	{'Holy Word: Serenity',  'lowestpredicted.area(40, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !player.buff(Divinity)' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(40, 85).heal >= 4 & keybind(lshift) & UI(k_HWS)' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !advanced' , 'lowestpredicted'},
 	-- Pause on left alt when checked in UI.
 	{'%pause', 'keybind(lalt)& UI(k_P)'},
 }
 
 local Potions = {
 	--Health Stone below 20% health. Active when NOT channeling Divine Hymn.
-	{'#5512', 'UI(p_HS) & player.health <= UI(p_HSspin) & !player.channeling(Divine Hymn)'},
+	{'#Healthstone', 'UI(p_HS) & player.health <= UI(p_HSspin) & !player.channeling(Divine Hymn)'},
 	--Ancient Healing Potion below 20% health. Active when NOT channeling Divine Hymn.
 	{'#Ancient Healing Potion', 'UI(p_AHP) & player.health <= UI(p_AHPspin) & !player.channeling(Divine Hymn)'},
 	--Ancient Mana Potion below 20% mana. Active when NOT channeling Divine Hymn.
@@ -248,8 +253,6 @@ local Lowestpred = {
 	{'!Gift of the Naaru', 'lowestpredicted.health <= 20 & lowestpredicted.buff(Guardian Spirit)', 'lowestpredicted'},
 	--Flash Heal if lowest health is below or if UI value.
 	{'Flash Heal', 'lowestpredicted.health <= UI(l_FH)', 'lowestpredicted'},
-	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
-	{'Prayer of Healing', 'lowestpredicted.area(20, 65).heal >= 4 & toggle(AOE) & {player.buff(Divinity) || player.buff(Blessing of T\'uure) || player.buff(Power of the Naaru)}' , 'lowestpredicted'},
 	--Heal if Lowest Healt is below or if UI value.
 	{'Heal', 'lowestpredicted.health <= UI(l_H) & !lowestpredicted.debuff(Fragile Echo)', 'lowestpredicted'},
 }
@@ -265,8 +268,6 @@ local Lowest = {
 	{'!Gift of the Naaru', 'lowest.health <= 20 & lowest.buff(Guardian Spirit)', 'lowest'},
 	--Flash Heal if lowest health is below or if UI value.
 	{'Flash Heal', 'lowest.health <= UI(l_FH)', 'lowest'},
-	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
-	{'Prayer of Healing', 'lowest.area(20, 65).heal >= 4 & toggle(AOE) & {player.buff(Divinity) || player.buff(Blessing of T\'uure) || player.buff(Power of the Naaru)}' , 'lowest'},
 	--Heal if Lowest Healt is below or if UI value.
 	{'Heal', 'lowest.health <= UI(l_H) & !lowest.debuff(Fragile Echo)', 'lowest'},
 }
@@ -298,12 +299,13 @@ local inCombat = {
 	{Keybinds, '!player.channeling(Divine Hymn)'},
 	{'%dispelall', 'toggle(disp) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
 	{'Desperate Prayer', 'UI(c_DP) & player.health <= UI(c_DPspin) & !player.buff(Guardian Spirit)', 'player'},
+	{'!Divine Hymn', 'player.buff(Divinity) & !player.spell(Prayer of Mending).cooldown = 0 & !player.channeling(Divine Hymn) & player.area(40,60).heal >= UI(DH_spin) & UI(DH)'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !player.channeling(Divine Hymn)'},
 	 --Guardian Spirit if lowest health is below or if UI value and checked.
-	{'!Guardian Spirit', 'UI(c_GSt) & tank1.health <= UI(c_GSspint) & !player.channeling(Divine Hymn)', 'tank1'},
-	{'!Guardian Spirit', 'UI(c_GSt) & tank2.health <= UI(c_GSspint) & !player.channeling(Divine Hymn)', 'tank2'},
-	{'!Guardian Spirit', 'UI(c_GS) & lowest.health <= UI(c_GSspin) & !player.channeling(Divine Hymn)', 'lowest'},
+	{'!Guardian Spirit', 'UI(c_GSt) & {tank1.health <= UI(c_GSspint) || player.health <= UI(c_GSspint)} & !player.channeling(Divine Hymn)', 'tank1'},
+	{'!Guardian Spirit', 'UI(c_GSt) & {tank2.health <= UI(c_GSspint) || player.health <= UI(c_GSspint)} & !player.channeling(Divine Hymn)', 'tank2'},
+	{'!Guardian Spirit', 'UI(c_GS) & lowest.health <= UI(c_GSspin)  & !player.channeling(Divine Hymn)', 'lowest'},
 	--Light of T'uure if lowest health is below or if UI value and checked.
 	{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn)', 'tank'},
 	{'!Light of T\'uure', 'UI(c_LoTt) & tank1.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank1.buff(Light of T\'uure) & !tank1.buff(Guardian Spirit)', 'tank1'},
@@ -316,12 +318,13 @@ local inCombat = {
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(6,2) & player.area(24, 95).heal.infront >= 3 & toggle(AOE)'},
 	--Holy Word: Sanctify if lowest and 3 or more others at 40yds are below or if 80% health and if unlocked with advanced.
-	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 80).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','lowestpredicted.ground'},
+	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','lowestpredicted.ground'},
 	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
 	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(7,3) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
 	{'Holy Word: Serenity',  'lowestpredicted.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & player.buff(Power of the Naaru)' , 'lowestpredicted'},
-	{'Prayer of Healing', 'lowestpredicted.area(20, 85).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & player.buff(Power of the Naaru) & !player.spell(Prayer of Mending).cooldown = 0', 'lowestpredicted'},
+	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
+	{'Prayer of Healing', 'lowestpredicted.area(40, 85).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0', 'lowestpredicted'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
 	{{
 		{Lowestpred, 'lowestpredicted.health < 100 & !toggle(xDPS) & !lowestpredicted.debuff(Ignite Soul)'},
@@ -345,10 +348,13 @@ local outCombat = {
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Renew', '!tank.buff(Renew) & pull_timer <= gcd & UI(pull_Ren)', 'tank'},
-	{'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 5 & UI(pull_PoM)', 'tank1'},
-	{'Prayer of Mending', 'tank2.buff(Prayer of Mending).count = 5 & UI(pull_PoM)', 'tank2'},
-	{'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 10 & tank1.buff(Prayer of Mending).duration <= 3 & UI(pull_PoM)', 'tank1'},
-	{'Prayer of Mending', 'tank2.buff(Prayer of Mending).count = 10 & tank2.buff(Prayer of Mending).duration <= 3 &UI(pull_PoM)', 'tank2'},
+	{'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 5 & !tank2.buff(Prayer of Mending).count = 5 & UI(pull_PoM)', 'tank2'},
+	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 5 & tank2.buff(Prayer of Mending).count = 5  & UI(pull_PoM)', 'tank1'},
+	{'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 5 & !tank1.buff(Prayer of Mending).count = 10 & UI(pull_PoM)', 'tank1'},
+    {'Prayer of Mending', 'tank2.buff(Prayer of Mending).count = 5 & !tank2.buff(Prayer of Mending).count = 10 & UI(pull_PoM)', 'tank2'},
+    {'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 10 & tank1.buff(Prayer of Mending).duration <= 5 & UI(pull_PoM)', 'tank1'},
+    {'Prayer of Mending', 'tank2.buff(Prayer of Mending).count = 10 & tank2.buff(Prayer of Mending).duration <= 5 & UI(pull_PoM)', 'tank2'},
+
 	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 5 & pull_timer <= 20 & UI(pull_PoM)', 'tank1'},
 	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count = 5 & pull_timer <= 20 & UI(pull_PoM)', 'tank2'},
 	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count = 10 & pull_timer <= 20 & UI(pull_PoM)', 'tank1'},
@@ -356,9 +362,9 @@ local outCombat = {
 	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	{'Renew', '!lowest.buff(Renew) & lowest.health < 100', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
-	{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
+	{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid = 1040', 'player'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
-	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
+	{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body) & !inareaid = 1040', 'player'},
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
 }
 
