@@ -128,7 +128,7 @@ local Potions = {
 
 local Trinkets = {
 	-- Top Trinket usage if enabled in UI.
-	{'#trinket1', 'UI(trinket_1) & target.range >= 10 & !target.moving', 'target'},
+	{'#trinket1', 'UI(trinket_1)', 'target'},
 	-- Bottom Trinket usage if enabled in UI.
 	{'#trinket2', 'UI(trinket_2)'},
 }
