@@ -149,11 +149,13 @@ local Keybinds = {
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
 	--Holy Word: Sanctify on Mouseover target left shift when checked in UI.
 	{'!Holy Word: Sanctify', 'lowestpredicted.health <= 100 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & keybind(lshift) & UI(k_HWS) & !advanced', 'cursor.ground'}, 
-	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & keybind(lshift) & UI(k_HWS)','lowestpredicted.ground'},
+    {'!Holy Word: Sanctify', 'lowestpredicted.area(10, 99).heal >= 2 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & keybind(lshift) & UI(k_HWS) & partycheck = 2','lowestpredicted.ground'},
+	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 99).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & keybind(lshift) & UI(k_HWS) & partycheck = 3','lowestpredicted.ground'},
 	{'Holy Word: Serenity',  'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !player.buff(Divinity) & !advanced' , 'lowestpredicted'},
-	{'Holy Word: Serenity',  'lowestpredicted.area(40, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !player.buff(Divinity)' , 'lowestpredicted'},
-	{'Prayer of Healing', 'lowestpredicted.area(40, 85).heal >= 4 & keybind(lshift) & UI(k_HWS)' , 'lowestpredicted'},
+	{'Holy Word: Serenity',  'lowestpredicted.area(40, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & !player.buff(Divinity)' , 'lowestpredicted'},
 	{'Prayer of Healing', 'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !advanced' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(20, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & partycheck = 3' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(40, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & partycheck = 2' , 'lowestpredicted'},
 	-- Pause on left alt when checked in UI.
 	{'%pause', 'keybind(lalt)& UI(k_P)'},
 }
@@ -335,14 +337,14 @@ local inCombat = {
 	{{
 		{Lowestpred, 'lowestpredicted.health < 100 & !toggle(xDPS) & !lowestpredicted.debuff(Ignite Soul)'},
 		{Tankpred, 'tank.health < 100 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
-		{Playerpred, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul)'},
+		{Playerpred, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul) & !player.buff(Spirit of Redemption)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS) & target.infront'},
 	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & partycheck=3'},
 	{{
 		{Lowest, 'lowest.health < 100 & !toggle(xDPS) & !lowest.debuff(Ignite Soul)'},
 		{Tank, 'tank.health < 100 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
-		{Player, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul)'},
+		{Player, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul) & !player.buff(Spirit of Redemption)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS) & target.infront'},
 	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & !partycheck=3'},
