@@ -348,7 +348,6 @@ local inCombat = {
 		{FullDPS, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 		{DPS, 'lowest.health > 90 & !toggle(xDPS) & target.infront'},
 	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & !partycheck=3'},
-	{'!smite', 'target.infront & player.casting(Heal).percent <= 40 & lowestpredicted.health > UI(l_H)', 'target'}, 
 	{'smite', 'target.infront', 'target'}, 
 } 
 
