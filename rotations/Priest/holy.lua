@@ -294,10 +294,20 @@ local Moving = {
 	{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
 	{'!Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
-	--Holy Nova if player and 4 or more others at 10yds are below or if 90% health.
-	{'Holy Nova', 'player.area(10, 99).heal >= 4 & !player.area(10, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !lowest.health <= UI(l_FH) & !player.channeling(Divine Hymn)', 'player'},
 	-- Full DPS when activated.
 	{FullDPS, 'toggle(xDPS) & target.range <= 40'},
+}
+
+local PoMooc = {
+    {'Prayer of Mending', '!tank.buff(Prayer of Mending) & pull_timer <= 20', 'tank'},
+	{'Prayer of Mending', '!tank1.buff(Prayer of Mending) & tank2.buff(Prayer of Mending) & UI(pull_PoM) & partycheck = 3', 'tank1'},
+	{'Prayer of Mending', '!tank2.buff(Prayer of Mending) & tank1.buff(Prayer of Mending) & UI(pull_PoM) & partycheck = 3', 'tank2'},
+	{'Prayer of Mending', 'tank1.buff(Prayer of Mending).duration < tank2.buff(Prayer of Mending).duration & UI(pull_PoM) & partycheck = 3', 'tank1'},
+	{'Prayer of Mending', 'tank2.buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM) & partycheck = 3', 'tank2'},
+	{'Prayer of Mending', 'tank1.buff(Prayer of Mending).duration > player.buff(Prayer of Mending).duration & UI(pull_PoM)', 'player'},
+	{'Prayer of Mending', 'tank2.buff(Prayer of Mending).duration > player.buff(Prayer of Mending).duration & UI(pull_PoM)', 'player'},
+	{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > tank1.buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank1'},
+	{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > tank2.buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank2'},
 }
 
 local inCombat = {
@@ -307,6 +317,7 @@ local inCombat = {
 	{'%dispelall', 'toggle(disp) & !player.channeling(Divine Hymn) & spell(Purify).cooldown = 0'},
 	{'Desperate Prayer', 'UI(c_DP) & player.health <= UI(c_DPspin) & !player.buff(Guardian Spirit)', 'player'},
 	{'!Divine Hymn', 'player.buff(Divinity) & !player.spell(Prayer of Mending).cooldown = 0 & !player.channeling(Divine Hymn) & player.area(40,60).heal >= UI(DH_spin) & UI(DH)'},
+	{'!Holy Word: Chastise', 'toggle(interrupts) & target.interruptAt(70) & target.range <= 30 & !player.channeling(Divine Hymn)', 'target'},
 	--Fade when you get aggro.
 	{'fade', 'aggro & !player.channeling(Divine Hymn)'},
 	 --Guardian Spirit if lowest health is below or if UI value and checked.
@@ -314,12 +325,11 @@ local inCombat = {
 	{'!Guardian Spirit', 'UI(c_GSt) & {tank2.health <= UI(c_GSspint) || player.health <= UI(c_GSspint)} & !player.channeling(Divine Hymn)', 'tank2'},
 	{'!Guardian Spirit', 'UI(c_GS) & lowest.health <= UI(c_GSspin)  & !player.channeling(Divine Hymn)', 'lowest'},
 	--Light of T'uure if lowest health is below or if UI value and checked.
-	{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS)', 'tank'},
-	{'!Light of T\'uure', 'UI(c_LoTt) & tank1.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank1.buff(Light of T\'uure) & !tank1.buff(Guardian Spirit) & !toggle(xDPS)', 'tank1'},
-	{'!Light of T\'uure', 'UI(c_LoTt) & tank2.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank2.buff(Light of T\'uure) & !tank2.buff(Guardian Spirit) & !toggle(xDPS)', 'tank2'},
-	{'!Light of T\'uure', 'UI(c_LoT) & lowest.health <= UI(c_LoTspin) & !player.channeling(Divine Hymn) & !lowest.buff(Light of T\'uure) & !lowest.buff(Guardian Spirit) & !toggle(xDPS)', 'lowest'},
+	{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestpredicted.health <= 40', 'tank'},
+	{'!Light of T\'uure', 'UI(c_LoTt) & tank1.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank1.buff(Light of T\'uure) & !tank1.buff(Guardian Spirit) & !toggle(xDPS) & !lowestpredicted.health <= 40', 'tank1'},
+	{'!Light of T\'uure', 'UI(c_LoTt) & tank2.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank2.buff(Light of T\'uure) & !tank2.buff(Guardian Spirit) & !toggle(xDPS) & !lowestpredicted.health <= 40', 'tank2'},
+	{'!Light of T\'uure', 'UI(c_LoT) & lowest.health <= UI(c_LoTspin) & !player.channeling(Divine Hymn) & !lowest.buff(Light of T\'uure) & !lowest.buff(Guardian Spirit) & !toggle(xDPS) & !lowestpredicted.health <= 40', 'lowest'},
 	{'Arcane Torrent', 'player.mana < 97', 'player'},
-	{'!Holy Word: Chastise', 'toggle(interrupts) & target.interruptAt(70) & target.range <= 30 & !lowest.health <= 40', 'target'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
 	{'Halo','talent(6,3) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !player.channeling(Divine Hymn)'},
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
@@ -334,6 +344,7 @@ local inCombat = {
 	{'Prayer of Healing', 'lowestpredicted.area(20, 85).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & partycheck=3', 'lowestpredicted'},
 	{'Prayer of Healing', 'lowest.area(40, 85).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & !partycheck=3', 'lowest'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},
+	{'Holy Nova', 'lowest.health > 90 & !toggle(xDPS) & moving & {target.range <= 12 || player.area(12).enemies >= 2}'},
 	{{
 		{Lowestpred, 'lowestpredicted.health < 100 & !toggle(xDPS) & !lowestpredicted.debuff(Ignite Soul)'},
 		{Tankpred, 'tank.health < 100 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
@@ -356,19 +367,10 @@ local outCombat = {
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
 	{'Renew', '!tank.buff(Renew) & pull_timer <= gcd & UI(pull_Ren) & !player.buff(Spirit of Redemption)', 'tank'},
-	{'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 5 & !player.buff(Prayer of Mending) & UI(pull_PoM)', 'player'},
-	{'Prayer of Mending', 'tank2.buff(Prayer of Mending).count = 5 & !player.buff(Prayer of Mending) & UI(pull_PoM)', 'player'},
-    {'Prayer of Mending', 'player.buff(Prayer of Mending).count = 5 & tank.buff(Prayer of Mending).count = 5 & UI(pull_PoM)', 'tank'},
-    {'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 10 & player.buff(Prayer of Mending).count = 5 & UI(pull_PoM)', 'player'},
-    {'Prayer of Mending', 'tank2.buff(Prayer of Mending).count = 10 & player.buff(Prayer of Mending).count = 5 & UI(pull_PoM)', 'player'},
-    {'Prayer of Mending', 'player.buff(Prayer of Mending).count = 10 & tank.buff(Prayer of Mending).duration <= 6 & UI(pull_PoM)', 'tank'},
-    {'Prayer of Mending', 'tank1.buff(Prayer of Mending).count = 10 & player.buff(Prayer of Mending).duration <= 6 & UI(pull_PoM)', 'player'},
-    {'Prayer of Mending', 'tank2.buff(Prayer of Mending).count = 10 & player.buff(Prayer of Mending).duration <= 6 & UI(pull_PoM)', 'player'},
------------------------------------------------------------------------------------------------------------------------------------------------
-	{'Prayer of Mending', '!tank.buff(Prayer of Mending).count = 5 & pull_timer <= 20 & UI(pull_PoM)', 'tank'},
-	{'Prayer of Mending', '!player.buff(Prayer of Mending).count = 5 & pull_timer <= 20 & UI(pull_PoM)', 'player'},
-	{'Prayer of Mending', '!tank.buff(Prayer of Mending).count = 10 & pull_timer <= 20 & UI(pull_PoM)', 'tank'},
-	{'Prayer of Mending', '!player.buff(Prayer of Mending).count = 10 & pull_timer <= 20 & UI(pull_PoM)', 'player'},
+	{PoMooc}, 
+	{{
+	{PoMooc},
+	}, 'pull_timer <= 20'},
 	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	{'Renew', '!lowest.buff(Renew) & lowest.health < 100 & !player.buff(Spirit of Redemption)', 'lowest'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
