@@ -114,6 +114,11 @@ local GUI = {
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'm_HWSE', width = 55, default = 50},
 	{type = 'spinner', text = 'Flash Heal Surge of Light', key = 'm_FH', width = 55, default = 70},
 	{type = 'spinner', text = 'Renew', key = 'm_Ren', width = 55, default = 90},
+
+	--OOC
+	{type = 'header', text = 'Out of Combat', align = 'center'},
+	{type = 'checkbox', text = 'Healing', key = 'ooc_heal', width = 55, default = false},
+
 }
 
 local exeOnLoad = function()
@@ -340,6 +345,7 @@ local inCombat = {
 	{'!Holy Word: Sanctify', 'tank.area(10, 85).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
 	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','lowestpredicted.ground'},
 	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','lowestpredicted.ground'},
+	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & partycheck = 2','lowestpredicted.ground'},
 	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
 	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(7,3) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
@@ -385,7 +391,27 @@ local outCombat = {
 	{PoMooc},
 	}, 'pull_timer <= 20'},
 	{'!Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
+	{'Renew', '!lowest.buff(Renew) & lowest.health < 100 & !player.buff(Spirit of Redemption) & moving', 'lowest'},
+	{{ --Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
+	{'Halo','talent(6,3) & player.area(30, 90).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !player.channeling(Divine Hymn)'},
+	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
+	{'Divine Star', 'talent(6,2) & player.area(24, 95).heal.infront >= 3 & toggle(AOE)'},
+	--Holy Word: Sanctify if lowest and 3 or more others at 40yds are below or if 80% health and if unlocked with advanced.
+	{'!Holy Word: Sanctify', 'tank.area(10, 85).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','lowestpredicted.ground'},
+	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','lowestpredicted.ground'},
+	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
+	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(7,3) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
+	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
+	{'Holy Word: Serenity',  'lowestpredicted.area(20, 85).heal >= 4 & toggle(AOE) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & player.buff(Power of the Naaru)' , 'lowestpredicted'},
+	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
+	{'!Prayer of Healing', 'lowestpredicted.area(10, 90).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
+	{'!Prayer of Healing', 'lowestpredicted.area(20, 90).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
+	{'!Prayer of Healing', 'lowestpredicted.area(30, 90).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
+	{'!Prayer of Healing', 'lowestpredicted.area(40, 90).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(20, 85).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & partycheck=3', 'lowestpredicted'},}, 'UI(ooc_heal)'},
 	{'Renew', '!lowest.buff(Renew) & lowest.health < 100 & !player.buff(Spirit of Redemption)', 'lowest'},
+	{Lowest, 'lowest.health < 100 & !toggle(xDPS) & !lowest.debuff(Ignite Soul) & UI(ooc_heal)'},
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid = 1040', 'player'},
 	--Body and Mind if player is moving for 2 seconds or longer and Missing Body and Mind and if UI enables it.
