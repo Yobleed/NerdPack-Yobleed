@@ -153,14 +153,20 @@ local Keybinds = {
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground'},
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
 	--Holy Word: Sanctify on Mouseover target left shift when checked in UI.
-	{'!Holy Word: Sanctify', 'lowestpredicted.health <= 100 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & keybind(lshift) & UI(k_HWS) & !advanced', 'cursor.ground'}, 
-    {'!Holy Word: Sanctify', 'lowestpredicted.area(10, 99).heal >= 2 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & keybind(lshift) & UI(k_HWS) & partycheck = 2','lowestpredicted.ground'},
-	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 99).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & keybind(lshift) & UI(k_HWS) & partycheck = 3','lowestpredicted.ground'},
-	{'Holy Word: Serenity',  'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !player.buff(Divinity) & !advanced' , 'lowestpredicted'},
-	{'Holy Word: Serenity',  'lowestpredicted.area(40, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & !player.buff(Divinity)' , 'lowestpredicted'},
-	{'Prayer of Healing', 'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & !advanced' , 'lowestpredicted'},
-	{'Prayer of Healing', 'lowestpredicted.area(20, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & partycheck = 3' , 'lowestpredicted'},
-	{'Prayer of Healing', 'lowestpredicted.area(40, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & partycheck = 2' , 'lowestpredicted'},
+	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 99).heal >= 6 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestpredicted.ground'},
+	{'!Holy Word: Sanctify', '!player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS)', 'cursor.ground'},
+	{'Holy Word: Serenity',  'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & !player.buff(Divinity)' , 'lowestpredicted'},
+	{'Prayer of Healing', 'player.area(10,85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !advanced & player.buff(Power of the Naaru)' , 'lowestpredicted'},
+	{'Prayer of Healing', 'player.area(20,85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !advanced & player.buff(Power of the Naaru)' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(10, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(20, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(30, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(40, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(20, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(30, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(40, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.health <= 100 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru)' , 'lowestpredicted'},
+	
 	-- Pause on left alt when checked in UI.
 	{'%pause', 'keybind(lalt)& UI(k_P)'},
 }
