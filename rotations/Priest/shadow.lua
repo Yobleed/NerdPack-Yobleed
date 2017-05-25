@@ -119,7 +119,7 @@ local Survival = {
 
 local Potions = {
 	-- Potion of Prolonged Power usage if enabled in UI.
-	{'#142117', 'player.hashero & !player.buff(229206) & UI(s_PP)'},
+	{'#142117', 'player.hashero & !player.buff(Potion of Prolonged Power) & UI(s_PP)'},
 	-- Healthstone usage if enabled in UI.
 	{'#5512', 'player.health <= UI(s_HSspin) & UI(s_HS)'},
 	-- Ancient Healing Potion usage if enabled in UI.
