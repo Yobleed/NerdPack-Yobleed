@@ -138,7 +138,13 @@ local exeOnLoad = function()
 		text = 'ON/OFF Dispel All',
 		icon = 'Interface\\ICONS\\spell_holy_dispelmagic', --toggle(disp)
 	})
-
+    
+    NeP.Interface:AddToggle({
+		key = 'xaGriev',
+		name = 'Grievous Wound',
+		text = 'Mythic + Grievous Wound',
+		icon = 'Interface\\ICONS\\Ability_backstab', --toggle(xGriev)
+	})
 	end
 
 local Trinkets = {
@@ -247,7 +253,7 @@ local Tank = {
 
 local Playerpred = {
     --Holy Word: Serenity if player health is below or if UI value.
-	{'!Holy Word: Serenity', 'player.health.predicted <= UI(p_HWSE) & !player.buff(Divinity)', 'player'},
+	{'!Holy Word: Serenity', 'player.health.predicted <= UI(p_HWSE) & !player.buff(Divinity) & !player.spell(Desperate Prayer).cooldown = 0', 'player'},
 	--Gift of the Naaru if player health is below or if UI value.
 	{'!Gift of the Naaru', 'player.health.predicted <= UI(p_Gift)', 'player'},
 	--Flash Heal if player health is below or if UI value.
@@ -334,6 +340,14 @@ local PoMooc = {
 	{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > tank2.buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank2'},
 }
 
+local GrievousWound = {
+	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
+	{'!Gift of the Naaru', 'lowest.health <= 40', 'lowest'},
+	{'Flash Heal', 'lowest.health <= 90', 'lowest'},
+	{'Heal', 'lowest.health <= 95', 'lowest'},
+	
+}
+
 local inCombat = {
 	{{ {Potions},
 	{Trinkets, '!player.channeling(Divine Hymn)'},
@@ -380,16 +394,16 @@ local inCombat = {
 	{'!Light of T\'uure', 'UI(c_LoT) & lowest.health <= UI(c_LoTspin) & !player.channeling(Divine Hymn) & !lowest.buff(Light of T\'uure) & !lowest.buff(Guardian Spirit) & !toggle(xDPS) & !lowestpredicted.health <= 40', 'lowest'},
 	{Moving, 'moving & !player.channeling(Prayer of Healing) & !player.channeling(Divine Hymn)'},},'!player.channeling(Divine Hymn)'}, 
 	{{
+	    {Playerpred, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul) & !player.buff(Spirit of Redemption) & !tank.health.predicted <= 40'},
 		{Lowestpred, 'lowestpredicted.health < 100 & !toggle(xDPS) & !lowestpredicted.debuff(Ignite Soul)'},
 		{Tankpred, 'tank.health < 100 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
-		{Playerpred, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul) & !player.buff(Spirit of Redemption)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & partycheck=3'},
 	{{   
-	    {'Flash Heal', 'lowest.health <= 90', 'ldebuff(Grievous Wound)'},
+	    {GrievousWound, 'toggle(xaGriev) & lowest.health < 90 & !tank.health <= 40'}, --Grievous Wound
+	    {Player, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul) & !player.buff(Spirit of Redemption) & !tank.health <= 40'},
 		{Lowest, 'lowest.health < 100 & !toggle(xDPS) & !lowest.debuff(Ignite Soul)'},
 		{Tank, 'tank.health < 100 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
-		{Player, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul) & !player.buff(Spirit of Redemption)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & !partycheck=3'},
 	--Flash Heal if lowest health is below or if UI value.
@@ -428,6 +442,7 @@ local outCombat = {
 	{'!Prayer of Healing', 'lowestpredicted.area(40, 90).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
 	{'Prayer of Healing', 'lowestpredicted.area(20, 85).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & partycheck=3', 'lowestpredicted'},}, 'UI(ooc_heal)'},
 	{'Renew', '!lowest.buff(Renew) & lowest.health < 100 & !player.buff(Spirit of Redemption)', 'lowest'},
+	{GrievousWound, 'toggle(xaGriev) & lowest.health < 90 & !tank.health <= 40'}, --Grievous Wound
 	{{{Lowest, 'lowest.health < 100 & !toggle(xDPS) & !lowest.debuff(Ignite Soul) & UI(ooc_heal)'},}, '!partycheck = 1'}, 
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid = 1040', 'player'},
