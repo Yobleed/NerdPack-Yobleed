@@ -256,7 +256,7 @@ local Playerpred = {
 
 local Player = {
     --Holy Word: Serenity if player health is below or if UI value.
-	{'!Holy Word: Serenity', 'player.health <= UI(p_HWSE) & !player.buff(Divinity)', 'player'},
+	{'!Holy Word: Serenity', 'player.health <= UI(p_HWSE) & !player.buff(Divinity) & !player.spell(Desperate Prayer).cooldown = 0', 'player'},
 	--Gift of the Naaru if player health is below or if UI value.
 	{'!Gift of the Naaru', 'player.health <= UI(p_Gift)', 'player'},
 	--Flash Heal if player health is below or if UI value.
@@ -356,18 +356,20 @@ local inCombat = {
 	--Holy Word: Sanctify if lowest and 3 or more others at 40yds are below or if 80% health and if unlocked with advanced.
 	{'!Holy Word: Sanctify', 'tank.area(10, 85).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
 	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','lowestpredicted.ground'},
-	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','lowestpredicted.ground'},
+	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity)','lowestpredicted.ground'},
 	{'!Holy Word: Sanctify', 'lowestpredicted.area(10, 85).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & partycheck = 2','lowestpredicted.ground'},
-	{'!Holy Word: Sanctify', 'lowestpredicted.area(40, 70).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Power of the Naaru)', 'tank.ground'},
 	--Circle of healing if lowest and 4 or more others at 30yds are below or if 85% health.
 	{'Circle of Healing', 'lowest.area(30, 85).heal >= 4 & toggle(AOE) & talent(7,3) & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul)', 'lowest'},
 	--Prayer of Healing if lowest and 4 or more others at 20yds are below or if 65% health
 	{'Holy Word: Serenity',  'lowestpredicted.area(40, 85).heal >= 4 & lowestpredicted.health <= 40 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.buff(Divinity) & player.buff(Power of the Naaru)' , 'lowestpredicted'},
 	--Prayer of Healing if lowest and 4 or more others are below or if 65% health
 	{'!Prayer of Healing', 'lowestpredicted.area(10, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
+	{'!Prayer of Healing', 'lowestpredicted.area(15, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
 	{'!Prayer of Healing', 'lowestpredicted.area(20, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
+	{'!Prayer of Healing', 'lowestpredicted.area(25, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
 	{'!Prayer of Healing', 'lowestpredicted.area(30, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
-	{'!Prayer of Healing', 'lowestpredicted.area(40, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(10, 85).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & partycheck=3', 'lowestpredicted'},
+	{'Prayer of Healing', 'lowestpredicted.area(15, 85).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & partycheck=3', 'lowestpredicted'},
 	{'Prayer of Healing', 'lowestpredicted.area(20, 85).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowestpredicted.debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & partycheck=3', 'lowestpredicted'},
 	--Party PoH
 	{'Prayer of Healing', 'lowest.area(40, 85).heal >= 4 & toggle(AOE) & !tank.health <= 40 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !lowest.debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & !partycheck=3', 'lowest'},
@@ -383,7 +385,8 @@ local inCombat = {
 		{Playerpred, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul) & !player.buff(Spirit of Redemption)'},
 		{FullDPS, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 	}, '!moving & !player.channeling(Divine Hymn) & !player.channeling(Prayer of Healing) & partycheck=3'},
-	{{
+	{{   
+	    {'Flash Heal', 'lowest.health <= 90', 'ldebuff(Grievous Wound)'},
 		{Lowest, 'lowest.health < 100 & !toggle(xDPS) & !lowest.debuff(Ignite Soul)'},
 		{Tank, 'tank.health < 100 & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
 		{Player, 'player.health < 100 & !toggle(xDPS) & !player.debuff(Ignite Soul) & !player.buff(Spirit of Redemption)'},
