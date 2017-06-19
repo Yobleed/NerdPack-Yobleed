@@ -1,7 +1,7 @@
 ## Title: Yobleed Combat rotations
 ## Notes: Priest Rotations for Nerdpack
 ## Dependencies: NerdPack
-## Interface: 70100
+## Interface: 70200
 ## Author: Yobleed
 
 files.xml
