@@ -199,15 +199,7 @@ local Solo = {
 	{'Smite', nil, 'target'},
 }
 
-local Moving = {
-    {'Holy Word: Serenity', 'lowest.health <= UI(m_HWSE) & !player.buff(Divinity)', 'lowest'},
-	{'Gift of the Naaru', 'lowest.health <= 20 & lowest.buff(Guardian Spirit)', 'lowest'},
-	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
-	{'Flash Heal', 'player.buff(Surge of Light) & lowest.health <= UI(m_FH)', 'lowest'},
-	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(m_Ren)', 'lowest'},
-	{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
-	{'!Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
-}
+
 
 local Tankpred = {
 	{'!Holy Word: Serenity', 'tank1.health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
@@ -268,7 +260,7 @@ local PoMooc = {
 }
 
 local Mythic = {
-    {'Prayer of Mending', 'tank.buff(Prayer of Mending).count <= 5 & lowest.health > 95', 'tank'},
+    {PoMooc, 'lowest.health > 95', 'tank'},
     {'renew', 'lowest.health < 100 & lowest.health > 90 & !lowest.buff(renew)', 'lowest'},
 	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
 	{'!Gift of the Naaru', 'lowest.health <= 40', 'lowest'},
@@ -313,13 +305,22 @@ local Beforepull = {
 {'Renew', '!tank.buff(Renew) & pull_timer <= gcd & UI(pull_Ren)', 'tank'},
 }
 
+local Moving = {
+    {Sanctify},
+    {'Holy Word: Serenity', 'lowest.health <= UI(m_HWSE) & !player.buff(Divinity)', 'lowest'},
+	{'Gift of the Naaru', 'lowest.health <= 20 & lowest.buff(Guardian Spirit)', 'lowest'},
+	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
+	{'Flash Heal', 'player.buff(Surge of Light) & lowest.health <= UI(m_FH)', 'lowest'},
+	{'Renew', '!lowest.buff(Renew) & toggle(myth_heal) & partycheck = 2', 'lowest'},
+	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(m_Ren)', 'lowest'},
+}
+
 local ST = {
 
-{Moving, 'player.moving'},
-{Tankpred,'partycheck = 3'},
-{Tank},
-{Playerpred,'partycheck = 3'},
-{Player},
+{Tankpred,'partycheck = 3 & !lowestp.health <= 40'},
+{Tank, '!lowest.health <= 40'},
+{Playerpred,'partycheck = 3 & !lowestp.health <= 40'},
+{Player, '!lowest.health <= 40'},
 {Lowestpred,'partycheck = 3'},
 {Lowest},
 	
@@ -334,6 +335,8 @@ local AOE = {
 
 local inCombat = {
 {{
+{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
+{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body)', 'player'},
 {'!Holy Word: Chastise', 'toggle(interrupts) & target.interruptAt(70) & target.infront', 'target'},
 {'fade', 'player.aggro & !partycheck = 1'},
 {Cooldowns},
@@ -342,9 +345,10 @@ local inCombat = {
 {Keybinds},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 {Solo, 'toggle(xDPS) & target.range <= 40 & target.infront'},
-{AOE,'!tank.health <= 30 & toggle(AOE)'},
-{Mythic, 'partycheck = 2 & toggle(myth_heal)'},
-{ST},
+{Moving, 'player.moving'},
+{AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & !player.moving'},
+{Mythic, 'partycheck = 2 & toggle(myth_heal) & !player.moving'},
+{ST, '!toggle(myth_heal) & !player.moving'},
 {'Flash Heal', 'lowestp.health < 100 & player.buff(Spirit of Redemption)', 'lowestp'},
 {DPS},
 {'smite', 'target.infront', 'target'}, 
@@ -362,16 +366,17 @@ local outCombat = {
 {Potions, 'partycheck = 2 & toggle(myth_heal)'},
 {Keybinds},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
-{AOE,'!tank.health <= 30 & toggle(AOE) & toggle(ooc_heal)'},
-{Mythic, 'partycheck = 2 & toggle(myth_heal)'},
-{ST,'toggle(ooc_heal)'},
-{PoMooc}, 
+{Moving, 'player.moving'},
+{AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & toggle(ooc_heal) & !player.moving'},
+{Mythic, 'partycheck = 2 & toggle(myth_heal) & !player.moving'},
+{ST,'toggle(ooc_heal) & !player.moving'},
+{PoMooc, 'tank.buff(Prayer of Mending'}, 
 {Beforepull, 'pull_timer <= 20'},
 },'!player.channeling(Divine Hymn)'},
 }
 
 NeP.CR:Add(257, {
-	name = '|cffFACC2E [Yobleed]|r Priest - |cffFACC2EHoly 2|r',
+	name = '|cffFACC2E [Yobleed]|r Priest - |cffFACC2EHoly|r',
 	ic = inCombat,
 	ooc = outCombat,
 	gui = GUI,
