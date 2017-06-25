@@ -412,5 +412,10 @@ NeP.CR:Add(257, {
 	ic = inCombat,
 	ooc = outCombat,
 	gui = GUI,
-	load = exeOnLoad
+	load = exeOnLoad,
+	blacklist = {
+                 units = {},
+                 buffs = {},
+                 debuff = {}
+        }
 })

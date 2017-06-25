@@ -874,7 +874,7 @@ end)
 NeP.DSL:Register('purify', function(target)
 --priest
     for i = 1,40 do
-    local debuff,,,count,dispeltype,duration,expires = UnitDebuff(target, i)
+    local debuff,count,dispeltype,duration,expires = UnitDebuff(target, i)
         if debuff then 
             if dispeltype == "Disease" or dispeltype == "Magic" then
                 return true
