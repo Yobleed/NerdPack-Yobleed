@@ -80,6 +80,14 @@ local setsTable = {
 		138316, --Purifier's Leggings
 		138370, --Purifier's Drape
 		},
+        ["T20"] = {
+		147163, --Shawl of Blind Absolution
+		147164, --Gloves of Blind Absolution
+		147165, --Hood of Blind Absolution
+		147166, --Leggings of Blind Absolution
+		147167, --Robes of Blind Absolution
+		147168, --Mantle of Blind Absolution
+		},
 	},
 	["ROGUE"] = {
 		["T19"] = {
@@ -124,7 +132,9 @@ local setsTable = {
 }
 
 --{'set_bonus(T19)=2||set_bonus(T19)>=4'}
+--{'set_bonus(T20)=2||set_bonus(T20)>=4'}
 --/dump NeP.DSL:Get('set_bonus')('player', 'T19')
+--/dump NeP.DSL:Get('set_bonus')('player', 'T20')
 NeP.DSL:Register("set_bonus", function(_, set)
 local class = select(2,UnitClass('player'))
 local pieces = setsTable[class][set] or {}
@@ -830,4 +840,33 @@ end)
 --/dump NeP.DSL:Get('inareaid')()
 NeP.DSL:Register('inareaid', function()
     return  GetCurrentMapAreaID()
+end)
+
+----------------------------------------------------------------------------------
+-----------------------------------DISPELLABLE------------------------------------
+----------------------------------------------------------------------------------
+-- COUNTS Dispellable Buffs and returns a number
+NeP.DSL:Register("dispellcount", function(target, spell)
+  local n1 = 0
+  for _, Obj in pairs(NeP.Healing:GetRoster()) do
+    for _,spellID, _,_,_,_, dispelType in LibDisp:IterateDispellableAuras(Obj.key) do
+      if dispelType then
+        n1 = n1 + 1
+      end
+    end
+  end
+  return nl
+end)
+
+--This one should just look for a dispellable debuff, if one is found it return true, otherwise false
+NeP.DSL:Register("dispellable", function(target, spell)
+  for _, Obj in pairs(NeP.Healing:GetRoster()) do
+    for _,spellID, _,_,_,_, dispelType in LibDisp:IterateDispellableAuras(Obj.key) do
+      if dispelType then
+        return true
+      else
+        return false
+      end
+    end
+  end
 end)
