@@ -870,3 +870,15 @@ NeP.DSL:Register("dispellable", function(target, spell)
     end
   end
 end)
+
+NeP.DSL:Register('purify', function(target)
+--priest
+    for i = 1,40 do
+    local debuff,,,count,dispeltype,duration,expires = UnitDebuff(target, i)
+        if debuff then 
+            if dispeltype == "Disease" or dispeltype == "Magic" then
+                return true
+            end
+        end
+    end
+end)
