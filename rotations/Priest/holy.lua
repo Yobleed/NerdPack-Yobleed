@@ -1,3 +1,9 @@
+--[[
+{'Heal', 'health<100', {'player, 'tank', 'lowest'}}, 
+Priority by array order
+player > tank > lowest
+]]--
+
 local GUI = {
 	-- GUI Header 
 	{type = "texture",
@@ -132,28 +138,7 @@ local exeOnLoad = function()
     
 end
 
-local Keybinds = {
-	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground'},
-	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 6 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 5 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 4 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 3 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 2 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
-	{'!Holy Word: Sanctify', '!player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced', 'tank.ground'},
-	{'!Holy Word: Sanctify', '!player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS)', 'cursor.ground'},
-	{'Prayer of Healing', 'player.area(10,85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !advanced & player.buff(Power of the Naaru)' , 'player'},
-	{'Prayer of Healing', 'player.area(20,85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !advanced & player.buff(Power of the Naaru)' , 'player'},
-	{'Prayer of Healing', 'lowestp.area(10, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
-	{'Prayer of Healing', 'lowestp.area(20, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
-	{'Prayer of Healing', 'lowestp.area(30, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
-	{'Prayer of Healing', 'lowestp.area(40, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
-	{'Prayer of Healing', 'lowestp.area(20, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
-	{'Prayer of Healing', 'lowestp.area(30, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
-	{'Prayer of Healing', 'lowestp.area(40, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
-	{'Prayer of Healing', 'lowestp.health <= 100 & keybind(lshift)' , 'lowestp'},
-	{'%pause', 'keybind(lalt)& UI(k_P)'},
-}
+
 
 local Cooldowns ={
 {'!Guardian Spirit', 'UI(c_GSt) & {tank1.health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'tank1'},
@@ -198,9 +183,15 @@ local Solo = {
 	{'Holy Fire', '!moving', 'target'},
 	{'Smite', nil, 'target'},
 }
-
-
-
+--[[
+local Thedesolatehost = {
+	{'!Holy Word: Serenity', 'ldebuff(Spirit Realm).health <= UI(l_HWSE) & !player.buff(Divinity)', 'ldebuff(Spirit Realm)'},
+	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & ldebuff(Spirit Realm).health < 100', 'ldebuff(Spirit Realm)'},
+	{'Gift of the Naaru', 'ldebuff(Spirit Realm).health <= 20 & !lbuff(Guardian Spirit)', 'ldebuff(Spirit Realm)'},
+	{'Flash Heal', 'ldebuff(Spirit Realm).health <= UI(l_FH)', 'ldebuff(Spirit Realm)'},
+	{'Heal', 'ldebuff(Spirit Realm).health <= UI(l_H)', 'ldebuff(Spirit Realm)'},
+}
+]]--
 local Tankpred = {
 	{'!Holy Word: Serenity', 'tank1.health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
 	{'!Holy Word: Serenity', 'tank2.health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
@@ -257,10 +248,13 @@ local PoMooc = {
 	{'Prayer of Mending', 'tank2.buff(Prayer of Mending).duration > player.buff(Prayer of Mending).duration & UI(pull_PoM)', 'player'},
 	{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > tank1.buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank1'},
 	{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > tank2.buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank2'},
+	{'Prayer of Mending', '!player.buff(Prayer of Mending) & tank1.buff(Prayer of Mending) & UI(pull_PoM) & partycheck = 3', 'player'},
+	{'Prayer of Mending', 'buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM)', 'friendly'},
 }
 
 local Mythic = {
-    {PoMooc, 'lowest.health > 95', 'tank'},
+    {PoMooc, 'lowest.health > 95 & !player.moving', 'tank'},
+    {'renew', '!lowest.buff(renew) & player.moving', 'lowest'},
     {'renew', 'lowest.health < 100 & lowest.health > 90 & !lowest.buff(renew)', 'lowest'},
 	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
 	{'!Gift of the Naaru', 'lowest.health <= 40', 'lowest'},
@@ -299,6 +293,40 @@ local PoM = {
 	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count > 5', 'tank2'},
 }
 
+local Keybinds = {
+	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground'},
+	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
+	-----------------------------------------------------------------------------T20-----------------------------------------------------------------------
+	{{
+	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS) & !advanced', 'cursor.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 6 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 5 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 4 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 3 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 2 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS)', 'tank.ground'},
+	},'set_bonus(T20)>= 2'},
+	-------------------------------------------------------------------------------------------------------------------------------------------------------
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 6 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 5 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 4 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 3 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 2 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', '!player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced', 'tank.ground'},
+	{'!Holy Word: Sanctify', '!player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS)', 'cursor.ground'},
+	{'Prayer of Healing', 'player.area(10,85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !advanced & player.buff(Power of the Naaru)' , 'player'},
+	{'Prayer of Healing', 'player.area(20,85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !advanced & player.buff(Power of the Naaru)' , 'player'},
+	{'Prayer of Healing', 'lowestp.area(10, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
+	{'Prayer of Healing', 'lowestp.area(20, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
+	{'Prayer of Healing', 'lowestp.area(30, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
+	{'Prayer of Healing', 'lowestp.area(40, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
+	{'Prayer of Healing', 'lowestp.area(20, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
+	{'Prayer of Healing', 'lowestp.area(30, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
+	{'Prayer of Healing', 'lowestp.area(40, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
+	{'Prayer of Healing', 'lowestp.health <= 100 & keybind(lshift)' , 'lowestp'},
+	{'%pause', 'keybind(lalt)& UI(k_P)'},
+}
+
 local Beforepull = {
 {'#Potion of Prolonged Power', 'pull_timer <= 3 & UI(s_PPull)'}, --Potion of Prolonged Power
 {PoMooc}, 
@@ -316,13 +344,14 @@ local Moving = {
 }
 
 local ST = {
+{Playerpred,'partycheck = 3 & !lowestp.health <= 50'},
+{Player, '!tank.health <= 40 & !lowest.health <= 50'},
+{Lowestpred,'partycheck = 3 & !tank.health.predicted <= 50'},
+{Lowest, '!tank.health <= 50'},
+{Tankpred,'partycheck = 3'},
+{Tank},
 
-{Tankpred,'partycheck = 3 & !lowestp.health <= 40'},
-{Tank, '!lowest.health <= 40'},
-{Playerpred,'partycheck = 3 & !lowestp.health <= 40'},
-{Player, '!lowest.health <= 40'},
-{Lowestpred,'partycheck = 3'},
-{Lowest},
+
 	
 }
 
@@ -345,6 +374,7 @@ local inCombat = {
 {Keybinds},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 {Solo, 'toggle(xDPS) & target.range <= 40 & target.infront'},
+--{Thedesolatehost,'partycheck = 3'},
 {Moving, 'player.moving'},
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & !player.moving'},
 {Mythic, 'partycheck = 2 & toggle(myth_heal) & !player.moving'},
@@ -366,11 +396,11 @@ local outCombat = {
 {Potions, 'partycheck = 2 & toggle(myth_heal)'},
 {Keybinds},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
+{PoMooc, '!toggle(myth_heal)'}, 
 {Moving, 'player.moving'},
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & toggle(ooc_heal) & !player.moving'},
 {Mythic, 'partycheck = 2 & toggle(myth_heal) & !player.moving'},
 {ST,'toggle(ooc_heal) & !player.moving'},
-{PoMooc, 'tank.buff(Prayer of Mending'}, 
 {Beforepull, 'pull_timer <= 20'},
 },'!player.channeling(Divine Hymn)'},
 }
