@@ -31,6 +31,7 @@ local GUI = {
 	{type = 'checkbox', text = 'Holy Word: Chastise', key = 'd_HWC', width = 55, default = false},
 	{type = 'checkbox', text = 'Holy Fire', key = 'd_HF', width = 55, default = false},
 	{type = 'checkbox', text = 'Holy Nova', key = 'd_nova', width = 55, default = false},
+	{type = 'checkbox', text = 'Smite', key = 'd_smite', width = 55, default = true},
 	{type = 'ruler'},{type = 'spacer'},
 
 	--POTIONS
@@ -171,7 +172,7 @@ local DPS = {
 	{'Holy Fire', 'UI(d_HF) & target.infront' , 'target'},
 	{'Holy Nova', 'player.area(10).enemies >= 2 & UI(d_nova)'},
 	{'Holy Nova', 'player.moving & UI(d_nova) & target.range <= 10'},
-	{'Smite', 'target.infront', 'target'},
+	{'Smite', 'target.infront & UI(d_smite)', 'target'},
 }
 
 local Solo = {
@@ -339,7 +340,7 @@ local Moving = {
 	{'Gift of the Naaru', 'lowest.health <= 20 & lowest.buff(Guardian Spirit)', 'lowest'},
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
 	{'Flash Heal', 'player.buff(Surge of Light) & lowest.health <= UI(m_FH)', 'lowest'},
-	{'Renew', '!lowest.buff(Renew) & toggle(myth_heal) & partycheck = 2', 'lowest'},
+	{'Renew', '!lowest.buff(Renew) & UI(myth_heal) & partycheck = 2', 'lowest'},
 	{'Renew', '!lowest.buff(Renew) & lowest.health <= UI(m_Ren)', 'lowest'},
 }
 
