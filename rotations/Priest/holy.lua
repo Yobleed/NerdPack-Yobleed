@@ -146,10 +146,10 @@ local Cooldowns ={
 {'!Guardian Spirit', 'UI(c_GSt) & {tank1.health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'tank1'},
 {'!Guardian Spirit', 'UI(c_GSt) & {tank2.health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'tank2'},
 {'!Guardian Spirit', 'UI(c_GS) & lowest.health <= UI(c_GSspin)', 'lowest'},
-{'Desperate Prayer', 'UI(c_DP) & player.health <= UI(c_DPspin) & !player.buff(Guardian Spirit)', 'player'},
+{'Desperate Prayer', 'UI(c_DP) & player.health <= UI(c_DPspin) & !player.buff(Guardian Spirit) & !player.channeling(Divine Hymn)', 'player'},
 {'Arcane Torrent', 'player.mana < 97'},
 {'!Divine Hymn', 'player.buff(Divinity) & !player.spell(Prayer of Mending).cooldown = 0 & player.area(40,70).heal >= UI(DH_spin) & UI(DH)'},
-{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift)', 'tank'},
+{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & !UI(myth_heal)', 'tank'},
 {'Light of T\'uure', 'UI(c_LoTt) & tank1.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank1.buff(Light of T\'uure) & !tank1.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift)', 'tank1'},
 {'Light of T\'uure', 'UI(c_LoTt) & tank2.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank2.buff(Light of T\'uure) & !tank2.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift)', 'tank2'},
 {'Light of T\'uure', 'UI(c_LoT) & lowest.health <= UI(c_LoTspin) & !player.channeling(Divine Hymn) & !lowest.buff(Light of T\'uure) & !lowest.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift)', 'lowest'},
@@ -171,7 +171,8 @@ local Potions = {
 local DPS = {
 	{{
 	{'Holy Word: Chastise', 'UI(d_HWC) & target.infront' , 'target'}, 
-	{'Holy Fire', 'UI(d_HF) & target.infront' , 'target'},
+    {'Holy Fire', 'UI(d_HF) & target.infront & !debuff(Holy Fire).count = 2 & infront' , 'target'},
+	{'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count = 2', 'enemies'},
 	{'Holy Nova', 'player.area(10).enemies >= 2 & UI(d_nova)'},
 	{'Holy Nova', 'player.moving & UI(d_nova) & target.range <= 10'},
 	},'!player.mana <= 35'},
@@ -187,15 +188,7 @@ local Solo = {
 	{'Holy Fire', '!moving', 'target'},
 	{'Smite', nil, 'target'},
 }
---[[
-local Thedesolatehost = {
-	{'!Holy Word: Serenity', 'ldebuff(Spirit Realm).health <= UI(l_HWSE) & !player.buff(Divinity)', 'ldebuff(Spirit Realm)'},
-	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & ldebuff(Spirit Realm).health < 100', 'ldebuff(Spirit Realm)'},
-	{'Gift of the Naaru', 'ldebuff(Spirit Realm).health <= 20 & !lbuff(Guardian Spirit)', 'ldebuff(Spirit Realm)'},
-	{'Flash Heal', 'ldebuff(Spirit Realm).health <= UI(l_FH)', 'ldebuff(Spirit Realm)'},
-	{'Heal', 'ldebuff(Spirit Realm).health <= UI(l_H)', 'ldebuff(Spirit Realm)'},
-}
-]]--
+
 local Tankpred = {
 	{'!Holy Word: Serenity', 'tank1.health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
 	{'!Holy Word: Serenity', 'tank2.health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
@@ -258,6 +251,11 @@ local PoMooc = {
 }
 
 local Mythic = {
+    {{
+    {'Holy Word: Chastise', 'id(120651) & range <= 30 & infront' , 'enemies'},
+    {'Holy Fire', 'id(120651) & range <= 40 & infront', 'enemies'}, 
+    {'Smite', 'id(120651) & range <= 40 & infront', 'enemies'}, 
+    },'lowest.health >= 80'},
     {PoMooc, 'lowest.health > 95 & !player.moving', 'tank'},
     {'renew', '!lowest.buff(renew) & player.moving', 'lowest'},
     {'renew', 'lowest.health < 100 & lowest.health > 90 & !lowest.buff(renew)', 'lowest'},
@@ -380,7 +378,6 @@ local inCombat = {
 --{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 {Solo, 'toggle(xDPS) & target.range <= 40 & target.infront'},
---{Thedesolatehost,'partycheck = 3'},
 {Moving, 'player.moving'},
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & !player.moving'},
 {Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
