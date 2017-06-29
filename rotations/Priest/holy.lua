@@ -4,6 +4,7 @@ Priority by array order
 player > tank > lowest
 ]]--
 
+--Spirit Realm = 235621
 local GUI = {
 	-- GUI Header 
 	{type = "texture",
@@ -251,6 +252,7 @@ local PoMooc = {
 	{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > tank2.buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank2'},
 	{'Prayer of Mending', '!player.buff(Prayer of Mending) & tank1.buff(Prayer of Mending) & UI(pull_PoM) & partycheck = 3', 'player'},
 	{'Prayer of Mending', 'buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM)', 'friendly'},
+	{'Prayer of Mending', '!buff(Prayer of Mending) & UI(pull_PoM) & range <= 40 & tank.buff(Prayer of Mending)', 'friendly'},
 }
 
 local Mythic = {
@@ -383,7 +385,6 @@ local inCombat = {
 {ST, '!UI(myth_heal) & !player.moving'},
 {'Flash Heal', 'lowestp.health < 100 & player.buff(Spirit of Redemption)', 'lowestp'},
 {DPS},
-{'smite', 'target.infront', 'target'}, 
 },'!player.channeling(Divine Hymn)'},
 
 } 
