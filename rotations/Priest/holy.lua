@@ -169,10 +169,12 @@ local Potions = {
 }
 
 local DPS = {
+	{{
 	{'Holy Word: Chastise', 'UI(d_HWC) & target.infront' , 'target'}, 
 	{'Holy Fire', 'UI(d_HF) & target.infront' , 'target'},
 	{'Holy Nova', 'player.area(10).enemies >= 2 & UI(d_nova)'},
 	{'Holy Nova', 'player.moving & UI(d_nova) & target.range <= 10'},
+	},'!player.mana <= 35'},
 	{'Smite', 'target.infront & UI(d_smite)', 'target'},
 }
 
