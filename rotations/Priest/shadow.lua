@@ -281,7 +281,7 @@ local lotv1 = {
 	{'Mind Flay', '!player.spell(Void Eruption).cooldown = 0 & !player.spell(Mind Blast).cooldown = 0 & target.debuff(Shadow Word: Pain) & target.debuff(Vampiric Touch)'},
 }
 
--local s2m1 = {
+local s2m1 = {
 	--Dispersion after Void Torrent and Void Bolt
 	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent) & UI(dps_D)'},
 	--Torrent on CD.
