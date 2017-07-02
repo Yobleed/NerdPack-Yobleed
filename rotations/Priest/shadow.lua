@@ -115,7 +115,14 @@ local exeOnLoad = function()
 	})
 
 end
+local Mythic = {
+    {'!Void Eruption', 'id(120651) & range <= 40 & infront', 'enemies'},
+    {'!Shadow Word: Death', 'id(120651) & range <= 40', 'enemies'}, 
+	{'!Mind Blast', 'id(120651) & range <= 40 & infront' , 'enemies'},
+    {'Shadow Word: Pain', 'id(120651) & range <= 40 & !debuff(Shadow Word: Pain)', 'enemies'},
+    {'Mind Flay', 'id(120651) & range <= 40 & debuff(Shadow Word: Pain) & infront', 'enemies'},
 
+}
 
 local Survival = {
 	-- Fade usage if enabled in UI.
@@ -386,6 +393,7 @@ local inCombat = {
 	{Movement, '!player.buff(Voidform || {player.buff Voidform & !spell(Void Eruption).cooldown = 0 & !player.channeling(Void Torrent)}'},
 	{Surrender, '!player.channeling(Void Torrent)'}, 
 	{'Mind Bomb', '{toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness) & !player.channeling(Void Torrent) & !talent(7,2)} || {toggle(abc) & target.area(8).enemies >= 3 & talent(7,2) & spell(Shadow Crash).cooldown = 0 & player.buff(Voidform) & !player.channeling(Void Torrent)}'},
+	{Mythic, 'partycheck = 2'},
 	{Emergency, '!player.channeling(Void Torrent)'},
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
