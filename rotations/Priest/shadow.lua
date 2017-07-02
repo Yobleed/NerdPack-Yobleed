@@ -216,6 +216,10 @@ local cooldowns = {
 	{'!Shadowfiend', '!talent(6,3) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= UI(dps_SFspin) & !talent(6,1) & UI(dps_fiend)'},
 	--Shadowfiend if PI and above 40% insanity.
 	{'!Shadowfiend', 'player.buff(Power Infusion) & player.buff(voidform).count >= UI(dps_SFspin) & UI(dps_fiend)'},
+	--Shadow Word Death with Zek's Exterminatus
+	{'!Shadow Word: Death', 'equipped(144438) & !player.buff(voidform)', 'target'},
+	{'!Shadow Word: Death', 'equipped(144438) & player.spell(Void Eruption).cooldown > gcd & player.buff(voidform)', 'target'},
+
 }
 
 
