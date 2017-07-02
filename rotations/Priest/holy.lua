@@ -159,11 +159,15 @@ local Trinkets = {
 	--Top Trinket usage if UI enables it.
 	{'#trinket1', 'UI(trinket_1) & player.area(15,85).heal >= 4'}, --Preserved Cake 
 	--Bottom Trinket usage if UI enables it.
-	{'#trinket2', 'UI(trinket_2)'},
-}
+	{'#trinket2', 'UI(trinket_2) & tank1.health <= UI(t_HWSE) & player.spell(Holy Word: Serenity).cooldown > gcd', 'tank1'},--Archive of Faith
+	{'#trinket2', 'UI(trinket_2) & tank2.health <= UI(t_HWSE) & player.spell(Holy Word: Serenity).cooldown > gcd', 'tank2'},
+	{'#trinket2', 'UI(trinket_2) & lowest.health <= UI(l_HWSE) & player.spell(Holy Word: Serenity).cooldown > gcd', 'lowest'},--Archive of Faith
+
+
+} 
 
 local Potions = {
-	{'#Healthstone', 'UI(p_HS) & player.health <= UI(p_HSspin) & !player.channeling(Divine Hymn)'},
+	{'#5512', 'UI(p_HS) & player.health <= UI(p_HSspin) & !player.channeling(Divine Hymn)'},
 	{'#Ancient Healing Potion', 'UI(p_AHP) & player.health <= UI(p_AHPspin) & !player.channeling(Divine Hymn)'},
 	{'#Ancient Mana Potion', 'UI(p_AMP) & player.mana <= UI(p_AMPspin) & !player.channeling(Divine Hymn)'},
 }
