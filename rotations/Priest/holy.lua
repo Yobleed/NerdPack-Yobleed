@@ -17,6 +17,7 @@ local GUI = {
 
 	{type = 'checkbox', text = 'Healing OOC', key = 'ooc_heal', width = 55, default = false},
 	{type = 'checkbox', text = 'Mythic+ Healing', key = 'myth_heal', width = 55, default = false},
+	{type = 'checkbox', text = 'Attack Fel Explosives', key = 'myth_fel', width = 55, default = false},
 	
     --KEYBINDS
 	{type = 'header', text = 'Keybinds', align = 'center'},
@@ -254,13 +255,14 @@ local PoMooc = {
 	{'Prayer of Mending', 'buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM)', 'friendly'},
 	{'Prayer of Mending', '!buff(Prayer of Mending) & UI(pull_PoM) & range <= 40 & tank.buff(Prayer of Mending)', 'friendly'},
 }
-
-local Mythic = {
-    {{
+local Felexplosive = {
+	  {{
     {'Holy Word: Chastise', 'id(120651) & range <= 30 & infront' , 'enemies'},
     {'Holy Fire', 'id(120651) & range <= 40 & infront', 'enemies'}, 
     {'Smite', 'id(120651) & range <= 40 & infront', 'enemies'}, 
-    },'lowest.health >= 80'},
+    },'lowest.health >= 80 & UI(myth_fel)'},
+}
+local Mythic = {
     {PoMooc, 'lowest.health > 95 & !player.moving', 'tank'},
     {'renew', '!lowest.buff(renew) & player.moving', 'lowest'},
     {'renew', 'lowest.health < 100 & lowest.health > 90 & !lowest.buff(renew)', 'lowest'},
@@ -386,6 +388,7 @@ local inCombat = {
 {'flash heal', 'health < 100 & id(119663) & !lowestp.health <= 50', 'friendly'}, --Hopeless Reflection
 {Moving, 'player.moving'},
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & !player.moving'},
+{Felexplosive},
 {Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
 {ST, '!UI(myth_heal) & !player.moving'},
 {'Flash Heal', 'lowestp.health < 100 & player.buff(Spirit of Redemption)', 'lowestp'},
