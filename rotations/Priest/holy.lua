@@ -149,9 +149,10 @@ local Cooldowns ={
 {'Desperate Prayer', 'UI(c_DP) & player.health <= UI(c_DPspin) & !player.buff(Guardian Spirit) & !player.channeling(Divine Hymn)', 'player'},
 {'Arcane Torrent', 'player.mana < 97'},
 {'!Divine Hymn', 'player.buff(Divinity) & !player.spell(Prayer of Mending).cooldown = 0 & player.area(40,70).heal >= UI(DH_spin) & UI(DH)'},
-{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & !UI(myth_heal)', 'tank'},
-{'Light of T\'uure', 'UI(c_LoTt) & tank1.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank1.buff(Light of T\'uure) & !tank1.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift)', 'tank1'},
-{'Light of T\'uure', 'UI(c_LoTt) & tank2.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank2.buff(Light of T\'uure) & !tank2.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift)', 'tank2'},
+{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & !UI(myth_heal) & tank1.health < tank2.health', 'tank1'},
+{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & !UI(myth_heal) & tank2.health < tank1.health', 'tank2'},
+{'Light of T\'uure', 'UI(c_LoTt) & tank1.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank1.buff(Light of T\'uure) & !tank1.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & tank1.health < tank2.health', 'tank1'}, 
+{'Light of T\'uure', 'UI(c_LoTt) & tank2.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank2.buff(Light of T\'uure) & !tank2.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & tank2.health < tank1.health', 'tank2'},
 {'Light of T\'uure', 'UI(c_LoT) & lowest.health <= UI(c_LoTspin) & !player.channeling(Divine Hymn) & !lowest.buff(Light of T\'uure) & !lowest.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift)', 'lowest'},
 }
 
@@ -159,9 +160,9 @@ local Trinkets = {
 	--Top Trinket usage if UI enables it.
 	{'#trinket1', 'UI(trinket_1) & player.area(15,85).heal >= 4'}, --Preserved Cake 
 	--Bottom Trinket usage if UI enables it.
-	{'#trinket2', 'UI(trinket_2) & tank1.health <= UI(t_HWSE) & player.spell(Holy Word: Serenity).cooldown > gcd', 'tank1'},--Archive of Faith
-	{'#trinket2', 'UI(trinket_2) & tank2.health <= UI(t_HWSE) & player.spell(Holy Word: Serenity).cooldown > gcd', 'tank2'},
-	{'#trinket2', 'UI(trinket_2) & lowest.health <= UI(l_HWSE) & player.spell(Holy Word: Serenity).cooldown > gcd', 'lowest'},--Archive of Faith
+	{'#trinket2', 'UI(trinket_2) & tank1.health <= UI(t_HWSE) & player.spell(Holy Word: Serenity).cooldown > gcd & !player.moving', 'tank1'},--Archive of Faith
+	{'#trinket2', 'UI(trinket_2) & tank2.health <= UI(t_HWSE) & player.spell(Holy Word: Serenity).cooldown > gcd & !player.moving', 'tank2'},
+	{'#trinket2', 'UI(trinket_2) & lowest.health <= UI(l_HWSE) & player.spell(Holy Word: Serenity).cooldown > gcd & !player.moving', 'lowest'},--Archive of Faith
 
 
 } 
@@ -382,6 +383,7 @@ local inCombat = {
 --{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
 {Solo, 'toggle(xDPS) & target.range <= 40 & target.infront'},
+{'flash heal', 'health < 100 & id(119663) & !lowestp.health <= 50', 'friendly'}, --Hopeless Reflection
 {Moving, 'player.moving'},
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & !player.moving'},
 {Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
