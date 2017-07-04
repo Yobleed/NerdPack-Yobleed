@@ -14,10 +14,18 @@ local GUI = {
 	offset = 90, 
 	y = 42, 
 	center = true},
-
+    --GENERAL
+    {type = 'header', text = 'General', align = 'center'},
 	{type = 'checkbox', text = 'Healing OOC', key = 'ooc_heal', width = 55, default = false},
 	{type = 'checkbox', text = 'Mythic+ Healing', key = 'myth_heal', width = 55, default = false},
 	{type = 'checkbox', text = 'Attack Fel Explosives', key = 'myth_fel', width = 55, default = false},
+	{type = 'ruler'},{type = 'spacer'},
+
+	--TOS DISPELLING
+	{type = 'header', text = 'Dispel', align = 'center'},
+	{type = 'text', text = 'Advanced Only', align = 'center'},
+	{type = 'checkbox', text = 'Echoing Anguish (Demonic Inquisition)', key = 'disp_ang', width = 55, default = false},
+	{type = 'ruler'},{type = 'spacer'},
 	
     --KEYBINDS
 	{type = 'header', text = 'Keybinds', align = 'center'},
@@ -151,8 +159,8 @@ local Cooldowns ={
 {'Arcane Torrent', 'player.mana < 97'},
 {'!Divine Hymn', 'player.buff(Divinity) & !player.spell(Prayer of Mending).cooldown = 0 & player.area(40,70).heal >= UI(DH_spin) & UI(DH)'},
 {'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & partycheck = 2 & !UI(myth_heal)', 'tank'},
-{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & !UI(myth_heal) & tank1.health < tank2.health', 'tank1'},
-{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & !UI(myth_heal) & tank2.health < tank1.health', 'tank2'},
+{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & tank1.health < tank2.health', 'tank1'},
+{'Light of T\'uure', 'UI(c_lot1) & player.spell(Light of T\'uure).charges = 2 & !lowest.health <= 40 & !tank.buff(Light of T\'uure) & !player.channeling(Divine Hymn) & !tank.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & tank2.health < tank1.health', 'tank2'},
 {'Light of T\'uure', 'UI(c_LoTt) & tank1.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank1.buff(Light of T\'uure) & !tank1.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & partycheck = 2', 'tank'}, 
 {'Light of T\'uure', 'UI(c_LoTt) & tank1.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank1.buff(Light of T\'uure) & !tank1.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & tank1.health < tank2.health', 'tank1'}, 
 {'Light of T\'uure', 'UI(c_LoTt) & tank2.health <= UI(c_LoTspint) & !player.channeling(Divine Hymn) & !tank2.buff(Light of T\'uure) & !tank2.buff(Guardian Spirit) & !toggle(xDPS) & !lowestp.health <= 40 & !keybind(lshift) & tank2.health < tank1.health', 'tank2'},
@@ -357,11 +365,11 @@ local Moving = {
 
 local ST = {
 {Playerpred,'partycheck = 3 & !lowestp.health <= 50'},
-{Player, '!tank.health <= 40 & !lowest.health <= 50'},
+{Player, '!tank.health <= 40 & !lowest.health <= 50 & !partycheck = 3'},
 {Lowestpred,'partycheck = 3 & !tank.health.predicted <= 50'},
-{Lowest, '!tank.health <= 50'},
+{Lowest, '!tank.health <= 50 & !partycheck = 3'},
 {Tankpred,'partycheck = 3'},
-{Tank},
+{Tank, '!partycheck = 3'},
 
 
 	
@@ -384,8 +392,8 @@ local inCombat = {
 {Potions},
 {Trinkets},
 {Keybinds},
---{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify', 'friendly'},
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
+{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(8).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
 {Solo, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 {'flash heal', 'health < 100 & id(119663) & !lowestp.health <= 50', 'friendly'}, --Hopeless Reflection
 {Moving, 'player.moving'},
@@ -408,8 +416,8 @@ local outCombat = {
 {Cooldowns,'partycheck = 2 & UI(myth_heal)'},
 {Potions, 'partycheck = 2 & UI(myth_heal)'},
 {Keybinds},
---{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify', 'friendly'},
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0'},
+{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(8).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
 {PoMooc, '!UI(myth_heal)'}, 
 {Moving, 'player.moving'},
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & {UI(ooc_heal)||UI(myth_heal)} & !player.moving'},
