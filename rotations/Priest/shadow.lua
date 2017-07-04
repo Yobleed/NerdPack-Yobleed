@@ -45,7 +45,7 @@ local GUI = {
 	{type = 'spinner', text = 'Target > 35%', key = 'dps_PIspin2', align = 'left', width = 55, step = 1, default = 15},
 	{type = 'text', text = 'Shadowfiend/Mindbender', align = 'center'},
 	{type = 'checkbox', text = 'ON/OFF', key = 'dps_fiend', width = 55, default= false},
-    {type = 'spinner', text = 'Shadowfiend Stacks', key = 'dps_SFspin', align = 'left', width = 55, step = 1, default = 22},
+    {type = 'spinner', text = 'Stacks', key = 'dps_SFspin', align = 'left', width = 55, step = 1, default = 22},
     {type = 'text', text = 'Void Torrent', align = 'center'},
     {type = 'checkbox', text = 'ON/OFF', key = 'dps_void', width = 55, default= false}, 
 	{type = 'text', text = 'Dispersion', align = 'center'},
