@@ -43,7 +43,7 @@ local GUI = {
 	{type = 'checkbox', text = 'ON/OFF', key = 'dps_PI', width = 55, default= false},
 	{type = 'spinner', text = 'Target <= 35%', key = 'dps_PIspin1', align = 'left', width = 55, step = 1, default = 15},
 	{type = 'spinner', text = 'Target > 35%', key = 'dps_PIspin2', align = 'left', width = 55, step = 1, default = 15},
-	{type = 'text', text = 'Shadowfiend', align = 'center'},
+	{type = 'text', text = 'Shadowfiend/Mindbender', align = 'center'},
 	{type = 'checkbox', text = 'ON/OFF', key = 'dps_fiend', width = 55, default= false},
     {type = 'spinner', text = 'Shadowfiend Stacks', key = 'dps_SFspin', align = 'left', width = 55, step = 1, default = 22},
     {type = 'text', text = 'Void Torrent', align = 'center'},
@@ -131,7 +131,7 @@ local Zeks = {
 }
 local Survival = {
 	-- Fade usage if enabled in UI.
-	{'Fade', 'target.threat = 100 & UI(s_F)'},
+	{'Fade', 'player.aggro & UI(s_F)'},
 	-- Power Word: Shield usage if enabled in UI.
 	{'Power Word: Shield', 'player.health <= UI(s_PWSspin) & UI(s_PWS)', 'player'},
 	-- Dispersion usage if enabled in UI.
@@ -212,8 +212,10 @@ local Emergency = {
 }
 
 local cooldowns = {
+    
     --Torrent on CD.
-	{'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0 & UI(dps_void) & player.buff(voidform).count > 3', 'target'}, 
+    {'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0 & UI(dps_void) & player.buff(voidform).count > 3 & set_bonus(T19) = 4', 'target'}, 
+    {'!Void Torrent', 'UI(dps_void) & !set_bonus(T19) = 4', 'target'}, 
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
 	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown = 0 & !spell(Void Torrent).cooldown = 0 & !spell(Dispersion).cooldown = 0 & UI(dps_PI)', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
@@ -223,31 +225,37 @@ local cooldowns = {
 	--Mindbender if talent is active on CD in S2M.
 	{'!Mindbender', 'talent(6,3) & player.buff(Surrender to Madness)'},
 	--Mind Bender if talent is active and not in S2M if VF stacks are above 5.
-	{'!Mindbender', 'talent(6,3) & !player.buff(Surrender to Madness) & player.buff(voidform).count > 5'},
+	{'!Mindbender', 'talent(6,3) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_SFspin) & UI(dps_fiend)', 'target'},
 	--Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
-	{'!Shadowfiend', '!talent(6,3) & !spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= UI(dps_SFspin) & !talent(6,1) & UI(dps_fiend)'},
+	{'!Shadowfiend', '!player.spell(Void Eruption).cooldown = 0 & player.buff(voidform).count >= UI(dps_SFspin) & !talent(6,1) & UI(dps_fiend)', 'target'},
 	--Shadowfiend if PI and above 40% insanity.
 	{'!Shadowfiend', 'player.buff(Power Infusion) & player.buff(voidform).count >= UI(dps_SFspin) & UI(dps_fiend)'},
 }
 
 local AOE = {
     {{
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront', 'enemies'},
-	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40', 'enemies'},
+    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & !player.buff(Twist of Fate) & health <= 35 & talent(1,1) & combat', 'enemies'},
+    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat', 'enemies'},
+	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat', 'enemies'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40', 'enemies'},  
-	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40', 'enemies'}, 
-	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & infront', 'enemies'}, 
-	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40', 'enemies'}, 
-	},'player.buff(voidform) & !player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0 & player.spell(Shadow Word: Death).charges < 1'},
+    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat', 'enemies'},  
+	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat', 'enemies'}, 
+	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & combat} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
+	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & combat} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
+	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
+	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat', 'enemies'},
+	},'player.buff(voidform) & !player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0'},
     {{
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront', 'enemies'},
-	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40', 'enemies'},
+    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & !player.buff(Twist of Fate) & health <= 35 & talent(1,1) & combat', 'enemies'},
+    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat', 'enemies'},
+	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat', 'enemies'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40', 'enemies'},  
-	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40', 'enemies'}, 
-	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & infront', 'enemies'}, 
-	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40', 'enemies'}, 
+    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat', 'enemies'},  
+	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat', 'enemies'}, 
+	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & combat} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
+	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & combat} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
+	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
+	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat', 'enemies'},
 	},'!player.buff(voidform) & !player.insanity = 100'},
 	--Shadow Crash on CD.
 	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0} || {!advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0}', 'target.ground'},
@@ -276,18 +284,29 @@ local ST = {
 }
 
 local lotv = {
+    {{
+    {'!Shadow Word: Death', '!player.spell(Void Eruption).cooldown = 0 & player.moving', 'target'},
     {'!Shadow Word: Death', '{!player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0 & player.spell(Shadow Word: Death).charges > 1} || {!player.channeling(Mind Blast) & !player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0 }', 'target'},
 	{'!Shadow Word: Death', '!player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0 & !player.channeling(Void Eruption)', 'target'},
+	}, '!target.area(10).enemies >= 4 & advanced'},
+	 {{
+    {'!Shadow Word: Death', '!player.spell(Void Eruption).cooldown = 0 & player.moving', 'target'},
+    {'!Shadow Word: Death', '{!player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0 & player.spell(Shadow Word: Death).charges > 1} || {!player.channeling(Mind Blast) & !player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0 }', 'target'},
+	{'!Shadow Word: Death', '!player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0 & !player.channeling(Void Eruption)', 'target'},
+	}, '!advanced'},
 	--Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
 	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown = 0','target'},
 	--Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
 	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown = 0','target'},
 	--Void Bolt on CD not interrupting casting MB.
 	{'!Void Eruption', '!player.channeling(Mind Blast)','target'},
+	--Mind Flay if Dots are up and VB and MB are on CD.
+	{'Mind Flay', 'target.area(10).enemies >= 4 & advanced & target.debuff(Shadow Word: Pain)','target'},
 	--Mind Blast on CD if VB is on CD.
 	{'Mind Blast', '!player.spell(Void Eruption).cooldown <= gcd','target'},
 	--Mind Blast if player is channeling Mind Flay.
-	{'!Mind Blast', 'player.channeling(Mind Flay) & !player.spell(Void Eruption).cooldown <= gcd','target'},
+	{'!Mind Blast', 'player.channeling(Mind Flay) & !player.spell(Void Eruption).cooldown <= gcd & !target.area(10).enemies >= 4 & advanced ','target'},
+	{'!Mind Blast', 'player.channeling(Mind Flay) & !player.spell(Void Eruption).cooldown <= gcd & !advanced','target'},
 	--Misery.
 	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)','target'},  
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
