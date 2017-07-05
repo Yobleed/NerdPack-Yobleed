@@ -235,25 +235,29 @@ local cooldowns = {
 local AOE = {
     {{
     {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & !player.buff(Twist of Fate) & health <= 35 & talent(1,1) & combat', 'enemies'},
+    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat & debuff(Vampiric Touch)', 'enemies'},
+	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat & debuff(Vampiric Touch)', 'enemies'},
     {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat', 'enemies'},
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat', 'enemies'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
     {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat', 'enemies'},  
 	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat', 'enemies'}, 
-	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & combat} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
-	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & combat} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
+	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
+	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat', 'enemies'},
 	},'player.buff(voidform) & !player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0'},
     {{
     {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & !player.buff(Twist of Fate) & health <= 35 & talent(1,1) & combat', 'enemies'},
+    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat & debuff(Vampiric Touch)', 'enemies'},
+	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat & debuff(Vampiric Touch)', 'enemies'},
     {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat', 'enemies'},
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat', 'enemies'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
     {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat', 'enemies'},  
 	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat', 'enemies'}, 
-	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & combat} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
-	{'Vampiric Touch', '{!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & combat} || {!debuff(Shadow Word: Pain) & talent(6,2)} & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
+	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
+	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat', 'enemies'},
 	},'!player.buff(voidform) & !player.insanity = 100'},

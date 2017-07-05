@@ -101,7 +101,7 @@ local exeOnLoad = function()
 	-- Rotation loaded message.
 	print('|cff58FAF4 ----------------------------------------------------------------------|r')
 	print('|cff58FAF4 --- |rPriest: |cff58FAF4DISCIPLINE|r')
-	print('|cff58FAF4 --- |rRecommended Talents: 1/3 or 1/2 - 2/2 or 2/1 - 3/1 - 4/2 or 4/3 - 5/2 or 5/3 - 6/2 or 6/3 - 7/1 or 7/2')
+	print('|cff58FAF4 ----------------------------------------------------------------------|r')
 	print('|cff58FAF4 ----------------------------------------------------------------------|r')
 	print('|cffff0000 Configuration: |rRight-click the MasterToggle and go to Combat Routines Settings|r')
 

@@ -171,9 +171,9 @@ local Trinkets = {
 	--Top Trinket usage if UI enables it.
 	{'#trinket1', 'UI(trinket_1) & player.area(15,85).heal >= 4'}, --Preserved Cake 
 	--Bottom Trinket usage if UI enables it.
-	{'#trinket2', 'UI(trinket_2) & tank1.health <= 60 & player.spell(Holy Word: Serenity).cooldown > gcd & !player.moving', 'tank1'},--Archive of Faith
-	{'#trinket2', 'UI(trinket_2) & tank2.health <= 60 & player.spell(Holy Word: Serenity).cooldown > gcd & !player.moving', 'tank2'},
-	{'#trinket2', 'UI(trinket_2) & lowest.health <= 50 & player.spell(Holy Word: Serenity).cooldown > gcd & !player.moving', 'lowest'},--Archive of Faith
+	{'#trinket2', 'UI(trinket_2) & tank1.health <= 50 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'tank1'},--Archive of Faith
+	{'#trinket2', 'UI(trinket_2) & tank2.health <= 50 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'tank2'},
+	{'#trinket2', 'UI(trinket_2) & lowest.health <= 40 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},--Archive of Faith
 
 
 } 
@@ -188,7 +188,7 @@ local DPS = {
 	{{
 	{'Holy Word: Chastise', 'UI(d_HWC) & target.infront' , 'target'}, 
     {'Holy Fire', 'UI(d_HF) & target.infront & !debuff(Holy Fire).count = 2 & infront' , 'target'},
-	{'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count = 2', 'enemies'},
+	{'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count = 2 & combat', 'enemies'},
 	{'Holy Nova', 'player.area(10).enemies >= 2 & UI(d_nova)'},
 	{'Holy Nova', 'player.moving & UI(d_nova) & target.range <= 10'},
 	},'!player.mana <= 35'},
@@ -272,8 +272,10 @@ local Felexplosive = {
     {'Smite', 'id(120651) & range <= 40 & infront', 'enemies'}, 
     },'lowest.health >= 80 & UI(myth_fel)'},
 }
+
 local Mythic = {
-    {PoMooc, 'lowest.health > 95 & !player.moving', 'tank'},
+    {'Prayer of Mending', 'lowest.health > 95 & !player.moving & !tank.buff(Prayer of Mending)', 'tank'},
+    {'Prayer of Mending', 'lowest.health > 95 & !player.moving & !lowest.buff(Prayer of Mending)', 'lowest'},
     {'renew', '!lowest.buff(renew) & player.moving', 'lowest'},
     {'renew', 'lowest.health < 100 & lowest.health > 90 & !lowest.buff(renew)', 'lowest'},
 	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
@@ -378,7 +380,7 @@ local ST = {
 local AOE = {
 {Sanctify},
 {PoH},
-{PoM},
+{PoM, '!UI(myth_heal)'},
 
 }
 
@@ -392,7 +394,7 @@ local inCombat = {
 {Potions},
 {Trinkets},
 {Keybinds},
-{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(8).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
+{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
 {Solo, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 {'flash heal', 'health < 100 & id(119663) & !lowestp.health <= 50', 'friendly'}, --Hopeless Reflection
@@ -416,7 +418,7 @@ local outCombat = {
 {Cooldowns,'partycheck = 2 & UI(myth_heal)'},
 {Potions, 'partycheck = 2 & UI(myth_heal)'},
 {Keybinds},
-{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(8).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
+{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
 {PoMooc, '!UI(myth_heal)'}, 
 {Moving, 'player.moving'},
