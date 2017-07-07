@@ -171,15 +171,15 @@ local Trinkets = {
 	--Top Trinket usage if UI enables it.
 	{'#trinket1', 'UI(trinket_1) & player.area(15,85).heal >= 4'}, --Preserved Cake 
 	--Bottom Trinket usage if UI enables it.
-	{'#trinket2', 'UI(trinket_2) & tank1.health <= 50 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'tank1'},--Archive of Faith
-	{'#trinket2', 'UI(trinket_2) & tank2.health <= 50 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'tank2'},
-	{'#trinket2', 'UI(trinket_2) & lowest.health <= 40 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},--Archive of Faith
+	{'!#trinket2', 'UI(trinket_2) & tank1.health <= 50 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'tank1'},--Archive of Faith
+	{'!#trinket2', 'UI(trinket_2) & tank2.health <= 50 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'tank2'},
+	{'!#trinket2', 'UI(trinket_2) & lowest.health <= 40 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},--Archive of Faith
 
 
 } 
 
 local Potions = {
-	{'#5512', 'UI(p_HS) & player.health <= UI(p_HSspin) & !player.channeling(Divine Hymn)'},
+	{'#Healthstone', 'UI(p_HS) & player.health <= UI(p_HSspin) & !player.channeling(Divine Hymn)'},
 	{'#Ancient Healing Potion', 'UI(p_AHP) & player.health <= UI(p_AHPspin) & !player.channeling(Divine Hymn)'},
 	{'#Ancient Mana Potion', 'UI(p_AMP) & player.mana <= UI(p_AMPspin) & !player.channeling(Divine Hymn)'},
 }
@@ -274,6 +274,7 @@ local Felexplosive = {
 }
 
 local Mythic = {
+    {'!#trinket2', 'UI(trinket_2) & lowest.health <= 60 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
     {'Prayer of Mending', 'lowest.health > 95 & !player.moving & !tank.buff(Prayer of Mending)', 'tank'},
     {'Prayer of Mending', 'lowest.health > 95 & !player.moving & !lowest.buff(Prayer of Mending)', 'lowest'},
     {'renew', '!lowest.buff(renew) & player.moving', 'lowest'},
@@ -287,11 +288,14 @@ local Mythic = {
 }
 
 local Sanctify = {
-	{'!Holy Word: Sanctify', 'tank.area(10, 85).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
-	{'!Holy Word: Sanctify', 'lowest.area(10, 85).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
-	{'!Holy Word: Sanctify', 'lowest.area(10, 85).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
-	{'!Holy Word: Sanctify', 'lowest.area(10, 85).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
-	{'!Holy Word: Sanctify', 'lowest.area(10, 85).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity) & partycheck = 2','lowest.ground'},	
+	{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+	{'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
+	{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+	{'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
+	{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+    {'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
+	{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+	{'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity) & partycheck = 2','lowest.ground'},	
 }
 
 local PoH = {
@@ -313,6 +317,7 @@ local PoM = {
 	{'Prayer of Mending', 'tank2.buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration', 'tank2'},
 	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count > 5', 'tank1'},
 	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count > 5', 'tank2'},
+	{'Prayer of Mending', '!tank.buff(Prayer of Mending)', 'tank'},
 }
 
 local Keybinds = {
