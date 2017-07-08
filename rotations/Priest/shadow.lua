@@ -237,12 +237,12 @@ local cooldowns = {
 local AOE = {
     {{
     {'Shadow Word: Pain', '{!debuff(Shadow Word: Pain) & toggle(AOE) & distance <= 40 & combat & {player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}}}', 'enemies'},
-    {'Vampiric Touch', '{ttd >= 7 & toggle(AOE) & distance <= 40 & combat & !lastcast(Vampiric Touch) & {!debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}}}', 'enemies'},  
+    {'Vampiric Touch', '{ttd >= 7 & toggle(AOE) & distance <= 40 & combat & !player.lastcast(Vampiric Touch) & {!debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}}}', 'enemies'},  
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat', 'enemies'},
 	},'player.buff(voidform) & !player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0'},
     {{
     {'Shadow Word: Pain', '{!debuff(Shadow Word: Pain) & toggle(AOE) & distance <= 40 & combat & infront & {player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}}}', 'enemies'},
-    {'Vampiric Touch', '{ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch) & {!debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}}}', 'enemies'},  
+    {'Vampiric Touch', '{ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !player.lastcast(Vampiric Touch) & {!debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}}}', 'enemies'},  
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
 	},'!player.buff(voidform) & !player.insanity = 100'},
 	--Shadow Crash on CD.
@@ -259,7 +259,7 @@ local ST = {
 	--SWD when target below 35
 	{'!Shadow Word: Death', '!player.insanity >= 65 & !player.channeling(Void Eruption)','target'},
 	--Misery.
-	{'Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2) & !lastcast(Vampiric Touch)','target'},
+	{'Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2) & !player.lastcast(Vampiric Touch)','target'},
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)','target'},
 	{'Mind Blast', 'equipped(Mangaza\'s Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
@@ -267,7 +267,7 @@ local ST = {
 	{'Mind Blast', '!equipped(Mangaza\'s Madness)','target'},
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
 	{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(6,2)} || {!target.debuff(Shadow Word: Pain) & !talent(6,2)}','target'},
-	{'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {{!target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},
+	{'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !player.lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !player.lastcast(Vampiric Touch)} || {{!target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},
 	--Mind Flay if Mind Blast is on cooldown
 	{'Mind Flay', nil,'target'},
 }
@@ -298,11 +298,11 @@ local lotv = {
 	{'!Mind Blast', 'player.channeling(Mind Flay) & !player.spell(Void Eruption).cooldown <= gcd & !target.area(10).enemies >= 4 & advanced ','target'},
 	{'!Mind Blast', 'player.channeling(Mind Flay) & !player.spell(Void Eruption).cooldown <= gcd & !advanced','target'},
 	--Misery.
-	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2) & !lastcast(Vampiric Touch)','target'},  
+	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2) & !player.lastcast(Vampiric Touch)','target'},  
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
 	{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(6,2)} || {!target.debuff(Shadow Word: Pain) & !talent(6,2)} || {moving & !target.debuff(Shadow Word: Pain)}','target'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-	{'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {{target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(6,2) & !lastcast(Vampiric Touch)}','target'},  
+	{'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !player.lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !player.lastcast(Vampiric Touch)} || {{target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(6,2) & !player.lastcast(Vampiric Touch)}','target'},  
 	--Mind Flay if Dots are up and VB and MB are on CD.
 	{'Mind Flay', '!player.spell(Mind Blast).cooldown = 0','target'},
 }
@@ -310,7 +310,7 @@ local lotv = {
 
 local inCombat = {
 	--Shadowform if no voidform and no shadowform.
-	{'Shadowform', '!player.buff(voidform) & !player.buff(Shadowform) & !lastcast(Shadowform)', 'player'},
+	{'Shadowform', '!player.buff(voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
 	{Movement, '!player.buff(Voidform || {player.buff Voidform & !spell(Void Eruption).cooldown = 0 & !player.channeling(Void Torrent)}'},
 	{Surrender, '!player.channeling(Void Torrent)'}, 
 	{'Mind Bomb', '{toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness) & !player.channeling(Void Torrent) & !talent(7,2)} || {toggle(abc) & target.area(8).enemies >= 3 & talent(7,2) & spell(Shadow Crash).cooldown = 0 & player.buff(Voidform) & !player.channeling(Void Torrent)}'},
@@ -336,7 +336,7 @@ local outCombat = {
 	{'#142117', 'pull_timer < 4 & UI(s_pull)'},
 	-- Mind Blast before Pull.
 	{'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
-	{'Shadowform', '!player.buff(Shadowform) & !lastcast(Shadowform)','player'},
+	{'Shadowform', '!player.buff(Shadowform) & !player.lastcast(Shadowform)','player'},
 	--No Body and Soul from Class Hall.
 	{Movement, '!player.buff(Body and Soul) & !inareaid = 1040'},
 }
