@@ -26,7 +26,9 @@ local GUI = {
 
 	-- GENERAL
 	{type = 'header', text = 'General', align = 'center'},
-	{type = 'text', text = 'Before Pull.', align = 'center'},
+	{type = 'text', text = 'Mythic +', align = 'center'},
+	{type = 'checkbox', text = 'Target Fel Explosives', key = 'myth_fel', width = 55, default= false},
+	{type = 'text', text = 'Before Pull', align = 'center'},
 	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_pull', width = 55, default= false},
 	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', width = 55, default= false},
 	{type = 'text', text = 'Movement', align = 'center'},
@@ -234,32 +236,14 @@ local cooldowns = {
 
 local AOE = {
     {{
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & !player.buff(Twist of Fate) & health <= 35 & talent(1,1) & combat', 'enemies'},
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat & debuff(Vampiric Touch)', 'enemies'},
-	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat & debuff(Vampiric Touch)', 'enemies'},
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat', 'enemies'},
-	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat', 'enemies'},
-	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch)', 'enemies'},  
-	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat & !lastcast(Vampiric Touch)', 'enemies'}, 
-	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
-	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
+    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat & infront & player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}', 'enemies'},
+    {'Vampiric Touch', 'ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch) & !debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}', 'enemies'},  
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
-	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat', 'enemies'},
 	},'player.buff(voidform) & !player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0'},
     {{
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & !player.buff(Twist of Fate) & health <= 35 & talent(1,1) & combat', 'enemies'},
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat & debuff(Vampiric Touch)', 'enemies'},
-	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat & debuff(Vampiric Touch)', 'enemies'},
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat', 'enemies'},
-	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat', 'enemies'},
-	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch)', 'enemies'},  
-	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat & !lastcast(Vampiric Touch)', 'enemies'}, 
-	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
-	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
+    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat & infront & player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}', 'enemies'},
+    {'Vampiric Touch', 'ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch) & !debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}', 'enemies'},  
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
-	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat', 'enemies'},
 	},'!player.buff(voidform) & !player.insanity = 100'},
 	--Shadow Crash on CD.
 	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0} || {!advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0}', 'target.ground'},
@@ -330,7 +314,7 @@ local inCombat = {
 	{Movement, '!player.buff(Voidform || {player.buff Voidform & !spell(Void Eruption).cooldown = 0 & !player.channeling(Void Torrent)}'},
 	{Surrender, '!player.channeling(Void Torrent)'}, 
 	{'Mind Bomb', '{toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness) & !player.channeling(Void Torrent) & !talent(7,2)} || {toggle(abc) & target.area(8).enemies >= 3 & talent(7,2) & spell(Shadow Crash).cooldown = 0 & player.buff(Voidform) & !player.channeling(Void Torrent)}'},
-	{Mythic, 'partycheck = 2'},
+	{Mythic, 'partycheck = 2 & UI(myth_fel)'},
 	{Emergency, '!player.channeling(Void Torrent)'},
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
