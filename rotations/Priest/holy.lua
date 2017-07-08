@@ -423,20 +423,19 @@ local inCombat = {
 local outCombat = {
 {{
 {'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid = 1040', 'player'},
-{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body) & !inareaid = 1040', 'player'}, 		
-{Cooldowns,'partycheck = 2 & UI(myth_heal)'},		
-{Potions, 'partycheck = 2 & UI(myth_heal)'},		
-{Keybinds},		
-{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},		
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},		
-{PoMooc, '!UI(myth_heal)'}, 		
-{Moving, 'player.moving'},		
-{AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & {UI(ooc_heal)||UI(myth_heal)} & !player.moving'},		
-{Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},		
-{ST,'UI(ooc_heal) & !player.moving'},		
-{Beforepull, 'pull_timer <= 20'},		
+{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body) & !inareaid = 1040', 'player'}, 
+{Cooldowns,'partycheck = 2 & UI(myth_heal)'},
+{Potions, 'partycheck = 2 & UI(myth_heal)'},
+{Keybinds},
+{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
+{PoMooc, '!UI(myth_heal)'}, 
+{Moving, 'player.moving'},
+{AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & {UI(ooc_heal)||UI(myth_heal)} & !player.moving'},
+{Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
+{ST,'UI(ooc_heal) & !player.moving'},
+{Beforepull, 'pull_timer <= 20'},
 },'!player.channeling(Divine Hymn)'},
-
 }
 
 NeP.CR:Add(257, {
