@@ -246,7 +246,7 @@ local Solo = {
 	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 1 & moving'},
 	--Smite on CD.
 	{'Smite', nil, 'target'},
-
+}
 local Atonement = {
     --Lights Wrath on CD if toggled in UI.
     {"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'}, 
