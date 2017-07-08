@@ -275,16 +275,18 @@ local Felexplosive = {
 
 local Mythic = {
     {'!#trinket2', 'UI(trinket_2) & lowest.health <= 60 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
-    {'Prayer of Mending', 'lowest.health > 95 & !player.moving & !tank.buff(Prayer of Mending)', 'tank'},
-    {'Prayer of Mending', 'lowest.health > 95 & !player.moving & !lowest.buff(Prayer of Mending)', 'lowest'},
-    {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowestp.health < 100', 'lowestp'},
+    {'Prayer of Mending', 'lowest.health > 90 & !player.moving & !tank.buff(Prayer of Mending)', 'tank'},
+    {'Prayer of Mending', 'lowest.health > 90 & !player.moving & !lowest.buff(Prayer of Mending)', 'lowest'},
+    {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowest.health < 100', 'lowest'},
     {'renew', '!lowest.buff(renew) & player.moving', 'lowest'},
-    {'renew', 'lowest.health < 100 & lowest.health > 90 & !lowest.buff(renew)', 'lowest'},
+    {'renew', '!buff(renew) & player.moving', 'friendly'},
+    {'renew', 'lowest.health < 100 & lowest.health > 70 & !lowest.buff(renew)', 'lowest'},
 	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},
 	{'!Gift of the Naaru', 'lowest.health <= 40', 'lowest'},
 	{'Flash Heal', 'lowest.health <= 90', 'lowest'},
+	{'!Flash Heal', 'player.buff(Surge of Light) & lowest.health <= 90', 'lowest'},
 	{'Heal', 'lowest.health <= 95', 'lowest'},
-	{'renew', 'lowest.health < 100 & !lowest.buff(renew)', 'lowest'},
+
 	
 }
 
@@ -410,7 +412,7 @@ local inCombat = {
 {Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
 {ST, '!UI(myth_heal) & !player.moving'},
 {'Flash Heal', 'lowestp.health < 100 & player.buff(Spirit of Redemption)', 'lowestp'},
-{DPS},
+{DPS, 'lowest.health > UI(l_FH)'},
 },'!player.channeling(Divine Hymn)'},
 
 } 
@@ -418,21 +420,8 @@ local inCombat = {
 
 
 local outCombat = {
-{{
-{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid = 1040', 'player'},
-{'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body) & !inareaid = 1040', 'player'}, 
-{Cooldowns,'partycheck = 2 & UI(myth_heal)'},
-{Potions, 'partycheck = 2 & UI(myth_heal)'},
-{Keybinds},
-{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
-{PoMooc, '!UI(myth_heal)'}, 
-{Moving, 'player.moving'},
-{AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & {UI(ooc_heal)||UI(myth_heal)} & !player.moving'},
-{Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
-{ST,'UI(ooc_heal) & !player.moving'},
-{Beforepull, 'pull_timer <= 20'},
-},'!player.channeling(Divine Hymn)'},
+{'#trinket2', nil, 'player'},
+
 }
 
 NeP.CR:Add(257, {

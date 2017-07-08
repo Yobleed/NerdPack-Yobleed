@@ -240,8 +240,8 @@ local AOE = {
     {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat', 'enemies'},
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat', 'enemies'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat', 'enemies'},  
-	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat', 'enemies'}, 
+    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch)', 'enemies'},  
+	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat & !lastcast(Vampiric Touch)', 'enemies'}, 
 	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
 	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
@@ -254,8 +254,8 @@ local AOE = {
     {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & player.moving & combat', 'enemies'},
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & player.moving & combat', 'enemies'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat', 'enemies'},  
-	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat', 'enemies'}, 
+    {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch)', 'enemies'},  
+	{'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & ttd >= 7 & toggle(AOE) & distance <= 40 & combat & !lastcast(Vampiric Touch)', 'enemies'}, 
 	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & infront & combat', 'enemies'}, 
 	{'Vampiric Touch', '!debuff(Vampiric Touch) & !lastcast(Vampiric Touch) & toggle(AOE) & ttd >= 7 & distance <= 40 & combat', 'enemies'}, 
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
@@ -275,7 +275,7 @@ local ST = {
 	--SWD when target below 35
 	{'!Shadow Word: Death', '!player.insanity >= 65 & !player.channeling(Void Eruption)','target'},
 	--Misery.
-	{'Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)','target'},
+	{'Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2) & !lastcast(Vampiric Touch)','target'},
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)','target'},
 	{'Mind Blast', 'equipped(Mangaza\'s Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
@@ -314,39 +314,15 @@ local lotv = {
 	{'!Mind Blast', 'player.channeling(Mind Flay) & !player.spell(Void Eruption).cooldown <= gcd & !target.area(10).enemies >= 4 & advanced ','target'},
 	{'!Mind Blast', 'player.channeling(Mind Flay) & !player.spell(Void Eruption).cooldown <= gcd & !advanced','target'},
 	--Misery.
-	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)','target'},  
+	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2) & !lastcast(Vampiric Touch)','target'},  
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
 	{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(6,2)} || {!target.debuff(Shadow Word: Pain) & !talent(6,2)} || {moving & !target.debuff(Shadow Word: Pain)}','target'},
 	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-	{'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {{target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},  
+	{'!Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {{target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(6,2) & !lastcast(Vampiric Touch)}','target'},  
 	--Mind Flay if Dots are up and VB and MB are on CD.
 	{'Mind Flay', '!player.spell(Mind Blast).cooldown = 0','target'},
 }
 
-local s2m = {
-	--Dispersion after Void Torrent and Void Bolt
-	{'!Dispersion', 'player.buff(voidform).count >= 6 & player.buff(voidform).count < 10 & !lastcast(Void Torrent) & UI(dps_D)'},
-	--Torrent on CD.
-	{'!Void Torrent', 'UI(dps_void)'},
-	--SWD Charge dump if below 20 stacks of VF and if DoTs are up.
-	{'!Shadow Word: Death', 'player.buff(voidform).count < 10 & target.debuff(Shadow Word: Pain).duration > 6 & target.debuff(Vampiric Touch).duration > 6'},
-	--SWD if insanity is below 40%.
-	{'!Shadow Word: Death', 'player.insanity < 30'}, 
-	--Void Bolt on CD not interrupting casting MB.
-	{'!Void Eruption', '!player.channeling(Mind Blast) || player.insanity <= 40'},
-	--Misery.
-	{'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)'}, 
-	--Mind Blast on CD if VB is on CD.
-	{'Mind Blast', '!player.spell(Void Eruption).cooldown = 0'},
-	--Mind Blast on CD if VB is on CD.
-	{'!Mind Blast', '!player.spell(Void Eruption).cooldown = 0 & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & player.channeling(Mind Flay)'},
-	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-	{'!Shadow Word: Pain', 'target.debuff(Shadow Word: Pain).duration < 3 || !target.debuff(Shadow Word: Pain)'},
-	--Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-	{'!Vampiric Touch', 'target.debuff(Vampiric Touch).duration <= 3 || !target.debuff(Vampiric Touch)'}, 
-	--Mind Flay if Dots are up and VB and MB are on CD.
-	{'Mind Flay', nil, 'target'},
-}
 
 local inCombat = {
 	--Shadowform if no voidform and no shadowform.
@@ -366,7 +342,6 @@ local inCombat = {
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(70) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
 	{AOE, '!player.channeling(Void Torrent) & toggle(AOE) & range <= 40'}, 
-	{s2m, 'player.buff(Voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
 	{lotv, 'player.buff(voidform) & !player.channeling(Void Torrent)'}, 
 	{ST, "!player.buff(voidform) & !player.channeling(Void Torrent)"},
 
