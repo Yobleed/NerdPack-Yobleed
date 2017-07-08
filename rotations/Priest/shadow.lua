@@ -278,8 +278,9 @@ local ST = {
 	{'Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)','target'},
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay)','target'},
+	{'Mind Blast', 'equipped(Mangaza\'s Madness) & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain)'},
 	--Mind Blast on CD.
-	{'Mind Blast', nil,'target'},
+	{'Mind Blast', '!equipped(Mangaza\'s Madness)','target'},
 	--Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
 	{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration < 3 & !talent(6,2)} || {!target.debuff(Shadow Word: Pain) & !talent(6,2)}','target'},
 	{'Vampiric Touch', '{target.debuff(Vampiric Touch).duration <= 3 & !lastcast(Vampiric Touch)} || {!target.debuff(Vampiric Touch) & !lastcast(Vampiric Touch)} || {{!target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},
@@ -362,7 +363,7 @@ local inCombat = {
 	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(7,1) & !player.insanity >= 65} || {talent(7,3) ||talent(7,2) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
-	{Interrupts, 'toggle(interrupts) & target.interruptAt(80) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
+	{Interrupts, 'toggle(interrupts) & target.interruptAt(70) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
 	{AOE, '!player.channeling(Void Torrent) & toggle(AOE) & range <= 40'}, 
 	{s2m, 'player.buff(Voidform) & !player.channeling(Void Torrent) & player.buff(Surrender to Madness)'},
 	{lotv, 'player.buff(voidform) & !player.channeling(Void Torrent)'}, 

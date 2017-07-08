@@ -277,6 +277,7 @@ local Mythic = {
     {'!#trinket2', 'UI(trinket_2) & lowest.health <= 60 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
     {'Prayer of Mending', 'lowest.health > 95 & !player.moving & !tank.buff(Prayer of Mending)', 'tank'},
     {'Prayer of Mending', 'lowest.health > 95 & !player.moving & !lowest.buff(Prayer of Mending)', 'lowest'},
+    {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & lowestp.health < 100', 'lowestp'},
     {'renew', '!lowest.buff(renew) & player.moving', 'lowest'},
     {'renew', 'lowest.health < 100 & lowest.health > 90 & !lowest.buff(renew)', 'lowest'},
 	{'!Holy Word: Serenity', 'lowest.health <= UI(l_HWSE)', 'lowest'},

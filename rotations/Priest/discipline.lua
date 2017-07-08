@@ -143,6 +143,8 @@ end
 
 local Rapture = {
 	--Power Word: Shield on CD.
+	{'Power Word: Shield', '!tank1.buff(Power Word: Shield) & partycheck = 3', 'tank1'},
+	{'Power Word: Shield', '!tank2.buff(Power Word: Shield) & partycheck = 3', 'tank2'},
 	{'Power Word: Shield', '!tank.buff(Power Word: Shield)', 'tank'},
 	{'Power Word: Shield', '!lowest.buff(Power Word: Shield)', 'lowest'},
 	{'Power Word: Shield', '!lowest1.buff(Power Word: Shield)', 'lowest1'},
