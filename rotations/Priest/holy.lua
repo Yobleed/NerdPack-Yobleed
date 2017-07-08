@@ -187,10 +187,10 @@ local Potions = {
 local DPS = {
 	{{
 	{'Holy Word: Chastise', 'UI(d_HWC) & target.infront' , 'target'}, 
-    {'Holy Fire', 'UI(d_HF) & target.infront & !debuff(Holy Fire).count = 2 & infront' , 'target'},
-	{'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count = 2 & combat', 'enemies'},
-	{'Holy Nova', 'player.area(10).enemies >= 2 & UI(d_nova)'},
-	{'Holy Nova', 'player.moving & UI(d_nova) & target.range <= 10'},
+    {'Holy Fire', 'UI(d_HF) & target.infront & !debuff(Holy Fire).count = 2 & infront & !player.buff(Apotheosis)' , 'target'},
+	{'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count = 2 & combat & !player.buff(Apotheosis)', 'enemies'},
+	{'Holy Nova', 'player.area(10).enemies >= 2 & UI(d_nova) & !player.buff(Apotheosis)'},
+	{'Holy Nova', 'player.moving & UI(d_nova) & target.range <= 10 & !player.buff(Apotheosis)'},
 	},'!player.mana <= 35'},
 	{'Smite', 'target.infront & UI(d_smite) & !player.moving', 'target'},
 }
@@ -201,8 +201,9 @@ local Solo = {
 	{'Holy Word: Serenity', 'player.health <= UI(full_HWSE)', 'player'},
 	{'Flash Heal', 'player.health <= UI(full_FH)', 'player'},
 	{'Holy Word: Chastise', 'target.infront' , 'target'},
-	{'Holy Nova', 'player.area(10).enemies >= 4 & toggle(AOE)', 'player'},
-	{'Holy Fire', '!moving', 'target'},
+	{'Holy Nova', 'player.area(10).enemies >= 4 & toggle(AOE) & !player.buff(Apotheosis)', 'player'},
+	{'Holy Fire', 'UI(d_HF) & target.infront & !debuff(Holy Fire).count = 2 & infront & !player.buff(Apotheosis)' , 'target'},
+	{'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count = 2 & combat & !player.buff(Apotheosis)', 'enemies'},
 	{'Smite', nil, 'target'},
 }
 

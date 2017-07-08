@@ -225,7 +225,7 @@ local Solo = {
 	--LW.
     {'Light\'s Wrath', 'player.buff(Atonement) & toggle(cooldowns)'}, 
 	--PI on CD if toggled.
-	{'Power Infusion', 'talent(5,2) & toggle(cooldowns)', 'target'},
+	{'Power Infusion', 'talent(7,1) & toggle(cooldowns)', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 	--Shadow Mend if player health is below or if UI value.
@@ -233,9 +233,9 @@ local Solo = {
 	--Gift of the Naaru if player health is below or if UI value.
 	{'Gift of the Naaru', 'player.health <= UI(full_Gift)', 'player'},
 	--Purge the Wicked if talent and not on target.
-	{'Purge the Wicked', 'talent(7,1) & !target.debuff(Purge the Wicked)', 'target'},
+	{'Purge the Wicked', 'talent(6,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
-	{'Shadow Word: Pain', '!talent(7,1) & !target.debuff(Shadow Word: Pain)', 'target'},
+	{'Shadow Word: Pain', '!talent(6,1) & !target.debuff(Shadow Word: Pain)', 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 	{'Penance', 'target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
 	--Power Word: Solace on cooldown if talent.
@@ -246,7 +246,6 @@ local Solo = {
 	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 1 & moving'},
 	--Smite on CD.
 	{'Smite', nil, 'target'},
-}
 
 local Atonement = {
     --Lights Wrath on CD if toggled in UI.
@@ -254,9 +253,9 @@ local Atonement = {
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 	--Purge the Wicked if talent and not on target.
-	{'Purge the Wicked', 'talent(7,1) & !target.debuff(Purge the Wicked)', 'target'},
+	{'Purge the Wicked', ' talent(6,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
-	{'Shadow Word: Pain', '!talent(7,1) & !target.debuff(Shadow Word: Pain)', 'target'},
+	{'Shadow Word: Pain', '!talent(6,1) & !target.debuff(Shadow Word: Pain)', 'target'},
 	--Schism on cooldown.
 	{'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
