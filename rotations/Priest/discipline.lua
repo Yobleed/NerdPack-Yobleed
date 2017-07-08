@@ -1,3 +1,6 @@
+--count.friendly.buffs(Plea)
+-- Counts how many units have the buff
+-- USAGE: count(BUFF).buffs > = #
 local GUI = {
 	-- GUI Header 
 	{type = "texture",
@@ -140,6 +143,17 @@ local Rapture = {
 	{'Power Word: Shield', '!lowest5.buff(Power Word: Shield)', 'lowest6'},
 }
 
+local PWR = {
+    {'Power Word: Radiance', 'tank.area(85,30).heal >= 5 & player.spell(Power Word: Radiance).charges = 2 & advanced & !tank.buff(Atonement)', 'tank'},
+    {'Power Word: Radiance', 'player.area(85,40).heal >= 5 & player.spell(Power Word: Radiance).charges = 2  & !tank.buff(Atonement) & lowest.health <= 85 & !advanced', 'tank'},
+    {'Power Word: Radiance', 'lowest.area(85,30).heal >= 5 & player.spell(Power Word: Radiance).charges = 2 & advanced & !lowest.buff(Atonement)', 'lowest'},
+    {'Power Word: Radiance', 'player.area(85,40).heal >= 5 & player.spell(Power Word: Radiance).charges = 2  & !lowest.buff(Atonement) & lowest.health <= 85 & !advanced', 'lowest'},
+    {'Power Word: Radiance', 'tank.area(65,30).heal >= 5 & player.spell(Power Word: Radiance).charges < 2 & advanced & !tank.buff(Atonement)', 'tank'},
+    {'Power Word: Radiance', 'player.area(65,40).heal >= 5 & player.spell(Power Word: Radiance).charges < 2  & !tank.buff(Atonement) & lowest.health <= 65 & !advanced', 'tank'},
+    {'Power Word: Radiance', 'lowest.area(65,30).heal >= 5 & player.spell(Power Word: Radiance).charges < 2 & advanced & !lowest.buff(Atonement)', 'lowest'},
+    {'Power Word: Radiance', 'player.area(65,40).heal >= 5 & player.spell(Power Word: Radiance).charges < 2  & !lowest.buff(Atonement) & lowest.health <= 65 & !advanced', 'lowest'},
+}
+
 local Emergency = {
 	--Mana up!
 	{'!Power Infusion', 'player.buff(Rapture) & talent(4,2) & player.mana <= 30', 'player'},
@@ -220,7 +234,7 @@ local Solo = {
 }
 local Atonement = {
     --Lights Wrath on CD if toggled in UI.
-    {"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'}, 
+    {"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & count(Plea).friendly.buffs >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & count(Plea).friendly.buffs >= UI(ato_LW) & UI(LW)}', 'target'}, 
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 	--Purge the Wicked if talent and not on target.
@@ -241,7 +255,7 @@ local Atonement = {
 
 local Tank = {
     --better use of Light's Wrath
-    {"Light's Wrath", '{toggle(cooldowns) & tank.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & tank.health <= UI(t_LW) & spell(plea).count >= UI(tato_LW)} || {toggle(cooldowns) & tank.buff(Atonement) & !talent(1,3) & tank.health <= UI(t_LW) & spell(plea).count >= UI(tato_LW)}', 'target'},
+    {"Light's Wrath", '{toggle(cooldowns) & tank.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & tank.health <= UI(t_LW) & count(Plea).friendly.buffs >= UI(tato_LW)} || {toggle(cooldowns) & tank.buff(Atonement) & !talent(1,3) & tank.health <= UI(t_LW) & count(Plea).friendly.buffs >= UI(tato_LW)}', 'target'},
 	--Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
@@ -255,7 +269,7 @@ local Tank = {
 
 local Player = {
     --better use of Light's Wrath
-    {"Light's Wrath", '{toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & player.health <= UI(p_LW) & spell(plea).count >= UI(pato_LW)} || {toggle(cooldowns) & player.buff(Atonement) & !talent(1,3) & player.health <= UI(p_LW) & spell(plea).count >= UI(pato_LW)}', 'target'},
+    {"Light's Wrath", '{toggle(cooldowns) & player.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & player.health <= UI(p_LW) & count(Plea).friendly.buffs >= UI(pato_LW)} || {toggle(cooldowns) & player.buff(Atonement) & !talent(1,3) & player.health <= UI(p_LW) & count(Plea).friendly.buffs >= UI(pato_LW)}', 'target'},
 	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'player.health <= UI(p_PWS) & !player.buff(Power Word: Shield)', 'player'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
@@ -271,18 +285,8 @@ local Player = {
 }
 
 local Lowest = {
-    {{
-    {'Power Word: Radiance', 'tank.area(80,30).heal >= 5 & player.spell(Power Word: Radiance).charges > 1 & advanced & !tank.buff(Atonement)', 'tank'},
-    {'Power Word: Radiance', 'player.area(80,40).heal >= 5 & player.spell(Power Word: Radiance).charges > 1  & !tank.buff(Atonement) & lowest.health <= 80 & !advanced', 'tank'},
-    {'Power Word: Radiance', 'lowest.area(80,30).heal >= 5 & player.spell(Power Word: Radiance).charges > 1 & advanced & !lowest.buff(Atonement)', 'lowest'},
-    {'Power Word: Radiance', 'player.area(80,40).heal >= 5 & player.spell(Power Word: Radiance).charges > 1  & !lowest.buff(Atonement) & lowest.health <= 80 & !advanced', 'lowest'},
-    {'Power Word: Radiance', 'tank.area(60,30).heal >= 5 & player.spell(Power Word: Radiance).charges < 2 & advanced & !tank.buff(Atonement)', 'tank'},
-    {'Power Word: Radiance', 'player.area(60,40).heal >= 5 & player.spell(Power Word: Radiance).charges < 2  & !tank.buff(Atonement) & lowest.health <= 60 & !advanced', 'tank'},
-    {'Power Word: Radiance', 'lowest.area(60,30).heal >= 5 & player.spell(Power Word: Radiance).charges < 2 & advanced & !lowest.buff(Atonement)', 'lowest'},
-    {'Power Word: Radiance', 'player.area(60,40).heal >= 5 & player.spell(Power Word: Radiance).charges < 2  & !lowest.buff(Atonement) & lowest.health <= 60 & !advanced', 'lowest'},
-    },'toggle(AOE)'},
     --better use of Light's Wrath
-    {"Light's Wrath", '{toggle(cooldowns) & lowest.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & lowest.health <= UI(l_LW) & spell(plea).count >= UI(lato_LW)} || {toggle(cooldowns) & lowest.buff(Atonement) & !talent(1,3) & lowest.health <= UI(l_LW) & spell(plea).count >= UI(lato_LW)}', 'target'},
+    {"Light's Wrath", '{toggle(cooldowns) & lowest.buff(Atonement) & target.debuff(Schism) & target.debuff(Schism).duration >= 3 & lowest.health <= UI(l_LW) & count(Plea).friendly.buffs >= UI(lato_LW)} || {toggle(cooldowns) & lowest.buff(Atonement) & !talent(1,3) & lowest.health <= UI(l_LW) & count(Plea).friendly.buffs >= UI(lato_LW)}', 'target'},
 	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
@@ -326,17 +330,17 @@ local inCombat = {
 	{'Arcane Torrent', 'player.mana < 97', 'player'},
 	{Keybinds},
 	{Trinkets},
+	{PWR, 'toggle(AOE)'},
 	{Tank, 'tank.range <= 40 & !toggle(xDPS) & !tank.debuff(Ignite Soul) & tank.health <= 30'},
 	{Lowest, '!toggle(xDPS) & lowest.range <= 40 & !lowest.debuff(Ignite Soul) & lowest.health <= 30'},
 	{Rapture, 'player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Moving, "moving & !player.buff(Norgannon's Foresight)"},
-	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
 	{Solo, 'toggle(xDPS)'},
 	{Tank, 'tank.range <= 40 & !player.buff(Rapture) & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
 	{Player, '!toggle(xDPS) & !player.buff(Rapture) & !player.debuff(Ignite Soul)'},
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
 	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.buff(Rapture) & !player.mana <= 20'},
-	{"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & spell(plea).count >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & spell(plea).count >= UI(ato_LW) & UI(LW)}', 'target'},
+	{"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & count(Plea).friendly.buffs >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & count(Plea).friendly.buffs >= UI(ato_LW) & UI(LW)}', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 }
