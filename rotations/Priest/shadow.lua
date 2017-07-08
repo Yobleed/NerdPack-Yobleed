@@ -308,7 +308,8 @@ local lotv = {
 	--Mind Flay if Dots are up and VB and MB are on CD.
 	{'Mind Flay', 'target.area(10).enemies >= 4 & advanced & target.debuff(Shadow Word: Pain)','target'},
 	--Mind Blast on CD if VB is on CD.
-	{'Mind Blast', '!player.spell(Void Eruption).cooldown <= gcd','target'},
+	{'Mind Blast', '!player.spell(Void Eruption).cooldown <= gcd & target.debuff(Vampiric Touch) & target.debuff(Shadow Word: Pain) & equipped(Mangaza\'s Madness)','target'},
+	{'Mind Blast', '!player.spell(Void Eruption).cooldown <= gcd & !equipped(Mangaza\'s Madness)','target'},
 	--Mind Blast if player is channeling Mind Flay.
 	{'!Mind Blast', 'player.channeling(Mind Flay) & !player.spell(Void Eruption).cooldown <= gcd & !target.area(10).enemies >= 4 & advanced ','target'},
 	{'!Mind Blast', 'player.channeling(Mind Flay) & !player.spell(Void Eruption).cooldown <= gcd & !advanced','target'},
