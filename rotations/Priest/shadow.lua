@@ -236,13 +236,13 @@ local cooldowns = {
 
 local AOE = {
     {{
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat & infront & player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}', 'enemies'},
-    {'Vampiric Touch', 'ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch) & !debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}', 'enemies'},  
-	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
+    {'Shadow Word: Pain', '{!debuff(Shadow Word: Pain) & toggle(AOE) & distance <= 40 & combat & {player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}}}', 'enemies'},
+    {'Vampiric Touch', '{ttd >= 7 & toggle(AOE) & distance <= 40 & combat & !lastcast(Vampiric Touch) & {!debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}}}', 'enemies'},  
+	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat', 'enemies'},
 	},'player.buff(voidform) & !player.spell(Mind Blast).cooldown = 0 & !player.spell(Void Eruption).cooldown = 0'},
     {{
-    {'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat & infront & player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}', 'enemies'},
-    {'Vampiric Touch', 'ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch) & !debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}', 'enemies'},  
+    {'Shadow Word: Pain', '{!debuff(Shadow Word: Pain) & toggle(AOE) & distance <= 40 & combat & infront & {player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}}}', 'enemies'},
+    {'Vampiric Touch', '{ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !lastcast(Vampiric Touch) & {!debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}}}', 'enemies'},  
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
 	},'!player.buff(voidform) & !player.insanity = 100'},
 	--Shadow Crash on CD.
