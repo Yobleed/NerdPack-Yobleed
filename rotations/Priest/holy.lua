@@ -421,6 +421,7 @@ local inCombat = {
 
 
 local outCombat = {
+{{
 {'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid = 1040', 'player'},
 {'Body and Mind', 'player.movingfor >= 2 & !player.buff(Body And Mind) & UI(m_Body) & !inareaid = 1040', 'player'}, 		
 {Cooldowns,'partycheck = 2 & UI(myth_heal)'},		
