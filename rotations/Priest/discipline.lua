@@ -43,7 +43,7 @@ local GUI = {
 	--KEYBINDS
 	{type = 'header', text = 'Keybinds', align = 'center'},
 	{type = 'text', text = 'Left Shift: Power Word: Barrier|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
-	{type = 'checkbox', text = 'Power Word: Barrier', key = 'k_PWB', width = 55, default = false},
+	{type = 'checkbox', text = 'Power Word: Barrier/ PWR', key = 'k_PWB', width = 55, default = false},
 	{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
 	{type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
 	{type = 'ruler'},{type = 'spacer'},
@@ -144,14 +144,15 @@ local Rapture = {
 }
 
 local PWR = {
-    {'Power Word: Radiance', 'tank.area(85,30).heal >= 5 & player.spell(Power Word: Radiance).charges = 2 & advanced & !tank.buff(Atonement)', 'tank'},
-    {'Power Word: Radiance', 'player.area(85,40).heal >= 5 & player.spell(Power Word: Radiance).charges = 2  & !tank.buff(Atonement) & lowest.health <= 85 & !advanced', 'tank'},
-    {'Power Word: Radiance', 'lowest.area(85,30).heal >= 5 & player.spell(Power Word: Radiance).charges = 2 & advanced & !lowest.buff(Atonement)', 'lowest'},
-    {'Power Word: Radiance', 'player.area(85,40).heal >= 5 & player.spell(Power Word: Radiance).charges = 2  & !lowest.buff(Atonement) & lowest.health <= 85 & !advanced', 'lowest'},
-    {'Power Word: Radiance', 'tank.area(65,30).heal >= 5 & player.spell(Power Word: Radiance).charges < 2 & advanced & !tank.buff(Atonement)', 'tank'},
-    {'Power Word: Radiance', 'player.area(65,40).heal >= 5 & player.spell(Power Word: Radiance).charges < 2  & !tank.buff(Atonement) & lowest.health <= 65 & !advanced', 'tank'},
-    {'Power Word: Radiance', 'lowest.area(65,30).heal >= 5 & player.spell(Power Word: Radiance).charges < 2 & advanced & !lowest.buff(Atonement)', 'lowest'},
-    {'Power Word: Radiance', 'player.area(65,40).heal >= 5 & player.spell(Power Word: Radiance).charges < 2  & !lowest.buff(Atonement) & lowest.health <= 65 & !advanced', 'lowest'},
+    {'Power Word: Radiance', 'tank.area(65,30).heal >= 5 & advanced', 'tank'},
+    {'Power Word: Radiance', 'player.area(65,40).heal >= 5 & lowest.health <= 65 & !advanced', 'tank'},
+    {'Power Word: Radiance', 'lowest.area(65,30).heal >= 5 & advanced', 'lowest'},
+    {'Power Word: Radiance', 'player.area(65,40).heal >= 5 & lowest.health <= 65 & !advanced', 'lowest'},
+    {'Power Word: Radiance', 'tank.area(85,30).heal >= 5 & advanced', 'tank'},
+    {'Power Word: Radiance', 'player.area(85,40).heal >= 5 & lowest.health <= 85 & !advanced', 'tank'},
+    {'Power Word: Radiance', 'lowest.area(85,30).heal >= 5 & advanced', 'lowest'},
+    {'Power Word: Radiance', 'player.area(85,40).heal >= 5 & lowest.health <= 85 & !advanced', 'lowest'},
+
 }
 
 local Emergency = {
@@ -178,12 +179,10 @@ local Trinkets = {
 
 local Keybinds = {
 	-- Power Word: Barrier on left shift when checked in UI.
-	{'!Power Word: Barrier', 'keybind(lshift) & UI(k_PWB)', 'mouseover.ground'},
-	{'Power Word: Radiance', 'keybind(lshift) & UI(k_PWB) & !lowest.buff(Power Word: Barrier) & !lowest.buff(Atonement)', 'lowest'},
+	{'!Power Word: Barrier', 'keybind(lshift) & UI(k_PWB)', 'cursor.ground'},
+	{'Power Word: Radiance', 'keybind(lshift) & UI(k_PWB) & !lowest.buff(Atonement) & !player.spell(Power Word: Barrier).cooldown = 0', 'lowest'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
-	-- Power Word: Barrier on left shift when checked in UI.
-	{'!Power Word: Barrier', 'keybind(lshift) & UI(k_PWB) & !advanced', 'cursor.ground'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground'},
 	-- Pause on left alt when checked in UI.
@@ -218,6 +217,7 @@ local Solo = {
 	--Gift of the Naaru if player health is below or if UI value.
 	{'Gift of the Naaru', 'player.health <= UI(full_Gift)', 'player'},
 	--Purge the Wicked if talent and not on target.
+	{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown = 0 & range <= 40 & combat', 'enemies'},
 	{'Purge the Wicked', 'talent(6,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
 	{'Shadow Word: Pain', '!talent(6,1) & !target.debuff(Shadow Word: Pain)', 'target'},
@@ -238,6 +238,7 @@ local Atonement = {
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
 	--Purge the Wicked if talent and not on target.
+	{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown = 0 & range <= 40 & combat', 'enemies'},
 	{'Purge the Wicked', ' talent(6,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
 	{'Shadow Word: Pain', '!talent(6,1) & !target.debuff(Shadow Word: Pain)', 'target'},
@@ -263,7 +264,7 @@ local Tank = {
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "tank.health <= UI(t_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'tank'},
 	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement) & !player.mana <= 15', 'tank'},
+	{'Plea', 'tank.health <= UI(t_plea) & !tank.buff(Atonement)', 'tank'},
 	
 }
 
@@ -281,7 +282,7 @@ local Player = {
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(6,2) & player.area(24, 90).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
 	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'player.health <= UI(p_plea) & !player.buff(Atonement) & !player.mana <= 15', 'player'},
+	{'Plea', 'player.health <= UI(p_plea) & !player.buff(Atonement)', 'player'},
 }
 
 local Lowest = {
@@ -302,11 +303,11 @@ local Lowest = {
 	{'Power Word: Shield', '!lowest4.buff(Atonement)', 'lowest4'},
 	{'Power Word: Shield', '!lowest5.buff(Atonement)', 'lowest5'},
 	--Plea to aplly Atonement if lowest is above mend value and below plea value in UI and lowest missing atonement.
-	{'Plea', 'lowest1.health > UI(l_mend) & lowest1.health <= UI(l_plea) & !lowest1.buff(Atonement) & !player.mana <= 15', 'lowest1'},
-	{'Plea', 'lowest2.health > UI(l_mend) & lowest2.health <= UI(l_plea) & !lowest2.buff(Atonement) & !player.mana <= 15', 'lowest2'},
-	{'Plea', 'lowest3.health > UI(l_mend) & lowest3.health <= UI(l_plea) & !lowest3.buff(Atonement) & !player.mana <= 15', 'lowest3'},
-	{'Plea', 'lowest4.health > UI(l_mend) & lowest4.health <= UI(l_plea) & !lowest4.buff(Atonement) & !player.mana <= 15', 'lowest4'},
-	{'Plea', 'lowest5.health > UI(l_mend) & lowest5.health <= UI(l_plea) & !lowest5.buff(Atonement) & !player.mana <= 15', 'lowest5'},
+	{'Plea', 'lowest1.health > UI(l_mend) & lowest1.health <= UI(l_plea) & !lowest1.buff(Atonement)', 'lowest1'},
+	{'Plea', 'lowest2.health > UI(l_mend) & lowest2.health <= UI(l_plea) & !lowest2.buff(Atonement)', 'lowest2'},
+	{'Plea', 'lowest3.health > UI(l_mend) & lowest3.health <= UI(l_plea) & !lowest3.buff(Atonement)', 'lowest3'},
+	{'Plea', 'lowest4.health > UI(l_mend) & lowest4.health <= UI(l_plea) & !lowest4.buff(Atonement)', 'lowest4'},
+	{'Plea', 'lowest5.health > UI(l_mend) & lowest5.health <= UI(l_plea) & !lowest5.buff(Atonement)', 'lowest5'},
 }
 
 local Moving = {
@@ -339,7 +340,7 @@ local inCombat = {
 	{Tank, 'tank.range <= 40 & !player.buff(Rapture) & !toggle(xDPS) & !tank.debuff(Ignite Soul)'},
 	{Player, '!toggle(xDPS) & !player.buff(Rapture) & !player.debuff(Ignite Soul)'},
 	{Lowest, '!toggle(xDPS) & !player.buff(Rapture) & lowest.range <= 40 & !lowest.debuff(Ignite Soul)'},
-	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.buff(Rapture) & !player.mana <= 20'},
+	{Atonement, '!toggle(xDPS) & !lowest.health <= UI(l_mend) & !player.buff(Rapture)'},
 	{"Light's Wrath", '{target.debuff(Schism) & target.debuff(Schism).duration >= 3 & count(Plea).friendly.buffs >= UI(ato_LW) & UI(LW)} || {!talent(1,3) & count(Plea).friendly.buffs >= UI(ato_LW) & UI(LW)}', 'target'},
 	--Shadowfiend on CD if toggled.
 	{'Shadowfiend', 'toggle(cooldowns) & !talent(4,3)', 'target'},
