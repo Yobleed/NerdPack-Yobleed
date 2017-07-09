@@ -157,6 +157,8 @@ local PWR = {
 }
 
 local Cooldowns = {
+    --Automatic Shadowfiend.
+	{'!Shadowfiend', "UI(SF) & player.spell(Light's Wrath).cooldown >= 85 & !talent(4,3)",'target'},
 	--Mana up!
 	{'!Power Infusion', 'player.buff(Rapture) & talent(4,2) & player.mana <= 30', 'player'},
 	--Power Infusion if PWS and Rapture and Pain Suppression is on CD.
@@ -173,8 +175,6 @@ local Cooldowns = {
 	{'!Evangelism', 'talent(7,3) & UI(Evang) & player.area(40,70).heal >= UI(Evang_spin) & count(Atonement).friendly.buffs >= UI(Evang2_spin) & lowest.buff(Atonement)','player'},
 	--Automatic Light's Wrath.
 	{'!Light\'s Wrath', '{!talent(7,3) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & count(Atonement).friendly.buffs >= UI(LW2_spin) & lowest.buff(Atonement)} || {talent(7,3) & player.lastcast(Evangelism) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & count(Atonement).friendly.buffs >= UI(LW2_spin) & lowest.buff(Atonement)}','target'},
-    --Automatic Shadowfiend.
-	{'!Shadowfiend', 'UI(SF) & player.lastcast(Light\'s Wrath) & !talent(4,3)','player'},
 }  
 
 
