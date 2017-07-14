@@ -405,7 +405,6 @@ local AOE = {
 }
 
 local inCombat = {
-{'#Healthstone', 'UI(p_HS) & player.health <= UI(p_HSspin)', 'player'},
 {{
 {'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
 {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body)', 'player'},
@@ -424,9 +423,10 @@ local inCombat = {
 {Felexplosive},
 {Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
 {'/stopcasting','lowest.health >= UI(l_FH) & toggle(mana)'},
+{'/stopcasting','lowest.health = 100 & {player.CastingSpell(Heal) || player.CastingSpell(Flash Heal)}'},
 {ST, '!UI(myth_heal) & !player.moving'},
 {'Flash Heal', 'health < 100 & player.buff(Spirit of Redemption)', 'lowestp'},
-{'!Flash Heal', 'health < UI(l_FH) & player.casting(Smite)', 'lowest'},
+{'!Flash Heal', 'health < UI(l_FH) & player.CastingSpell(Smite)', 'lowest'},
 {DPS, 'lowest.health > UI(l_FH)'},
 },'!player.channeling(Divine Hymn)'},
 
@@ -443,7 +443,7 @@ local outCombat = {
 {Keybinds},
 {'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
-{PoMooc, '!UI(myth_heal)'}, 
+{PoMooc, '!UI(myth_heal) & !partycheck = 1'}, 
 {Moving, 'player.moving'},
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & {UI(ooc_heal)||UI(myth_heal)} & !player.moving'},
 {Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
