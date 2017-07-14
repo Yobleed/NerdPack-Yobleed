@@ -230,7 +230,7 @@ local Solo = {
 	--Shadow Word: Pain if not on target.
 	{'Shadow Word: Pain', '!talent(6,1) & !target.debuff(Shadow Word: Pain)', 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
+	{'Penance', '{target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)} & infront', 'target'},
 	--Power Word: Solace on cooldown if talent.
 	{'Power Word: Solace', 'talent(4,1)', 'target'},
 	--Divine Star if mobs are 3 or more.
@@ -238,31 +238,31 @@ local Solo = {
 	--Divine Star if moving.
 	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 1 & moving'},
 	--Smite on CD.
-	{'Smite', nil, 'target'},
+	{'Smite', 'infront', 'target'},
 }
 local Atonement = {
 	--Purge the Wicked if talent and not on target.
-	{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown = 0 & range <= 40 & combat', 'enemies'},
+	{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown = 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd', 'enemies'},
 	{'Purge the Wicked', ' talent(6,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
 	{'Shadow Word: Pain', '!talent(6,1) & !target.debuff(Shadow Word: Pain)', 'target'},
 	--Schism on cooldown.
 	{'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'target.debuff(Purge The Wicked) || target.debuff(Shadow Word: Pain)', 'target'},
+	{'Penance', '{target.debuff(Purge The Wicked) || target.debuff(Shadow Word: Pain)} & infront', 'target'},
 	--Power Word: Solace on cooldown if talent.
 	{'Power Word: Solace', 'talent(4,1)', 'target'},
 	--Divine Star if mobs are 3 or more.
 	{'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 3 & toggle(AOE)'},
 	--Smite on CD.
-	{'Smite', nil, 'target'},
+	{'Smite', 'infront', 'target'},
 }
 
 local Tankpred = {
     --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'tank.health.predicted <= UI(t_mend) & tank.buff(Atonement)', 'target'},
+	{'Penance', 'tank.health.predicted <= UI(t_mend) & tank.buff(Atonement) & infront', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "tank.health.predicted <= UI(t_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'tank'},
 	--Plea on UI value if no 6 atonements are active.
@@ -274,7 +274,7 @@ local Tank = {
     --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 	{'Power Word: Shield', '!tank.buff(atonement) || !tank.buff(Power Word: Shield)', 'tank'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'tank.health <= UI(t_mend) & tank.buff(Atonement)', 'target'},
+	{'Penance', 'tank.health <= UI(t_mend) & tank.buff(Atonement) & infront', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "tank.health <= UI(t_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'tank'},
 	--Plea on UI value if no 6 atonements are active.
@@ -285,7 +285,7 @@ local Playerpred = {
     --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'player.health <= UI(p_PWS) & !player.buff(Power Word: Shield)', 'player'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'player.health.predicted <= UI(p_mend) & player.buff(Atonement)', 'target'},
+	{'Penance', 'player.health.predicted <= UI(p_mend) & player.buff(Atonement) & infront', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "player.health.predicted <= UI(p_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'player'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
@@ -300,7 +300,7 @@ local Player = {
     --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'player.health <= UI(p_PWS) & !player.buff(Power Word: Shield)', 'player'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'player.health <= UI(p_mend) & player.buff(Atonement)', 'target'},
+	{'Penance', 'player.health <= UI(p_mend) & player.buff(Atonement) & infront', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "player.health <= UI(p_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'player'},
 	--Halo if player has talent and at least 4 or more people within a 30yd range are below or equal to 85% health.
@@ -317,7 +317,7 @@ local Lowestpred = {
 	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'lowestp.health <= UI(l_mend) & lowest.buff(Atonement) & !lowest.health <= 30', 'target'},
+	{'Penance', 'lowestp.health <= UI(l_mend) & lowest.buff(Atonement) & !lowest.health <= 30 & infront', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "lowestp.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'lowestp'},
 	--Plea on UI value if no 6 atonements are active.
@@ -337,7 +337,7 @@ local Lowest = {
 	--Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 	{'Power Word: Shield', 'lowest.health <= UI(l_PWS) & !lowest.buff(Power Word: Shield)', 'lowest'},
 	--Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-	{'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement) & !lowest.health <= 30', 'target'},
+	{'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement) & !lowest.health <= 30 & infront', 'target'},
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "lowest.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
 	--Plea on UI value if no 6 atonements are active.
