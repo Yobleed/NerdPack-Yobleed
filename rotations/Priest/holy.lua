@@ -293,13 +293,9 @@ local Mythic = {
 }
 
 local Sanctify = {
-	{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
-	{'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 6 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
-	{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+    {'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
 	{'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
-	{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
-    {'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
-	{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+	{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity) & partycheck = 2','tank.ground'},
 	{'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity) & partycheck = 2','lowest.ground'},	
 }
 
@@ -323,6 +319,8 @@ local PoM = {
 	{'Prayer of Mending', '!tank1.buff(Prayer of Mending).count > 5', 'tank1'},
 	{'Prayer of Mending', '!tank2.buff(Prayer of Mending).count > 5', 'tank2'},
 	{'Prayer of Mending', '!tank.buff(Prayer of Mending)', 'tank'},
+	{'Prayer of Mending', '!buff(Prayer of Mending)', 'lowestp'},
+
 }
 
 local Keybinds = {
@@ -388,9 +386,10 @@ local ST = {
 }
 
 local AOE = {
+{PoM, '!UI(myth_heal)'},
 {Sanctify},
 {PoH},
-{PoM, '!UI(myth_heal)'},
+
 
 }
 
