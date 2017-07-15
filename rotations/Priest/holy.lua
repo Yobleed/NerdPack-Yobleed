@@ -423,10 +423,10 @@ local inCombat = {
 {Felexplosive},
 {Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
 {'/stopcasting','lowest.health >= UI(l_FH) & toggle(mana)'},
-{'/stopcasting','lowest.health = 100 & {player.CastingSpell(Heal) || player.CastingSpell(Flash Heal)}'},
+{'/stopcasting','lowest.health = 100 & {player.casting(Heal) || player.casting(Flash Heal)}'},
 {ST, '!UI(myth_heal) & !player.moving'},
 {'Flash Heal', 'health < 100 & player.buff(Spirit of Redemption)', 'lowestp'},
-{'!Flash Heal', 'health < UI(l_FH) & player.CastingSpell(Smite)', 'lowest'},
+{'!Flash Heal', 'health < UI(l_FH) & player.casting(Smite)', 'lowest'},
 {DPS, 'lowest.health > UI(l_FH)'},
 },'!player.channeling(Divine Hymn)'},
 

@@ -13,6 +13,7 @@ local GUI = {
     --GENERAL
     {type = 'header', text = 'General', align = 'center'},
 	{type = 'checkbox', text = 'Out of Combat Healing', key = 'ooc_heal', width = 55, default = true},
+	{type = 'checkbox', text = 'Mythic+ Healing', key = 'myth_heal', width = 55, default = false},
     {type = 'checkbox', text = 'Out of Combat Atonements', key = 'ato', width = 55, default = false},
     --Healing Options
     {type = 'text', text = 'Healing Options', align = 'center'},
@@ -111,10 +112,7 @@ local GUI = {
 
 local exeOnLoad = function()
 	-- Rotation loaded message.
-	print('|cff58FAF4 ----------------------------------------------------------------------|r')
-	print('|cff58FAF4 --- |rPriest: |cff58FAF4DISCIPLINE|r')
-	print('|cff58FAF4 ----------------------------------------------------------------------|r')
-	print('|cff58FAF4 ----------------------------------------------------------------------|r')
+	print('|cff58FAF4 Priest:|r|cff58FAF4DISCIPLINE|r')
 	print('|cffff0000 Configuration: |rRight-click the MasterToggle and go to Combat Routines Settings|r')
 
 	NeP.Interface:AddToggle({
@@ -350,7 +348,22 @@ local Lowest = {
 	{'Power Word: Shield', '!lowest4.buff(Atonement)', 'lowest4'},
 	{'Power Word: Shield', '!lowest5.buff(Atonement)', 'lowest5'},
 }
-
+local Mythic = {
+{'!Pain Suppression', 'tank.health <= 20', 'tank'},
+{'!Pain Suppression', 'lowest.health <= 20', 'lowest'},
+{'Gift of the Naaru', 'lowest.health <= 20', 'lowest'},
+{'!Light\'s Wrath', '{!talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)} || {talent(7,3) & player.lastcast(Evangelism) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)}','target'},
+{'!Evangelism', 'talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)','player'},
+{'!Shadowfiend', "player.spell(Light's Wrath).cooldown >= 85 & !talent(4,3)",'target'},
+{PWR, '!tank.health <= 30'},
+{'Power Word: Radiance', 'pull_timer  <= 6 & pull_timer >= 3 & lowest.range <= 40', 'lowest'},
+{'Power Word: Shield', 'lowest.health <= 90 & !lowest.buff(Power Word: Shield)', 'lowest'},
+{'Penance', 'player.health <= 65 & player.buff(Atonement) & infront', 'target'},
+{'Shadow Mend', "player.health <= 65 & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'player'},
+{'Penance', 'lowest.health <= 65 & lowest.buff(Atonement) & infront', 'target'},
+{'Shadow Mend', "lowest.health <= 70 & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
+{'Plea', 'lowest.health <= 85 & !player.buff(Atonement)', 'lowest'},	
+}
 local Moving = {
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
 	{'/cast [@player] Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
@@ -388,16 +401,18 @@ local inCombat = {
 	{Moving, 'player.moving'},
 	{Solo, 'toggle(xDPS)'},
 	{PWR, 'UI(PWR) & !tank.health <= 30'},
+	{Mythic, 'partycheck = 2 & UI(myth_heal)'},
 	{ST, '!player.buff(Rapture)'},
-	{Atonement, '!lowest.health <= UI(l_mend)'},
+	{Atonement, '!lowest.health <= UI(l_mend) || {UI(myth_heal) & !lowest.health <= 65}'},
 }
 
 local outCombat = {
 	{Keybinds},
 	{Moving, 'moving & !UI(ato) & !inareaid = 1040'},
+	{Mythic, 'partycheck = 2 & UI(myth_heal)'},
 	{{
 		{'Shadow Mend', "lowest.health <= 90 & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
-	}, 'UI(ooc_heal)'},
+	}, 'UI(ooc_heal)||UI(myth_heal)'},
 	{{
 		{'Power Word: Shield', '!tank.buff(Power Word: Shield)', 'tank'},
 		{Moving, 'moving'},
@@ -406,7 +421,8 @@ local outCombat = {
 		{'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement)', 'lowest3'},
 		{'Plea', 'lowest4.health > UI(l_mend) & !lowest4.buff(Atonement)', 'lowest4'},
 		{'Plea', 'lowest5.health > UI(l_mend) & !lowest5.buff(Atonement)', 'lowest5'},
-	}, 'UI(ato)'}, 
+	}, 'UI(ato)||UI(myth_heal)'}, 
+	{Mythic, 'partycheck = 2 & UI(myth_heal)'},
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
 	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
