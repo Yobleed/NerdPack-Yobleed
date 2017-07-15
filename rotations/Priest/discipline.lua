@@ -352,10 +352,11 @@ local Mythic = {
 {'!Pain Suppression', 'tank.health <= 20', 'tank'},
 {'!Pain Suppression', 'lowest.health <= 20', 'lowest'},
 {'Gift of the Naaru', 'lowest.health <= 20', 'lowest'},
-{'!Light\'s Wrath', '{!talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)} || {talent(7,3) & player.lastcast(Evangelism) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)}','target'},
+{'!Light\'s Wrath', '{!talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)} || {talent(7,3) & player.spell(Evangelism).cooldown >= 70 & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)}','target'},
 {'!Evangelism', 'talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)','player'},
 {'!Shadowfiend', "player.spell(Light's Wrath).cooldown >= 85 & !talent(4,3)",'target'},
-{PWR, '!tank.health <= 30'},
+{'Power Word: Radiance', 'lowest.area(30,85).heal >= 3 & lowest.health <= 85 & !lowest.buff(Atonement) & advanced', 'lowest'},
+{'Power Word: Radiance', 'player.area(40,85).heal >= 3 & lowest.health <= 85 & !lowest.buff(Atonement) & !advanced', 'lowest'},
 {'Power Word: Radiance', 'pull_timer  <= 6 & pull_timer >= 3 & lowest.range <= 40', 'lowest'},
 {'Power Word: Shield', 'lowest.health <= 90 & !lowest.buff(Power Word: Shield)', 'lowest'},
 {'Penance', 'player.health <= 65 & player.buff(Atonement) & infront', 'target'},
@@ -402,7 +403,7 @@ local inCombat = {
 	{Solo, 'toggle(xDPS)'},
 	{PWR, 'UI(PWR) & !tank.health <= 30'},
 	{Mythic, 'partycheck = 2 & UI(myth_heal)'},
-	{ST, '!player.buff(Rapture)'},
+	{ST, '!player.buff(Rapture) & !UI(myth_heal)'},
 	{Atonement, '!lowest.health <= UI(l_mend) || {UI(myth_heal) & !lowest.health <= 65}'},
 }
 
