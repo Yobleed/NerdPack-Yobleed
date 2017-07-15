@@ -362,7 +362,7 @@ local Mythic = {
 {'Shadow Mend', "player.health <= 65 & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'player'},
 {'Penance', 'lowest.health <= 65 & lowest.buff(Atonement) & infront', 'target'},
 {'Shadow Mend', "lowest.health <= 70 & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
-{'Plea', 'lowest.health <= 85 & !player.buff(Atonement)', 'lowest'},	
+{'Plea', 'lowest.health <= 85 & !lowest.buff(Atonement)', 'lowest'},	
 }
 local Moving = {
 	--Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
