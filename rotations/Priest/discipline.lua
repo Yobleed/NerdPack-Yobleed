@@ -172,7 +172,7 @@ local Cooldowns = {
 	--Automatic usage of Evangelism.
 	{'!Evangelism', 'talent(7,3) & UI(Evang) & player.area(40,70).heal >= UI(Evang_spin) & count(Atonement).friendly.buffs >= UI(Evang2_spin) & lowest.buff(Atonement)','player'},
 	--Automatic Light's Wrath.
-	{'!Light\'s Wrath', '{!talent(7,3) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & count(Atonement).friendly.buffs >= UI(LW2_spin) & lowest.buff(Atonement)} || {talent(7,3) & player.lastcast(Evangelism) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & count(Atonement).friendly.buffs >= UI(LW2_spin) & lowest.buff(Atonement)}','target'},
+	{'!Light\'s Wrath', '{!talent(7,3) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & count(Atonement).friendly.buffs >= UI(LW2_spin) & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime} || {talent(7,3) & player.lastcast(Evangelism) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & count(Atonement).friendly.buffs >= UI(LW2_spin) & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime}','target'},
 }  
 
 
@@ -213,7 +213,7 @@ local Solo = {
 	--Schism on cooldown.
 	{'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 	--LW.
-    {'Light\'s Wrath', 'player.buff(Atonement)'}, 
+    {'Light\'s Wrath', 'player.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime'}, 
 	--PI on CD if toggled.
 	{'Power Infusion', 'talent(7,1)', 'target'},
 	--Shadowfiend on CD if toggled.
@@ -352,7 +352,7 @@ local Mythic = {
 {'!Pain Suppression', 'tank.health <= 20', 'tank'},
 {'!Pain Suppression', 'lowest.health <= 20', 'lowest'},
 {'Gift of the Naaru', 'lowest.health <= 20', 'lowest'},
-{'!Light\'s Wrath', '{!talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)} || {talent(7,3) & player.spell(Evangelism).cooldown >= 70 & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)}','target'},
+{'!Light\'s Wrath', '{!talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime} || {talent(7,3) & player.spell(Evangelism).cooldown >= 70 & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime}','target'},
 {'!Evangelism', 'talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)','player'},
 {'!Shadowfiend', "player.spell(Light's Wrath).cooldown >= 85 & !talent(4,3)",'target'},
 {'Power Word: Radiance', 'lowest.area(30,85).heal >= 3 & lowest.health <= 85 & !lowest.buff(Atonement) & advanced', 'lowest'},
