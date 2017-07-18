@@ -309,7 +309,7 @@ local lotv = {
 
 
 local inCombat = {
-	--Shadowform if no voidform and no shadowform.
+	{{--Shadowform if no voidform and no shadowform.
 	{'Shadowform', '!player.buff(voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
 	{Movement, '!player.buff(Voidform || {player.buff Voidform & !spell(Void Eruption).cooldown = 0 & !player.channeling(Void Torrent)}'},
 	{Surrender, '!player.channeling(Void Torrent)'}, 
@@ -328,7 +328,8 @@ local inCombat = {
 	{AOE, '!player.channeling(Void Torrent) & toggle(AOE) & range <= 40'}, 
 	{lotv, 'player.buff(voidform) & !player.channeling(Void Torrent)'}, 
 	{ST, "!player.buff(voidform) & !player.channeling(Void Torrent)"},
-
+	{'Mind Flay', nil,'target'},
+},'!player.channeling(Void Torrent)'},
 }
 
 local outCombat = {

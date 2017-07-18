@@ -71,7 +71,6 @@ local GUI = {
 
 	--Cooldowns
 	{type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
-	{type = 'spinner', text = 'Players below 70%', key = 'DH_spin', width = 55, max = 10, step = 1, default = 7},
 	{type = 'checkbox', text = 'Use Guardian Spirit on Tank', key = 'c_GSt', width = 55, default = false},
 	{type = 'spinner', text = '', key = 'c_GSspint', width = 55, default = 20},
 	{type = 'checkbox', text = 'Use Guardian Spirit on Lowest', key = 'c_GS', width = 55, default = false},
@@ -158,8 +157,6 @@ end
 
 
 local Cooldowns ={
-{'#Perfectly Preserved Cake', 'equipped(Perfectly Preserved Cake) & player.area(15,85).heal >= 4'},
-{'!#Archive of Faith', 'equipped(Archive of Faith) & lowest.health <= 60 & !player.moving & equipped(Archive of Faith) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'}, 
 {'!Guardian Spirit', 'UI(c_GSt) & {health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'tank1'},
 {'!Guardian Spirit', 'UI(c_GSt) & {health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'tank2'},
 {'!Guardian Spirit', 'UI(c_GS) & health <= UI(c_GSspin)', 'lowest'},
@@ -173,10 +170,12 @@ local Cooldowns ={
 
 local Trinkets = {
 	--Top Trinket usage if UI enables it.
+	{'#trinket1', 'UI(trinket_1) & !tank1.buff(Guiding Hand) & tank1.health < tank2.health & tank1.health > 60 & player.equipped(The Deceiver\'s Grand Design) ', 'tank1'}, -- Deceiver's Grand Design
+	{'#trinket1', 'UI(trinket_1) & !tank2.buff(Guiding Hand) & tank2.health < tank1.health & tank2.health > 60 & player.equipped(The Deceiver\'s Grand Design) ', 'tank2'},
+	{'#trinket1', 'UI(trinket_1) & !tank.buff(Guiding Hand) & tank.health > 60 & player.equipped(The Deceiver\'s Grand Design)', 'tank'},
 	{'#trinket1', 'UI(trinket_1)'},
 	--Bottom Trinket usage if UI enables it.
-	{'!#trinket2', 'UI(trinket_2)'}, 
-
+	{'!#trinket2', 'UI(trinket_2) & lowest.health <= 60 & !player.moving & equipped(Archive of Faith) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'}, 
 } 
 
 local Potions = {
@@ -443,6 +442,9 @@ local outCombat = {
 {Keybinds},
 {'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
+{'#trinket1', 'UI(trinket_1) & !tank1.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design)', 'tank1'}, --Deceiver's
+{'#trinket1', 'UI(trinket_1) & !tank2.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design)', 'tank2'},
+{'#trinket1', 'UI(trinket_1) & !tank.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design)', 'tank'},
 {PoMooc, '!UI(myth_heal) & !partycheck = 1'}, 
 {Moving, 'player.moving'},
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & {UI(ooc_heal)||UI(myth_heal)} & !player.moving'},
