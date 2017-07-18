@@ -158,8 +158,8 @@ end
 
 
 local Cooldowns ={
-{'#Preserved Cake', 'player.area(15,85).heal >= 4'}, --Preserved Cake 
-{'!#Archive of Faith', 'lowest.health <= 60 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
+{'#Perfectly Preserved Cake', 'equipped(Perfectly Preserved Cake) & player.area(15,85).heal >= 4'},
+{'!#Archive of Faith', 'equipped(Archive of Faith) & lowest.health <= 60 & !player.moving & equipped(Archive of Faith) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'}, 
 {'!Guardian Spirit', 'UI(c_GSt) & {health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'tank1'},
 {'!Guardian Spirit', 'UI(c_GSt) & {health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'tank2'},
 {'!Guardian Spirit', 'UI(c_GS) & health <= UI(c_GSspin)', 'lowest'},
@@ -173,11 +173,9 @@ local Cooldowns ={
 
 local Trinkets = {
 	--Top Trinket usage if UI enables it.
-	{'#Trinket1', 'UI(trinket_1)'},
+	{'#trinket1', 'UI(trinket_1)'},
 	--Bottom Trinket usage if UI enables it.
-	{'#trinket2', 'UI(trinket_2)'},
-
-
+	{'!#trinket2', 'UI(trinket_2)'}, 
 
 } 
 
@@ -251,7 +249,7 @@ local Lowestpred = {
 	{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowestp'},
 	{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowestp'},
 	{'Flash Heal', 'health <= UI(l_FH)', 'lowestp'},
-	{'Heal', 'health <= UI(l_H)', 'lowestp'},
+	{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowestp'},
 }
 
 local Lowest = {
@@ -260,7 +258,7 @@ local Lowest = {
 	{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowest'},
 	{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowest'},
 	{'Flash Heal', 'health <= UI(l_FH)', 'lowest'},
-	{'Heal', 'health <= UI(l_H)', 'lowest'},
+	{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowest'},
 }
 
 local PoMooc = {
@@ -274,8 +272,8 @@ local PoMooc = {
 	{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank1'},
 	{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank2'},
 	{'Prayer of Mending', '!buff(Prayer of Mending) & tank1.buff(Prayer of Mending) & UI(pull_PoM) & partycheck = 3', 'player'},
-	{'Prayer of Mending', 'buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM)', 'friendly'},
-	{'Prayer of Mending', '!buff(Prayer of Mending) & UI(pull_PoM) & range <= 40 & tank.buff(Prayer of Mending)', 'friendly'},
+	{'Prayer of Mending', 'buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM) & !player.moving', 'friendly'},
+	{'Prayer of Mending', '!buff(Prayer of Mending) & UI(pull_PoM) & range <= 40 & tank.buff(Prayer of Mending) & !player.moving', 'friendly'},
 }
 local Felexplosive = {
 	  {{
@@ -340,12 +338,12 @@ local Keybinds = {
 	-----------------------------------------------------------------------------T20-----------------------------------------------------------------------
 	{{
 	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS) & !advanced', 'cursor.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 6 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 5 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 4 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 3 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
-	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 2 & keybind(lshift) & UI(k_HWS)','lowestp.ground'},
-	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS)', 'tank.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 6 & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 5 & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 4 & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 3 & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 2 & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
+	{'!Holy Word: Sanctify', 'keybind(lshift) & UI(k_HWS) & advanced', 'tank.ground'},
 	},'set_bonus(T20)>= 2'},
 	-------------------------------------------------------------------------------------------------------------------------------------------------------
 	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 6 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
@@ -354,7 +352,7 @@ local Keybinds = {
 	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 3 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
 	{'!Holy Word: Sanctify', 'lowestp.area(10, 99).heal >= 2 & !player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced','lowestp.ground'},
 	{'!Holy Word: Sanctify', '!player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & advanced', 'tank.ground'},
-	{'!Holy Word: Sanctify', '!player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS)', 'cursor.ground'},
+	{'!Holy Word: Sanctify', '!player.buff(Power of the Naaru) & keybind(lshift) & UI(k_HWS) & !advanced', 'cursor.ground'},
 	{'Prayer of Healing', 'area(10,85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !advanced & buff(Power of the Naaru)' , 'player'},
 	{'Prayer of Healing', 'area(20,85).heal >= 4 & keybind(lshift) & UI(k_HWS) & !advanced & buff(Power of the Naaru)' , 'player'},
 	{'Prayer of Healing', 'area(10, 85).heal >= 4 & keybind(lshift) & UI(k_HWS) & player.buff(Power of the Naaru) & advanced' , 'lowestp'},
@@ -422,8 +420,10 @@ local inCombat = {
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & !player.moving'},
 {Felexplosive},
 {Mythic, 'partycheck = 2 & UI(myth_heal) & !player.moving'},
-{'/stopcasting','lowest.health >= UI(l_FH) & toggle(mana)'},
-{'/stopcasting','lowest.health = 100 & {player.casting(Heal) || player.casting(Flash Heal)}'},
+{'!/stopcasting','lowest.health >= UI(l_FH) & toggle(mana) & partycheck = 2 & {player.casting(Heal) || player.casting(Flash Heal)}'},
+{'!/stopcasting','lowestp.health >= UI(l_FH) & toggle(mana) & partycheck = 3 & {player.casting(Heal) || player.casting(Flash Heal)}'},
+{'!/stopcasting','lowest.health >= 100 & partycheck = 2 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal)}'},
+{'!/stopcasting','lowestp.health >= 100 & partycheck = 3 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal)}'},
 {ST, '!UI(myth_heal) & !player.moving'},
 {'Flash Heal', 'health < 100 & player.buff(Spirit of Redemption)', 'lowestp'},
 {'!Flash Heal', 'health < UI(l_FH) & player.casting(Smite)', 'lowest'},
