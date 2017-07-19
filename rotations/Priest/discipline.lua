@@ -196,7 +196,7 @@ local Trinkets = {
 local Keybinds = {
 	-- Power Word: Barrier on left shift when checked in UI.
 	{'!Power Word: Barrier', 'keybind(lshift) & UI(k_PWB)', 'cursor.ground'},
-	{'Power Word: Radiance', 'keybind(lshift) & UI(k_PWB) & !lowest.buff(Atonement) & !player.spell(Power Word: Barrier).cooldown = 0', 'lowest'},
+	{'Power Word: Radiance', 'keybind(lshift) & UI(k_PWB) & !lowest.buff(Atonement) & !player.spell(Power Word: Barrier).cooldown == 0', 'lowest'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
@@ -231,7 +231,7 @@ local Rampup = {
 
 local Solo = {
 	--Plea to keep on Atonement.
-	{'Plea', "{!player.buff(Atonement) & player.health < 90} || {!player.buff(Atonement) & spell(Light's Wrath).cooldown = 0}", 'player'},
+	{'Plea', "{!player.buff(Atonement) & player.health < 90} || {!player.buff(Atonement) & spell(Light's Wrath).cooldown == 0}", 'player'},
 	--PWS if player health is below or if UI value.
 	{'Power Word: Shield', 'Player.Health <= UI(full_PWS)', 'player'},
 	--Schism on cooldown.
@@ -247,7 +247,7 @@ local Solo = {
 	--Gift of the Naaru if player health is below or if UI value.
 	{'Gift of the Naaru', 'player.health <= UI(full_Gift)', 'player'},
 	--Purge the Wicked if talent and not on target.
-	{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown = 0 & range <= 40 & combat', 'enemies'},
+	{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat', 'enemies'},
 	{'Purge the Wicked', 'talent(6,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
 	{'Shadow Word: Pain', '!talent(6,1) & !target.debuff(Shadow Word: Pain)', 'target'},
@@ -264,7 +264,7 @@ local Solo = {
 }
 local Atonement = {
 	--Purge the Wicked if talent and not on target.
-	{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown = 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd', 'enemies'},
+	{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd', 'enemies'},
 	{'Purge the Wicked', ' talent(6,1) & !target.debuff(Purge the Wicked)', 'target'},
 	--Shadow Word: Pain if not on target.
 	{'Shadow Word: Pain', '!talent(6,1) & !target.debuff(Shadow Word: Pain)', 'target'},
@@ -413,7 +413,7 @@ local ST = {
 local inCombat = {
 	{Potions},
 	{Cooldowns},
-	{'%dispelall', '{toggle(disp) & spell(Purify).cooldown = 0 & tank.health > UI(t_mend)} || {player.health > UI(l_mend) & !tank.exists & toggle(disp) & spell(Purify).cooldown = 0}'},
+	{'%dispelall', '{toggle(disp) & spell(Purify).cooldown == 0 & tank.health > UI(t_mend)} || {player.health > UI(l_mend) & !tank.exists & toggle(disp) & spell(Purify).cooldown == 0}'},
 	--Fade when you get aggro.
 	{'fade', 'player.aggro & !toggle(xDPS)'},
 	--Knock back enemies if enemies are attack you and fade on CD.

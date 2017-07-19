@@ -231,7 +231,7 @@ local Tank = {
 }
 
 local Playerpred = {
-	{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown = 0', 'player'},
+	{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
 	{'Gift of the Naaru', 'health.predicted <= UI(p_Gift)', 'player'},
 	{'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health.predicted <= 95 & !player.buff(Surge of Light)', 'lowestp'},
 	{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
@@ -239,7 +239,7 @@ local Playerpred = {
 }
 
 local Player = {
-	{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown = 0', 'player'},
+	{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
 	{'Gift of the Naaru', 'health <= UI(p_Gift)', 'player'},
 	{'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health <= 95 & !player.buff(Surge of Light)', 'lowest'},
 	{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
@@ -319,10 +319,10 @@ local PoH = {
 	{'Prayer of Healing', 'area(20, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestp'},
 	{'Prayer of Healing', 'area(25, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestp'},
 	{'Prayer of Healing', 'area(30, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & partycheck=3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestp'},
-	{'Prayer of Healing', 'area(10, 85).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & partycheck=3', 'lowestp'},
-	{'Prayer of Healing', 'area(15, 85).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & partycheck=3', 'lowestp'},
-	{'Prayer of Healing', 'area(20, 85).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & partycheck=3', 'lowestp'},
-	{'Prayer of Healing', 'area(40, 85).heal >= 4 & toggle(AOE) & !tank.health <= 50 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown = 0 & !partycheck=3', 'lowest'},
+	{'Prayer of Healing', 'area(10, 85).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown == 0 & partycheck=3', 'lowestp'},
+	{'Prayer of Healing', 'area(15, 85).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown == 0 & partycheck=3', 'lowestp'},
+	{'Prayer of Healing', 'area(20, 85).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown == 0 & partycheck=3', 'lowestp'},
+	{'Prayer of Healing', 'area(40, 85).heal >= 4 & toggle(AOE) & !tank.health <= 50 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & !player.spell(Prayer of Mending).cooldown == 0 & !partycheck=3', 'lowest'},
 }
 
 local PoM = {
@@ -417,8 +417,8 @@ local inCombat = {
 {Potions},
 {Trinkets},
 {Keybinds},
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
-{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
+{'Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {Solo, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 {'flash heal', 'health < 100 & id(119663) & !lowestp.health <= 50', 'friendly'}, --Hopeless Reflection
 {Moving, 'player.moving'},
@@ -446,8 +446,8 @@ local outCombat = {
 {Cooldowns,'partycheck = 2 & UI(myth_heal)'},
 {Potions, 'partycheck = 2 & UI(myth_heal)'},
 {Keybinds},
-{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
+{'Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'#trinket1', 'UI(trinket_1) & !tank1.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design)', 'tank1'}, --Deceiver's
 {'#trinket1', 'UI(trinket_1) & !tank2.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design)', 'tank2'},
 {'#trinket1', 'UI(trinket_1) & !tank.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design)', 'tank'},
