@@ -112,6 +112,7 @@ local GUI = {
 	{type = 'header', text = 'Lowest', align = 'center'},
 	{type = 'text', text = 'Lowest health values', align = 'center'},
 	{type = 'spinner', text = 'Holy Word: Serenity', key = 'l_HWSE', width = 55, default = 60},
+	{type = 'spinner', text = 'Binding Heal', key = 'l_BH', width = 55, default = 85},
 	{type = 'spinner', text = 'Flash Heal', key = 'l_FH', width = 55, default = 85},
 	{type = 'spinner', text = 'Heal', key = 'l_H', width = 55, default = 95},
 	{type = 'ruler'},{type = 'spacer'},
@@ -173,6 +174,7 @@ local Trinkets = {
 	{'#trinket1', 'UI(trinket_1) & !tank1.buff(Guiding Hand) & tank1.health < tank2.health & tank1.health > 60 & player.equipped(The Deceiver\'s Grand Design) ', 'tank1'}, -- Deceiver's Grand Design
 	{'#trinket1', 'UI(trinket_1) & !tank2.buff(Guiding Hand) & tank2.health < tank1.health & tank2.health > 60 & player.equipped(The Deceiver\'s Grand Design) ', 'tank2'},
 	{'#trinket1', 'UI(trinket_1) & !tank.buff(Guiding Hand) & tank.health > 60 & player.equipped(The Deceiver\'s Grand Design)', 'tank'},
+	{'#trinket1', 'UI(trinket_1) & !player.buff(Guiding Hand) & player.health > 60 & player.equipped(The Deceiver\'s Grand Design) & UI(myth_heal)', 'player'},
 	{'#trinket1', 'UI(trinket_1)'},
 	--Bottom Trinket usage if UI enables it.
 	{'!#trinket2', 'UI(trinket_2) & lowest.health <= 60 & !player.moving & equipped(Archive of Faith) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'}, 
@@ -231,6 +233,7 @@ local Tank = {
 local Playerpred = {
 	{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown = 0', 'player'},
 	{'Gift of the Naaru', 'health.predicted <= UI(p_Gift)', 'player'},
+	{'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health.predicted <= 95 & !player.buff(Surge of Light)', 'lowestp'},
 	{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
 	{'Flash Heal', 'health.predicted <= UI(p_FH)', 'player'},
 }
@@ -238,6 +241,7 @@ local Playerpred = {
 local Player = {
 	{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown = 0', 'player'},
 	{'Gift of the Naaru', 'health <= UI(p_Gift)', 'player'},
+	{'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health <= 95 & !player.buff(Surge of Light)', 'lowest'},
 	{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
 	{'Flash Heal', 'health <= UI(p_FH)', 'player'},
 }  
@@ -246,6 +250,7 @@ local Lowestpred = {
 	{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowestp'},
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowestp'},
 	{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowestp'},
+	{'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health.predicted <= 95  & !player.buff(Surge of Light)', 'lowestp'},
 	{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowestp'},
 	{'Flash Heal', 'health <= UI(l_FH)', 'lowestp'},
 	{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowestp'},
@@ -255,6 +260,7 @@ local Lowest = {
 	{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowest'},
 	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
 	{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowest'},
+	{'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health <= 95 & !player.buff(Surge of Light)', 'lowest'},
 	{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowest'},
 	{'Flash Heal', 'health <= UI(l_FH)', 'lowest'},
 	{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowest'},
@@ -294,7 +300,7 @@ local Mythic = {
 	{'!Gift of the Naaru', 'health <= 40', 'lowest'},
 	{'Heal', 'health <= 90 & player.spell(Heal)casttime <= 1.2 & !health <= 50', 'lowest'},
 	{'Flash Heal', 'health <= 90', 'lowest'},
-	{'!Flash Heal', 'player.buff(Surge of Light) & health <= 90', 'lowest'},
+	{'Binding Heal', 'health <= 95 & !is(player) & player.health <= 95 & !player.buff(Surge of Light)', 'lowest'},
 	{'Heal', 'health <= 95', 'lowest'},
 
 	
@@ -411,8 +417,8 @@ local inCombat = {
 {Potions},
 {Trinkets},
 {Keybinds},
-{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown = 0 & !UI(disp_ang)'},
+{'Purify', 'toggle(disp) & player.spell(Purify).cooldown = 0 & purify & area(9).friendly = 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {Solo, 'toggle(xDPS) & target.range <= 40 & target.infront'},
 {'flash heal', 'health < 100 & id(119663) & !lowestp.health <= 50', 'friendly'}, --Hopeless Reflection
 {Moving, 'player.moving'},
@@ -445,6 +451,7 @@ local outCombat = {
 {'#trinket1', 'UI(trinket_1) & !tank1.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design)', 'tank1'}, --Deceiver's
 {'#trinket1', 'UI(trinket_1) & !tank2.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design)', 'tank2'},
 {'#trinket1', 'UI(trinket_1) & !tank.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design)', 'tank'},
+{'#trinket1', 'UI(trinket_1) & !player.buff(Guiding Hand) & player.equipped(The Deceiver\'s Grand Design) & UI(myth_heal)', 'player'},
 {PoMooc, '!UI(myth_heal) & !partycheck = 1'}, 
 {Moving, 'player.moving'},
 {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & {UI(ooc_heal)||UI(myth_heal)} & !player.moving'},
