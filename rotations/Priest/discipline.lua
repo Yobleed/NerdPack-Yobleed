@@ -133,6 +133,7 @@ local exeOnLoad = function()
 end
 
 local Rapture = {
+    {'Penance', 'player.buff(Penitent)','target'},
 	--Power Word: Shield.
 	{'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest1'},
 	{'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest2'},
