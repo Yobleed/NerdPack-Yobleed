@@ -218,7 +218,7 @@ local Rampup = {
 --Spreading Atonement before DPS if checked.
     {'!Light\'s Wrath', 'player.spell(Evangelism).cooldown ~= 0 & friendly.buff(Atonement).duration < {{player.spell(Light\'s Wrath).casttime + gcd}+0.5} & pull_timer = 999','target'},
 	{'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck = 3','player'},
-	{'!Evangelism', 'buff(Sins of the Many).count = 5 & buff(Atonement).duration < spell(Light\'s Wrath).casttime) & partycheck = 2','player'},
+	{'!Evangelism', 'buff(Sins of the Many).count = 5 & buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck = 2','player'},
 	{'Power Word: Radiance', '!buff(Atonement)', 'lowest'},
 	{'Power Word: Shield', '!buff(Atonement)', 'lowest'},
 	{'Plea', '!buff(Atonement)', 'lowest'},
@@ -315,7 +315,7 @@ local Playerpred = {
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(6,2) & player.area(24, 90).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
 	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'player.health.predicted <= UI(p_plea) & !player.buff(Atonement)', 'player'},
+	{'Plea', 'player.health.predicted <= UI(p_plea) & !player.buff(Atonement) & !player.buff(Sins of the Many).count >= 6', 'player'},
 }
 
 local Player = {
@@ -330,7 +330,7 @@ local Player = {
 	--Divine Star if player has talent and at least 1 enemy is in front with a range of 24yds and at least 3 or higher players with health below or equal to 95% are in front with a range of 24yds.
 	{'Divine Star', 'talent(6,2) & player.area(24, 90).heal.infront >= 3 & toggle(AOE) & !toggle(xDPS)'},
 	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'player.health <= UI(p_plea) & !player.buff(Atonement)', 'player'},
+	{'Plea', 'player.health <= UI(p_plea) & !player.buff(Atonement) & !player.buff(Sins of the Many).count >= 6', 'player'},
 }
 local Lowestpred = {
     --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
@@ -343,7 +343,7 @@ local Lowestpred = {
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "lowestp.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'lowestp'},
 	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'lowestp.health <= UI(l_plea) & !lowestp.buff(Atonement)', 'lowestp'},
+	{'Plea', 'lowestp.health <= UI(l_plea) & !lowestp.buff(Atonement) & !player.buff(Sins of the Many).count >= 6', 'lowestp'},
 	--Power Word: Shield on CD if not Atonement on 6 people max.
 	{'Power Word: Shield', '!lowest1.buff(Atonement)', 'tank'},
 	{'Power Word: Shield', '!lowest1.buff(Atonement)', 'lowest1'},
@@ -363,7 +363,7 @@ local Lowest = {
 	--Shadow Mend on UI value if PWS don't make it.
 	{'Shadow Mend', "lowest.health <= UI(l_mend) & !player.channeling(Penance) & !player.channeling(Light\'s Wrath) & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
 	--Plea on UI value if no 6 atonements are active.
-	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement)', 'lowest'},
+	{'Plea', 'lowest.health <= UI(l_plea) & !lowest.buff(Atonement) & !player.buff(Sins of the Many).count >= 6', 'lowest'},
 	--Power Word: Shield on CD if not Atonement on 6 people max.
 	{'Power Word: Shield', '!lowest1.buff(Atonement)', 'tank'},
 	{'Power Word: Shield', '!lowest1.buff(Atonement)', 'lowest1'},
