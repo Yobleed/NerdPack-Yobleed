@@ -134,12 +134,12 @@ end
 
 local Rapture = {
 	--Power Word: Shield.
-	{'Power Word: Shield', '!lowest1.buff(Power Word: Shield)', 'lowest1'},
-	{'Power Word: Shield', '!lowest2.buff(Power Word: Shield)', 'lowest2'},
-	{'Power Word: Shield', '!lowest3.buff(Power Word: Shield)', 'lowest3'},
-	{'Power Word: Shield', '!lowest4.buff(Power Word: Shield)', 'lowest4'},
-	{'Power Word: Shield', '!lowest5.buff(Power Word: Shield)', 'lowest5'},
-	{'Power Word: Shield', '!lowest5.buff(Power Word: Shield)', 'lowest6'},
+	{'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest1'},
+	{'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest2'},
+	{'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest3'},
+	{'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest4'},
+	{'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest5'},
+	{'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest6'},
 }
 
 local PWR = {
@@ -403,11 +403,13 @@ local inCombat = {
 	{Keybinds},
 	{Trinkets},
 	{Rapture, 'player.buff(Rapture)'},
+	{{
 	{Moving, 'player.moving'},
 	{Solo, 'toggle(xDPS)'},
 	{PWR, 'UI(PWR) & !tank.health <= 30'},
 	{Mythic, 'partycheck = 2 & UI(myth_heal)'},
-	{ST, '!player.buff(Rapture) & !UI(myth_heal)'},
+	{ST, '!UI(myth_heal)'},
+	},'!player.buff(Rapture)'},
 	{Atonement, '!lowest.health <= UI(l_mend) || {UI(myth_heal) & !lowest.health <= 65}'},
 }
 
