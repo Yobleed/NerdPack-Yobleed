@@ -376,7 +376,7 @@ local Mythic = {
 {'!Pain Suppression', 'tank.health <= 20', 'tank'},
 {'!Pain Suppression', 'lowest.health <= 20', 'lowest'},
 {'Gift of the Naaru', 'lowest.health <= 20', 'lowest'},
-{'!Light\'s Wrath', '{!talent(7,3) & player.area(40,70).heal >= 2 & buff(Sins of the Many).count >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime} || {talent(7,3) & player.spell(Evangelism).cooldown >= 70 & player.area(40,70).heal >= 2 & buff(Sins of the Many).count >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime}','target'},
+{'!Light\'s Wrath', '{!talent(7,3) & player.area(40,70).heal >= 2 & player.buff(Sins of the Many).count >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime} || {talent(7,3) & player.spell(Evangelism).cooldown >= 70 & player.area(40,70).heal >= 2 & player.buff(Sins of the Many).count >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime}','target'},
 {'!Evangelism', 'talent(7,3) & player.area(40,70).heal >= 2 & buff(Sins of the Many).count >= 4 & lowest.buff(Atonement)','player'},
 {'!Shadowfiend', "player.spell(Light's Wrath).cooldown >= 85 & !talent(4,3)",'target'},
 {'Power Word: Radiance', 'lowest.area(30,85).heal >= 3 & lowest.health <= 85 & !lowest.buff(Atonement) & advanced & player.spell(Power Word: Radiance).charges = 2', 'lowest'},
