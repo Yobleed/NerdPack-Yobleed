@@ -201,7 +201,7 @@ local Surrender = {
 
 local Insight = {
 	-- Mind Blast when buffed with Shadowy Insight only when Voidbolt is on CD.
-	{'!Mindblast', '!spell(Void Eruption)'}, 
+	{'!Mindblast', '!player.spell(Void Eruption).cooldown == 0','target'}, 
 }
 
 local Emergency = {
