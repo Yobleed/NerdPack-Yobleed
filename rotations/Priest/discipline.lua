@@ -116,6 +116,13 @@ local exeOnLoad = function()
 	print('|cffff0000 Configuration: |rRight-click the MasterToggle and go to Combat Routines Settings|r')
 
 	NeP.Interface:AddToggle({
+		key = 'ramp',
+		name = 'Spike Damage',
+		text = 'ON/OFF Ramping up Atonements for incoming spike damage',
+		icon = 'Interface\\ICONS\\ability_mage_massinvisibility', --toggle(ramp)
+	})
+
+	NeP.Interface:AddToggle({
 		key = 'xDPS',
 		name = 'Solo',
 		text = 'ON/OFF Solo rotation',
@@ -205,6 +212,12 @@ local Potions = {
 	{'#Ancient Healing Potion', 'UI(p_AHP) & player.health <= UI(p_AHPspin) & !player.channeling(Divine Hymn)'},
 	--Ancient Mana Potion below 20% mana. Active when NOT channeling Divine Hymn.
 	{'#Ancient Mana Potion', 'UI(p_AMP) & player.mana <= UI(p_AMPspin) & !player.channeling(Divine Hymn)'},
+}
+
+local Rampup = {
+--Spreading Atonement before DPS if checked.
+	{'Power Word: Radiance', '!buff(Atonement)', 'friendly'},
+
 }
 
 
@@ -406,6 +419,7 @@ local inCombat = {
 	{Rapture, 'player.buff(Rapture)'},
 	{{
 	{Moving, 'player.moving'},
+	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
 	{Solo, 'toggle(xDPS)'},
 	{PWR, 'UI(PWR) & !tank.health <= 30'},
 	{Mythic, 'partycheck = 2 & UI(myth_heal)'},
