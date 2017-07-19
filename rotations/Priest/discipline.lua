@@ -216,7 +216,7 @@ local Potions = {
 
 local Rampup = {
 --Spreading Atonement before DPS if checked.
-	{'!Evangelism', 'count(Atonement).friendly.buffs >= 15','player'},
+	{'!Evangelism', 'count(Atonement).friendly.buffs >= 12','player'},
 	{'Power Word: Radiance', '!buff(Atonement)', 'friendly'},
 	{'Power Word: Shield', '!buff(Atonement)', 'friendly'},
 	{'Plea', '!buff(Atonement)', 'friendly'},
