@@ -75,7 +75,7 @@ local GUI = {
 	{type = 'header', text = 'Pull Timer', align = 'center'},
 	{type = 'text', text = 'Before Pull.', align = 'center'},
 	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_PPull', width = 55, default= false},
-	{type = 'checkbox', text = 'Power Word: Radiance', key = 'PWR_PPull', width = 55, default= false},
+	{type = 'checkbox', text = 'Pre-Pull Ramp', key = 'PWR_PPull', width = 55, default= false},
 	{type = 'ruler'}, {type = 'spacer'},
 
 	--Solo
@@ -180,9 +180,9 @@ local Cooldowns = {
 	--Gift of the Naaru if lowest health is below or if 20%.
 	{'Gift of the Naaru', 'lowest.health <= 20', 'lowest'},
 	--Automatic usage of Evangelism.
-	{'!Evangelism', 'talent(7,3) & UI(Evang) & player.area(40,70).heal >= UI(Evang_spin) & count(Atonement).friendly.buffs >= UI(Evang2_spin) & lowest.buff(Atonement)','player'},
+	{'!Evangelism', 'talent(7,3) & UI(Evang) & player.area(40,70).heal >= UI(Evang_spin) & buff(Sins of the Many).count >= UI(Evang2_spin) & lowest.buff(Atonement)','player'},
 	--Automatic Light's Wrath.
-	{'!Light\'s Wrath', '{!talent(7,3) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & count(Atonement).friendly.buffs >= UI(LW2_spin) & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime} || {talent(7,3) & player.lastcast(Evangelism) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & count(Atonement).friendly.buffs >= UI(LW2_spin) & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime}','target'},
+	{'!Light\'s Wrath', '{!talent(7,3) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & player.buff(Sins of the Many).count >= UI(LW2_spin) & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime} || {talent(7,3) & player.lastcast(Evangelism) & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & player.buff(Sins of the Many).count >= UI(LW2_spin) & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime}','target'},
 }  
 
 
@@ -216,8 +216,9 @@ local Potions = {
 
 local Rampup = {
 --Spreading Atonement before DPS if checked.
-	{'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(spell(Light\'s Wrath).casttime) & partycheck = 3','player'},
-	{'!Evangelism', 'buff(Sins of the Many).count = 5 & buff(Atonement).duration < spell(spell(Light\'s Wrath).casttime) & partycheck = 2','player'},
+    {'!Light\'s Wrath', 'player.spell(Evangelism).cooldown ~= 0 & friendly.buff(Atonement).duration < {{player.spell(Light\'s Wrath).casttime + gcd}+0.5} & pull_timer = 999','target'},
+	{'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck = 3','player'},
+	{'!Evangelism', 'buff(Sins of the Many).count = 5 & buff(Atonement).duration < spell(Light\'s Wrath).casttime) & partycheck = 2','player'},
 	{'Power Word: Radiance', '!buff(Atonement)', 'lowest'},
 	{'Power Word: Shield', '!buff(Atonement)', 'lowest'},
 	{'Plea', '!buff(Atonement)', 'lowest'},
@@ -375,8 +376,8 @@ local Mythic = {
 {'!Pain Suppression', 'tank.health <= 20', 'tank'},
 {'!Pain Suppression', 'lowest.health <= 20', 'lowest'},
 {'Gift of the Naaru', 'lowest.health <= 20', 'lowest'},
-{'!Light\'s Wrath', '{!talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime} || {talent(7,3) & player.spell(Evangelism).cooldown >= 70 & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime}','target'},
-{'!Evangelism', 'talent(7,3) & player.area(40,70).heal >= 2 & count(Atonement).friendly.buffs >= 4 & lowest.buff(Atonement)','player'},
+{'!Light\'s Wrath', '{!talent(7,3) & player.area(40,70).heal >= 2 & buff(Sins of the Many).count >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime} || {talent(7,3) & player.spell(Evangelism).cooldown >= 70 & player.area(40,70).heal >= 2 & buff(Sins of the Many).count >= 4 & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime}','target'},
+{'!Evangelism', 'talent(7,3) & player.area(40,70).heal >= 2 & buff(Sins of the Many).count >= 4 & lowest.buff(Atonement)','player'},
 {'!Shadowfiend', "player.spell(Light's Wrath).cooldown >= 85 & !talent(4,3)",'target'},
 {'Power Word: Radiance', 'lowest.area(30,85).heal >= 3 & lowest.health <= 85 & !lowest.buff(Atonement) & advanced & player.spell(Power Word: Radiance).charges = 2', 'lowest'},
 {'Power Word: Radiance', 'player.area(40,85).heal >= 3 & lowest.health <= 85 & !lowest.buff(Atonement) & !advanced & player.spell(Power Word: Radiance).charges = 2', 'lowest'},
@@ -438,6 +439,10 @@ local inCombat = {
 local outCombat = {
 	{Keybinds},
 	{Moving, 'moving & !UI(ato) & !inareaid = 1040'},
+	{'!Light\'s Wrath', 'pull_timer <= player.spell(Light\'s Wrath).casttime & UI(PWR_PPull) ','target'},
+	{'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck = 3 & pull_timer <= 20 & UI(PWR_PPull)','player'},
+	{'!Evangelism', 'buff(Sins of the Many).count = 5 & buff(Atonement).duration < spell(Light\'s Wrath).casttime) & partycheck = 2 & pull_timer <= 20 & UI(PWR_PPull)','player'},
+	{Rampup, 'toggle(ramp)||{pull_timer  <= 20 & UI(PWR_PPull)}'},
 	{Mythic, 'partycheck = 2 & UI(myth_heal)'},
 	{{
 		{'Shadow Mend', "lowest.health <= 90 & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
@@ -454,9 +459,8 @@ local outCombat = {
 	{Mythic, 'partycheck = 2 & UI(myth_heal)'},
 	{'%ressdead(Resurrection)', 'UI(rezz)'},
 	-- Potion of Prolonged Power usage before pull if enabled in UI.
-	{'#142117', 'pull_timer <= 3 & UI(s_PPull)'},
+	{'#142117', '{pull_timer <= 3 & UI(s_PPull) & !UI(PWR_PPull)}||{{pull_timer <= 5 + gcd} & UI(s_PPull) & UI(PWR_PPull)}'},
 	{'Power Word: Shield', 'pull_timer <= gcd', 'tank'},
-	{'Power Word: Radiance', '{pull_timer  <= 6 & pull_timer >= 3} & lowest.range <= 40 & UI(PWR_PPull)', 'lowest'},
 }
 
 NeP.CR:Add(256, {
