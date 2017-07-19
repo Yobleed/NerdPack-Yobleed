@@ -216,7 +216,11 @@ local Potions = {
 
 local Rampup = {
 --Spreading Atonement before DPS if checked.
-	{'!Evangelism', 'count(Atonement).friendly.buffs >= 12','player'},
+	{'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(spell(Light\'s Wrath).casttime) & partycheck = 3','player'},
+	{'!Evangelism', 'buff(Sins of the Many).count = 5 & buff(Atonement).duration < spell(spell(Light\'s Wrath).casttime) & partycheck = 2','player'},
+	{'Power Word: Radiance', '!buff(Atonement)', 'lowest'},
+	{'Power Word: Shield', '!buff(Atonement)', 'lowest'},
+	{'Plea', '!buff(Atonement)', 'lowest'},
 	{'Power Word: Radiance', '!buff(Atonement)', 'friendly'},
 	{'Power Word: Shield', '!buff(Atonement)', 'friendly'},
 	{'Plea', '!buff(Atonement)', 'friendly'},
@@ -422,7 +426,7 @@ local inCombat = {
 	{Rapture, 'player.buff(Rapture)'},
 	{{
 	{Moving, 'player.moving'},
-	{Rampup, 'toggle(ramp) & !lowest.debuff(Ignite Soul)'},
+	{Rampup, 'toggle(ramp)'},
 	{Solo, 'toggle(xDPS)'},
 	{PWR, 'UI(PWR) & !tank.health <= 30'},
 	{Mythic, 'partycheck = 2 & UI(myth_heal)'},
