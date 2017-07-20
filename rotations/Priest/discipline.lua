@@ -217,7 +217,7 @@ local Potions = {
 
 local Rampup = {
 --Spreading Atonement before DPS if checked.
-    {'!Light\'s Wrath', 'player.spell(Evangelism).cooldown ~== 0 & friendly.buff(Atonement).duration < {{player.spell(Light\'s Wrath).casttime + gcd}+0.5} & pull_timer == 999','target'},
+    {'!Light\'s Wrath', 'player.spell(Evangelism).cooldown ~= 0 & friendly.buff(Atonement).duration < {{player.spell(Light\'s Wrath).casttime + gcd}+0.5} & pull_timer == 999','target'},
 	{'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck == 3','player'},
 	{'!Evangelism', 'buff(Sins of the Many).count == 5 & buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck == 2','player'},
 	{'Power Word: Radiance', '!buff(Atonement)', 'lowest'},
