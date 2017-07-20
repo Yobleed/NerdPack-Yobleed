@@ -1,13 +1,10 @@
 --[[TO DO:
 count.buff/debuff() with count.enemies/friendly.buff/debuff()
 counts how many have the buff/debuff
-
 Vampiric Touch:
 enemyndebuff(Vampiric Touch) FAKEUNIT
-
 Shadow Word: Pain  :
 enemyndebuff(Shadow Word: Pain) FAKEUNIT
-
 Shadow Word: Death :
 Lowestenemy FAKEUNIT
 ]]--
@@ -30,7 +27,7 @@ local GUI = {
 	{type = 'checkbox', text = 'Target Fel Explosives', key = 'myth_fel', width = 55, default= false},
 	{type = 'text', text = 'Before Pull', align = 'center'},
 	{type = 'checkbox', text = 'Potion of Prolonged Power', key = 's_pull', width = 55, default= false},
-	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', width = 55, default= false},
+	{type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', width = 55, default = false},
 	{type = 'text', text = 'Movement', align = 'center'},
 	{type = 'checkbox', text = 'Body and Soul', key = 'm_Body', width = 55, default = false},
     {type = 'ruler'}, {type = 'spacer'},
@@ -216,8 +213,8 @@ local Emergency = {
 local cooldowns = {
     
     --Torrent on CD.
-    {'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0 & UI(dps_void) & player.buff(voidform).count > 3 & set_bonus(T19) = 4', 'target'}, 
-    {'!Void Torrent', 'UI(dps_void) & !set_bonus(T19) = 4', 'target'}, 
+    {'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0 & UI(dps_void) & player.buff(voidform).count > 3 & set_bonus(T19) == 4', 'target'}, 
+    {'!Void Torrent', 'UI(dps_void) & !set_bonus(T19) == 4', 'target'}, 
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
 	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown == 0 & !spell(Void Torrent).cooldown == 0 & !spell(Dispersion).cooldown == 0 & UI(dps_PI)', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
@@ -244,7 +241,7 @@ local AOE = {
     {'Shadow Word: Pain', '{!debuff(Shadow Word: Pain) & toggle(AOE) & distance <= 40 & combat & infront & {player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}}}', 'enemies'},
     {'Vampiric Touch', '{ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !player.lastcast(Vampiric Touch) & {!debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}}}', 'enemies'},  
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
-	},'!player.buff(voidform) & !player.insanity = 100'},
+	},'!player.buff(voidform) & !player.insanity == 100'},
 	--Shadow Crash on CD.
 	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0} || {!advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0}', 'target.ground'},
 
@@ -314,14 +311,14 @@ local inCombat = {
 	{Movement, '!player.buff(Voidform || {player.buff Voidform & !spell(Void Eruption).cooldown == 0 & !player.channeling(Void Torrent)}'},
 	{Surrender, '!player.channeling(Void Torrent)'}, 
 	{'Mind Bomb', '{toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness) & !player.channeling(Void Torrent) & !talent(7,2)} || {toggle(abc) & target.area(8).enemies >= 3 & talent(7,2) & spell(Shadow Crash).cooldown == 0 & player.buff(Voidform) & !player.channeling(Void Torrent)}'},
-	{Mythic, 'partycheck = 2 & UI(myth_fel)'},
+	{Mythic, 'partycheck == 2 & UI(myth_fel)'},
 	{Emergency, '!player.channeling(Void Torrent)'},
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
 	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
 	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
 	{Zeks},
-	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(7,1) & !player.insanity >= 65} || {talent(7,3) ||talent(7,2) & !player.insanity = 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
+	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(7,1) & !player.insanity >= 65} || {talent(7,3) ||talent(7,2) & !player.insanity == 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(70) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
@@ -339,7 +336,7 @@ local outCombat = {
 	{'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
 	{'Shadowform', '!player.buff(Shadowform) & !player.lastcast(Shadowform)','player'},
 	--No Body and Soul from Class Hall.
-	{Movement, '!player.buff(Body and Soul) & !inareaid = 1040'},
+	{Movement, '!player.buff(Body and Soul) & !inareaid == 1040'},
 }
 
 NeP.CR:Add(258, {
