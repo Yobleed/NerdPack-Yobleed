@@ -200,8 +200,6 @@ local Keybinds = {
 	{'Power Word: Radiance', 'keybind(lshift) & UI(k_PWB) & !lowest.buff(Atonement) & !player.spell(Power Word: Barrier).cooldown == 0', 'lowest'},
 	--Mass Dispel on Mouseover target Left Control when checked in UI.
 	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
-	--Mass Dispel on Mouseover target Left Control when checked in UI.
-	{'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD) & !advanced', 'cursor.ground'},
 	-- Pause on left alt when checked in UI.
 	{'%pause', 'keybind(lalt)& UI(k_P)'},
 }

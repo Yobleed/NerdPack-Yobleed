@@ -125,8 +125,8 @@ local Mythic = {
 
 local Zeks = {
 	--Shadow Word Death with Zek's Exterminatus
-	{'!Shadow Word: Death', 'equipped(144438) & !player.buff(voidform) & player.spell(Mind Blast).cooldown > gcd', 'target'},
-	{'!Shadow Word: Death', 'equipped(144438) & player.spell(Void Eruption).cooldown > gcd & player.spell(Mind Blast).cooldown > gcd & player.buff(voidform)', 'target'},
+	{'!Shadow Word: Death', 'equipped(144438) & !player.buff(Voidform) & player.spell(Mind Blast).cooldown > gcd', 'target'},
+	{'!Shadow Word: Death', 'equipped(144438) & player.spell(Void Eruption).cooldown > gcd & player.spell(Mind Blast).cooldown > gcd & player.buff(Voidform)', 'target'},
 }
 local Survival = {
 	-- Fade usage if enabled in UI.
@@ -203,32 +203,32 @@ local Insight = {
 
 local Emergency = {
 	--Dispersion when SWD charges are 0 and VoiT is on CD and insanity below or equal to 20%.
-	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & !spell(Void Torrent).cooldown > 0 & player.insanity <= 20 & !talent(7,1) & !talent(7,2) & UI(dps_D)'},
+	{'!Dispersion', 'player.spell(Shadow Word: Death).charges < 1 & !spell(Void Torrent).cooldown == 0 & player.insanity <= 20 & !talent(7,1) & !talent(7,2) & UI(dps_D)'},
 	--Arcane Torrent if SWD on cd or not usable, dispersion is on CD and insanity is low
-	{'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!spell(Shadow Word: Death).cooldown > 0 || !target.health <= 35} & !spell(Dispersion).cooldown > 0'}, 
+	{'!Arcane Torrent', 'UI(dps_at) & player.insanity <= 35 & {!player.spell(shadow word: death).cooldown == 0 || !target.health <= 35} & !player.spell(Dispersion).cooldown == 0'}, 
 	--Power Infusion if talent active and VF stacks are 70 or higher if SWD charges are 0 and insanity is 50% or below.
-	{'!Power Infusion', 'talent(6,1) & player.buff(voidform).count >= 80 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 60 & UI(dps_PI)'},
+	{'!Power Infusion', 'talent(6,1) & player.buff(Voidform).count >= 80 & spell(Shadow Word: Death).charges < 1 & player.insanity <= 60 & UI(dps_PI)'},
 }
 
 local cooldowns = {
     
     --Torrent on CD.
-    {'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0 & UI(dps_void) & player.buff(voidform).count > 3 & set_bonus(T19) == 4', 'target'}, 
+    {'!Void Torrent', 'player.spell(Void Eruption).cooldown > 0 & UI(dps_void) & player.buff(Voidform).count > 3 & set_bonus(T19) == 4', 'target'}, 
     {'!Void Torrent', 'UI(dps_void) & !set_bonus(T19) == 4', 'target'}, 
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown == 0 & !spell(Void Torrent).cooldown == 0 & !spell(Dispersion).cooldown == 0 & UI(dps_PI)', 'player'},
+	{'!Power Infusion', 'talent(6,1) & player.buff(Surrender to Madness) & player.buff(Voidform).count >= 50 & player.insanity >= 50 & !spell(Void Eruption).cooldown == 0 & !spell(Void Torrent).cooldown == 0 & !spell(Dispersion).cooldown == 0 & UI(dps_PI)', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target below or equal to 35% health.
-	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_PIspin1) & target.health <= 35 & UI(dps_PI)', 'player'},
+	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(Voidform).count >= UI(dps_PIspin1) & target.health <= 35 & UI(dps_PI)', 'player'},
 	--Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
-	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_PIspin2) & target.health > 35 & UI(dps_PI)', 'player'},
+	{'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(Voidform).count >= UI(dps_PIspin2) & target.health > 35 & UI(dps_PI)', 'player'},
 	--Mindbender if talent is active on CD in S2M.
 	{'!Mindbender', 'talent(6,3) & player.buff(Surrender to Madness)'},
 	--Mind Bender if talent is active and not in S2M if VF stacks are above 5.
-	{'!Mindbender', 'talent(6,3) & !player.buff(Surrender to Madness) & player.buff(voidform).count >= UI(dps_SFspin) & UI(dps_fiend)', 'target'},
+	{'!Mindbender', 'talent(6,3) & !player.buff(Surrender to Madness) & player.buff(Voidform).count >= UI(dps_SFspin) & UI(dps_fiend)', 'target'},
 	--Shadowfiend if Void Bolt is on CD and VF stacks are above 10 when Power Infusion talent is not active.
-	{'!Shadowfiend', '!player.spell(Void Eruption).cooldown == 0 & player.buff(voidform).count >= UI(dps_SFspin) & !talent(6,1) & UI(dps_fiend)', 'target'},
+	{'!Shadowfiend', '!player.spell(Void Eruption).cooldown == 0 & player.buff(Voidform).count >= UI(dps_SFspin) & !talent(6,1) & UI(dps_fiend)', 'target'},
 	--Shadowfiend if PI and above 40% insanity.
-	{'!Shadowfiend', 'player.buff(Power Infusion) & player.buff(voidform).count >= UI(dps_SFspin) & UI(dps_fiend)'},
+	{'!Shadowfiend', 'player.buff(Power Infusion) & player.buff(Voidform).count >= UI(dps_SFspin) & UI(dps_fiend)'},
 }
 
 local AOE = {
@@ -236,12 +236,12 @@ local AOE = {
     {'Shadow Word: Pain', '{!debuff(Shadow Word: Pain) & toggle(AOE) & distance <= 40 & combat & {player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}}}', 'enemies'},
     {'Vampiric Touch', '{ttd >= 7 & toggle(AOE) & distance <= 40 & combat & !player.lastcast(Vampiric Touch) & {!debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}}}', 'enemies'},  
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & combat', 'enemies'},
-	},'player.buff(voidform) & !player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0'},
+	},'player.buff(Voidform) & !player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0'},
     {{
     {'Shadow Word: Pain', '{!debuff(Shadow Word: Pain) & toggle(AOE) & distance <= 40 & combat & infront & {player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}}}', 'enemies'},
     {'Vampiric Touch', '{ttd >= 7 & toggle(AOE) & infront & distance <= 40 & combat & !player.lastcast(Vampiric Touch) & {!debuff(Vampiric Touch)||{!debuff(Shadow Word: Pain) & talent(6,2)}}}', 'enemies'},  
 	{'Shadow Word: Pain', '!debuff(Shadow Word: Pain) & !talent(6,2) & toggle(AOE) & distance <= 40 & infront & combat', 'enemies'},
-	},'!player.buff(voidform) & !player.insanity == 100'},
+	},'!player.buff(Voidform) & !player.insanity == 100'},
 	--Shadow Crash on CD.
 	{'Shadow Crash', '{target.area(8).enemies >= 2 & advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0} || {!advanced & toggle(AOE) & player.buff(Voidform) & !target.moving & player.spell(Void Eruption).cooldown > 0}', 'target.ground'},
 
@@ -281,9 +281,9 @@ local lotv = {
 	{'!Shadow Word: Death', '!player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0 & !player.channeling(Void Eruption)', 'target'},
 	}, '!advanced'},
 	--Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
-	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown == 0','target'},
+	{'!Dispersion', 'player.buff(Voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown == 0','target'},
 	--Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
-	{'!Dispersion', 'player.buff(voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown == 0','target'},
+	{'!Dispersion', 'player.buff(Voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown == 0','target'},
 	--Void Bolt on CD not interrupting casting MB.
 	{'!Void Eruption', '!player.channeling(Mind Blast)','target'},
 	--Mind Flay if Dots are up and VB and MB are on CD.
@@ -306,8 +306,8 @@ local lotv = {
 
 
 local inCombat = {
-	{{--Shadowform if no voidform and no shadowform.
-	{'Shadowform', '!player.buff(voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
+	{{--Shadowform if no Voidform and no shadowform.
+	{'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
 	{Movement, '!player.buff(Voidform || {player.buff Voidform & !spell(Void Eruption).cooldown == 0 & !player.channeling(Void Torrent)}'},
 	{Surrender, '!player.channeling(Void Torrent)'}, 
 	{'Mind Bomb', '{toggle(abc) & target.area(8).enemies >= 3 & !player.buff(Surrender To Madness) & !player.channeling(Void Torrent) & !talent(7,2)} || {toggle(abc) & target.area(8).enemies >= 3 & talent(7,2) & spell(Shadow Crash).cooldown == 0 & player.buff(Voidform) & !player.channeling(Void Torrent)}'},
@@ -316,15 +316,15 @@ local inCombat = {
 	{Potions, '!player.channeling(Void Torrent)'},
 	{Survival, 'player.health < 100 & !player.channeling(Void Torrent) & !player.buff(Surrender to Madness)'},
 	{Support, '!player.buff(Surrender to Madness) & !player.channeling(Void Torrent)'},
-	{cooldowns, 'player.buff(voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
+	{cooldowns, 'player.buff(Voidform) & !player.channeling(Void Torrent) & toggle(cooldowns)'}, 
 	{Zeks},
 	{Insight, 'player.buff(Shadowy Insight) & {!player.channeling(Void Torrent) & {talent(7,1) & !player.insanity >= 65} || {talent(7,3) ||talent(7,2) & !player.insanity == 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
 	{Keybinds},
 	{Trinkets, '!player.channeling(Void Torrent)'},
 	{Interrupts, 'toggle(interrupts) & target.interruptAt(70) & target.infront & target.range <= 30 & !player.channeling(Void Torrent)'},
 	{AOE, '!player.channeling(Void Torrent) & toggle(AOE) & range <= 40'}, 
-	{lotv, 'player.buff(voidform) & !player.channeling(Void Torrent)'}, 
-	{ST, "!player.buff(voidform) & !player.channeling(Void Torrent)"},
+	{lotv, 'player.buff(Voidform) & !player.channeling(Void Torrent)'}, 
+	{ST, "!player.buff(Voidform) & !player.channeling(Void Torrent)"},
 	{'Mind Flay', nil,'target'},
 },'!player.channeling(Void Torrent)'},
 }
