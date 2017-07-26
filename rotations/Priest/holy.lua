@@ -290,7 +290,7 @@ local Felexplosive = {
 }
 
 local Mythic = {
-  {'!#Archive of Faith', 'UI(trinket_2) & health <= 60 & !player.moving & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
+  {'!#Archive of Faith', 'UI(trinket_2) & health <= 60 & !player.moving & !player.buff(Spirit of Redemption) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
   {'Prayer of Mending', 'lowest.health > 90 & !player.moving & !buff(Prayer of Mending)', 'tank'},
   {'Prayer of Mending', 'health > 90 & !player.moving & !buff(Prayer of Mending)', 'lowest'},
   {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
