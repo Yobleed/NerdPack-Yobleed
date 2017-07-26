@@ -321,6 +321,7 @@ local Sanctify = {
 }
 
 local PoH = {
+  {'!/stopcasting', '!lowestp.area(30, 90).heal >= 4 & player.casting(Prayer of Healing) & partycheck==3'},
   {'Prayer of Healing', 'area(10, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & partycheck==3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestp'},
   {'Prayer of Healing', 'area(15, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & partycheck==3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestp'},
   {'Prayer of Healing', 'area(20, 90).heal >= 4 & toggle(AOE) & !tank.health <= 20 & !toggle(xDPS) & !player.channeling(Divine Hymn) & !debuff(Ignite Soul) & partycheck==3 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'lowestp'},
