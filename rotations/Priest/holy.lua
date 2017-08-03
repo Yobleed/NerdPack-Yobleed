@@ -382,7 +382,7 @@ local AOE = {
 }
 
 local inCombat = {
-  {'Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
+  {'Angelic Feather', 'player.movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
   {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body)', 'player'},
   {'!Holy Word: Chastise', 'toggle(interrupts) & interruptAt(70) & infront', 'target'},
   {'Fade', 'aggro & !partycheck == 1','player'},
@@ -408,7 +408,7 @@ local inCombat = {
 }
 
 local outCombat = {
-  {'Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid == 1040', 'player.ground'},
+  {'Angelic Feather', 'player.movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid == 1040', 'player.ground'},
   {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body) & !inareaid == 1040', 'player'},
   {Cooldowns,'partycheck == 2 & UI(myth_heal)'},
   {Potions, 'partycheck == 2 & UI(myth_heal)'},
