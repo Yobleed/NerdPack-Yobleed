@@ -237,7 +237,7 @@ local Solo = {
   --PWS if player health is below or if UI value.
   {'Power Word: Shield', 'Player.Health <= UI(full_PWS)', 'player'},
   --Schism on cooldown.
-  {'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
+  {'Schism', "talent(1,3) & {!player.moving || player.buff(Norgannon's Foresight)}", 'target'},
   --LW.
     {'Light\'s Wrath', 'player.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime'},
   --PI on CD if toggled.
@@ -245,7 +245,7 @@ local Solo = {
   --Shadowfiend on CD if toggled.
   {'Shadowfiend', '!talent(4,3)', 'target'},
   --Shadow Mend if player health is below or if UI value.
-  {'Shadow Mend', "player.health <= UI(full_mend) & {!moving || player.buff(Norgannon's Foresight)}", 'player'},
+  {'Shadow Mend', "player.health <= UI(full_mend) & {!player.moving || player.buff(Norgannon's Foresight)}", 'player'},
   --Gift of the Naaru if player health is below or if UI value.
   {'Gift of the Naaru', 'player.health <= UI(full_Gift)', 'player'},
   --Purge the Wicked if talent and not on target.
@@ -440,18 +440,18 @@ local inCombat = {
 
 local outCombat = {
   {Keybinds},
-  {Moving, 'moving & !UI(ato) & !inareaid == 1040'},
+  {Moving, 'player.moving & !UI(ato) & !inareaid == 1040'},
   {'!Light\'s Wrath', 'pull_timer <= player.spell(Light\'s Wrath).casttime & UI(PWR_PPull) ','target'},
   {'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck == 3 & pull_timer <= 20 & UI(PWR_PPull)','player'},
   {'!Evangelism', 'buff(Sins of the Many).count == 5 & buff(Atonement).duration < spell(Light\'s Wrath).casttime) & partycheck == 2 & pull_timer <= 20 & UI(PWR_PPull)','player'},
   {Rampup, 'toggle(ramp)||{pull_timer  <= 20 & UI(PWR_PPull)}'},
   {Mythic, 'partycheck == 2 & UI(myth_heal)'},
   {{
-    {'Shadow Mend', "lowest.health <= 90 & {!moving || player.buff(Norgannon's Foresight)}", 'lowest'},
+    {'Shadow Mend', "lowest.health <= 90 & {!player.moving || player.buff(Norgannon's Foresight)}", 'lowest'},
   }, 'UI(ooc_heal)||UI(myth_heal)'},
   {{
     {'Power Word: Shield', '!tank.buff(Power Word: Shield)', 'tank'},
-    {Moving, 'moving'},
+    {Moving, 'player.moving'},
     {'Plea', 'lowest1.health > UI(l_mend) & !lowest1.buff(Atonement)', 'lowest1'},
     {'Plea', 'lowest2.health > UI(l_mend) & !lowest2.buff(Atonement)', 'lowest2'},
     {'Plea', 'lowest3.health > UI(l_mend) & !lowest3.buff(Atonement)', 'lowest3'},
