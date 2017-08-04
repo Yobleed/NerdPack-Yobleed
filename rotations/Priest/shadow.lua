@@ -238,7 +238,7 @@ local AOE = {
     {'Shadow Word: Pain', '!debuff & !talent(6,2) & distance <= 40 & combat', 'enemies'},
   }, 'player.buff(Voidform) & {!player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0||!player.insanity == 100}'},
   --Shadow Crash on CD.
-  {'Shadow Crash', 'area(8).enemies >= 2 & player.buff(Voidform) & !moving & spell(Void Eruption).cooldown > 0', 'target.ground'},
+  {'Shadow Crash', 'area(8).enemies >= 2 & player.buff(Voidform) & !target.moving & spell(Void Eruption).cooldown > 0', 'target.ground'},
 }
 
 local ST = {
@@ -280,7 +280,7 @@ local lotv = {
   --Misery.
   {'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2) & !player.lastcast(Vampiric Touch)','target'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-  {'Shadow Word: Pain', 'debuff.duration < 3 & {!talent(6,2)||moving}','target'},
+  {'Shadow Word: Pain', 'debuff.duration < 3 & {!talent(6,2)||player.moving}','target'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
   {'!Vampiric Touch', '!player.lastcast & {debuff.duration <= 3 || target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},
 }
