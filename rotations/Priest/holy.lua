@@ -297,9 +297,8 @@ local Mythic = {
 {'Renew', '!buff(Renew) & player.moving', 'friendly'},
 {'!Holy Word: Serenity', 'health <= UI(l_HWSE)', 'lowest'},
 {'!Gift of the Naaru', 'health <= 40', 'lowest'},
-{'Binding Heal', 'lowestp.area(20, 95).heal >= 2 & !health <= 85', 'lowestp'},
-{'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= 85 & !advanced', 'lowestp'},
-{'Heal', 'health <= 90 & player.spell(Heal)casttime <= player.spell(Flash Heal)casttime & !health <= 50', 'lowest'},
+{'Binding Heal', 'lowest.area(20, 95).heal >= 2 & !health <= 85', 'lowest'},
+{'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= 85 & !advanced', 'lowest'},
 {'Flash Heal', 'health <= 90', 'lowest'},
 {'Heal', 'health <= 95', 'lowest'},
 
