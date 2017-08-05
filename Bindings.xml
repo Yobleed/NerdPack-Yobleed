@@ -23,9 +23,5 @@
         NeP.Interface:toggleToggle('ramp')
     </Binding>
 
-<Binding name="Top Up your party" description="Toggle ON/OFF" header="NeP_Yobleed" category="NerdPack-Yobleed">
-        NeP.Interface:toggleToggle('topup')
-    </Binding>
-
 </Bindings>
 
