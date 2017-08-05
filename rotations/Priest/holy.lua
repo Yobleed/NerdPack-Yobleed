@@ -212,57 +212,61 @@ local Solo = {
 }
 
 local Tankpred = {
-  {'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', {'tank1', 'tank2'}},
-  {'Heal', 'health.predicted <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', {'tank1', 'tank2'}},
-  {'Flash Heal', 'health.predicted <= UI(t_FH)', {'tank1', 'tank2'}},
-  {'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', {'tank1', 'tank2'}},
+	{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
+	{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
+	{'Heal', 'health.predicted <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank1'},
+	{'Heal', 'health.predicted <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank2'},
+	{'Flash Heal', 'health.predicted <= UI(t_FH)', 'tank1'},
+	{'Flash Heal', 'health.predicted <= UI(t_FH)', 'tank2'},
+	{'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank1'},
+	{'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank2'},
 }
 
 local Tank = {
-  {'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
-  {'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
-  {'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank1'},
-  {'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank2'},
-  {'Flash Heal', 'health <= UI(t_FH)', 'tank1'},
-  {'Flash Heal', 'health <= UI(t_FH)', 'tank2'},
-  {'Renew', '!buff(Renew) & health <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank1'},
-  {'Renew', '!buff(Renew) & health <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank2'},
+	{'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
+	{'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
+	{'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank1'},
+	{'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank2'},
+	{'Flash Heal', 'health <= UI(t_FH)', 'tank1'},
+	{'Flash Heal', 'health <= UI(t_FH)', 'tank2'},
+	{'Renew', '!buff(Renew) & health <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank1'},
+	{'Renew', '!buff(Renew) & health <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank2'},
 }
 
 local Playerpred = {
-  {'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
-  {'Gift of the Naaru', 'health.predicted <= UI(p_Gift)', 'player'},
-  {'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health.predicted <= 95 & !player.buff(Surge of Light)', 'lowestp'},
-  {'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
-  {'Flash Heal', 'health.predicted <= UI(p_FH)', 'player'},
+	{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
+	{'Gift of the Naaru', 'health.predicted <= UI(p_Gift)', 'player'},
+	{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
+	{'Flash Heal', 'health.predicted <= UI(p_FH)', 'player'},
 }
 
 local Player = {
-  {'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
-  {'Gift of the Naaru', 'health <= UI(p_Gift)', 'player'},
-  {'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health <= 95 & !player.buff(Surge of Light)', 'lowest'},
-  {'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
-  {'Flash Heal', 'health <= UI(p_FH)', 'player'},
-}
+	{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
+	{'Gift of the Naaru', 'health <= UI(p_Gift)', 'player'},
+	{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
+	{'Flash Heal', 'health <= UI(p_FH)', 'player'},
+}  
 
 local Lowestpred = {
-  {'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowestp'},
-  {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowestp'},
-  {'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowestp'},
-  {'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health.predicted <= 95  & !player.buff(Surge of Light)', 'lowestp'},
-  {'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowestp'},
-  {'Flash Heal', 'health <= UI(l_FH)', 'lowestp'},
-  {'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowestp'},
+	{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowestp'},
+	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowestp'},
+	{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowestp'},
+  {'Binding Heal', 'lowestp.area(20, 95).heal >= 2 & !health <= UI(l_FH)', 'lowestp'},
+  {'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= UI(l_FH) & !advanced', 'lowestp'},
+	{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowestp'},
+	{'Flash Heal', 'health <= UI(l_FH)', 'lowestp'},
+	{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowestp'},
 }
 
 local Lowest = {
-  {'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowest'},
-  {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
-  {'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowest'},
-  {'Binding Heal', 'health <= UI(l_BH) & !is(player) & player.health <= 95 & !player.buff(Surge of Light)', 'lowest'},
-  {'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowest'},
-  {'Flash Heal', 'health <= UI(l_FH)', 'lowest'},
-  {'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowest'},
+	{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowest'},
+	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
+	{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowest'},
+  {'Binding Heal', 'lowest.area(20, 95).heal >= 2 & !health <= UI(l_FH)', 'lowest'},
+  {'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= UI(l_FH) & !advanced', 'lowest'},
+	{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowest'},
+	{'Flash Heal', 'health <= UI(l_FH)', 'lowest'},
+	{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowest'},
 }
 
 local PoMooc = {
@@ -286,19 +290,19 @@ local Felexplosive = {
 }
 
 local Mythic = {
-  {'!#Archive of Faith', 'UI(trinket_2) & health <= 60 & !player.moving & !player.buff(Spirit of Redemption) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
-  {'Prayer of Mending', 'lowest.health > 90 & !player.moving & !buff(Prayer of Mending)', 'tank'},
+  {'!#Archive of Faith', 'UI(trinket_2) & health <= 60 & !player.moving & !player.buff(Spirit of Redemption) & player.equipped(Archive of Faith) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
+  {'Prayer of Mending', 'health > 90 & !player.moving & !buff(Prayer of Mending)', 'tank'},
   {'Prayer of Mending', 'health > 90 & !player.moving & !buff(Prayer of Mending)', 'lowest'},
   {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
   {'Renew', '!buff(Renew) & player.moving', 'lowest'},
   {'Renew', '!buff(Renew) & player.moving', 'friendly'},
-  {'Renew', 'health < 100 & health > 70 & !buff(Renew)', 'lowest'},
   {'!Holy Word: Serenity', 'health <= UI(l_HWSE)', 'lowest'},
-  {'!Gift of the Naaru', 'health <= 40', 'lowest'},
-  {'Heal', 'health <= 90 & player.spell(Heal)casttime <= 1.2 & !health <= 50', 'lowest'},
-  {'Flash Heal', 'health <= 90', 'lowest'},
-  {'Binding Heal', 'health <= 95 & !is(player) & player.health <= 95 & !player.buff(Surge of Light)', 'lowest'},
-  {'Heal', 'health <= 95', 'lowest'},
+	{'!Gift of the Naaru', 'health <= 40', 'lowest'},
+  {'Binding Heal', 'lowestp.area(20, 95).heal >= 2 & !health <= 85', 'lowestp'},
+  {'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= 85 & !advanced', 'lowestp'},
+	{'Heal', 'health <= 90 & player.spell(Heal)casttime <= player.spell(Flash Heal)casttime & !health <= 50', 'lowest'},
+	{'Flash Heal', 'health <= 90', 'lowest'},
+	{'Heal', 'health <= 95', 'lowest'},
 
 
 }
@@ -382,6 +386,7 @@ local AOE = {
 }
 
 local inCombat = {
+  {{
   {'Angelic Feather', 'player.movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
   {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body)', 'player'},
   {'!Holy Word: Chastise', 'toggle(interrupts) & interruptAt(70) & infront', 'target'},
@@ -397,17 +402,28 @@ local inCombat = {
   {AOE,'!tank.health <= 30 & !lowest.health <= 30 & toggle(AOE) & !player.moving'},
   {Felexplosive, 'lowest.health >= 80 & UI(myth_fel)'},
   {Mythic, 'partycheck == 2 & UI(myth_heal) & !player.moving'},
+  {{
+  {'!/stopcasting','!lowestp.area(40, 95).heal >= 2 & toggle(mana) & partycheck == 3 & player.casting(Binding Heal)'},
+  {'!/stopcasting','!lowest.area(40, 95).heal >= 2 & toggle(mana) & partycheck == 2 & player.casting(Binding Heal)'},
   {'!/stopcasting','lowest.health >= UI(l_FH) & toggle(mana) & partycheck == 2 & {player.casting(Heal) || player.casting(Flash Heal)}'},
   {'!/stopcasting','lowestp.health >= UI(l_FH) & toggle(mana) & partycheck == 3 & {player.casting(Heal) || player.casting(Flash Heal)}'},
-  {'!/stopcasting','lowest.health >= 100 & partycheck == 2 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal)}'},
-  {'!/stopcasting','lowestp.health >= 100 & partycheck == 3 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal)}'},
+  {'!/stopcasting','lowest.health >= 100 & partycheck == 2 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal) }'},
+  {'!/stopcasting','lowestp.health >= 100 & partycheck == 3 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal)}'},
+  },'!player.buff(Spirit of Redemption)'},
   {ST, '!UI(myth_heal) & !player.moving'},
   {'Flash Heal', 'health < 100 & player.buff(Spirit of Redemption)', 'lowestp'},
   {'!Flash Heal', 'health < UI(l_FH) & player.casting(Smite)', 'lowest'},
   {DPS, 'lowest.health > UI(l_FH)'},
+  },'!player.channeling(Divine Hymn)'},
 }
 
 local outCombat = {
+  {{
+  {'#trinket1', 'partycheck == 3 & !buff(Guiding Hand) & health > 70 & player.equipped(The Deceiver\'s Grand Design) & UI(trinket_1)', 'tank1'}, -- Deceiver's Grand Design
+  {'#trinket1', 'partycheck == 3 & !buff(Guiding Hand) & health > 70 & player.equipped(The Deceiver\'s Grand Design) & UI(trinket_1)', 'tank2'},
+  {'#trinket1', 'partycheck == 2 & !buff(Guiding Hand) & health > 70 & player.equipped(The Deceiver\'s Grand Design) & UI(trinket_1)', 'tank'},
+  {'#trinket1', 'partycheck ~= 3 & !buff(Guiding Hand) & health > 70 & player.equipped(The Deceiver\'s Grand Design) & UI(trinket_1)', 'player'},
+  },'!player.buff(Spirit of Redemption)'},
   {'Angelic Feather', 'player.movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid == 1040', 'player.ground'},
   {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body) & !inareaid == 1040', 'player'},
   {Cooldowns,'partycheck == 2 & UI(myth_heal)'},
