@@ -214,8 +214,6 @@ local Solo = {
 local Tankpred = {
 {'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
 {'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
-{'Heal', 'health.predicted <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank1'},
-{'Heal', 'health.predicted <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank2'},
 {'Flash Heal', 'health.predicted <= UI(t_FH)', 'tank1'},
 {'Flash Heal', 'health.predicted <= UI(t_FH)', 'tank2'},
 {'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank1'},
@@ -225,8 +223,6 @@ local Tankpred = {
 local Tank = {
 {'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
 {'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
-{'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank1'},
-{'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank2'},
 {'Flash Heal', 'health <= UI(t_FH)', 'tank1'},
 {'Flash Heal', 'health <= UI(t_FH)', 'tank2'},
 {'Renew', '!buff(Renew) & health <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank1'},
@@ -236,14 +232,12 @@ local Tank = {
 local Playerpred = {
 {'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
 {'Gift of the Naaru', 'health.predicted <= UI(p_Gift)', 'player'},
-{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
 {'Flash Heal', 'health.predicted <= UI(p_FH)', 'player'},
 }
 
 local Player = {
 {'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
 {'Gift of the Naaru', 'health <= UI(p_Gift)', 'player'},
-{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
 {'Flash Heal', 'health <= UI(p_FH)', 'player'},
 }  
 
@@ -253,7 +247,6 @@ local Lowestpred = {
 {'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowestp'},
 {'Binding Heal', 'lowestp.area(20, 95).heal >= 2 & !health <= UI(l_FH)', 'lowestp'},
 {'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= UI(l_FH) & !advanced', 'lowestp'},
-{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowestp'},
 {'Flash Heal', 'health <= UI(l_FH)', 'lowestp'},
 {'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowestp'},
 }
@@ -264,7 +257,6 @@ local Lowest = {
 {'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowest'},
 {'Binding Heal', 'lowest.area(20, 95).heal >= 2 & !health <= UI(l_FH)', 'lowest'},
 {'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= UI(l_FH) & !advanced', 'lowest'},
-{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowest'},
 {'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowest'},
 }
 
