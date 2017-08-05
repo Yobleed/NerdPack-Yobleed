@@ -266,8 +266,9 @@ local Solo = {
 }
 local Atonement = {
   --Purge the Wicked if talent and not on target.
-  {'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd', 'enemies'},
-  {'Purge the Wicked', ' talent(6,1) & !target.debuff(Purge the Wicked)', 'target'},
+  {'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & ttd >= 20 & partycheck = 3', 'enemies'},
+	{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & partycheck ~= 3', 'enemies'},
+	{'Purge the Wicked', ' talent(6,1) & !target.debuff(Purge the Wicked)', 'target'},
   --Shadow Word: Pain if not on target.
   {'Shadow Word: Pain', '!talent(6,1) & !target.debuff(Shadow Word: Pain)', 'target'},
   --Schism on cooldown.
@@ -279,7 +280,8 @@ local Atonement = {
   --Divine Star if mobs are 3 or more.
   {'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 3 & toggle(AOE)'},
   --Smite on CD.
-  {'Smite', 'infront', 'target'},
+  {'Smite', 'infront & partycheck = 3 & player.buff(Sins of the Many).count >= 5', 'target'},
+	{'Smite', 'infront & partycheck ~= 3', 'target'},
 }
 
 local Tankpred = {
