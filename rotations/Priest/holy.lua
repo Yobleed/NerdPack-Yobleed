@@ -173,147 +173,146 @@ local Cooldowns = {
 }
 
 local Trinkets = {
-  --Top Trinket usage if UI enables it.
-  {'#trinket1', 'UI(trinket_1) & !tank1.buff(Guiding Hand) & tank1.health < tank2.health & tank1.health > 60 & player.equipped(The Deceiver\'s Grand Design)', 'tank1'}, -- Deceiver's Grand Design
-  {'#trinket1', 'UI(trinket_1) & !tank2.buff(Guiding Hand) & tank2.health < tank1.health & tank2.health > 60 & player.equipped(The Deceiver\'s Grand Design)', 'tank2'},
-  {'#trinket1', 'UI(trinket_1) & !tank.buff(Guiding Hand) & tank.health > 60 & player.equipped(The Deceiver\'s Grand Design)', 'tank'},
-  {'#trinket1', 'UI(trinket_1) & !player.buff(Guiding Hand) & player.health > 60 & player.equipped(The Deceiver\'s Grand Design) & UI(myth_heal)', 'player'},
-  {'#trinket1', 'UI(trinket_1)'},
-  --Bottom Trinket usage if UI enables it.
-  {'!#trinket2', 'UI(trinket_2) & lowest.health <= 60 & !player.moving & equipped(Archive of Faith) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
+--Top Trinket usage if UI enables it.
+{'#trinket1', 'UI(trinket_1) & !tank1.buff(Guiding Hand) & tank1.health < tank2.health & tank1.health > 60 & player.equipped(The Deceiver\'s Grand Design)', 'tank1'}, -- Deceiver's Grand Design
+{'#trinket1', 'UI(trinket_1) & !tank2.buff(Guiding Hand) & tank2.health < tank1.health & tank2.health > 60 & player.equipped(The Deceiver\'s Grand Design)', 'tank2'},
+{'#trinket1', 'UI(trinket_1) & !tank.buff(Guiding Hand) & tank.health > 60 & player.equipped(The Deceiver\'s Grand Design)', 'tank'},
+{'#trinket1', 'UI(trinket_1) & !player.buff(Guiding Hand) & player.health > 60 & player.equipped(The Deceiver\'s Grand Design) & UI(myth_heal)', 'player'},
+{'#trinket1', 'UI(trinket_1)'},
+--Bottom Trinket usage if UI enables it.
+{'!#trinket2', 'UI(trinket_2) & lowest.health <= 60 & !player.moving & equipped(Archive of Faith) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
 }
 
 local Potions = {
-  {'#Healthstone', 'UI(p_HS) & player.health <= UI(p_HSspin)','player'},
-  {'#Ancient Healing Potion', 'UI(p_AHP) & player.health <= UI(p_AHPspin)','player'},
-  {'#Ancient Mana Potion', 'UI(p_AMP) & player.mana <= UI(p_AMPspin)','player'},
+{'#Healthstone', 'UI(p_HS) & player.health <= UI(p_HSspin)','player'},
+{'#Ancient Healing Potion', 'UI(p_AHP) & player.health <= UI(p_AHPspin)','player'},
+{'#Ancient Mana Potion', 'UI(p_AMP) & player.mana <= UI(p_AMPspin)','player'},
 }
 
 local DPS = {
-  {{
-    {'Holy Word: Chastise', 'UI(d_HWC) & infront' , 'target'},
-    {'Holy Fire', 'UI(d_HF) & infront & !debuff(Holy Fire).count == 2 & infront & !player.buff(Apotheosis)' , 'target'},
-    {'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count == 2 & combat & !player.buff(Apotheosis)', 'enemies'},
-    {'Holy Nova', '{player.area(10).enemies >= 2 & UI(d_nova) & !player.buff(Apotheosis)} || {player.moving & UI(d_nova) & range <= 10 & !player.buff(Apotheosis)}','target'},
-  },'!player.mana <= 35'},
-  {'Smite', 'infront & UI(d_smite) & !player.moving', 'target'},
+{{
+{'Holy Word: Chastise', 'UI(d_HWC) & infront' , 'target'},
+{'Holy Fire', 'UI(d_HF) & infront & !debuff(Holy Fire).count == 2 & infront & !player.buff(Apotheosis)' , 'target'},
+{'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count == 2 & combat & !player.buff(Apotheosis)', 'enemies'},
+{'Holy Nova', '{player.area(10).enemies >= 2 & UI(d_nova) & !player.buff(Apotheosis)} || {player.moving & UI(d_nova) & range <= 10 & !player.buff(Apotheosis)}','target'},
+},'!player.mana <= 35'},
+{'Smite', 'infront & UI(d_smite) & !player.moving', 'target'},
 }
 
 local Solo = {
-  {'Apotheosis','talent(7,1) & target.debuff(Holy Fire).count == 2','player'},
-  {'Gift of the Naaru', 'health <= UI(full_Gift)', 'player'},
-  {'Holy Word: Serenity', 'health <= UI(full_HWSE)', 'player'},
-  {'Flash Heal', 'health <= UI(full_FH)', 'player'},
-  {'Holy Word: Chastise', 'infront' , 'target'},
-  {'Holy Nova', 'area(10).enemies >= 4 & toggle(AOE) & !buff(Apotheosis)', 'player'},
-  {'Holy Fire', 'UI(d_HF) & infront & !debuff(Holy Fire).count == 2 & infront & !player.buff(Apotheosis)' , 'target'},
-  {'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count == 2 & combat & !player.buff(Apotheosis)', 'enemies'},
-  {'Smite', nil, 'target'},
+{'Apotheosis','talent(7,1) & target.debuff(Holy Fire).count == 2','player'},
+{'Gift of the Naaru', 'health <= UI(full_Gift)', 'player'},
+{'Holy Word: Serenity', 'health <= UI(full_HWSE)', 'player'},
+{'Flash Heal', 'health <= UI(full_FH)', 'player'},
+{'Holy Word: Chastise', 'infront' , 'target'},
+{'Holy Nova', 'area(10).enemies >= 4 & toggle(AOE) & !buff(Apotheosis)', 'player'},
+{'Holy Fire', 'UI(d_HF) & infront & !debuff(Holy Fire).count == 2 & infront & !player.buff(Apotheosis)' , 'target'},
+{'Holy Fire', 'UI(d_HF) & range <= 40 & infront & !debuff(Holy Fire).count == 2 & combat & !player.buff(Apotheosis)', 'enemies'},
+{'Smite', nil, 'target'},
 }
 
 local Tankpred = {
-	{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
-	{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
-	{'Heal', 'health.predicted <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank1'},
-	{'Heal', 'health.predicted <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank2'},
-	{'Flash Heal', 'health.predicted <= UI(t_FH)', 'tank1'},
-	{'Flash Heal', 'health.predicted <= UI(t_FH)', 'tank2'},
-	{'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank1'},
-	{'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank2'},
+{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
+{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
+{'Heal', 'health.predicted <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank1'},
+{'Heal', 'health.predicted <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank2'},
+{'Flash Heal', 'health.predicted <= UI(t_FH)', 'tank1'},
+{'Flash Heal', 'health.predicted <= UI(t_FH)', 'tank2'},
+{'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank1'},
+{'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank2'},
 }
 
 local Tank = {
-	{'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
-	{'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
-	{'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank1'},
-	{'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank2'},
-	{'Flash Heal', 'health <= UI(t_FH)', 'tank1'},
-	{'Flash Heal', 'health <= UI(t_FH)', 'tank2'},
-	{'Renew', '!buff(Renew) & health <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank1'},
-	{'Renew', '!buff(Renew) & health <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank2'},
+{'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank1'},
+{'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.buff(Divinity)', 'tank2'},
+{'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank1'},
+{'Heal', 'health <= UI(t_FH) & player.spell(Heal)casttime <= 1.2', 'tank2'},
+{'Flash Heal', 'health <= UI(t_FH)', 'tank1'},
+{'Flash Heal', 'health <= UI(t_FH)', 'tank2'},
+{'Renew', '!buff(Renew) & health <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank1'},
+{'Renew', '!buff(Renew) & health <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'tank2'},
 }
 
 local Playerpred = {
-	{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
-	{'Gift of the Naaru', 'health.predicted <= UI(p_Gift)', 'player'},
-	{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
-	{'Flash Heal', 'health.predicted <= UI(p_FH)', 'player'},
+{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
+{'Gift of the Naaru', 'health.predicted <= UI(p_Gift)', 'player'},
+{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
+{'Flash Heal', 'health.predicted <= UI(p_FH)', 'player'},
 }
 
 local Player = {
-	{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
-	{'Gift of the Naaru', 'health <= UI(p_Gift)', 'player'},
-	{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
-	{'Flash Heal', 'health <= UI(p_FH)', 'player'},
+{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !buff(Divinity) & !spell(Desperate Prayer).cooldown == 0', 'player'},
+{'Gift of the Naaru', 'health <= UI(p_Gift)', 'player'},
+{'Heal', 'health.predicted <= UI(p_FH) & player.spell(Heal)casttime <= 1.2', 'player'},
+{'Flash Heal', 'health <= UI(p_FH)', 'player'},
 }  
 
 local Lowestpred = {
-	{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowestp'},
-	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowestp'},
-	{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowestp'},
-  {'Binding Heal', 'lowestp.area(20, 95).heal >= 2 & !health <= UI(l_FH)', 'lowestp'},
-  {'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= UI(l_FH) & !advanced', 'lowestp'},
-	{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowestp'},
-	{'Flash Heal', 'health <= UI(l_FH)', 'lowestp'},
-	{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowestp'},
+{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowestp'},
+{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowestp'},
+{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowestp'},
+{'Binding Heal', 'lowestp.area(20, 95).heal >= 2 & !health <= UI(l_FH)', 'lowestp'},
+{'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= UI(l_FH) & !advanced', 'lowestp'},
+{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowestp'},
+{'Flash Heal', 'health <= UI(l_FH)', 'lowestp'},
+{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowestp'},
 }
 
 local Lowest = {
-	{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowest'},
-	{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
-	{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowest'},
-  {'Binding Heal', 'lowest.area(20, 95).heal >= 2 & !health <= UI(l_FH)', 'lowest'},
-  {'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= UI(l_FH) & !advanced', 'lowest'},
-	{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowest'},
-	{'Flash Heal', 'health <= UI(l_FH)', 'lowest'},
-	{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowest'},
+{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.buff(Divinity)', 'lowest'},
+{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
+{'Gift of the Naaru', 'health <= 20 & buff(Guardian Spirit)', 'lowest'},
+{'Binding Heal', 'lowest.area(20, 95).heal >= 2 & !health <= UI(l_FH)', 'lowest'},
+{'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= UI(l_FH) & !advanced', 'lowest'},
+{'Heal', 'health <= UI(l_H) & player.spell(Heal)casttime <= 1.2', 'lowest'},
+{'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowest'},
 }
 
 local PoMooc = {
-  {'Prayer of Mending', '!buff(Prayer of Mending) & pull_timer <= 20', 'tank'},
-  {'Prayer of Mending', '!buff(Prayer of Mending) & tank2.buff(Prayer of Mending) & UI(pull_PoM) & partycheck == 3', 'tank1'},
-  {'Prayer of Mending', '!buff(Prayer of Mending) & tank1.buff(Prayer of Mending) & UI(pull_PoM) & partycheck == 3', 'tank2'},
-  {'Prayer of Mending', 'buff(Prayer of Mending).duration < tank2.buff(Prayer of Mending).duration & UI(pull_PoM) & partycheck == 3', 'tank1'},
-  {'Prayer of Mending', 'buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM) & partycheck == 3', 'tank2'},
-  {'Prayer of Mending', 'tank1.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'player'},
-  {'Prayer of Mending', 'tank2.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'player'},
-  {'Prayer of Mending', 'player.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank1'},
-  {'Prayer of Mending', 'player.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank2'},
-  {'Prayer of Mending', '!buff(Prayer of Mending) & tank1.buff(Prayer of Mending) & UI(pull_PoM) & partycheck == 3', 'player'},
-  {'Prayer of Mending', 'buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM) & !player.moving', 'friendly'},
-  {'Prayer of Mending', '!buff(Prayer of Mending) & UI(pull_PoM) & range <= 40 & tank.buff(Prayer of Mending) & !player.moving', 'friendly'},
+{'Prayer of Mending', '!buff(Prayer of Mending) & pull_timer <= 20', 'tank'},
+{'Prayer of Mending', '!buff(Prayer of Mending) & tank2.buff(Prayer of Mending) & UI(pull_PoM) & partycheck == 3', 'tank1'},
+{'Prayer of Mending', '!buff(Prayer of Mending) & tank1.buff(Prayer of Mending) & UI(pull_PoM) & partycheck == 3', 'tank2'},
+{'Prayer of Mending', 'buff(Prayer of Mending).duration < tank2.buff(Prayer of Mending).duration & UI(pull_PoM) & partycheck == 3', 'tank1'},
+{'Prayer of Mending', 'buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM) & partycheck == 3', 'tank2'},
+{'Prayer of Mending', 'tank1.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'player'},
+{'Prayer of Mending', 'tank2.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'player'},
+{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank1'},
+{'Prayer of Mending', 'player.buff(Prayer of Mending).duration > buff(Prayer of Mending).duration & UI(pull_PoM)', 'tank2'},
+{'Prayer of Mending', '!buff(Prayer of Mending) & tank1.buff(Prayer of Mending) & UI(pull_PoM) & partycheck == 3', 'player'},
+{'Prayer of Mending', 'buff(Prayer of Mending).duration < tank1.buff(Prayer of Mending).duration & UI(pull_PoM) & !player.moving', 'friendly'},
+{'Prayer of Mending', '!buff(Prayer of Mending) & UI(pull_PoM) & range <= 40 & tank.buff(Prayer of Mending) & !player.moving', 'friendly'},
 }
 local Felexplosive = {
-  {'Holy Word: Chastise', 'id(120651) & range <= 30 & infront' , 'enemies'},
-  {'Holy Fire', 'id(120651) & range <= 40 & infront', 'enemies'},
-  {'Smite', 'id(120651) & range <= 40 & infront', 'enemies'},
+{'Holy Word: Chastise', 'id(120651) & range <= 30 & infront' , 'enemies'},
+{'Holy Fire', 'id(120651) & range <= 40 & infront', 'enemies'},
+{'Smite', 'id(120651) & range <= 40 & infront', 'enemies'},
 }
 
 local Mythic = {
-  {'!#Archive of Faith', 'UI(trinket_2) & health <= 60 & !player.moving & !player.buff(Spirit of Redemption) & player.equipped(Archive of Faith) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
-  {'Prayer of Mending', 'health > 90 & !player.moving & !buff(Prayer of Mending)', 'tank'},
-  {'Prayer of Mending', 'health > 90 & !player.moving & !buff(Prayer of Mending)', 'lowest'},
-  {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
-  {'Renew', '!buff(Renew) & player.moving', 'lowest'},
-  {'Renew', '!buff(Renew) & player.moving', 'friendly'},
-  {'!Holy Word: Serenity', 'health <= UI(l_HWSE)', 'lowest'},
-	{'!Gift of the Naaru', 'health <= 40', 'lowest'},
-  {'Binding Heal', 'lowestp.area(20, 95).heal >= 2 & !health <= 85', 'lowestp'},
-  {'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= 85 & !advanced', 'lowestp'},
-	{'Heal', 'health <= 90 & player.spell(Heal)casttime <= player.spell(Flash Heal)casttime & !health <= 50', 'lowest'},
-	{'Flash Heal', 'health <= 90', 'lowest'},
-	{'Heal', 'health <= 95', 'lowest'},
+{'!#Archive of Faith', 'UI(trinket_2) & health <= 60 & !player.moving & !player.buff(Spirit of Redemption) & player.equipped(Archive of Faith) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
+{'Prayer of Mending', 'health > 90 & !player.moving & !buff(Prayer of Mending)', 'tank'},
+{'Prayer of Mending', 'health > 90 & !player.moving & !buff(Prayer of Mending)', 'lowest'},
+{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
+{'Renew', '!buff(Renew) & player.moving', 'lowest'},
+{'Renew', '!buff(Renew) & player.moving', 'friendly'},
+{'!Holy Word: Serenity', 'health <= UI(l_HWSE)', 'lowest'},
+{'!Gift of the Naaru', 'health <= 40', 'lowest'},
+{'Binding Heal', 'lowestp.area(20, 95).heal >= 2 & !health <= 85', 'lowestp'},
+{'Binding Heal', 'player.area(40, 95).heal >= 2 & !health <= 85 & !advanced', 'lowestp'},
+{'Heal', 'health <= 90 & player.spell(Heal)casttime <= player.spell(Flash Heal)casttime & !health <= 50', 'lowest'},
+{'Flash Heal', 'health <= 90', 'lowest'},
+{'Heal', 'health <= 95', 'lowest'},
 
 
 }
 
 local Sanctify = {
-  {'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
-  {'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
-  {{
-    {'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
-    {'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
-    {'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+{'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 5 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
+{{
+{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
+{'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 4 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
+{'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','tank.ground'},
     {'!Holy Word: Sanctify', 'lowest.area(10, 90).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity)','lowest.ground'},
   },'set_bonus(T20)= 4'},
   {'!Holy Word: Sanctify', 'tank.area(10, 90).heal >= 3 & toggle(AOE) & !player.channeling(Divine Hymn) & !lowestp.debuff(Ignite Soul) & !player.buff(Divinity) & partycheck == 2','tank.ground'},
