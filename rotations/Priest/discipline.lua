@@ -30,6 +30,8 @@ local GUI = {
     {type = 'spinner', text = 'Atonements', key = 'LW2_spin', width = 55, max = 40, step = 1, default = 5},
     {type = 'checkbox', text = 'Mindbender', key = 'MB', width = 55, default = false},
     {type = 'spinner', text = 'Mana', key = 'MB_spin', width = 55, default = 90},
+    {type = 'text', text = 'Arcane Torrent', align = 'center'},
+    {type = 'checkbox', text = 'ON/OFF', key = 'dps_at', width = 55, default= true},
     {type = 'ruler'},{type = 'spacer'},
 
   --Cooldowns
@@ -425,7 +427,7 @@ local inCombat = {
   --Knock back enemies as interrupt.
   {'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range > 10 & !lowest.health <= UI(l_mend)', 'tank'},
   {'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range <= 10 & !lowest.health <= UI(l_mend)', 'player'},
-  {'Arcane Torrent', 'player.mana < 97', 'player'},
+  {'Arcane Torrent', 'player.mana < 97 & UI(dps_at)', 'player'},
   {Keybinds},
   {Trinkets},
   {Rapture, 'player.buff(Rapture)'},
