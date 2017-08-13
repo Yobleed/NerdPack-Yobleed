@@ -365,7 +365,9 @@ local ST = {
   {Tank, '!partycheck == 3 & tank.health < 50 & & tank.exists'},
   {Playerpred,'partycheck == 3 & !lowestp.health <= 50'},
   {Player, '!lowest.health <= 50 & !partycheck == 3'},
+  {Lowestpred,'lowestp.health <100 & partycheck == 3'},
   {Lowest, 'lowest.health < 100'},
+   
 }
 
 local AOE = {
