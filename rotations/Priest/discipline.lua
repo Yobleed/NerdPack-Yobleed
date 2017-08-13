@@ -405,15 +405,13 @@ local Moving = {
 }
 
 local ST = {
-{Playerpred,'partycheck == 3 & !lowestp.health <= 50'},
-{Player, '!tank.health <= 40 & !lowest.health <= 50 & !partycheck == 3'},
-{Lowestpred,'partycheck == 3 & !tank.health.predicted <= 50'},
-{Lowest, '!tank.health <= 50 & !partycheck == 3'},
-{Tankpred,'partycheck == 3'},
-{Tank, '!partycheck == 3'},
-
-
-
+  {Tankpred,'partycheck == 3 & tank.health.predicted < 50 & tank.exists'},
+  {Tank, '!partycheck == 3 & tank.health < 50 & & tank.exists'},
+  {Playerpred,'partycheck == 3 & !lowestp.health <= 50'},
+  {Player, '!lowest.health <= 50 & !partycheck == 3'},
+  {Lowestpred,'lowestp.health <100 & partycheck == 3'},
+  {Lowest, 'lowest.health < 100'},
+   
 }
 
 local inCombat = {
