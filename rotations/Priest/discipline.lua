@@ -148,12 +148,12 @@ end
 local Rapture = {
     {'Penance', 'player.buff(Penitent)','target'},
   --Power Word: Shield.
-  {'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest1'},
-  {'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest2'},
-  {'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest3'},
-  {'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest4'},
-  {'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest5'},
-  {'Power Word: Shield', '!buff(Power Word: Shield) & !buff(Atonement)', 'lowest6'},
+  {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest1'},
+  {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest2'},
+  {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest3'},
+  {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest4'},
+  {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest5'},
+  {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest6'},
 }
 
 local PWR = {
