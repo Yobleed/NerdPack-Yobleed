@@ -262,14 +262,13 @@ local Atonement = {
 --Schism on cooldown.
 {'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-{'Penance', 'talent(6,1) & debuff(Purge the Wicked)', 'enemies'},
-{'Penance', nil, 'target'},
+{'Penance', '{talent(6,1) & debuff(Purge the Wicked)}||!talent(6,1)', 'target'},
 --Power Word: Solace on cooldown if talent.
 {'Power Word: Solace', 'talent(4,1)', 'target'},
 --Divine Star if mobs are 3 or more.
 {'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 3 & toggle(AOE)'},
 --Smite on CD.
-{'Smite', 'infront & {{partycheck = 3 & player.buff(Sins of the Many).count >= 5}||partycheck ~= 3}', 'target'},
+{'Smite', 'infront', 'target'}, --& {{partycheck = 3 & player.buff(Sins of the Many).count >= 5}||partycheck ~= 3}
 
 }
 
@@ -420,7 +419,7 @@ local inCombat = {
 {Rapture, 'player.buff(Rapture)'},
 {{
 {Moving, 'player.moving'},
-{Rampup, 'toggle(ramp)'},
+{Rampup, 'toggle(ramp) & player.spell(Light\'s Wrath).cooldown = 0 & player.spell(Evangelism).cooldown = 0 & player.spell(Power Word: Radiance).charges >= 1'},
 {Solo, 'toggle(xDPS)'},
 {PWR, 'UI(PWR) & !tank.health <= 30'},
 {Mythic, 'partycheck == 2 & UI(myth_heal)'},
