@@ -372,7 +372,7 @@ local inCombat = {
 {Mythic,'partycheck == 2 & UI(myth_heal)'},
 {Party,'partycheck == 2'},
 {Solo,'partycheck == 1 || toggle(xDPS)'},
-{DPS},
+{DPS,'lowest.health > UI(l_FH)'},
 } 
 
 
