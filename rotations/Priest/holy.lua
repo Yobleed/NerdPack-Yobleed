@@ -163,10 +163,10 @@ local Cooldowns = {
 }
 
 local Guidinghand = {
-{'#147007', '!buff(Guiding Hand) & health > 60 & player.equipped(147007)', {'lowest(tank)','player'}}, -- Deceiver's Grand Design
+{'#147007', '!buff(Guiding Hand) & health > 60 & player.equipped(147007)', {'tank1','tank2','player'}}, -- Deceiver's Grand Design
 }
 local Archive = {
-{'#147006', 'health <= 50 & !player.moving & equipped(147006) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
+{'#147006', 'health <= 50 & !player.moving & equipped(147006) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', {'lowest(tank)','lowest'}},
 }
 
 local Trinkets = {
@@ -177,8 +177,6 @@ local Trinkets = {
 --Bottom Trinket
 {'#trinket2', 'UI(trinket_2)', 'target'},
 }
-
-
 
 local Potions = {
 --Health Stone.
@@ -283,7 +281,8 @@ local Sanctify = {
 }
 
 local PoH = {
-{'Prayer of Healing', 'area(20, 85).heal >= 4 & player.buff(Power of the Naaru) & player.buff(Divinity)', 'friendly'},
+{'Prayer of Healing', 'area(20, 90).heal >= 4 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'friendly'},
+{'Prayer of Healing', 'area(10, 85).heal >= 4', 'friendly'},
 {'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
 }
 
@@ -324,7 +323,6 @@ local AOE = {
 }
 
 local Raid = {
-{'Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {PoM,'!tank.health <= 50 & !player.moving'},
 {Tankpred,'tank.health.predicted < 70 & tank.exists'},
 {Playerpred,'player.health.predicted <= 50'},
@@ -357,6 +355,7 @@ local Stopcasting ={
 }
 
 local inCombat = {
+{'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'Fade', 'aggro & !partycheck == 1','player'},
 {'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
