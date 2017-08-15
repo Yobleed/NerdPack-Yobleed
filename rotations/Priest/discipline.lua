@@ -107,7 +107,6 @@ center = true},
 --PLAYER
 {type = 'header', text = 'Player', align = 'center'},
 {type = 'text', text = 'Player health values', align = 'center'},
-{type = 'spinner', text = 'Power Word: Shield', key = 'p_PWS', width = 55, default = 90},
 {type = 'spinner', text = 'Shadow Mend', key = 'p_mend', width = 55, default = 40},
 {type = 'spinner', text = 'Plea', key = 'p_plea', min = 70, max = 90, width = 55, default = 80}, --step = 1
 {type = 'ruler'},{type = 'spacer'},
@@ -291,8 +290,6 @@ local Tank = {
 }
 
 local Playerpred = {
---Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
-{'Power Word: Shield', 'health <= UI(p_PWS) & !buff(Power Word: Shield)', 'player'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'player.health.predicted <= UI(p_mend) & player.buff(Atonement) & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.
@@ -306,8 +303,6 @@ local Playerpred = {
 }
 
 local Player = {
---Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
-{'Power Word: Shield', 'health <= UI(p_PWS) & !buff(Power Word: Shield)', 'player'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'player.health<= UI(p_mend) & player.buff(Atonement) & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.
@@ -324,7 +319,7 @@ local Lowestpred = {
 --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest(tank)'},
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
-{'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield)', 'lowest'},
+{'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield) & !is(player)', 'lowest'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'lowestp.health <= UI(l_mend) & lowestp.buff(Atonement) & !lowestp.health <= 30 & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.
@@ -339,7 +334,7 @@ local Lowest = {
 --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest(tank)'},
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
-{'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield)', 'lowest'},
+{'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield) & !is(player)', 'lowest'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement) & !lowest.health <= 30 & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.

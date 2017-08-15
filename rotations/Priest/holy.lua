@@ -154,8 +154,8 @@ end
 
 
 local Cooldowns = {
-{'!Guardian Spirit', 'UI(c_GSt) & {health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'lowest(tank)'},
-{'!Guardian Spirit', 'UI(c_GS) & health <= UI(c_GSspin) & !is(player)', 'lowest'},
+{'!Guardian Spirit', 'UI(c_GSt) & !player.spell(Holy Word: Serenity).cooldown == 0 & {health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'lowest(tank)'},
+{'!Guardian Spirit', 'UI(c_GS) & !player.spell(Holy Word: Serenity).cooldown == 0 & health <= UI(c_GSspin) & !is(player)', 'lowest'},
 {'Desperate Prayer', 'UI(c_DP) & health <= UI(c_DPspin) & !buff(Guardian Spirit)', 'player'},
 {'Arcane Torrent', 'player.mana < 97 & UI(dps_at)', 'player'},
 {'Light of T\'uure', 'UI(c_lot1) & !buff(Light of T\'uure) & !buff(Guardian Spirit) & !lowest.health <= 40 & !keybind(lshift) & {player.spell(Light of T\'uure).charges == 2||health <= UI(c_LoTspint)}', 'lowest(tank)'},
@@ -257,8 +257,8 @@ local Solo = {
 local PoMooc = {
 {'Prayer of Mending', '!buff(Prayer of Mending)', {'tank1','tank2'}},
 {'Prayer of Mending', 'buff(Prayer of Mending).count = 5', {'tank1','tank2'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count = 10', {'tank1','tank2'}},
-{'Prayer of Mending', '!buff(Prayer of Mending)', {'player','lowest'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count = 10 & buff(Prayer of Mending).duration <= 20', {'tank1','tank2'}},
+{'Prayer of Mending', '!buff(Prayer of Mending) & partycheck == 2', {'player','lowest'}},
 }
 
 local Felexplosive = {
