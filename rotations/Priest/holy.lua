@@ -306,7 +306,7 @@ local Keybinds = {
 
 local Beforepull = {
 --Potion of Prolonged Power
-{'#142117', 'dbm(Pull in) <= 3 & UI(s_PPull) & !buff(Potion of Prolonged Power)', 'player'}, 
+{'#142117', 'pull_timer <= 3 & UI(s_PPull) & !buff(Potion of Prolonged Power)', 'player'},
 }
 
 local Moving = {
@@ -327,6 +327,7 @@ local Raid = {
 {Tankpred,'tank.health.predicted < 70 & tank.exists'},
 {Playerpred,'player.health.predicted <= 50'},
 {Lowestpred,'lowestp.health <100'},
+{'!Flash Heal', 'health < UI(l_FH) & player.casting(Smite)', 'lowest'},
 }
 
 local Mythic = {
@@ -338,7 +339,7 @@ local Mythic = {
 {'!Gift of the Naaru', 'health <= 40', 'lowest'},
 {'Binding Heal', '!health <= 90 & !is(player) & {area(20, 99).heal >= 2 || {player.health < 100 & health < 100}}', 'lowest'},
 {'Flash Heal', 'health <= 90', 'lowest'},
-{'Heal', 'health <= 95', 'lowest'},  
+{'Heal', 'health <= 95', 'lowest'},
 }
 
 local Party = {
@@ -346,12 +347,14 @@ local Party = {
 {Tank,'tank.health < 50 & tank.exists'},
 {Player,'player.health<= 45'},
 {Lowest,'lowest.health <100'},
+{'!Flash Heal', 'health < UI(l_FH) & player.casting(Smite)', 'lowest'},
 }
 
 local Stopcasting ={
 {'!/stopcasting','!lowestp.area(40, 95).heal >= 2 & toggle(mana) & player.casting(Binding Heal)'},
 {'!/stopcasting','{{lowest.health >= UI(l_FH) & partycheck == 2} || {lowestp.health >= UI(l_FH) & partycheck == 3}} & !player.casting.percent >= 80 & toggle(mana) & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal)}'},
 {'!/stopcasting','{{lowest.health >= 100 & partycheck == 2} || {lowestp.health >= 100 & partycheck == 3}} & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal) }'},
+{'!/stopcasting','debuff(240447).duration <= gcd & debuff(240447)','player'}, --Quaking
 }
 
 local inCombat = {

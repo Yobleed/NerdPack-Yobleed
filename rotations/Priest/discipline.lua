@@ -360,7 +360,7 @@ local Mythic = {
 {'Power Word: Radiance', 'player.area(40,85).heal >= 3 & health <= 85 & !buff(Atonement) & !advanced & player.spell(Power Word: Radiance).charges == 2', 'lowest'},
 {'Power Word: Radiance', 'area(30,85).heal >= 3 & lowest.health <= 85 & !buff(Atonement) & advanced & player.spell(Power Word: Radiance).charges < 2 & !player.lastcast(Power Word: Radiance)', 'lowest'},
 {'Power Word: Radiance', 'player.area(40,85).heal >= 3 & health <= 85 & !buff(Atonement) & !advanced & player.spell(Power Word: Radiance).charges < 2 & !player.lastcast(Power Word: Radiance)', 'lowest'},
-{'Power Word: Radiance', 'dbm(Pull in) <= 6 & dbm(Pull in) >= 3 & range <= 40', 'lowest'},
+{'Power Word: Radiance', 'pull_timer <= 6 & pull_timer >= 3 & range <= 40', 'lowest'},
 {'Power Word: Shield', 'health <= 90 & !buff(Power Word: Shield)', 'lowest'},
 {'Penance', 'player.health <= 65 & player.buff(Atonement) & infront', 'target'},
 {'Shadow Mend', "health <= 65 & {!moving || buff(Norgannon's Foresight)}", 'player'},
@@ -395,11 +395,16 @@ local ST = {
 }
 
 local Beforepull = {
-{'#142117', '{dbm(Pull in) <= 3 & UI(s_PPull) & !UI(PWR_PPull) & !buff(Potion of Prolonged Power)}||{{dbm(Pull in) <= 5 + gcd} & UI(s_PPull) & UI(PWR_PPull) & !buff(Potion of Prolonged Power)}','player'},
-{'Power Word: Shield', 'dbm(Pull in) <= gcd', 'tank'},
+{'#142117', '{pull_timer <= 3 & UI(s_PPull) & !UI(PWR_PPull) & !buff(Potion of Prolonged Power)}||{{pull_timer <= 5 + gcd} & UI(s_PPull) & UI(PWR_PPull) & !buff(Potion of Prolonged Power)}','player'},
+{'Power Word: Shield', 'pull_timer <= gcd', 'tank'},
+}
+
+local Stopcasting = {
+{'!/stopcasting','debuff(240447).duration <= gcd & debuff(240447)','player'}, --Quaking 
 }
 
 local inCombat = {
+{Stopcasting},
 {Potions},
 {Cooldowns},
 {'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & UI(disp_ang) & range <= 40', 'friendly'},
@@ -429,10 +434,10 @@ local outCombat = {
 {Beforepull},
 {Keybinds},
 {Moving, 'player.moving & !UI(ato) & !inareaid == 1040'},
-{'!Light\'s Wrath', 'dbm(Pull in) <= player.spell(Light\'s Wrath).casttime & UI(PWR_PPull) ','target'},
-{'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck == 3 & dbm(Pull in) <= 20 & UI(PWR_PPull)','player'},
-{'!Evangelism', 'buff(Sins of the Many).count == 5 & buff(Atonement).duration < spell(Light\'s Wrath).casttime) & partycheck == 2 & dbm(Pull in) <= 20 & UI(PWR_PPull)','player'},
-{Rampup, 'toggle(ramp)||{dbm(Pull in) <= 20 & UI(PWR_PPull)}'},
+{'!Light\'s Wrath', 'pull_timer <= player.spell(Light\'s Wrath).casttime & UI(PWR_PPull) ','target'},
+{'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck == 3 & pull_timer <= 20 & UI(PWR_PPull)','player'},
+{'!Evangelism', 'buff(Sins of the Many).count == 5 & buff(Atonement).duration < spell(Light\'s Wrath).casttime) & partycheck == 2 & pull_timer <= 20 & UI(PWR_PPull)','player'},
+{Rampup, 'toggle(ramp)||{pull_timer <= 20 & UI(PWR_PPull)}'},
 {Mythic, 'partycheck == 2 & UI(myth_heal)'},
 {{
 {'Shadow Mend', "lowest.health <= 90 & {!player.moving || player.buff(Norgannon's Foresight)}", 'lowest'},
