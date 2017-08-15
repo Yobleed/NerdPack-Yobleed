@@ -262,7 +262,7 @@ local Atonement = {
 --Schism on cooldown.
 {'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-{'Penance', '{talent(6,1) & debuff(Purge the Wicked)}||!talent(6,1)', 'target'},
+{'Penance', 'target.debuff(Purge the Wicked)||!talent(6,1)', 'target'},
 --Power Word: Solace on cooldown if talent.
 {'Power Word: Solace', 'talent(4,1)', 'target'},
 --Divine Star if mobs are 3 or more.
