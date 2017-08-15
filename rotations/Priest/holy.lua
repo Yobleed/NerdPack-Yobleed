@@ -2,6 +2,7 @@ local _, yobleed = ...
 local NeP = NeP
 --[[
 {type='checkspin', text='something', desc='something something', key='KEY', spin=80, check=true}
+UI(KEY_check) & UI(KEY_spin)
 ]]--
 
 local GUI = {
@@ -130,9 +131,9 @@ local exeOnLoad = function()
 
     NeP.Interface:AddToggle({
     key = 'xDPS',
-    name = 'Solo Mode',
-    text = 'ON/OFF Solo Mode',
-    icon = 'Interface\\ICONS\\spell_holy_holysmite', --toggle(xDPS)
+    name = 'DPS Mode',
+    text = 'ON/OFF DPS Mode',
+    icon = 'Interface\\ICONS\\inv_staff_2h_artifactheartofkure_d_06', --toggle(xDPS)
   })
 
   NeP.Interface:AddToggle({
@@ -152,8 +153,6 @@ local exeOnLoad = function()
 end
 
 
-
-
 local Cooldowns = {
 {'!Guardian Spirit', 'UI(c_GSt) & {health <= UI(c_GSspint) || player.health <= UI(c_GSspint)}', 'lowest(tank)'},
 {'!Guardian Spirit', 'UI(c_GS) & health <= UI(c_GSspin) & !is(player)', 'lowest'},
@@ -163,13 +162,23 @@ local Cooldowns = {
 {'Light of T\'uure', 'UI(c_LoT) & health <= UI(c_LoTspin) & !buff(Light of T\'uure) & !buff(Guardian Spirit) & !health <= 40 & !keybind(lshift)', 'lowest'},
 }
 
+local Guidinghand = {
+{'#147007', '!buff(Guiding Hand) & health > 60 & player.equipped(147007)', {'lowest(tank)','player'}}, -- Deceiver's Grand Design
+}
+local Archive = {
+{'#147006', 'health <= 50 & !player.moving & equipped(147006) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', 'lowest'},
+}
 
 local Trinkets = {
+{Guidinghand},
+{Archive},
 --Top Trinket.
 {'#trinket1', 'UI(trinket_1)', 'target'},
 --Bottom Trinket
 {'#trinket2', 'UI(trinket_2)', 'target'},
-} 
+}
+
+
 
 local Potions = {
 --Health Stone.
@@ -298,7 +307,7 @@ local Keybinds = {
 
 local Beforepull = {
 --Potion of Prolonged Power
-{'#142117', 'dbm(Pull in) <= 3 & UI(s_PPull)'}, 
+{'#142117', 'dbm(Pull in) <= 3 & UI(s_PPull) & !buff(Potion of Prolonged Power)', 'player'}, 
 }
 
 local Moving = {
@@ -363,7 +372,7 @@ local inCombat = {
 {Raid,'partycheck == 3'},
 {Mythic,'partycheck == 2 & UI(myth_heal)'},
 {Party,'partycheck == 2'},
-{Solo,'partycheck == 1'},
+{Solo,'partycheck == 1 || toggle(xDPS)'},
 {DPS},
 } 
 
