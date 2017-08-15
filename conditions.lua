@@ -164,3 +164,20 @@ end)
 NeP.DSL:Register('inareaid', function()
     return GetCurrentMapAreaID()
 end)
+
+----------------------------------------------------------------------------------
+-----------------------------------PURIFY DISPELLING-------------------------------------------
+----------------------------------------------------------------------------------
+-- purify
+--/dump NeP.DSL:Get('purify')()
+NeP.DSL:Register('purify', function(target)
+--priest
+  for i = 1,40 do
+  local debuff,_,_,count,dispeltype,duration,expires = UnitDebuff(target, i)
+    if debuff then 
+      if dispeltype == "Disease" or dispeltype == "Magic" then
+        return true
+      end
+    end
+  end
+end)
