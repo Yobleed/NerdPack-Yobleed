@@ -391,6 +391,7 @@ local ST = {
 
 local Beforepull = {
 {'#142117', '{pull_timer <= 3 & UI(s_PPull) & !UI(PWR_PPull) & !buff(Potion of Prolonged Power)}||{{pull_timer <= 5 + gcd} & UI(s_PPull) & UI(PWR_PPull) & !buff(Potion of Prolonged Power)}','player'},
+{Rampup, 'pull_timer <= 20 & UI(PWR_PPull)'},
 {'Power Word: Shield', 'pull_timer <= gcd', 'tank'},
 }
 
@@ -405,7 +406,8 @@ local inCombat = {
 {'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'fade', 'player.aggro & !toggle(xDPS)'},
-{'Shining Force', 'spell(fade).cooldown > 0 & player.area(10).enemies > 1 & aggro & !toggle(xDPS) & player.health <= 40', 'player'},
+{'Psychic Scream', 'player.aggro & !toggle(xDPS) & player.area(8).enemies >= 1'},
+{'Shining Force', 'spell(Psychic Scream).cooldown > 0 & area(10).enemies >= 1 & aggro & !toggle(xDPS)', 'player'},
 {'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range > 10 & !lowest.health <= UI(l_mend)', 'tank'},
 {'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range <= 10 & !lowest.health <= UI(l_mend)', 'player'},
 {'Arcane Torrent', 'player.mana < 97 & UI(dps_at)', 'player'},
@@ -414,7 +416,7 @@ local inCombat = {
 {Rapture, 'player.buff(Rapture)'},
 {{
 {Moving, 'player.moving'},
-{Rampup, 'toggle(ramp) & player.spell(Light\'s Wrath).cooldown = 0 & player.spell(Evangelism).cooldown = 0 & player.spell(Power Word: Radiance).charges >= 1'},
+{Rampup, 'toggle(ramp)'},
 {Solo, 'toggle(xDPS)'},
 {PWR, 'UI(PWR) & !tank.health <= 30'},
 {Mythic, 'partycheck == 2 & UI(myth_heal)'},
@@ -432,7 +434,6 @@ local outCombat = {
 {'!Light\'s Wrath', 'pull_timer <= player.spell(Light\'s Wrath).casttime & UI(PWR_PPull) ','target'},
 {'!Evangelism', 'buff(Sins of the Many).count >= 12 & friendly.buff(Atonement).duration < spell(Light\'s Wrath).casttime & partycheck == 3 & pull_timer <= 20 & UI(PWR_PPull)','player'},
 {'!Evangelism', 'buff(Sins of the Many).count == 5 & buff(Atonement).duration < spell(Light\'s Wrath).casttime) & partycheck == 2 & pull_timer <= 20 & UI(PWR_PPull)','player'},
-{Rampup, 'toggle(ramp)||{pull_timer <= 20 & UI(PWR_PPull)}'},
 {Mythic, 'partycheck == 2 & UI(myth_heal)'},
 {{
 {'Shadow Mend', "lowest.health <= 90 & {!player.moving || player.buff(Norgannon's Foresight)}", 'lowest'},
