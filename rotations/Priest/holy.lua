@@ -256,10 +256,12 @@ local Solo = {
 }
 
 local PoMooc = {
-{'Prayer of Mending', '!buff(Prayer of Mending)', {'tank1','tank2'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count = 5', {'tank1','tank2'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count = 10 & buff(Prayer of Mending).duration <= 20', {'tank1','tank2'}},
-{'Prayer of Mending', '!buff(Prayer of Mending) & partycheck == 2', {'player','lowest'}},
+{{
+{'Prayer of Mending', '!buff(Prayer of Mending)', {'tank1','tank2','player'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count = 5', {'tank1','tank2','player'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count = 10 & buff(Prayer of Mending).duration <= 20', {'tank1','tank2','player'}},
+},'partycheck == 3'},
+{'Prayer of Mending', '!buff(Prayer of Mending) & partycheck == 2', {'tank','player','lowest'}},
 }
 
 local Felexplosive = {
@@ -282,8 +284,8 @@ local Sanctify = {
 }
 
 local PoH = {
-{'Prayer of Healing', 'area(20, 90).heal >= 4 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'friendly'},
-{'Prayer of Healing', 'area(10, 85).heal >= 4', 'friendly'},
+{'Prayer of Healing', 'area(20, 85).heal >= 4 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'friendly'},
+{'Prayer of Healing', 'area(10, 80).heal >= 4', 'friendly'},
 {'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
 }
 
@@ -336,9 +338,9 @@ local Mythic = {
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'friendly'},
-{'!Holy Word: Serenity', 'health <= UI(l_HWSE)', 'lowest'},
+{'!Holy Word: Serenity', 'health <= 60', 'lowest'},
 {'!Gift of the Naaru', 'health <= 40', 'lowest'},
-{'Binding Heal', '!health <= 90 & !is(player) & {area(20, 99).heal >= 2 || {player.health < 100 & health < 100}}', 'lowest'},
+{'Binding Heal', '!health <= 70 & !is(player) & {area(20, 99).heal >= 2 || {player.health < 100 & health < 100}}', 'lowest'},
 {'Flash Heal', 'health <= 90', 'lowest'},
 {'Heal', 'health <= 95', 'lowest'},
 }
@@ -383,8 +385,8 @@ local inCombat = {
 
 local outCombat = {
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
-{'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
-{'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body)', 'player'},
+{'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid == 1040', 'player'},
+{'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body) !inareaid == 1040', 'player'},
 {Cooldowns,'partycheck == 2 & UI(myth_heal)'},
 {Potions},
 {Keybinds},
