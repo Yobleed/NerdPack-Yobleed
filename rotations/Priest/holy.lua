@@ -163,7 +163,8 @@ local Cooldowns = {
 }
 
 local Guidinghand = {
-{'#147007', '!buff(Guiding Hand) & health > 60 & player.equipped(147007)', {'tank1','tank2','player'}}, -- Deceiver's Grand Design
+{'#147007', '!buff(Guiding Hand) & health > 60 & player.equipped(147007) & partycheck == 3', {'tank1','tank2'}}, -- Deceiver's Grand Design
+{'#147007', '!buff(Guiding Hand) & health > 60 & player.equipped(147007) & partycheck == 2', {'tank1','player'}},
 }
 local Archive = {
 {'#147006', 'health <= 50 & !player.moving & equipped(147006) & {player.spell(Holy Word: Serenity).cooldown > gcd || player.mana <= 5}', {'lowest(tank)','lowest'}},
