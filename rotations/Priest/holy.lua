@@ -199,31 +199,36 @@ local DPS = {
 }
 
 local Tankpred = {
-{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE)', 'lowest(tank)'},
+{'!Holy Word: Serenity', 'health.predicted <= 40', 'lowest(tank)'},
+{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.casting(Prayer of Healing)', 'lowest(tank)'},
 {'Flash Heal', 'health.predicted <= UI(t_FH)', 'lowest(tank)'},
 {'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'lowest(tank)'},
 }
 
 local Tank = {
-{'!Holy Word: Serenity', 'health <= UI(t_HWSE)', 'lowest(tank)'},
+{'!Holy Word: Serenity', 'health <= 40', 'lowest(tank)'},
+{'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.casting(Prayer of Healing)', 'lowest(tank)'},
 {'Flash Heal', 'health <= UI(t_FH)', 'lowest(tank)'},
 {'Renew', '!buff(Renew) & health<= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'lowest(tank)'},
 }
 
 local Playerpred = {
-{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !spell(Desperate Prayer).cooldown == 0', 'player'},
+{'!Holy Word: Serenity', 'health.predicted <= 40 & !spell(Desperate Prayer).cooldown == 0', 'player'},
+{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !spell(Desperate Prayer).cooldown == 0 & !player.casting(Prayer of Healing)', 'player'},
 {'Gift of the Naaru', 'health.predicted <= UI(p_Gift)', 'player'},
 {'Flash Heal', 'health.predicted <= UI(p_FH)', 'player'},
 }
 
 local Player = {
-{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !spell(Desperate Prayer).cooldown == 0', 'player'},
+{'!Holy Word: Serenity', 'health <= 40 & !spell(Desperate Prayer).cooldown == 0', 'player'},
+{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !spell(Desperate Prayer).cooldown == 0 & !player.casting(Prayer of Healing)', 'player'},
 {'Gift of the Naaru', 'health <= UI(p_Gift)', 'player'},
 {'Flash Heal', 'health <= UI(p_FH)', 'player'},
 }  
 
 local Lowestpred = {
-{'!Holy Word: Serenity', 'health <= UI(l_HWSE)', 'lowestp'},
+{'!Holy Word: Serenity', 'health <= 40', 'lowestp'},
+{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.casting(Prayer of Healing)', 'lowestp'},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= {gcd*2}+1 & health < 100', 'lowestp'},
 {'Gift of the Naaru', 'health <= 40', 'lowestp'},
 {'Binding Heal', '!health <= UI(l_HWSE) & !is(player) & {area(20, 95).heal >= 2 || {player.health <= 95 & health <= 95}}', 'lowestp'},
@@ -232,12 +237,21 @@ local Lowestpred = {
 }
 
 local Lowest = {
-{'!Holy Word: Serenity', 'health <= UI(l_HWSE)', 'lowest'},
+{'!Holy Word: Serenity', 'health <= 40', 'lowest'},
+{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.casting(Prayer of Healing)', 'lowest'},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= {gcd*2}+1 & health < 100', 'lowest'},
 {'Gift of the Naaru', 'health <= 40', 'lowest'},
 {'Binding Heal', '!health <= UI(l_HWSE) & !is(player) & {area(20, 95).heal >= 2 || {player.health <= 95 & health <= 95}}', 'lowest'},
 {'Flash Heal', 'health <= UI(l_FH)', 'lowest'},
 {'Heal', 'health <= UI(l_H) & !toggle(mana)', 'lowest'},
+}
+
+local Spirit = {
+{'!Holy Word: Serenity', 'health <= 40', 'lowest'},
+{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.casting(Prayer of Healing)', 'lowest'},
+{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= {gcd*2}+1 & health < 100', 'lowest'},
+{'Gift of the Naaru', 'health <= 40', 'lowest'},
+{'Flash Heal', 'health <= 100', 'lowest'},
 }
 
 
@@ -257,9 +271,9 @@ local Solo = {
 
 local PoMooc = {
 {{
-{'Prayer of Mending', '!buff(Prayer of Mending)', {'tank1','tank2','player'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count = 5', {'tank1','tank2','player'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count = 10 & buff(Prayer of Mending).duration <= 20', {'tank1','tank2','player'}},
+{'Prayer of Mending', '!buff(Prayer of Mending)', {'tank1','tank2'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count = 5', {'tank1','tank2'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count = 10 & buff(Prayer of Mending).duration <= 20', {'tank1','tank2'}},
 },'partycheck == 3'},
 {'Prayer of Mending', '!buff(Prayer of Mending) & partycheck == 2', {'tank','player','lowest'}},
 }
@@ -284,7 +298,7 @@ local Sanctify = {
 }
 
 local PoH = {
-{'Prayer of Healing', 'area(20, 85).heal >= 4 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'friendly'},
+{'!Prayer of Healing', 'area(20, 85).heal >= 4 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'friendly'},
 {'Prayer of Healing', 'area(10, 80).heal >= 4', 'friendly'},
 {'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
 }
@@ -355,7 +369,7 @@ local Party = {
 
 local Stopcasting ={
 {'!/stopcasting','!lowestp.area(40, 95).heal >= 2 & toggle(mana) & player.casting(Binding Heal)'},
-{'!/stopcasting','{{lowest.health >= UI(l_FH) & partycheck == 2} || {lowestp.health >= UI(l_FH) & partycheck == 3}} & !player.casting.percent >= 80 & toggle(mana) & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal)}'},
+{'!/stopcasting','{{lowest.health >= UI(l_FH) & partycheck == 2} || {lowestp.health >= UI(l_FH) & partycheck == 3}} & !player.casting.percent >= 80 & toggle(mana) & {player.casting(Heal) || player.casting(Flash Heal)}'},
 {'!/stopcasting','{{lowest.health >= 100 & partycheck == 2} || {lowestp.health >= 100 & partycheck == 3}} & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal) }'},
 {'!/stopcasting','debuff(240447).duration <= gcd & debuff(240447)','player'}, --Quaking
 }
@@ -369,11 +383,12 @@ local inCombat = {
 {'!Holy Word: Chastise', 'toggle(interrupts) & interruptAt(70) & infront', 'target'},
 {Potions,'!player.buff(Spirit of Redemption)'},
 {Cooldowns},
-{Trinkets,'!player.buff(Spirit of Redemption)'},
-{Keybinds},
+{Trinkets,'!player.buff(Spirit of Redemption) & !keybind(lshift)'},
+{Keybinds}, 
 {Stopcasting},
 {Moving,'player.moving'},
 {AOE,'toggle(AOE)'},
+{Spirit,'player.buff(Spirit of Redemption)'},
 {Raid,'partycheck == 3'},
 {Mythic,'partycheck == 2 & UI(myth_heal)'},
 {Party,'partycheck == 2'},
@@ -389,7 +404,7 @@ local outCombat = {
 {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body) !inareaid == 1040', 'player'},
 {Cooldowns,'partycheck == 2 & UI(myth_heal)'},
 {Potions},
-{Keybinds},
+{Keybinds}, 
 {Beforepull},
 {Mythic,'partycheck == 2 & UI(myth_heal)'},
 {{

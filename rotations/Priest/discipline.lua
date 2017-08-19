@@ -392,7 +392,7 @@ local ST = {
 local Beforepull = {
 {'#142117', '{pull_timer <= 3 & UI(s_PPull) & !UI(PWR_PPull) & !buff(Potion of Prolonged Power)}||{{pull_timer <= 5 + gcd} & UI(s_PPull) & UI(PWR_PPull) & !buff(Potion of Prolonged Power)}','player'},
 {Rampup, 'pull_timer <= 20 & UI(PWR_PPull)'},
-{'Power Word: Shield', 'pull_timer <= gcd', 'tank'},
+{'Power Word: Shield', 'pull_timer <= gcd & !tank.buff(Power Word: Shield)', 'tank'},
 }
 
 local Stopcasting = {
