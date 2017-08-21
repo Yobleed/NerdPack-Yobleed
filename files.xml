@@ -7,6 +7,7 @@
   <Script file="rotations\priest\shadow.lua"/>
   <Script file="rotations\priest\shadow2.lua"/>
   <Script file="rotations\priest\holy.lua"/>
+  <Script file="rotations\priest\holymagetower.lua"/>
   <Script file="rotations\priest\discipline.lua"/>
   <Script file="rotations\priest\discmagetower.lua"/>
 </Ui>
