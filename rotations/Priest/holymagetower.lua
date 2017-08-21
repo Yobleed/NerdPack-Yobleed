@@ -26,10 +26,7 @@ center = true},
 
 --KEYBINDS
 {type = 'header', text = 'Keybinds', align = 'center'},
-{type = 'text', text = 'Left Shift: AoE Top Up|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
-{type = 'checkbox', text = 'Top Up', key = 'k_HWS', width = 55, default = false},
-{type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
-{type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
+{type = 'text', text = 'Left Shift Holy Word: Sanctify @Cursor', align = 'center'},
 {type = 'ruler'},{type = 'spacer'},
 
 --POTIONS
@@ -47,40 +44,17 @@ print('|cffff0000 READ ME |rRight-click the MasterToggle and go to Combat Routin
 NeP.Interface:AddToggle({
 key = 'stage1',
 name = 'Stage1',
-text = 'Stage1',
+text = 'Interrupt all Risen',
 icon = 'Interface\\ICONS\\spell_holy_chastise',
 })
 
 NeP.Interface:AddToggle({
-key = 'stage3',
-name = 'Stage3',
-text = 'Stage3',
-icon = 'Interface\\ICONS\\trade_engineering',
-})
-NeP.Interface:AddToggle({
-key = 'stage4',
-name = 'Stage4',
-text = 'Stage4',
-icon = 'Interface\\ICONS\\trade_engineering',
-})
-NeP.Interface:AddToggle({
 key = 'stage5',
 name = 'Stage5',
-text = 'Stage5',
+text = 'Heal all damaged souls',
 icon = 'Interface\\ICONS\\trade_engineering',
 })
-NeP.Interface:AddToggle({
-key = 'stage6',
-name = 'Stage6',
-text = 'Stage6',
-icon = 'Interface\\ICONS\\trade_engineering',
-})
-NeP.Interface:AddToggle({
-key = 'stage7',
-name = 'Stage7',
-text = 'Stage7',
-icon = 'Interface\\ICONS\\trade_engineering',
-})
+
 NeP.Interface:AddToggle({
 key = 'disp',
 name = 'Dispell',
@@ -90,17 +64,7 @@ icon = 'Interface\\ICONS\\spell_holy_dispelmagic',
 end
 
 local Keybinds = {
-{{
-{'!Mass Dispel', '!advanced', 'cursor.ground'},
-{'!Mass Dispel', nil, 'mouseover.ground'},
-},'UI(k_MD) & keybind(lcontrol)'},
-{{
-{'!Holy Word: Sanctify', '!advanced', 'cursor.ground'},
-{'!Holy Word: Sanctify', 'area(10, 99).heal >= 5 & advanced','lowest.ground'},
-{'!Holy Word: Sanctify', 'advanced', 'tank.ground'},
-{'Prayer of Healing', '{player.area(40,99).heal >= 4 & !advanced}||area(20,99).heal >= 4','friendly'},
-},'keybind(lshift) & UI(k_HWS)'},
-{'%pause', 'keybind(lalt)& UI(k_P)'},
+{'!Holy Word: Sanctify', 'keybind(lshift)', 'cursor.ground'},
 }
 
 local Potions = {
@@ -110,7 +74,7 @@ local Potions = {
 local Cooldowns = {
 {'!Guardian Spirit', '!player.spell(Holy Word: Serenity).cooldown == 0 & health <= 20 & !is(player)', 'lowest'},
 {'Desperate Prayer', 'health <= 50 & !buff(Guardian Spirit)', 'player'},
-{'Light of T\'uure', 'health <= 70 & !buff(Light of T\'uure) & !buff(Guardian Spirit) & !health <= 40', 'lowest'},
+{'Light of T\'uure', 'health <= 70 & !buff(Light of T\'uure) & !buff(Guardian Spirit) & !health <= 40 & !partycheck == 1', 'lowest'},
 }
 
 local Guidinghand = {
@@ -125,7 +89,7 @@ local Healing = {
 {Guidinghand},
 {Archive},
 {'!Holy Word: Sanctify', 'area(10, 90).heal >= 3','lowest.ground'},
-{'Prayer of Mending', '!lowest.health <= 60 & !player.moving & !buff(Prayer of Mending)', 'lowest'},
+{'Prayer of Mending', '!lowest.health <= 60 & !player.moving & !buff(Prayer of Mending) & !partycheck == 1', 'lowest'},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'lowest'},
 {'!Holy Word: Serenity', 'health <= 60', 'lowest'},
@@ -141,33 +105,28 @@ local DPS = {
 }
 
 local Stage1 = {
-{'!Shackle Undead','id(118489) & casting(Knife Dance)','enemies'},--Corrupted Risen Soldier
-{'!Shackle Undead','id(118489) & channeling(Knife Dance)','enemies'},--Corrupted Risen Soldier
-{'!Holy Word: Chastise', 'id(118491) & casting(Arcane Blitz) & casting.percent >= 50 & buff(Arcane Blitz).count.any > 2', 'enemies'}, -- Corrupted Risen Mage
-{'!Shackle Undead','id(118492) & channeling(Mana Sting) & player.spell(Holy Word: Chastise).cooldown > 0','enemies'},--Corrupted Risen Arbalest
-{'!Holy Word: Chastise','id(118492) & channeling(Mana Sting)','enemies'}, --Corrupted Risen Arbalest
+{'!Shackle Undead','casting(Knife Dance) & range <= 40','enemies'},--Corrupted Risen Soldier
+{'!Shackle Undead','channeling(Knife Dance) & range <= 40','enemies'},--Corrupted Risen Soldier
+{'!Holy Word: Chastise', 'casting(Arcane Blitz) & casting.percent >= 50 & buff(Arcane Blitz).count.any > 2 & range <= 30', 'enemies'}, -- Corrupted Risen Mage
+{'!Shackle Undead','channeling(Mana Sting) & player.spell(Holy Word: Chastise).cooldown > 0 & range <= 40','enemies'},--Corrupted Risen Arbalest
+{'!Holy Word: Chastise','channeling(Mana Sting) & range <= 30','enemies'}, --Corrupted Risen Arbalest
+{Healing,'lowest.health < 90'},
 }
-local Stage3 = {
-{'!Shackle Undead','id(118492) & channeling(Mana Sting) & player.spell(Holy Word: Chastise).cooldown > 0','enemies'},--Corrupted Risen Arbalest
-{'!Holy Word: Chastise','id(118492) & channeling(Mana Sting)','enemies'}, --Corrupted Risen Arbalest
-{'!Holy Word: Serenity', 'id(119470)', 'friendly'},
-{'Flash Heal', 'id(119470)', 'friendly'},  
+
+local Stage5 = {
 {Healing,'lowest.health <= 60'},
-
-
+{'Holy Word: Serenity', 'health < 100 & id(119480)', 'friendly'}, -- archer
+{'Flash Heal', 'health < 100 & id(119480)', 'friendly'}, -- archer
+{'Holy Word: Serenity', 'health < 100 & id(119477)', 'friendly'}, -- mage
+{'Flash Heal', 'health < 100 & id(119477)', 'friendly'}, -- mage
+{'Holy Word: Serenity', 'health < 100 & id(119476)', 'friendly'}, -- soldier
+{'Flash Heal', 'health < 100 & id(119476)', 'friendly'}, -- soldier
 }
-local Stage4 = {}
-local Stage5 = {}
-local Stage6 = {}
-local Stage7 = {}
 
 local Magetower = {
 {Stage1,'toggle(stage1)'},
-{Stage3,'toggle(stage3)'},
-{Stage4,'toggle(stage4)'},
 {Stage5,'toggle(stage5)'},
-{Stage6,'toggle(stage6)'},
-{Stage7,'toggle(stage7)'},
+
 }
 local inCombat = {
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0'},
@@ -175,8 +134,8 @@ local inCombat = {
 {Potions},
 {Keybinds},
 {Magetower},
-{Healing,'lowest.health < 90'},
-{DPS,'target.debuff(Shackle Undead)'},
+{Healing,'lowest.health <= 70 & !toggle(Stage1) & !toggle(Stage5)'},
+{DPS,'!target.debuff(Shackle Undead)'},
 }
 
 local outCombat = {
@@ -184,7 +143,7 @@ local outCombat = {
 {Potions},
 {Keybinds},
 {Magetower},
-{Healing,'lowest.health < 90'},		
+{Healing,'lowest.health < 90'},
 } 
 
 NeP.CR:Add(257, {
