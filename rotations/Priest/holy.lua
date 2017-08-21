@@ -270,11 +270,8 @@ local Solo = {
 }
 
 local PoMooc = {
-{{
-{'Prayer of Mending', '!buff(Prayer of Mending)', {'tank1','tank2'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count = 5', {'tank1','tank2'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count = 10 & buff(Prayer of Mending).duration <= 20', {'tank1','tank2'}},
-},'partycheck == 3'},
+{'Prayer of Mending', 'buff(Prayer of Mending).duration <= 15', {'tank1','tank2'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count < 5 & partycheck == 3', {'tank1','tank2'}},
 {'Prayer of Mending', '!buff(Prayer of Mending) & partycheck == 2', {'tank','player','lowest'}},
 }
 
@@ -314,16 +311,16 @@ local Keybinds = {
 },'UI(k_MD) & keybind(lcontrol)'},
 {{
 {'!Holy Word: Sanctify', '!advanced', 'cursor.ground'},
-{'!Holy Word: Sanctify', 'area(10, 99).heal >= 5 & advanced','lowest.ground'},
+{'!Holy Word: Sanctify', 'area(10, 99).heal >= 3 & advanced','lowest.ground'},
 {'!Holy Word: Sanctify', 'advanced', 'tank.ground'},
-{'Prayer of Healing', '{player.area(40,99).heal >= 4 & !advanced}||area(20,99).heal >= 4','friendly'},
+{'Prayer of Healing', 'health < 100','friendly'},
 },'keybind(lshift) & UI(k_HWS)'},
 {'%pause', 'keybind(lalt)& UI(k_P)'},
 }
 
 local Beforepull = {
 --Potion of Prolonged Power
-{'#142117', 'pull_timer <= 3 & UI(s_PPull) & !buff(Potion of Prolonged Power)', 'player'},
+{'#142117', 'pull_timer <= 3 & pull_timer >= 1 & UI(s_PPull) & !buff(Potion of Prolonged Power)', 'player'},
 }
 
 local Moving = {
@@ -382,18 +379,20 @@ local inCombat = {
 {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body)', 'player'},
 {'!Holy Word: Chastise', 'toggle(interrupts) & interruptAt(70) & infront', 'target'},
 {Potions,'!player.buff(Spirit of Redemption)'},
-{Cooldowns},
+{Cooldowns,'!player.buff(Spirit of Redemption)'},
 {Trinkets,'!player.buff(Spirit of Redemption) & !keybind(lshift)'},
 {Keybinds}, 
-{Stopcasting},
+{Stopcasting,'!player.buff(Spirit of Redemption)'},
 {Moving,'player.moving'},
 {AOE,'toggle(AOE)'},
 {Spirit,'player.buff(Spirit of Redemption)'},
+{{
 {Raid,'partycheck == 3'},
 {Mythic,'partycheck == 2 & UI(myth_heal)'},
 {Party,'partycheck == 2'},
 {Solo,'partycheck == 1 || toggle(xDPS)'},
 {DPS,'lowest.health > UI(l_FH)'},
+},'!player.buff(Spirit of Redemption)'},
 } 
 
 
@@ -408,10 +407,10 @@ local outCombat = {
 {Beforepull},
 {Mythic,'partycheck == 2 & UI(myth_heal)'},
 {{
-{PoMooc,'partycheck >=2 & !player.moving'},
 {AOE,'toggle(AOE)'},
 {Raid,'partycheck == 3'},
-{Party,'partycheck ~= 3'}, 
+{Party,'partycheck ~= 3'},
+{PoMooc,'partycheck >=2 & !player.moving'}, 
 },'UI(ooc_heal)'},
 }
 
