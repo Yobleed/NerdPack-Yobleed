@@ -320,7 +320,9 @@ local Keybinds = {
 
 local Beforepull = {
 --Potion of Prolonged Power
-{'#142117', 'pull_timer <= 3 & pull_timer >= 1 & UI(s_PPull) & !buff(Potion of Prolonged Power)', 'player'},
+{'#142117', 'pull_timer <= 3 & UI(s_PPull) & !buff(Potion of Prolonged Power)', 'player'},
+{'Prayer of Mending', 'buff(Prayer of Mending).duration <= 15', {'tank1','tank2'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count < 10', {'tank1','tank2'}},
 }
 
 local Moving = {
@@ -404,7 +406,7 @@ local outCombat = {
 {Cooldowns,'partycheck == 2 & UI(myth_heal)'},
 {Potions},
 {Keybinds}, 
-{Beforepull},
+{Beforepull,'pull_timer >= 1 & pull_timer <= 20'},
 {Mythic,'partycheck == 2 & UI(myth_heal)'},
 {{
 {AOE,'toggle(AOE)'},
