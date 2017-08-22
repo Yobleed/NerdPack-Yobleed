@@ -271,7 +271,7 @@ local Solo = {
 
 local PoMooc = {
 {'Prayer of Mending', 'buff(Prayer of Mending).duration <= 15 & partycheck == 3', {'tank1','tank2'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count < 5 & partycheck == 3', {'tank1','tank2'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count < 10 & partycheck == 3', {'tank1','tank2'}},
 {'Prayer of Mending', '!buff(Prayer of Mending) & partycheck == 2', {'tank','player','lowest'}},
 }
 

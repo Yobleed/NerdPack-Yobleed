@@ -43,7 +43,7 @@ print('|cffff0000 READ ME |rRight-click the MasterToggle and go to Combat Routin
 
 NeP.Interface:AddToggle({
 key = 'stage1',
-name = 'Stage1',
+name = 'Stage1-4 & 6',
 text = 'Interrupt all Risen',
 icon = 'Interface\\ICONS\\spell_holy_chastise',
 })
@@ -51,7 +51,14 @@ icon = 'Interface\\ICONS\\spell_holy_chastise',
 NeP.Interface:AddToggle({
 key = 'stage5',
 name = 'Stage5',
-text = 'Heal all damaged souls',
+text = 'Heal all damaged souls at boss',
+icon = 'Interface\\ICONS\\trade_engineering',
+})
+
+NeP.Interface:AddToggle({
+key = 'stage7',
+name = 'Stage7',
+text = 'Boss Fight, Keep health below 50%',
 icon = 'Interface\\ICONS\\trade_engineering',
 })
 
@@ -123,14 +130,27 @@ local Stage5 = {
 {'Flash Heal', 'health < 100 & id(119476)', 'friendly'}, -- soldier
 }
 
+local Stage7 = {
+{'!Guardian Spirit', '!player.spell(Holy Word: Serenity).cooldown == 0 & health <= 20 & !is(player)', 'lowest'},
+{'Desperate Prayer', 'health <= 20 & !buff(Guardian Spirit)', 'player'},
+{Guidinghand},
+{'!Holy Word: Sanctify', 'area(10, 20).heal >= 3','lowest.ground'},
+{'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
+{'!Holy Word: Serenity', 'health <= 15', 'lowest'},
+{'Binding Heal', '!health <= 20 & !is(player) & {area(20, 90).heal >= 2 || {player.health < 45 & health < 45}}', 'lowest'},
+{'Flash Heal', 'health <= 35', 'lowest'},
+
+}
+
 local Magetower = {
 {Stage1,'toggle(stage1)'},
 {Stage5,'toggle(stage5)'},
+{Stage7,'toggle(stage7)'},
 
 }
 local inCombat = {
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0'},
-{Cooldowns},
+{Cooldowns,'!toggle(stage7)'},
 {Potions},
 {Keybinds},
 {Magetower},
