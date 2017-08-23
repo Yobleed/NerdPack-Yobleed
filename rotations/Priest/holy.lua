@@ -339,7 +339,7 @@ local Raid = {
 }
 
 local Mythic = {
-{'Prayer of Mending', 'health > 95 & !player.moving & !buff(Prayer of Mending)', 'lowest'},
+{'Prayer of Mending', 'health > 95 & !player.moving & !buff(Prayer of Mending)', {'tank1','tank2','lowest','player'}},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'friendly'},
