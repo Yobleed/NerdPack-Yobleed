@@ -19,12 +19,6 @@ center = true},
 {type = 'checkbox', text = 'Mythic+ Healing', key = 'myth_heal', width = 55, default = false},
 {type = 'checkbox', text = 'Out of Combat Atonements', key = 'ato', width = 55, default = false},
 
---TOS DISPELLING
-{type = 'header', text = 'Dispel', align = 'center'},
-{type = 'text', text = 'Advanced Only', align = 'center'},
-{type = 'checkbox', text = 'Echoing Anguish (Demonic Inquisition)', key = 'disp_ang', width = 55, default = false},
-{type = 'ruler'},{type = 'spacer'},
-
 --Healing Options
 {type = 'text', text = 'Healing Options', align = 'center'},
 {type = 'checkbox', text = 'Auto Power Word: Radiance', key = 'PWR', width = 55, default = false},
@@ -412,8 +406,8 @@ local inCombat = {
 {Stopcasting},
 {Potions},
 {Cooldowns},
-{'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & UI(disp_ang) & range <= 40', 'friendly'},
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
+{'!Purify', 'player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & {target.id(116689) || target.id(116691)} & range <= 40', 'friendly'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & {!target.id(116689) || !target.id(116691)}'},
 {'fade', '{target.inmelee || player.area(2).enemies >= 1} & player.aggro & !partycheck == 1'},
 {'Psychic Scream', 'player.spell(Fade).cooldown > 0 & player.aggro & !toggle(xDPS) & player.area(8).enemies >= 1'},
 {'Shining Force', 'spell(Fade).cooldown > 0 & spell(Psychic Scream).cooldown > 0 & area(10).enemies >= 1 & aggro & !toggle(xDPS)', 'player'},
@@ -435,7 +429,7 @@ local inCombat = {
 }
 
 local outCombat = {
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0'},
 {'%ressdead(Resurrection)', 'UI(rezz)'},
 {Beforepull,'pull_timer >= 1'},
 {Keybinds},

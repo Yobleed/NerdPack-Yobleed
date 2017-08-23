@@ -366,7 +366,7 @@ local Stopcasting ={
 }
 
 local inCombat = {
-{'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & {target.id(116689) || target.id(116691)} & range <= 40', 'friendly'},
+{'!Purify', 'player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & {target.id(116689) || target.id(116691)} & range <= 40', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & {!target.id(116689) || !target.id(116691)}'},
 {'fade', '{target.inmelee || player.area(2).enemies >= 1} & player.aggro & !partycheck == 1'},
 {'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
