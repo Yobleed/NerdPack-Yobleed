@@ -347,12 +347,12 @@ local Raid = {
 }
 
 local Mythic = {
-{'Prayer of Mending', 'health > 90 & !player.moving & !buff(Prayer of Mending)', 'lowest'},
+{'Prayer of Mending', 'health > 95 & !player.moving & !buff(Prayer of Mending)', 'lowest'},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'friendly'},
-{'!Holy Word: Serenity', 'health <= 60', 'lowest'},
-{'!Gift of the Naaru', 'health <= 40', 'lowest'},
+{'!Holy Word: Serenity', 'health <= 75', 'lowest'},
+{'!Gift of the Naaru', 'health <= 50', 'lowest'},
 {'Binding Heal', '!health <= 70 & !is(player) & {area(20, 99).heal >= 2 || {player.health < 100 & health < 100}}', 'lowest'},
 {'Flash Heal', 'health <= 90', 'lowest'},
 {'Heal', 'health <= 95', 'lowest'},
@@ -407,13 +407,9 @@ local outCombat = {
 {Potions},
 {Keybinds}, 
 {Beforepull,'pull_timer >= 1 & pull_timer <= 20'},
-{Mythic,'partycheck == 2 & UI(myth_heal)'},
-{{
-{AOE,'toggle(AOE)'},
-{Raid,'partycheck == 3'},
-{Party,'partycheck ~= 3'},
-{PoMooc,'partycheck >=2 & !player.moving'}, 
-},'UI(ooc_heal)'},
+{Mythic,'UI(myth_heal) || UI(ooc_heal)'},
+{PoMooc,'partycheck >=2 & !player.moving & UI(ooc_heal)'},
+{AOE,'toggle(AOE)'}, 
 }
 
 
