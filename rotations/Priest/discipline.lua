@@ -60,6 +60,7 @@ center = true},
 
 --TRINKETS
 {type = 'header', text = 'Trinkets', align = 'center'},
+{type = 'checkbox', text = 'Auto Use Velen\'s Future Sight', key = 'velens', width = 55, default = false},
 {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', width = 55, default = false},
 {type = 'checkbox', text = 'Bottom Trinket', key = 'trinket_2', width = 55, default = false},
 {type = 'ruler'},{type = 'spacer'},
@@ -147,13 +148,21 @@ icon = 'Interface\\ICONS\\spell_holy_dispelmagic', --toggle(disp)
 })
 end
 
+local VelensFuture = {
+{'#144258','equipped(144258) & UI(velens)'},
+}
 
 local Rapture = {
 {'Penance', 'player.buff(Penitent)','target'},
 {'Power Word: Shield', '!buff(Power Word: Shield)', {'lowest1','lowest2','lowest3','lowest4','lowest5','lowest6'}},
 }
 
+
 local PWR = {
+{VelensFuture,'area(30,65).heal >= 3 & !buff(Atonement) & player.spell(Power Word: Radiance).charges < 2 & advanced', {'lowest(tank)','lowest'}},
+{VelensFuture,'player.area(40,65).heal >= 3 & health <= 65 & !buff(Atonement) & player.spell(Power Word: Radiance).charges < 2 & !advanced', {'lowest(tank)','lowest'}},
+{VelensFuture,'area(30,85).heal >= 3 & !buff(Atonement) & player.spell(Power Word: Radiance).charges == 2 & advanced',{'lowest(tank)','lowest'}},  
+{VelensFuture,'player.area(40,85).heal >= 3 & health <= 85 & !buff(Atonement} & player.spell(Power Word: Radiance).charges == 2 & !advanced',{'lowest(tank)','lowest'}},
 {'Power Word: Radiance', 'area(30,65).heal >= 3 & !buff(Atonement) & player.spell(Power Word: Radiance).charges < 2 & advanced', {'lowest(tank)','lowest'}},
 {'Power Word: Radiance', 'player.area(40,65).heal >= 3 & health <= 65 & !buff(Atonement) & player.spell(Power Word: Radiance).charges < 2 & !advanced', {'lowest(tank)','lowest'}},
 {'Power Word: Radiance', 'area(30,85).heal >= 3 & !buff(Atonement) & player.spell(Power Word: Radiance).charges == 2 & advanced',{'lowest(tank)','lowest'}},  

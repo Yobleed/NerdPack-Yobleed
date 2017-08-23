@@ -20,12 +20,6 @@ center = true},
 {type = 'checkbox', text = 'Attack Fel Explosives', key = 'myth_fel', width = 55, default = false},
 {type = 'ruler'},{type = 'spacer'},
 
---TOS DISPELLING
-{type = 'header', text = 'Dispel', align = 'center'},
-{type = 'text', text = 'Advanced Only', align = 'center'},
-{type = 'checkbox', text = 'Echoing Anguish (Demonic Inquisition)', key = 'disp_ang', width = 55, default = false},
-{type = 'ruler'},{type = 'spacer'},
-  
 --KEYBINDS
 {type = 'header', text = 'Keybinds', align = 'center'},
 {type = 'text', text = 'Left Shift: AoE Top Up|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
@@ -286,22 +280,20 @@ local Felexplosive = {
 
 
 local Sanctify = {
-{'!Holy Word: Sanctify', 'area(10, 90).heal >= 5','tank.ground'},
-{'!Holy Word: Sanctify', 'area(10, 90).heal >= 5','lowest.ground'},
+{'!Holy Word: Sanctify', 'area(10, 90).heal >= 5 & range <= 40','friendly.ground'},
 {{
-{'!Holy Word: Sanctify', 'area(10, 90).heal >= 3','tank.ground'},
-{'!Holy Word: Sanctify', 'area(10, 90).heal >= 3','lowest.ground'},
+{'!Holy Word: Sanctify', 'area(10, 90).heal >= 3 & range <= 40','friendly.ground'},
 },'partycheck ~= 3 || set_bonus(T20)= 4'},
 }
 
 local PoH = {
-{'!Prayer of Healing', 'area(20, 95).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity) || player.buff(Blessing of T\'uure)}', 'friendly'},
-{'Prayer of Healing', 'area(10, 90).heal >= 5', 'friendly'},
+{'!Prayer of Healing', 'area(20, 95).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity) || player.buff(Blessing of T\'uure)} & range <= 40', 'friendly'},
+{'Prayer of Healing', 'area(10, 90).heal >= 5 & range <= 40', 'friendly'},
 {'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
 }
 
 local PoM = {
-{'Prayer of Mending', '!buff(Prayer of Mending)', {'tank','player','lowest'}},
+{'Prayer of Mending', '!buff(Prayer of Mending) & !lowest.health <= 60', {'tank','player','lowest'}},
 }
 
 local Keybinds = {
@@ -311,7 +303,7 @@ local Keybinds = {
 },'UI(k_MD) & keybind(lcontrol)'},
 {{
 {'!Holy Word: Sanctify', '!advanced', 'cursor.ground'},
-{'!Holy Word: Sanctify', 'area(10, 99).heal >= 3 & advanced','lowest.ground'},
+{'!Holy Word: Sanctify', 'area(10, 99).heal >= 3 & advanced','friendly.ground'},
 {'!Holy Word: Sanctify', 'advanced', 'tank.ground'},
 {'Prayer of Healing', 'health < 100','friendly'},
 },'keybind(lshift) & UI(k_HWS)'},
@@ -374,8 +366,8 @@ local Stopcasting ={
 }
 
 local inCombat = {
-{'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & UI(disp_ang) & range <= 40', 'friendly'},
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
+{'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & {target.id(116689) || target.id(116691)} & range <= 40', 'friendly'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & {!target.id(116689) || !target.id(116691)}'},
 {'fade', '{target.inmelee || player.area(2).enemies >= 1} & player.aggro & !partycheck == 1'},
 {'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
 {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body)', 'player'},
@@ -400,7 +392,7 @@ local inCombat = {
 
 
 local outCombat = {
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0'},
 {'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid == 1040', 'player'},
 {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body) !inareaid == 1040', 'player'},
 {Cooldowns,'partycheck == 2 & UI(myth_heal)'},
