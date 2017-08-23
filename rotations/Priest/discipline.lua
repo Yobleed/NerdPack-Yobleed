@@ -428,7 +428,7 @@ local inCombat = {
 local outCombat = {
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'%ressdead(Resurrection)', 'UI(rezz)'},
-{Beforepull},
+{Beforepull,'pull_timer >= 1'},
 {Keybinds},
 {Moving, 'player.moving & !UI(ato) & !inareaid == 1040'},
 {'!Light\'s Wrath', 'pull_timer >= 1 & pull_timer <= player.spell(Light\'s Wrath).casttime & UI(PWR_PPull) ','target'},

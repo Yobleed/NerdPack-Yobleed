@@ -271,7 +271,7 @@ local Solo = {
 
 local PoMooc = {
 {'Prayer of Mending', 'buff(Prayer of Mending).duration <= 15 & partycheck == 3', {'tank1','tank2'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count < 10 & partycheck == 3', {'tank1','tank2'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count < 5 & partycheck == 3', {'tank1','tank2'}},
 {'Prayer of Mending', '!buff(Prayer of Mending) & partycheck == 2', {'tank','player','lowest'}},
 }
 
@@ -295,8 +295,8 @@ local Sanctify = {
 }
 
 local PoH = {
-{'!Prayer of Healing', 'area(20, 85).heal >= 4 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'friendly'},
-{'Prayer of Healing', 'area(10, 80).heal >= 4', 'friendly'},
+{'!Prayer of Healing', 'area(20, 95).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity) || player.buff(Blessing of T\'uure)}', 'friendly'},
+{'Prayer of Healing', 'area(10, 90).heal >= 5', 'friendly'},
 {'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
 }
 
@@ -322,7 +322,7 @@ local Beforepull = {
 --Potion of Prolonged Power
 {'#142117', 'pull_timer <= 3 & UI(s_PPull) & !buff(Potion of Prolonged Power)', 'player'},
 {'Prayer of Mending', 'buff(Prayer of Mending).duration <= 15', {'tank1','tank2'}},
-{'Prayer of Mending', 'buff(Prayer of Mending).count < 10', {'tank1','tank2'}},
+{'Prayer of Mending', 'buff(Prayer of Mending).count < 5', {'tank1','tank2'}},
 }
 
 local Moving = {

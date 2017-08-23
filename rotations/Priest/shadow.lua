@@ -310,9 +310,9 @@ local inCombat = {
 
 local outCombat = {
   -- Potion of Prolonged Power usage before pull if enabled in UI.
-  {'#142117', 'pull_timer < 4 & UI(s_pull)'},
+  {'#142117', 'pull_timer >= 1 & pull_timer < 4 & UI(s_pull)'},
   -- Mind Blast before Pull.
-  {'8092', 'pull_timer <= 1.2 & UI(pull_MB)'},
+  {'8092', 'pull_timer >= 1 & pull_timer <= 1.2 & UI(pull_MB)'},
   {'Shadowform', '!player.buff(Shadowform) & !player.lastcast(Shadowform)','player'},
   --No Body and Soul from Class Hall.
   {Movement, 'player.movingfor >= 1 & !player.buff(Body and Soul) & !inareaid == 1040'},
