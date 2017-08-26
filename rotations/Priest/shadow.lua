@@ -39,6 +39,9 @@ local GUI = {
   {type = 'header', text = 'Cooldowns if Toggled', align = 'center'},
   {type = 'checkbox', text = 'Hero Potion of Prolonged Power', key = 's_PP', default= false},
   {type = 'text', text = 'Trinkets', align = 'center'},
+  {type = 'checkbox', text = 'Charm of the Rising Tide', key = 'tide', step = 1, default = false, max = 50},
+  {type = 'spinner', text = '=>', key = 'tidespin', default = 35},
+  {type = 'spinner', text = '', key = 's_GotNspin', default = 40},
   {type = 'checkbox', text = 'Top Trinket', key = 'trinket_1', default = false},
   {type = 'checkbox', text = 'Bottom Trinket', key = 'trinket_2', default = false},
   {type = 'text', text = 'Power Infusion', align = 'center'},
@@ -52,6 +55,7 @@ local GUI = {
   {type = 'checkbox', text = 'ON/OFF', key = 'dps_void', default= false},
   {type = 'text', text = 'Dispersion', align = 'center'},
   {type = 'checkbox', text = 'ON/OFF', key = 'dps_D', default= false},
+  {type = 'spinner', text = 'Insanity', key = 'dps_Dinsanityspin', align = 'left', max = 50, step = 5, default = 45},
   {type = 'spinner', text = 'Target <= 35%', key = 'dps_Dspin', align = 'left', min = 15, max = 50, step = 1, default = 44},
   {type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', min = 15, max = 50, step = 1, default = 30},
   {type = 'text', text = 'Arcane Torrent', align = 'center'},
@@ -221,6 +225,7 @@ local cooldowns = {
   {'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(Voidform).count >= UI(dps_PIspin1) & target.health <= 35 & UI(dps_PI)', 'player'},
   --Power infusion if talent is active, not in S2M when VF stacks are above or equal to UI value and checked if target above or 35% health.
   {'Power Infusion', 'talent(6,1) & !player.buff(Surrender to Madness) & player.buff(Voidform).count >= UI(dps_PIspin2) & target.health > 35 & UI(dps_PI)', 'player'},
+  {'!#147002', 'equipped(147002) & player.buff(Voidform) & player.spell(Void Torrent).cooldown ~= 0 & player.buff(Voidform).count >= UI(tidespin) & UI(tide)'},
   --Mindbender if talent is active on CD in S2M.
   {'!Mindbender', 'talent(6,3) & player.buff(Surrender to Madness)'},
   --Mind Bender if talent is active and not in S2M if VF stacks are above 5.
@@ -256,6 +261,7 @@ local ST = {
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'Shadow Word: Pain', 'debuff.duration < 3 & !talent(6,2)','target'},
   {'Vampiric Touch', 'debuff.duration <= 3 & !player.lastcast || !debuff(Shadow Word: Pain) & talent(6,2)','target'},
+  {'Mind Flay', nil,'target'},
 }
 
 local lotv = {
@@ -265,13 +271,13 @@ local lotv = {
     {'!Shadow Word: Death', '!player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0 & !player.channeling(Void Eruption)', 'target'},
   }, '!target.area(10).enemies >= 4'},
   --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(Voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= 30 & target.health <= 35 & !player.spell(Void Torrent).cooldown == 0','target'},
+  {'!Dispersion', 'player.buff(Voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= UI(dps_Dinsanityspin) & target.health <= 35 & !player.spell(Void Torrent).cooldown == 0','target'},
   --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(Voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= 30 & target.health > 35 & !player.spell(Void Torrent).cooldown == 0','target'},
+  {'!Dispersion', 'player.buff(Voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= UI(dps_Dinsanityspin) & target.health > 35 & !player.spell(Void Torrent).cooldown == 0','target'},
   --Void Bolt on CD not interrupting casting MB.
   {'!Void Eruption', '!player.channeling(Mind Blast)','target'},
   --Mind Flay if Dots are up and VB and MB are on CD.
-  {'Mind Flay', 'area(10).enemies >= 4 & debuff(Shadow Word: Pain)','target'},
+  {'Mind Flay', 'area(8).enemies >= 4 & debuff(Shadow Word: Pain)','target'},
   --Mind Blast on CD if VB is on CD.
   {'Mind Blast', '!player.spell(Void Eruption).cooldown <= gcd & debuff(Vampiric Touch) & debuff(Shadow Word: Pain) & equipped(Mangaza\'s Madness)','target'},
   {'Mind Blast', '!player.spell(Void Eruption).cooldown <= gcd & !equipped(Mangaza\'s Madness)','target'},
@@ -283,6 +289,7 @@ local lotv = {
   {'Shadow Word: Pain', 'debuff.duration < 3 & {!talent(6,2)||player.moving}','target'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
   {'!Vampiric Touch', '!player.lastcast & {debuff.duration <= 3 || target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},
+  {'Mind Flay', nil,'target'},
 }
 
 
@@ -305,7 +312,6 @@ local inCombat = {
   {AOE, 'toggle(AOE) & range <= 40'},
   {lotv, 'player.buff(Voidform)'},
   {ST, "!player.buff(Voidform)"},
-  {'Mind Flay', nil,'target'},
 }
 
 local outCombat = {

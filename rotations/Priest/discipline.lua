@@ -19,6 +19,12 @@ center = true},
 {type = 'checkbox', text = 'Mythic+ Healing', key = 'myth_heal', width = 55, default = false},
 {type = 'checkbox', text = 'Out of Combat Atonements', key = 'ato', width = 55, default = false},
 
+--TOS DISPELLING
+{type = 'header', text = 'Dispel', align = 'center'},
+{type = 'text', text = 'Advanced Only', align = 'center'},
+{type = 'checkbox', text = 'Echoing Anguish (Demonic Inquisition)', key = 'disp_ang', width = 55, default = false},
+{type = 'ruler'},{type = 'spacer'},
+
 --Healing Options
 {type = 'text', text = 'Healing Options', align = 'center'},
 {type = 'checkbox', text = 'Auto Power Word: Radiance', key = 'PWR', width = 55, default = false},
@@ -165,7 +171,7 @@ local PWR = {
 
 local Cooldowns = {
 --Automatic Shadowfiend.
-{'!Shadowfiend', "UI(SF) & player.spell(Light's Wrath).cooldown >= 85 & !talent(4,3)",'target'},
+{'!Shadowfiend', 'UI(SF) & !talent(4,3) & player.spell(Light\'s Wrath).cooldown >= 85 || partycheck == 2','target'},
 --Mana up!
 {'!Power Infusion', 'player.buff(Rapture) & talent(4,2) & player.mana <= 30', 'player'},
 --Power Infusion if PWS and Rapture and Pain Suppression is on CD.
@@ -223,13 +229,14 @@ local Rampup = {
 
 local Solo = {
 --Plea to keep on Atonement.
+{'Power Word: Radiance', 'spell(Light\'s Wrath).cooldown == 0 & partycheck == 2 & area(30).friendly >= 4 & target.is(target) & target.health.actual >= 617526 & buff(Sins of the Many).count < 5', 'player'},
 {'Plea', "{!buff(Atonement) & health < 90} || {!buff(Atonement) & spell(Light's Wrath).cooldown == 0}", 'player'},
 --PWS if player health is below or if UI value.
 {'Power Word: Shield', 'Health <= UI(full_PWS)', 'player'},
 --Schism on cooldown.
 {'Schism', "talent(1,3) & {!player.moving || player.buff(Norgannon's Foresight)}", 'target'},
 --LW.
-{'Light\'s Wrath', 'player.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime','target'},
+{'Light\'s Wrath', 'player.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime & health.actual >= 617526','target'},
 --PI on CD if toggled.
 {'Power Infusion', 'talent(7,1)', 'target'},
 --Shadowfiend on CD if toggled.
@@ -406,11 +413,11 @@ local inCombat = {
 {Stopcasting},
 {Potions},
 {Cooldowns},
-{'!Purify', 'player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & {target.id(116689) || target.id(116691)} & range <= 40', 'friendly'},
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & {!target.id(116689) || !target.id(116691)}'},
+{'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & UI(disp_ang) & range <= 40', 'friendly'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'fade', '{target.inmelee || player.area(2).enemies >= 1} & player.aggro & !partycheck == 1'},
-{'Psychic Scream', 'player.spell(Fade).cooldown > 0 & player.aggro & !toggle(xDPS) & player.area(8).enemies >= 1'},
-{'Shining Force', 'spell(Fade).cooldown > 0 & spell(Psychic Scream).cooldown > 0 & area(10).enemies >= 1 & aggro & !toggle(xDPS)', 'player'},
+{'Psychic Scream', 'player.spell(Fade).cooldown > 0 & player.aggro & !toggle(xDPS) & player.area(8).enemies >= 1 & partycheck ~= 2'},
+{'Shining Force', 'spell(Fade).cooldown > 0 & spell(Psychic Scream).cooldown > 0 & area(10).enemies >= 1 & aggro & !toggle(xDPS) & partycheck ~= 2', 'player'},
 {'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range > 10 & !lowest.health <= UI(l_mend)', 'tank'},
 {'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range <= 10 & !lowest.health <= UI(l_mend)', 'player'},
 {'Arcane Torrent', 'player.mana < 97 & UI(dps_at)', 'player'},
@@ -429,7 +436,7 @@ local inCombat = {
 }
 
 local outCombat = {
-{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0'},
+{'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'%ressdead(Resurrection)', 'UI(rezz)'},
 {Beforepull,'pull_timer >= 1'},
 {Keybinds},
