@@ -346,6 +346,7 @@ local Raid = {
 }
 
 local Mythic = {
+{'!Holy Word: Sanctify', 'area(10, 90).heal >= 3 & range <= 40','lowest.ground'},
 {'Prayer of Mending', 'health > 95 & !player.moving & !buff(Prayer of Mending) & partycheck ~=3', {'tank1','tank2','lowest','player'}},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'lowest'},
@@ -366,11 +367,7 @@ local Party = {
 }
 
 local Stopcasting ={
-
-{'!/stopcasting','!lowest.area(40, 95).heal >= 3 & player.casting(Prayer of Healing) & !keybind(lshift)'},
-{'!/stopcasting','!lowestp.area(40, 95).heal >= 2 & toggle(mana) & player.casting(Binding Heal)'},
-{'!/stopcasting','{{lowest.health >= UI(l_FH) & partycheck == 2} || {lowestp.health >= UI(l_FH) & partycheck == 3}} & !player.casting.percent >= 80 & toggle(mana) & {player.casting(Heal) || player.casting(Flash Heal)}'},
-{'!/stopcasting','{{lowest.health >= 100 & partycheck == 2} || {lowestp.health >= 100 & partycheck == 3}} & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal) }'},
+{'!/stopcasting','lowest.health >= 100 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal) }'},
 {'!/stopcasting','debuff(240447).duration <= gcd & debuff(240447)','player'}, --Quaking
 }
 
@@ -385,14 +382,14 @@ local inCombat = {
 {Cooldowns,'!player.buff(Spirit of Redemption)'},
 {Trinkets,'!player.buff(Spirit of Redemption) & !keybind(lshift)'},
 {Keybinds}, 
-{Stopcasting,'!player.buff(Spirit of Redemption)'},
+{Stopcasting,'!player.buff(Spirit of Redemption) & !UI(myth_heal)'},
 {Moving,'player.moving'},
-{AOE,'toggle(AOE)'},
+{AOE,'toggle(AOE) & !UI(myth_heal)'},
 {Spirit,'player.buff(Spirit of Redemption)'},
 {{
 {Raid,'partycheck == 3'},
 {Mythic,'partycheck == 2 & UI(myth_heal)'},
-{Party,'partycheck == 2'},
+{Party,'partycheck == 2 & !UI(myth_heal)'},
 {Solo,'partycheck == 1 || toggle(xDPS)'},
 {DPS,'lowest.health > UI(l_FH)'},
 },'!player.buff(Spirit of Redemption)'},
@@ -408,9 +405,9 @@ local outCombat = {
 {Potions},
 {Keybinds}, 
 {Beforepull,'pull_timer >= 1 & pull_timer <= 20'},
-{AOE,'toggle(AOE)'}, 
+{AOE,'toggle(AOE) & !UI(myth_heal)'}, 
 {Mythic,'UI(myth_heal) || UI(ooc_heal)'},
-{PoMooc,'partycheck >=2 & !player.moving & UI(ooc_heal)'},
+{PoMooc,'partycheck >=2 & !player.moving & UI(ooc_heal) & !UI(myth_heal)'},
 
 }
 
