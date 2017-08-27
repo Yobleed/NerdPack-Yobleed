@@ -294,14 +294,6 @@ local Sanctify = {
 },'partycheck ~= 3 || set_bonus(T20)= 4'},
 }
 
-local PoH = {
-{'Prayer of Healing', 'area(40, 90).heal >= 10', 'lowest'},
-{'Prayer of Healing', 'area(20, 80).heal >= 5', 'lowest'},
-{'Prayer of Healing', 'area(10, 85).heal >= 5 & player.buff(Power of the Naaru) || player.buff(Divinity)', 'lowest'},
-{'Prayer of Healing', 'area(20, 85).heal >= 5 & player.buff(Power of the Naaru) || player.buff(Divinity)', 'lowest'},
-{'Prayer of Healing', 'area(25, 85).heal >= 5 & player.buff(Power of the Naaru) || player.buff(Divinity)', 'lowest'},
-{'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
-}
 
 local PoM = {
 {'Prayer of Mending', '!buff(Prayer of Mending) & !lowest.health <= 60 & !UI(myth_heal)', {'tank','player','lowest'}},
@@ -337,12 +329,18 @@ local Moving = {
 }
 
 local AOE = {
-{Sanctify,'!player.buff(Divinity)'},
-{PoH,'!player.spell(Prayer of Mending).cooldown == 0 & !tank.health <= 50'},
+{'Prayer of Healing', 'area(40, 85).heal >= 10', 'lowest'},
+{'Prayer of Healing', 'area(10, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'Prayer of Healing', 'area(15, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'Prayer of Healing', 'area(20, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'Prayer of Healing', 'area(25, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'Prayer of Healing', 'area(30, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
+{Sanctify,'!player.buff(Divinity) & !player.casting(Prayer of Healing)'},
 }
 
 local Raid = {
-{PoM,'!tank.health <= 50 & !player.moving'},
+{PoM,'!tank.health <= 50 & !player.moving & !UI(ooc_heal)'},
 {Tankpred,'tank.health.predicted < 70 & tank.exists'},
 {Playerpred,'player.health.predicted <= 50'},
 {Lowestpred,'lowestp.health <100'},
