@@ -239,7 +239,7 @@ local cooldowns = {
 local AOE = {
   {{
     {'Shadow Word: Pain', '!debuff & distance <= 40 & combat & {player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}}', 'enemies'},
-    {'Vampiric Touch', 'ttd >= 7 & distance <= 40 & combat & !player.lastcast & {!debuff||{!debuff & talent(6,2)}}}', 'enemies'},
+    {'Vampiric Touch', 'ttd >= 7 & distance <= 40 & combat & !player.lastcast(Vampiric Touch) & {!debuff||{!debuff & talent(6,2)}}}', 'enemies'},
     {'Shadow Word: Pain', '!debuff & !talent(6,2) & distance <= 40 & combat', 'enemies'},
   }, 'player.buff(Voidform) & {!player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0||!player.insanity == 100}'},
   --Shadow Crash on CD.
@@ -252,7 +252,7 @@ local ST = {
   --SWD when target below 35
   {'!Shadow Word: Death', '!player.insanity >= 65 & !player.channeling(Void Eruption)','target'},
   --Misery.
-  {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2) & !player.lastcast','target'},
+  {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2)','target'},
   --Mind Blast if player is channeling Mind Flay.
   {'!Mind Blast', 'player.channeling(Mind Flay)','target'},
   {'Mind Blast', 'equipped(Mangaza\'s Madness) & debuff(Vampiric Touch) & debuff(Shadow Word: Pain)', 'target'},
@@ -260,7 +260,7 @@ local ST = {
   {'Mind Blast', '!equipped(Mangaza\'s Madness)','target'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'Shadow Word: Pain', 'debuff.duration < 3 & !talent(6,2)','target'},
-  {'Vampiric Touch', 'debuff.duration <= 3 & !player.lastcast || !debuff(Shadow Word: Pain) & talent(6,2)','target'},
+  {'Vampiric Touch', 'debuff.duration <= 3 || !debuff(Shadow Word: Pain) & talent(6,2)','target'},
   {'Mind Flay', nil,'target'},
 }
 
@@ -284,11 +284,11 @@ local lotv = {
   --Mind Blast if player is channeling Mind Flay.
   {'!Mind Blast', 'player.channeling & !player.spell(Void Eruption).cooldown <= gcd & !area(10).enemies >= 4 ','target'},
   --Misery.
-  {'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2) & !player.lastcast(Vampiric Touch)','target'},
+  {'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)','target'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'Shadow Word: Pain', 'debuff.duration < 3 & {!talent(6,2)||player.moving}','target'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', '!player.lastcast & {debuff.duration <= 3 || target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},
+  {'!Vampiric Touch', '{debuff.duration <= 3 || target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},
   {'Mind Flay', nil,'target'},
 }
 
@@ -329,6 +329,7 @@ NeP.CR:Add(258, {
   ic = {{inCombat, '!player.channeling(Void Torrent)'}},
   ooc = outCombat,
   gui = GUI,
+  gui_st = {title='Yobleed\'s Priest Pack: Shadow', width='512', height='256', color='6c00ff'},
   load = exeOnLoad,
   ids = yobleed.spell_ids
 })

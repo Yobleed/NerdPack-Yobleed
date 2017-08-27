@@ -22,7 +22,7 @@ center = true},
 
 --TOS DISPELLING
 {type = 'header', text = 'Dispel', align = 'center'},
-{type = 'text', text = 'Advanced Only', align = 'center'},
+{type = 'text', text = 'Advanced Only', align = 'center', color ='FF0000'},
 {type = 'checkbox', text = 'Echoing Anguish (Demonic Inquisition)', key = 'disp_ang', width = 55, default = false},
 {type = 'ruler'},{type = 'spacer'},
 
@@ -199,36 +199,36 @@ local DPS = {
 }
 
 local Tankpred = {
-{'!Holy Word: Serenity', 'health.predicted <= 40', 'lowest(tank)'},
-{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.casting(Prayer of Healing)', 'lowest(tank)'},
+{'!Holy Word: Serenity', 'health.predicted <= 40 & !player.buff(Divinity)', 'lowest(tank)'},
+{'!Holy Word: Serenity', 'health.predicted <= UI(t_HWSE) & !player.casting(Prayer of Healing) & !player.buff(Divinity)', 'lowest(tank)'},
 {'Flash Heal', 'health.predicted <= UI(t_FH)', 'lowest(tank)'},
 {'Renew', '!buff(Renew) & health.predicted <= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'lowest(tank)'},
 }
 
 local Tank = {
-{'!Holy Word: Serenity', 'health <= 40', 'lowest(tank)'},
-{'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.casting(Prayer of Healing)', 'lowest(tank)'},
+{'!Holy Word: Serenity', 'health <= 40 & !player.buff(Divinity)', 'lowest(tank)'},
+{'!Holy Word: Serenity', 'health <= UI(t_HWSE) & !player.casting(Prayer of Healing) & !player.buff(Divinity)', 'lowest(tank)'},
 {'Flash Heal', 'health <= UI(t_FH)', 'lowest(tank)'},
 {'Renew', '!buff(Renew) & health<= UI(t_Ren) & !player.buff(Spirit of Redemption)', 'lowest(tank)'},
 }
 
 local Playerpred = {
-{'!Holy Word: Serenity', 'health.predicted <= 40 & !spell(Desperate Prayer).cooldown == 0', 'player'},
-{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !spell(Desperate Prayer).cooldown == 0 & !player.casting(Prayer of Healing)', 'player'},
+{'!Holy Word: Serenity', 'health.predicted <= 40 & !spell(Desperate Prayer).cooldown == 0 & !player.buff(Divinity)', 'player'},
+{'!Holy Word: Serenity', 'health.predicted <= UI(p_HWSE) & !spell(Desperate Prayer).cooldown == 0 & !player.casting(Prayer of Healing) & !player.buff(Divinity)', 'player'},
 {'Gift of the Naaru', 'health.predicted <= UI(p_Gift)', 'player'},
 {'Flash Heal', 'health.predicted <= UI(p_FH)', 'player'},
 }
 
 local Player = {
-{'!Holy Word: Serenity', 'health <= 40 & !spell(Desperate Prayer).cooldown == 0', 'player'},
-{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !spell(Desperate Prayer).cooldown == 0 & !player.casting(Prayer of Healing)', 'player'},
+{'!Holy Word: Serenity', 'health <= 40 & !spell(Desperate Prayer).cooldown == 0 & !player.buff(Divinity)', 'player'},
+{'!Holy Word: Serenity', 'health <= UI(p_HWSE) & !spell(Desperate Prayer).cooldown == 0 & !player.casting(Prayer of Healing) & !player.buff(Divinity)', 'player'},
 {'Gift of the Naaru', 'health <= UI(p_Gift)', 'player'},
 {'Flash Heal', 'health <= UI(p_FH)', 'player'},
 }  
 
 local Lowestpred = {
-{'!Holy Word: Serenity', 'health <= 40', 'lowestp'},
-{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.casting(Prayer of Healing)', 'lowestp'},
+{'!Holy Word: Serenity', 'health <= 40 & !player.buff(Divinity)', 'lowestp'},
+{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.casting(Prayer of Healing) & !player.buff(Divinity)', 'lowestp'},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= {gcd*2}+1 & health < 100', 'lowestp'},
 {'Gift of the Naaru', 'health <= 40', 'lowestp'},
 {'Binding Heal', '!health <= UI(l_HWSE) & !is(player) & {area(20, 95).heal >= 2 || {player.health <= 95 & health <= 95}}', 'lowestp'},
@@ -237,8 +237,8 @@ local Lowestpred = {
 }
 
 local Lowest = {
-{'!Holy Word: Serenity', 'health <= 40', 'lowest'},
-{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.casting(Prayer of Healing)', 'lowest'},
+{'!Holy Word: Serenity', 'health <= 40 & !player.buff(Divinity)', 'lowest'},
+{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.casting(Prayer of Healing) & !player.buff(Divinity)', 'lowest'},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= {gcd*2}+1 & health < 100', 'lowest'},
 {'Gift of the Naaru', 'health <= 40', 'lowest'},
 {'Binding Heal', '!health <= UI(l_HWSE) & !is(player) & {area(20, 95).heal >= 2 || {player.health <= 95 & health <= 95}}', 'lowest'},
@@ -247,8 +247,8 @@ local Lowest = {
 }
 
 local Spirit = {
-{'!Holy Word: Serenity', 'health <= 40', 'lowest'},
-{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.casting(Prayer of Healing)', 'lowest'},
+{'!Holy Word: Serenity', 'health <= 40 & !player.buff(Divinity)', 'lowest'},
+{'!Holy Word: Serenity', 'health <= UI(l_HWSE) & !player.casting(Prayer of Healing) & !player.buff(Divinity)', 'lowest'},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= {gcd*2}+1 & health < 100', 'lowest'},
 {'Gift of the Naaru', 'health <= 40', 'lowest'},
 {'Flash Heal', 'health <= 100', 'lowest'},
@@ -258,7 +258,7 @@ local Spirit = {
 local Solo = {
 {'Apotheosis', nil,'player'},
 {'Gift of the Naaru', 'health <= UI(full_Gift)', 'player'},
-{'Holy Word: Serenity', 'health <= UI(full_HWSE)', 'player'},
+{'Holy Word: Serenity', 'health <= UI(full_HWSE) & !player.buff(Divinity)', 'player'},
 {'Flash Heal', 'health <= UI(full_FH)', 'player'},
 {'Holy Word: Chastise', 'infront' , 'target'},
 {{
@@ -286,21 +286,25 @@ local Felexplosive = {
 
 
 local Sanctify = {
-{'!Holy Word: Sanctify', 'area(10, 90).heal >= 5 & range <= 40','lowest.ground'},
+{'!Holy Word: Sanctify', 'area(10, 85).heal = 6','lowest.ground'},
+{'!Holy Word: Sanctify', 'area(10, 85).heal >= 5','lowest.ground'},
+{'!Holy Word: Sanctify', 'area(10, 85).heal >= 4','lowest.ground'},
 {{
-{'!Holy Word: Sanctify', 'area(10, 90).heal >= 3 & range <= 40','lowest.ground'},
+{'!Holy Word: Sanctify', 'area(10, 85).heal >= 3','lowest.ground'},
 },'partycheck ~= 3 || set_bonus(T20)= 4'},
 }
 
 local PoH = {
-{'!Prayer of Healing', 'area(40, 90).heal >= 5 & player.buff(Power of the Naaru) || player.buff(Divinity) || player.buff(Blessing of T\'uure) & range <= 40', 'lowest'},
-{'Prayer of Healing', 'area(10, 90).heal >= 5 & range <= 40', 'lowest'},
-{'Prayer of Healing', 'area(20, 90).heal >= 5 & range <= 40', 'lowest'},
+{'Prayer of Healing', 'area(40, 90).heal >= 10', 'lowest'},
+{'Prayer of Healing', 'area(20, 80).heal >= 5', 'lowest'},
+{'Prayer of Healing', 'area(10, 85).heal >= 5 & player.buff(Power of the Naaru) || player.buff(Divinity)', 'lowest'},
+{'Prayer of Healing', 'area(20, 85).heal >= 5 & player.buff(Power of the Naaru) || player.buff(Divinity)', 'lowest'},
+{'Prayer of Healing', 'area(25, 85).heal >= 5 & player.buff(Power of the Naaru) || player.buff(Divinity)', 'lowest'},
 {'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
 }
 
 local PoM = {
-{'Prayer of Mending', '!buff(Prayer of Mending) & !lowest.health <= 60', {'tank','player','lowest'}},
+{'Prayer of Mending', '!buff(Prayer of Mending) & !lowest.health <= 60 & !UI(myth_heal)', {'tank','player','lowest'}},
 }
 
 local Keybinds = {
@@ -325,15 +329,15 @@ local Beforepull = {
 }
 
 local Moving = {
-{Sanctify},
-{'Holy Word: Serenity', 'health <= UI(m_HWSE)', 'lowest'},
+{Sanctify,'!player.buff(Divinity)'},
+{'Holy Word: Serenity', 'health <= UI(m_HWSE) & !player.buff(Divinity)', 'lowest'},
 {'Gift of the Naaru', 'health <= 20', 'lowest'},
 {'Flash Heal', 'player.buff(Surge of Light) & {{player.buff(Surge of Light).duration <= {gcd*2}+1 & health < 100}||health <= UI(m_FH)}', 'lowest'},
 {'Renew', '!buff(Renew) & {UI(myth_heal) || health <= UI(m_Ren)}', 'lowest'},
 }
 
 local AOE = {
-{Sanctify},
+{Sanctify,'!player.buff(Divinity)'},
 {PoH,'!player.spell(Prayer of Mending).cooldown == 0 & !tank.health <= 50'},
 }
 
@@ -346,12 +350,12 @@ local Raid = {
 }
 
 local Mythic = {
-{'!Holy Word: Sanctify', 'area(10, 90).heal >= 3 & range <= 40','lowest.ground'},
+{'!Holy Word: Sanctify', 'area(10, 90).heal >= 3 & range <= 40 & !player.buff(Divinity)','lowest.ground'},
 {'Prayer of Mending', 'health > 95 & !player.moving & !buff(Prayer of Mending) & partycheck ~=3', {'tank1','tank2','lowest','player'}},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'friendly'},
-{'!Holy Word: Serenity', 'health <= 75', 'lowest'},
+{'!Holy Word: Serenity', 'health <= 75 & !player.buff(Divinity)', 'lowest'},
 {'!Gift of the Naaru', 'health <= 50', 'lowest'},
 {'Binding Heal', '!health <= 70 & !is(player) & {area(20, 99).heal >= 2 || {player.health < 100 & health < 100}}', 'lowest'},
 {'Flash Heal', 'health <= 90', 'lowest'},
@@ -367,6 +371,7 @@ local Party = {
 }
 
 local Stopcasting ={
+{'!/stopcasting','!player.area(40,95).heal >= 5 & player.casting(Prayer of Healing) & partcheck == 3'},
 {'!/stopcasting','lowest.health >= 100 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal) }'},
 {'!/stopcasting','debuff(240447).duration <= gcd & debuff(240447)','player'}, --Quaking
 }
@@ -406,7 +411,8 @@ local outCombat = {
 {Keybinds}, 
 {Beforepull,'pull_timer >= 1 & pull_timer <= 20'},
 {AOE,'toggle(AOE) & !UI(myth_heal)'}, 
-{Mythic,'UI(myth_heal) || UI(ooc_heal)'},
+{Mythic,'UI(myth_heal)'},
+{Raid, 'UI(ooc_heal)'},
 {PoMooc,'partycheck >=2 & !player.moving & UI(ooc_heal) & !UI(myth_heal)'},
 
 }
@@ -417,6 +423,7 @@ NeP.CR:Add(257, {
   ic = {{inCombat,'!player.channeling(Divine Hymn)'}},
   ooc = {{outCombat,'!player.channeling(Divine Hymn)'}},
   gui = GUI,
+  gui_st = {title='Yobleed\'s Priest Pack: Holy', width='512', height='256', color='FACC2E'},
   load = exeOnLoad,
   ids = yobleed.spell_ids
 })

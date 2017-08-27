@@ -108,5 +108,6 @@ NeP.CR:Add(256, {
 	ic = inCombat,
 	ooc = outCombat,
 	gui = GUI,
+	gui_st = {title='Yobleed\'s Priest Pack: Discipline Mage Tower', width='512', height='256', color='FF9900'},
 	load = exeOnLoad
 })

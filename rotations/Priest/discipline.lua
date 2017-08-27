@@ -21,7 +21,7 @@ center = true},
 
 --TOS DISPELLING
 {type = 'header', text = 'Dispel', align = 'center'},
-{type = 'text', text = 'Advanced Only', align = 'center'},
+{type = 'text', text = 'Advanced Only', align = 'center', color ='FF0000'},
 {type = 'checkbox', text = 'Echoing Anguish (Demonic Inquisition)', key = 'disp_ang', width = 55, default = false},
 {type = 'ruler'},{type = 'spacer'},
 
@@ -461,6 +461,7 @@ NeP.CR:Add(256, {
   ic = inCombat,
   ooc = outCombat,
   gui = GUI,
+  gui_st = {title='Yobleed\'s Priest Pack: Discipline', width='512', height='256', color='58FAF4'},
   load = exeOnLoad,
   ids = yobleed.spell_ids
 })
