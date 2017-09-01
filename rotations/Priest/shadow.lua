@@ -113,6 +113,13 @@ local exeOnLoad = function()
   })
 
   NeP.Interface:AddToggle({
+		key = 'xSWP',
+		name = 'Shadow Word: Pain Mass DoT',
+		text = 'Use Shadow Word: Pain on several mobs. (Changable within settings).',
+		icon = 'Interface\\Icons\\spell_shadow_shadowwordpain',
+	})
+
+  NeP.Interface:AddToggle({
     -- Surrender to Madness toggle.
     key = 's2m',
     name = 'Surrender to Madness',
@@ -121,6 +128,11 @@ local exeOnLoad = function()
   })
 
 end
+
+local SWP_MASS = {
+	{'Shadow Word: Pain', 'range<41&combat&alive&count.enemies.debuffs<UI(SWP_UNITS)&debuff.duration<3', 'enemies'}
+}
+
 local Mythic = {
   {'!Void Eruption', 'id(120651) & range <= 40 & infront', 'enemies'},
   {'!Shadow Word: Death', 'id(120651) & range <= 40', 'enemies'},
@@ -247,55 +259,31 @@ local AOE = {
 }
 
 local ST = {
-  --Void Eruption if VT on target is 6seconds or higher and SWP on target and no S2M.
-  {'!Void Eruption', 'debuff(Vampiric Touch).duration > 4 & !player.buff(Surrender to Madness) & debuff(Vampiric Touch) & debuff(Shadow Word: Pain)','target'},
-  --SWD when target below 35
-  {'!Shadow Word: Death', '!player.insanity >= 65 & !player.channeling(Void Eruption)','target'},
-  --Misery.
-  {'Vampiric Touch', '!debuff(Shadow Word: Pain) & talent(6,2)','target'},
-  --Mind Blast if player is channeling Mind Flay.
-  {'!Mind Blast', 'player.channeling(Mind Flay)','target'},
-  {'Mind Blast', 'equipped(Mangaza\'s Madness) & debuff(Vampiric Touch) & debuff(Shadow Word: Pain)', 'target'},
-  --Mind Blast on CD.
-  {'Mind Blast', '!equipped(Mangaza\'s Madness)','target'},
-  --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-  {'Shadow Word: Pain', 'debuff.duration < 3 & !talent(6,2)','target'},
-  {'Vampiric Touch', 'debuff.duration <= 3 || !debuff(Shadow Word: Pain) & talent(6,2)','target'},
-  {'Mind Flay', nil,'target'},
+{'!Shadow Word: Death', '{!player.channeling(Mind Blast)&player.spell(Shadow Word: Death).charges>1&player.insanity<80}||{!player.channeling(Mind Blast)&player.insanity<45}', 'target'},
+{'!Void Eruption', '!player.moving&!player.channeling(Mind Blast)||player.insanity<30', 'target'},
+{'!Vampiric Touch', '!player.moving&!target.debuff(Shadow Word: Pain)&talent(6,2)', 'target'},
+{'Mind Blast', '!player.moving&player.spell(Void Eruption).cooldown>gcd', 'target'},
+{'!Mind Blast', '!player.moving&player.spell(Void Eruption).cooldown>gcd&target.debuff(Vampiric Touch)&target.debuff(Shadow Word: Pain)&player.channeling(Mind Flay)', 'target'},
+{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration<3&!talent(6,2)}||{!target.debuff(Shadow Word: Pain)&!talent(6,2)}||{player.moving&!target.debuff(Shadow Word: Pain)}', 'target'},
+{'!Vampiric Touch', '!player.moving&{{target.debuff(Vampiric Touch).duration<4&!player.lastcast(Vampiric Touch)}||{!target.debuff(Vampiric Touch)&!player.lastcast(Vampiric Touch)}||{{target.debuff(Shadow Word: Pain).duration<2.3||!target.debuff(Shadow Word: Pain)}&talent(6,2)}}', 'target'},
+{'Mind Flay', '!player.moving&player.spell(Void Eruption).cooldown>gcd&player.spell(Mind Blast).cooldown>gcd&target.debuff(Shadow Word: Pain)&target.debuff(Vampiric Touch)', 'target'}
 }
 
 local lotv = {
-  {{
-    {'!Shadow Word: Death', '!player.spell(Void Eruption).cooldown == 0 & player.moving', 'target'},
-    {'!Shadow Word: Death', '{!player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0 & player.spell(Shadow Word: Death).charges > 1} || {!player.channeling(Mind Blast) & !player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0 }', 'target'},
-    {'!Shadow Word: Death', '!player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0 & !player.channeling(Void Eruption)', 'target'},
-  }, '!target.area(10).enemies >= 4'},
-  --Dispersion if VF stacks are above or equal to UI value and checked and SWD charges are 0 and if insanity is below 20% and Target Health is below or equal to 35% health.
-  {'!Dispersion', 'player.buff(Voidform).count >= UI(dps_Dspin) & UI(dps_D) & spell(Shadow Word: Death).charges < 1 & player.insanity <= UI(dps_Dinsanityspin) & target.health <= 35 & !player.spell(Void Torrent).cooldown == 0','target'},
-  --Dispersion if VF stacks are above or equal to UI value and checked and if insanity is below 20% and Target Health is above 35% health.
-  {'!Dispersion', 'player.buff(Voidform).count >= UI(dps_D2spin) & UI(dps_D) & !player.buff(Surrender to Madness) & player.insanity <= UI(dps_Dinsanityspin) & target.health > 35 & !player.spell(Void Torrent).cooldown == 0','target'},
-  --Void Bolt on CD not interrupting casting MB.
-  {'!Void Eruption', '!player.channeling(Mind Blast)','target'},
-  --Mind Flay if Dots are up and VB and MB are on CD.
-  {'Mind Flay', 'area(8).enemies >= 4 & debuff(Shadow Word: Pain)','target'},
-  --Mind Blast on CD if VB is on CD.
-  {'Mind Blast', '!player.spell(Void Eruption).cooldown <= gcd & debuff(Vampiric Touch) & debuff(Shadow Word: Pain) & equipped(Mangaza\'s Madness)','target'},
-  {'Mind Blast', '!player.spell(Void Eruption).cooldown <= gcd & !equipped(Mangaza\'s Madness)','target'},
-  --Mind Blast if player is channeling Mind Flay.
-  {'!Mind Blast', 'player.channeling & !player.spell(Void Eruption).cooldown <= gcd & !area(10).enemies >= 4 ','target'},
-  --Misery.
-  {'!Vampiric Touch', '!target.debuff(Shadow Word: Pain) & talent(6,2)','target'},
-  --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
-  {'Shadow Word: Pain', 'debuff.duration < 3 & {!talent(6,2)||player.moving}','target'},
-  --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', '{debuff.duration <= 3 || target.debuff(Shadow Word: Pain).duration <= 1.3 || !target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},
-  {'Mind Flay', nil,'target'},
+{'!Shadow Word: Death', '{!player.channeling(Mind Blast)&player.spell(Shadow Word: Death).charges>1&player.insanity<80}||{!player.channeling(Mind Blast)&player.insanity<45}', 'target'},
+{'!Void Eruption', '!player.moving&!player.channeling(Mind Blast)||player.insanity<30', 'target'},
+{'!Vampiric Touch', '!player.moving&!target.debuff(Shadow Word: Pain)&talent(6,2)', 'target'},
+{'Mind Blast', '!player.moving&player.spell(Void Eruption).cooldown>gcd', 'target'},
+{'!Mind Blast', '!player.moving&player.spell(Void Eruption).cooldown>gcd&target.debuff(Vampiric Touch)&target.debuff(Shadow Word: Pain)&player.channeling(Mind Flay)', 'target'},
+{'Shadow Word: Pain', '{target.debuff(Shadow Word: Pain).duration<3&!talent(6,2)}||{!target.debuff(Shadow Word: Pain)&!talent(6,2)}||{player.moving&!target.debuff(Shadow Word: Pain)}', 'target'},
+{'!Vampiric Touch', '!player.moving&{{target.debuff(Vampiric Touch).duration<4&!player.lastcast(Vampiric Touch)}||{!target.debuff(Vampiric Touch)&!player.lastcast(Vampiric Touch)}||{{target.debuff(Shadow Word: Pain).duration<2.3||!target.debuff(Shadow Word: Pain)}&talent(6,2)}}', 'target'},
 }
 
 
 local inCombat = {
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
   {Movement, 'player.movingfor >= 1 & !player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown == 0}'},
+  {SWP_MASS, 'toggle(xSWP)'},
   {Surrender},
   {'Mind Bomb', 'toggle(abc) & talent(7,2) & target.area(8).enemies >= 3 & {!player.buff(Surrender To Madness) || spell(Shadow Crash).cooldown == 0 & player.buff(Voidform)}'},
   {Mythic, 'partycheck == 2 & UI(myth_fel)'},

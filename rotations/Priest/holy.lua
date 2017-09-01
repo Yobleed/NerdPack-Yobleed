@@ -329,6 +329,7 @@ local Moving = {
 }
 
 local AOE = {
+{Sanctify,'!player.buff(Divinity) & !player.casting(Prayer of Healing)'},
 {'Prayer of Healing', 'area(40, 85).heal >= 10', 'lowest'},
 {'Prayer of Healing', 'area(10, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
 {'Prayer of Healing', 'area(15, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
@@ -336,11 +337,10 @@ local AOE = {
 {'Prayer of Healing', 'area(25, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
 {'Prayer of Healing', 'area(30, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
 {'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
-{Sanctify,'!player.buff(Divinity) & !player.casting(Prayer of Healing)'},
 }
 
 local Raid = {
-{PoM,'!tank.health <= 50 & !player.moving & !UI(ooc_heal)'},
+{PoM,'!tank.health <= 50 & !player.moving'},
 {Tankpred,'tank.health.predicted < 70 & tank.exists'},
 {Playerpred,'player.health.predicted <= 50'},
 {Lowestpred,'lowestp.health <100'},
@@ -410,7 +410,6 @@ local outCombat = {
 {Beforepull,'pull_timer >= 1 & pull_timer <= 20'},
 {AOE,'toggle(AOE) & !UI(myth_heal)'}, 
 {Mythic,'UI(myth_heal)'},
-{Raid, 'UI(ooc_heal)'},
 {PoMooc,'partycheck >=2 & !player.moving & UI(ooc_heal) & !UI(myth_heal)'},
 
 }
