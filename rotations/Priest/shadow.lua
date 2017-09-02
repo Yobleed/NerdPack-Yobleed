@@ -71,10 +71,9 @@ local GUI = {
   {type = 'spinner', text = '', key = 's_Dspin', align = 'left', default = 20},
   {type = 'checkbox', text = 'Gift of the Naaru', key = 's_GotN', default = false},
   {type = 'spinner', text = '', key = 's_GotNspin', default = 40},
-  {type = 'checkbox', text = 'Healthstone', key = 's_HS', default = false},
-  {type = 'spinner', text = '', key = 's_HSspin', default = 20},
-  {type = 'checkbox', text = 'Ancient Healing Potion', key = 's_AHP', default = false},
-  {type = 'spinner', text = '', key = 's_AHPspin', default = 20, align = 'left'},
+{type = 'checkspin', text = 'Healthstone', key = 'HS', spin = 30, check = false},
+{type = 'checkspin', text = 'Ancient Healing Potion', key = 'AHP', spin = 30, check = false},
+{type = 'ruler'},{type = 'spacer'},
   {type = 'ruler'}, {type = 'spacer'},
 
   -- GUI Party Support
@@ -160,10 +159,10 @@ local Survival = {
 local Potions = {
   -- Potion of Prolonged Power usage if enabled in UI.
   {'#142117', 'player.hashero & !player.buff(Potion of Prolonged Power) & UI(s_PP)'},
-  -- Healthstone usage if enabled in UI.
-  {'#5512', 'player.health <= UI(s_HSspin) & UI(s_HS)'},
-  -- Ancient Healing Potion usage if enabled in UI.
-  {'#127834', 'player.health <= UI(s_AHPspin) & UI(s_AHP)'},
+--Health Stone.
+{'#5512', 'item(5512).usable&item(5512).count>0&player.health<=UI(HS_spin)&UI(HS_check)', 'player'},
+--Ancient Healing Potion.
+{'#127834', 'item(127834).usable&item(127834).count>0&player.health<=UI(AHP_spin)&UI(AHP_check)'},
 }
 
 local Trinkets = {

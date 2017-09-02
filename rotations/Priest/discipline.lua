@@ -76,12 +76,9 @@ center = true},
 --POTIONS
 {type = 'header', text = 'Potions', align = 'center'},
 {type = 'text', text = 'Check to enable Potions', align = 'center'},
-{type = 'checkbox', text = 'Healthstone', key = 'p_HS', width = 55, default = false},
-{type = 'spinner', text = '', key = 'p_HSspin', width = 55, default = 25},
-{type = 'checkbox', text = 'Ancient Healing Potion', key = 'p_AHP', width = 55, default = false},
-{type = 'spinner', text = '', key = 'p_AHPspin', width = 55, default = 25},
-{type = 'checkbox', text = 'Ancient Mana Potion', key = 'p_AMP', width = 55, default = false},
-{type = 'spinner', text = '', key = 'p_AMPspin', width = 55, default = 20},
+{type = 'checkspin', text = 'Healthstone', key = 'HS', spin = 30, check = false},
+{type = 'checkspin', text = 'Ancient Healing Potion', key = 'AHP', spin = 30, check = false},
+{type = 'checkspin', text = 'Ancient Mana Potion', key = 'AMP', spin = 30, check = false},
 {type = 'ruler'},{type = 'spacer'},
 
 --Before Pull
@@ -209,11 +206,11 @@ local Keybinds = {
 
 local Potions = {
 --Health Stone.
-{'#5512', 'UI(p_HS) & player.health <= UI(p_HSspin)'},
+{'#5512', 'item(5512).usable&item(5512).count>0&player.health<=UI(HS_spin)&UI(HS_check)', 'player'},
 --Ancient Healing Potion.
-{'#127834', 'UI(p_AHP) & player.health <= UI(p_AHPspin)'},
+{'#127834', 'item(127834).usable&item(127834).count>0&player.health<=UI(AHP_spin)&UI(AHP_check)'},
 --Ancient Mana Potion.
-{'#127835', 'UI(p_AMP) & player.mana <= UI(p_AMPspin)'},
+{'#127835', 'item(127835).usable&item(127835).count>0&player.mana<=UI(AMP_spin)&UI(AMP_check)', 'player'},
 }
 
 local Rampup = {
