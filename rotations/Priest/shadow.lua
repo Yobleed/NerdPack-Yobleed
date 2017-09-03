@@ -33,6 +33,7 @@ local GUI = {
   {type = 'checkbox', text = 'Mind Blast', key = 'pull_MB', default = false},
   {type = 'text', text = 'Movement', align = 'center'},
   {type = 'checkbox', text = 'Body and Soul', key = 'm_Body', default = false},
+  {type = 'spinner', text = 'Mass SWP - Units', key = 'SWP_UNITS', align = 'left', width = 55, step = 1, default = 4},
   {type = 'ruler'}, {type = 'spacer'},
 
   -- COOLDOWNS
@@ -71,9 +72,10 @@ local GUI = {
   {type = 'spinner', text = '', key = 's_Dspin', align = 'left', default = 20},
   {type = 'checkbox', text = 'Gift of the Naaru', key = 's_GotN', default = false},
   {type = 'spinner', text = '', key = 's_GotNspin', default = 40},
-{type = 'checkspin', text = 'Healthstone', key = 'HS', spin = 30, check = false},
-{type = 'checkspin', text = 'Ancient Healing Potion', key = 'AHP', spin = 30, check = false},
-{type = 'ruler'},{type = 'spacer'},
+  {type = 'checkspin', text = 'Healthstone', key = 'HS', spin = 30, check = false},
+  {type = 'checkspin', text = 'Ancient Healing Potion', key = 'AHP', spin = 30, check = false},
+  {type = 'checkspin', text = 'Astral Healing Potion', key = 'AsHP', spin = 30, check = false},
+  {type = 'ruler'},{type = 'spacer'},
   {type = 'ruler'}, {type = 'spacer'},
 
   -- GUI Party Support
@@ -163,6 +165,8 @@ local Potions = {
 {'#5512', 'item(5512).usable&item(5512).count>0&player.health<=UI(HS_spin)&UI(HS_check)', 'player'},
 --Ancient Healing Potion.
 {'#127834', 'item(127834).usable&item(127834).count>0&player.health<=UI(AHP_spin)&UI(AHP_check)'},
+--Astral Healing Potion.
+{'#152615', 'item(152615).usable&item(152615).count>0&player.health<=UI(AsHP_spin)&UI(AsHP_check)'},
 }
 
 local Trinkets = {
@@ -271,7 +275,7 @@ local ST = {
   {'Mind Blast', '!equipped(Mangaza\'s Madness)','target'},
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'Shadow Word: Pain', 'debuff.duration < 3 & !talent(6,2)','target'},
-  {'Vampiric Touch', '!player.lastcast(Vampiric Touch) & {debuff.duration <= 3 || !debuff(Shadow Word: Pain) & talent(6,2)}','target'},
+  {'Vampiric Touch', '!player.lastcast(Vampiric Touch) & !debuff','target'},
   {'Mind Flay', nil,'target'},
 }
 
@@ -299,31 +303,31 @@ local lotv = {
   --Shadow Word: Pain if target debuff duration is below 3 seconds OR if target has no SWP.
   {'Shadow Word: Pain', 'debuff.duration < 3 & {!talent(6,2)||player.moving}','target'},
   --Vampiric Touch if target debuff duration is below 3 seconds OR if target has no Vampiric Touch.
-  {'!Vampiric Touch', '!player.lastcast(Vampiric Touch) & {debuff.duration <= 3 || !target.debuff(Shadow Word: Pain)} & talent(6,2)}','target'},
+  {'Vampiric Touch', '!player.lastcast(Vampiric Touch) & !debuff','target'},
   {'Mind Flay', nil,'target'},
 }
 
 
 local inCombat = {
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
-  {Movement, 'player.movingfor >= 1 & !player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown == 0}'},
-  {SWP_MASS, 'toggle(xSWP)'},
+  {Movement,'player.movingfor >= 1 & !player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown == 0}'},
+  {SWP_MASS,'toggle(xSWP)'},
   {Surrender},
-  {'Mind Bomb', 'toggle(abc) & talent(7,2) & target.area(8).enemies >= 3 & {!player.buff(Surrender To Madness) || spell(Shadow Crash).cooldown == 0 & player.buff(Voidform)}'},
-  {Mythic, 'partycheck == 2 & UI(myth_fel)'},
+  {'Mind Bomb','toggle(abc) & talent(7,2) & target.area(8).enemies >= 3 & {!player.buff(Surrender To Madness) || spell(Shadow Crash).cooldown == 0 & player.buff(Voidform)}'},
+  {Mythic,'partycheck == 2 & UI(myth_fel)'},
   {Emergency},
   {Potions},
-  {Survival, 'player.health < 100 & !player.buff(Surrender to Madness)'},
-  {Support, '!player.buff(Surrender to Madness) '},
-  {cooldowns, 'toggle(cooldowns) & player.buff(Voidform)'},
+  {Survival,'player.health < 100 & !player.buff(Surrender to Madness)'},
+  {Support,'!player.buff(Surrender to Madness) '},
+  {cooldowns,'toggle(cooldowns) & player.buff(Voidform)'},
   {Zeks},
-  {Insight, 'player.buff(Shadowy Insight) & {{talent(7,1) & !player.insanity >= 65} || {talent(7,3) ||talent(7,2) & !player.insanity == 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
+  {Insight,'player.buff(Shadowy Insight) & {{talent(7,1) & !player.insanity >= 65} || {talent(7,3) ||talent(7,2) & !player.insanity == 100}} || {player.moving & !player.buff(Surrender to Madness)}'},
   {Keybinds},
-  {Trinkets, ''},
+  {Trinkets},
   {Interrupts, 'toggle(interrupts) & target.interruptAt(70) & target.infront & target.range <= 30'},
-  {AOE, 'toggle(AOE) & range <= 40'},
-  {lotv, 'player.buff(Voidform)'},
-  {ST, "!player.buff(Voidform)"},
+  {AOE,'toggle(AOE) & range <= 40'},
+  {lotv,'player.buff(Voidform)'},
+  {ST,'!player.buff(Voidform)'},
 }
 
 local outCombat = {

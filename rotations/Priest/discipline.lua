@@ -78,6 +78,7 @@ center = true},
 {type = 'text', text = 'Check to enable Potions', align = 'center'},
 {type = 'checkspin', text = 'Healthstone', key = 'HS', spin = 30, check = false},
 {type = 'checkspin', text = 'Ancient Healing Potion', key = 'AHP', spin = 30, check = false},
+{type = 'checkspin', text = 'Astral Healing Potion', key = 'AsHP', spin = 30, check = false},
 {type = 'checkspin', text = 'Ancient Mana Potion', key = 'AMP', spin = 30, check = false},
 {type = 'ruler'},{type = 'spacer'},
 
@@ -209,6 +210,8 @@ local Potions = {
 {'#5512', 'item(5512).usable&item(5512).count>0&player.health<=UI(HS_spin)&UI(HS_check)', 'player'},
 --Ancient Healing Potion.
 {'#127834', 'item(127834).usable&item(127834).count>0&player.health<=UI(AHP_spin)&UI(AHP_check)'},
+--Astral Healing Potion.
+{'#152615', 'item(152615).usable&item(152615).count>0&player.health<=UI(AsHP_spin)&UI(AsHP_check)'},
 --Ancient Mana Potion.
 {'#127835', 'item(127835).usable&item(127835).count>0&player.mana<=UI(AMP_spin)&UI(AMP_check)', 'player'},
 }

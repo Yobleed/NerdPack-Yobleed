@@ -48,7 +48,8 @@ center = true},
 {type = 'text', text = 'Check to enable Potions', align = 'center'},
 {type = 'checkspin', text = 'Healthstone', key = 'HS', spin = 30, check = false},
 {type = 'checkspin', text = 'Ancient Healing Potion', key = 'AHP', spin = 30, check = false},
-{type = 'checkspin', text = 'Ancient Mana Potion', key = 'AMP', spin = 30, check = false},
+{type = 'checkspin', text = 'Astral Healing Potion', key = 'AsHP', spin = 30, check = false},
+{type = 'checkspin', text = 'Ancient Mana Potion', key = 'AMP', spin = 30, check = false}, 152615
 {type = 'ruler'},{type = 'spacer'},
 
 --Before Pull
@@ -181,6 +182,8 @@ local Potions = {
 {'#5512', 'item(5512).usable&item(5512).count>0&player.health<=UI(HS_spin)&UI(HS_check)', 'player'},
 --Ancient Healing Potion.
 {'#127834', 'item(127834).usable&item(127834).count>0&player.health<=UI(AHP_spin)&UI(AHP_check)'},
+--Astral Healing Potion.
+{'#152615', 'item(152615).usable&item(152615).count>0&player.health<=UI(AsHP_spin)&UI(AsHP_check)'},
 --Ancient Mana Potion.
 {'#127835', 'item(127835).usable&item(127835).count>0&player.mana<=UI(AMP_spin)&UI(AMP_check)', 'player'},
 }
@@ -328,11 +331,11 @@ local Moving = {
 local AOE = {
 {Sanctify,'!player.buff(Divinity) & !player.casting(Prayer of Healing)'},
 {'Prayer of Healing', 'area(40, 85).heal >= 10', 'lowest'},
-{'Prayer of Healing', 'area(10, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
-{'Prayer of Healing', 'area(15, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
-{'Prayer of Healing', 'area(20, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
-{'Prayer of Healing', 'area(25, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
-{'Prayer of Healing', 'area(30, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'!Prayer of Healing', 'area(10, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'!Prayer of Healing', 'area(15, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'!Prayer of Healing', 'area(20, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'!Prayer of Healing', 'area(25, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
+{'!Prayer of Healing', 'area(30, 85).heal >= 5 & {player.buff(Power of the Naaru) || player.buff(Divinity)}', 'lowest'},
 {'Prayer of Healing', 'area(40, 85).heal >= 4 & partycheck==2', 'lowest'},
 }
 
