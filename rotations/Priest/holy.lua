@@ -49,7 +49,7 @@ center = true},
 {type = 'checkspin', text = 'Healthstone', key = 'HS', spin = 30, check = false},
 {type = 'checkspin', text = 'Ancient Healing Potion', key = 'AHP', spin = 30, check = false},
 {type = 'checkspin', text = 'Astral Healing Potion', key = 'AsHP', spin = 30, check = false},
-{type = 'checkspin', text = 'Ancient Mana Potion', key = 'AMP', spin = 30, check = false}, 152615
+{type = 'checkspin', text = 'Ancient Mana Potion', key = 'AMP', spin = 30, check = false},
 {type = 'ruler'},{type = 'spacer'},
 
 --Before Pull
