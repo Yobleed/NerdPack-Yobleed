@@ -380,6 +380,7 @@ local inCombat = {
 {'fade', '{target.inmelee || player.area(2).enemies >= 1} & player.aggro & !partycheck == 1'},
 {'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player'},
 {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body)', 'player'},
+{Felexplosive},
 {'!Holy Word: Chastise', 'toggle(interrupts) & interruptAt(70) & infront', 'target'},
 {Potions,'!player.buff(Spirit of Redemption)'},
 {Cooldowns,'!player.buff(Spirit of Redemption)'},

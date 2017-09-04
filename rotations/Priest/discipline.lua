@@ -17,6 +17,7 @@ center = true},
 {type = 'header', text = 'General', align = 'center'},
 {type = 'checkbox', text = 'Out of Combat Healing', key = 'ooc_heal', width = 55, default = true},
 {type = 'checkbox', text = 'Mythic+ Healing', key = 'myth_heal', width = 55, default = false},
+{type = 'checkbox', text = 'Attack Fel Explosives', key = 'myth_fel', width = 55, default = false},
 {type = 'checkbox', text = 'Out of Combat Atonements', key = 'ato', width = 55, default = false},
 
 --TOS DISPELLING
@@ -145,6 +146,15 @@ text = 'ON/OFF Dispel All',
 icon = 'Interface\\ICONS\\spell_holy_dispelmagic', --toggle(disp)
 })
 end
+
+local Felexplosive = {
+{{
+{'Purge the Wicked', 'id(120651) & range <= 40 & !debuff', 'enemies'},
+{'Penance', 'id(120651) & range <= 40' , 'enemies'},
+{'Shadow Word: Pain', '!talent(6,1) & id(120651) & range <= 40 & !debuff', 'enemies'},
+{'Power Word: Solace', 'id(120651) & range <= 40', 'enemies'},
+},'lowest.health >= 65 & UI(myth_fel) & enemies.infront'},
+}
 
 local VelensFuture = {
 {'#144258','equipped(144258) & UI(velens)'},
@@ -421,6 +431,7 @@ local inCombat = {
 {'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range > 10 & !lowest.health <= UI(l_mend)', 'tank'},
 {'!Shining Force', 'toggle(interrupts) & target.interruptAt(70) & target.range <= 10 & !lowest.health <= UI(l_mend)', 'player'},
 {'Arcane Torrent', 'player.mana < 97 & UI(dps_at)', 'player'},
+{Felexplosive},
 {Keybinds},
 {Trinkets},
 {Rapture, 'player.buff(Rapture)'},
