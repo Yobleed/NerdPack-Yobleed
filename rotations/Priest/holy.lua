@@ -373,7 +373,7 @@ local Party = {
 local Stopcasting ={
 {'!/stopcasting','!player.area(40,95).heal >= 5 & player.casting(Prayer of Healing) & partcheck == 3'},
 {'!/stopcasting','lowest.health >= 100 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal) }'},
-{'!/stopcasting','debuff(240447).duration <= 2 & debuff(240447)','player'}, --Quaking 
+{'!/stopcasting','debuff(Quake).duration <= 2 & debuff(Quake)','player'}, --Quaking 
 }
 
 local inCombat = {

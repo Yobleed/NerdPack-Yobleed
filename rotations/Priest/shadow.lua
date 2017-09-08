@@ -312,7 +312,7 @@ local lotv = {
 
 local inCombat = {
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
-  {'!/stopcasting','debuff(240447).duration <= 2 & debuff(240447)','player'}, --Quaking 
+  {'!/stopcasting','debuff(Quake).duration <= 2 & debuff(Quake)','player'}, --Quaking 
   {Movement,'player.movingfor >= 1 & !player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown == 0}'},
   {SWP_MASS,'toggle(xSWP)'},
   {Surrender},

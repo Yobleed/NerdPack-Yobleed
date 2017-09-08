@@ -418,7 +418,7 @@ local Beforepull = {
 }
 
 local Stopcasting = {
-{'!/stopcasting','debuff(240447).duration <= 2 & debuff(240447)','player'}, --Quaking 
+{'!/stopcasting','debuff(Quake).duration <= 2 & debuff(Quake)','player'}, --Quaking 
 }
 
 local inCombat = {
