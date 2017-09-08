@@ -78,6 +78,7 @@ center = true},
 {type = 'spinner', text = '', key = 'c_DPspin', width = 55, default = 30},
 {type = 'text', text = 'Arcane Torrent', align = 'center'},
 {type = 'checkbox', text = 'ON/OFF', key = 'dps_at', width = 55, default= true},
+{type = 'checkspin',text = 'Light\'s Judgment - Units', key = 'LJ',	spin = 4, step = 1, max = 20, check = true,	desc = '|cff00FF96World Spell usable on Argus.|r'},
 {type = 'ruler'},{type = 'spacer'},
 
 --Solo
@@ -158,6 +159,7 @@ local Cooldowns = {
 {'Arcane Torrent', 'player.mana < 97 & UI(dps_at)', 'player'},
 {'Light of T\'uure', 'UI(c_lot1) & !buff(Light of T\'uure) & !buff(Guardian Spirit) & !lowest.health <= 40 & !keybind(lshift) & {player.spell(Light of T\'uure).charges == 2||health <= UI(c_LoTspint)}', 'lowest(tank)'},
 {'Light of T\'uure', 'UI(c_LoT) & health <= UI(c_LoTspin) & !buff(Light of T\'uure) & !buff(Guardian Spirit) & !health <= 40 & !keybind(lshift)', 'lowest'},
+{'Light\'s Judgment', 'UI(LJ_check)&range<61&area(15).enemies>=UI(LJ_spin)', 'enemies.ground'}
 }
 
 local Guidinghand = {
@@ -371,7 +373,7 @@ local Party = {
 local Stopcasting ={
 {'!/stopcasting','!player.area(40,95).heal >= 5 & player.casting(Prayer of Healing) & partcheck == 3'},
 {'!/stopcasting','lowest.health >= 100 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal) }'},
-{'!/stopcasting','debuff(240447).duration <= gcd & debuff(240447)','player'}, --Quaking
+{'!/stopcasting','debuff(240447).duration <= 2 & debuff(240447)','player'}, --Quaking 
 }
 
 local inCombat = {

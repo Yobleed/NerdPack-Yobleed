@@ -61,6 +61,7 @@ local GUI = {
   {type = 'spinner', text = 'Target > 35%', key = 'dps_D2spin', align = 'left', min = 15, max = 50, step = 1, default = 30},
   {type = 'text', text = 'Arcane Torrent', align = 'center'},
   {type = 'checkbox', text = 'ON/OFF', key = 'dps_at', default= true},
+  {type = 'checkspin',text = 'Light\'s Judgment - Units', key = 'LJ', spin = 4, step = 1, max = 20, check = true, desc = '|cff00FF96World Spell usable on Argus.|r'},
   {type = 'ruler'}, {type = 'spacer'},
 
   -- GUI Survival & Potions
@@ -249,6 +250,7 @@ local cooldowns = {
   {'!Shadowfiend', '!player.spell(Void Eruption).cooldown == 0 & player.buff(Voidform).count >= UI(dps_SFspin) & !talent(6,1) & UI(dps_fiend)', 'target'},
   --Shadowfiend if PI and above 40% insanity.
   {'!Shadowfiend', 'player.buff(Power Infusion) & player.buff(Voidform).count >= UI(dps_SFspin) & UI(dps_fiend)'},
+  {'Light\'s Judgment', 'UI(LJ_check)&range<61&area(15).enemies>=UI(LJ_spin)', 'enemies.ground'}
 }
 
 local AOE = {
@@ -310,6 +312,7 @@ local lotv = {
 
 local inCombat = {
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
+  {'!/stopcasting','debuff(240447).duration <= 2 & debuff(240447)','player'}, --Quaking 
   {Movement,'player.movingfor >= 1 & !player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown == 0}'},
   {SWP_MASS,'toggle(xSWP)'},
   {Surrender},

@@ -46,6 +46,7 @@ center = true},
 {type = 'header', text = 'Cooldowns when toggled on', align = 'center'},
 {type = 'checkbox', text = 'Use Pain Suppression on tank', key = 'c_PSt', width = 55, default = false},
 {type = 'checkbox', text = 'Use Pain Suppression on lowest', key = 'c_PSl', width = 55, default = false},
+{type = 'checkspin',text = 'Light\'s Judgment - Units', key = 'LJ',	spin = 4, step = 1, max = 20, check = true,	desc = '|cff00FF96World Spell usable on Argus.|r'},
 {type = 'ruler'},{type = 'spacer'},
 
 -- GUI Moving
@@ -196,6 +197,7 @@ local Cooldowns = {
 {'!Evangelism', 'talent(7,3) & UI(Evang) & area(40,70).heal >= UI(Evang_spin) & buff(Sins of the Many).count >= UI(Evang2_spin) & lowest.buff(Atonement)','player'},
 --Automatic Light's Wrath.
 {'!Light\'s Wrath', '{!talent(7,3) || {talent(7,3) & player.lastcast(Evangelism)}} & UI(LW) & player.area(40,70).heal >= UI(LW_spin) & player.buff(Sins of the Many).count >= UI(LW2_spin) & lowest.buff(Atonement).duration > player.spell(Light\'s Wrath).casttime','target'},
+{'Light\'s Judgment', 'UI(LJ_check)&range<61&area(15).enemies>=UI(LJ_spin)', 'enemies.ground'}
 }
 
 
@@ -256,7 +258,7 @@ local Solo = {
 --Gift of the Naaru if player health is below or if UI value.
 {'Gift of the Naaru', 'player.health <= UI(full_Gift)', 'player'},
 --Purge the Wicked if talent and not on target.
-{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat', 'enemies'},
+{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & toggle(AOE)', 'enemies'},
 {'Purge the Wicked', 'talent(6,1) & !debuff(Purge the Wicked)', 'target'},
 --Shadow Word: Pain if not on target.
 {'Shadow Word: Pain', '!talent(6,1) & !debuff(Shadow Word: Pain)', 'target'},
@@ -274,7 +276,7 @@ local Solo = {
 
 local Atonement = {
 --Purge the Wicked if talent and not on target.
-{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & {{ttd >= 20 & partycheck = 3}||partycheck ~= 3}', 'enemies'},
+{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & toggle(AOE) & {{ttd >= 20 & partycheck = 3}||partycheck ~= 3}', 'enemies'},
 {'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked)', 'target'},
 --Shadow Word: Pain if not on target.
 {'Shadow Word: Pain', '!talent(6,1) & !debuff(Shadow Word: Pain)', 'target'},
@@ -416,7 +418,7 @@ local Beforepull = {
 }
 
 local Stopcasting = {
-{'!/stopcasting','debuff(240447).duration <= gcd & debuff(240447)','player'}, --Quaking 
+{'!/stopcasting','debuff(240447).duration <= 2 & debuff(240447)','player'}, --Quaking 
 }
 
 local inCombat = {
