@@ -316,7 +316,7 @@ local inCombat = {
   {Movement,'player.movingfor >= 1 & !player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown == 0}'},
   {SWP_MASS,'toggle(xSWP)'},
   {Surrender},
-  {'Mind Bomb','toggle(abc) & talent(7,2) & target.area(8).enemies >= 3 & {!player.buff(Surrender To Madness) || spell(Shadow Crash).cooldown == 0 & player.buff(Voidform)}'},
+  {'Mind Bomb','toggle(abc) & target.area(8).enemies >= 3'},
   {Mythic,'partycheck == 2 & UI(myth_fel)'},
   {Emergency},
   {Potions},
