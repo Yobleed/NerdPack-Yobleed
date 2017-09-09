@@ -373,7 +373,7 @@ local Party = {
 local Stopcasting ={
 {'!/stopcasting','!player.area(40,95).heal >= 5 & player.casting(Prayer of Healing) & partcheck == 3'},
 {'!/stopcasting','lowest.health >= 100 & !player.casting.percent >= 80 & {player.casting(Heal) || player.casting(Flash Heal) || player.casting(Binding Heal) }'},
-{'!/stopcasting','debuff(Quake).duration <= 2 & debuff(Quake)','player'}, --Quaking 
+{'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
 }
 
 local inCombat = {
@@ -404,6 +404,7 @@ local inCombat = {
 
 
 local outCombat = {
+{'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid == 1040', 'player'},
 {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body) !inareaid == 1040', 'player'},

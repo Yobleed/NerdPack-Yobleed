@@ -418,7 +418,7 @@ local Beforepull = {
 }
 
 local Stopcasting = {
-{'!/stopcasting','debuff(Quake).duration <= 2 & debuff(Quake)','player'}, --Quaking 
+{'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
 }
 
 local inCombat = {
@@ -449,6 +449,7 @@ local inCombat = {
 }
 
 local outCombat = {
+{'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'%ressdead(Resurrection)', 'UI(rezz)'},
 {Beforepull,'pull_timer >= 1'},

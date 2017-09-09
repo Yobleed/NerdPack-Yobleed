@@ -312,11 +312,11 @@ local lotv = {
 
 local inCombat = {
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
-  {'!/stopcasting','debuff(Quake).duration <= 2 & debuff(Quake)','player'}, --Quaking 
+  {'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
+  {'Mind Bomb','toggle(abc) & target.area(8).enemies >= 3'},
   {Movement,'player.movingfor >= 1 & !player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown == 0}'},
   {SWP_MASS,'toggle(xSWP)'},
   {Surrender},
-  {'Mind Bomb','toggle(abc) & target.area(8).enemies >= 3'},
   {Mythic,'partycheck == 2 & UI(myth_fel)'},
   {Emergency},
   {Potions},
@@ -334,6 +334,7 @@ local inCombat = {
 }
 
 local outCombat = {
+  {'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
   -- Potion of Prolonged Power usage before pull if enabled in UI.
   {'#142117', 'pull_timer >= 1 & pull_timer < 4 & UI(s_pull)'},
   -- Mind Blast before Pull.
