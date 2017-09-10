@@ -255,8 +255,7 @@ local cooldowns = {
 
 local AOE = {
   {{
-    {'Shadow Word: Pain', '!debuff & distance <= 40 & combat & {player.moving||{!player.buff(Twist of Fate) & health <= 35 & talent(1,1)}}', 'enemies'},
-    {'Vampiric Touch', 'ttd >= 7 & distance <= 40 & combat & !player.lastcast(Vampiric Touch) & {!debuff||{!debuff & talent(6,2)}}}', 'enemies'},
+    {'Vampiric Touch', 'ttd >= 7 & distance <= 40 & combat & !player.lastcast(Vampiric Touch) & !debuff', 'enemies'},
     {'Shadow Word: Pain', '!debuff & !talent(6,2) & distance <= 40 & combat', 'enemies'},
   }, 'player.buff(Voidform) & {!player.spell(Mind Blast).cooldown == 0 & !player.spell(Void Eruption).cooldown == 0||!player.insanity == 100}'},
   --Shadow Crash on CD.
