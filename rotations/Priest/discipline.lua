@@ -338,6 +338,8 @@ local Player = {
 }
 
 local Lowestpred = {
+--Shadow Covenant if lowest and 5 or more at 30yds are below 90%.
+{'Shadow Covenant', 'area(30,90).heal >= 5','lowestp'},
 --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest(tank)'},
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
@@ -353,6 +355,8 @@ local Lowestpred = {
 }
 
 local Lowest = {
+--Shadow Covenant if lowest and 3 or more at 30yds are below 90%.
+{'Shadow Covenant', 'area(30,90).heal >= 3','lowest'},
 --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest(tank)'},
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
@@ -378,6 +382,7 @@ local Mythic = {
 {'Power Word: Radiance', 'area(30,85).heal >= 3 & lowest.health <= 85 & !buff(Atonement) & advanced & player.spell(Power Word: Radiance).charges < 2 & !player.lastcast(Power Word: Radiance)', 'lowest'},
 {'Power Word: Radiance', 'player.area(40,85).heal >= 3 & health <= 85 & !buff(Atonement) & !advanced & player.spell(Power Word: Radiance).charges < 2 & !player.lastcast(Power Word: Radiance)', 'lowest'},
 {'Power Word: Radiance', 'pull_timer <= 6 & pull_timer >= 3 & range <= 40', 'lowest'},
+{'Shadow Covenant', 'area(30,90).heal >= 3'},
 {'Power Word: Shield', 'health <= 90 & !buff(Power Word: Shield)', 'lowest'},
 {'Penance', 'player.health <= 65 & player.buff(Atonement) & infront', 'target'},
 {'Shadow Mend', "health <= 65 & {!moving || buff(Norgannon's Foresight)}", 'player'},
@@ -387,7 +392,7 @@ local Mythic = {
 }
 local Moving = {
 --Angelic Feather if player is moving for 2 seconds or longer and Missing Angelic Feather and if UI enables it.
-{'Angelic Feather', 'player.movingfor >= 2 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
+{'Angelic Feather', 'player.movingfor >= 4 & !player.buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF)', 'player.ground'},
 -- Body and Soul usage if enabled in UI.
 {'Power Word: Shield', 'talent(2,2) & !player.buff(Body and Soul) & player.movingfor >= 1 & UI(m_Body) & !player.channeling(Penance) & !player.buff(Speed of the Pious)', 'player'},
 }
@@ -425,7 +430,7 @@ local inCombat = {
 {Stopcasting},
 {Potions},
 {Cooldowns},
-{'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(9).friendly == 1 & UI(disp_ang) & range <= 40', 'friendly'},
+{'!Purify', 'toggle(disp) & player.spell(Purify).cooldown == 0 & purify & area(8).friendly == 1 & UI(disp_ang) & range <= 40', 'friendly'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'fade', '{target.inmelee || player.area(2).enemies >= 1} & player.aggro & !partycheck == 1'},
 {'Psychic Scream', 'player.spell(Fade).cooldown > 0 & player.aggro & !toggle(xDPS) & player.area(8).enemies >= 1 & partycheck ~= 2'},
