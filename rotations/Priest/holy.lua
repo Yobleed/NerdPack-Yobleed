@@ -351,6 +351,7 @@ local Raid = {
 
 local Mythic = {
 {'!Holy Word: Sanctify', 'area(10, 90).heal >= 3 & range <= 40 & !player.buff(Divinity)','lowest.ground'},
+{'Prayer of Healing', 'area(40, 85).heal >= 4', 'lowest'},
 {'Prayer of Mending', 'health > 95 & !player.moving & !buff(Prayer of Mending) & partycheck ~=3', {'tank1','tank2','lowest','player'}},
 {'Flash Heal', 'player.buff(Surge of Light) & player.buff(Surge of Light).duration <= 3 & health < 100', 'lowest'},
 {'Renew', '!buff(Renew) & player.moving', 'lowest'},
