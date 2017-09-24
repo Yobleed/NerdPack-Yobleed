@@ -28,6 +28,7 @@ center = true},
 
 --Healing Options
 {type = 'text', text = 'Healing Options', align = 'center'},
+{type = 'checkspin',text = 'Shadow Covenant', key = 'SC', check = true, spin = 80},
 {type = 'checkbox', text = 'Auto Power Word: Radiance', key = 'PWR', width = 55, default = false},
 {type = 'checkbox', text = 'Auto Evangelism', key = 'Evang', width = 55, default = false},
 {type = 'spinner', text = 'players <= 70 health', key = 'Evang_spin', width = 55, max = 40, step = 1, default = 5},
@@ -339,7 +340,7 @@ local Player = {
 
 local Lowestpred = {
 --Shadow Covenant if lowest and 5 or more at 30yds are below 90%.
-{'Shadow Covenant', 'area(30,90).heal >= 5 & !debuff(Shadow Covenant)','lowestp'},
+{'Shadow Covenant', 'area(30,90).heal >= 5 & !debuff(Shadow Covenant) & UI(SC_check) & health <= UI(SC_spin)','lowestp'},
 --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest(tank)'},
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
@@ -356,7 +357,7 @@ local Lowestpred = {
 
 local Lowest = {
 --Shadow Covenant if lowest and 3 or more at 30yds are below 90%.
-{'Shadow Covenant', 'area(30,90).heal >= 3 & !debuff(Shadow Covenant)','lowest'},
+{'Shadow Covenant', 'area(30,90).heal >= 3 & !debuff(Shadow Covenant) & UI(SC_check) & health <= UI(SC_spin)','lowest'},
 --Power Word: Shield if tank doesn't have atonement or if tank doesnt have PWS.
 {'Power Word: Shield', '!buff(Power Word: Shield)', 'lowest(tank)'},
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
@@ -382,7 +383,7 @@ local Mythic = {
 {'Power Word: Radiance', 'area(30,85).heal >= 3 & lowest.health <= 85 & !buff(Atonement) & advanced & player.spell(Power Word: Radiance).charges < 2 & !player.lastcast(Power Word: Radiance)', 'lowest'},
 {'Power Word: Radiance', 'player.area(40,85).heal >= 3 & health <= 85 & !buff(Atonement) & !advanced & player.spell(Power Word: Radiance).charges < 2 & !player.lastcast(Power Word: Radiance)', 'lowest'},
 {'Power Word: Radiance', 'pull_timer <= 6 & pull_timer >= 3 & range <= 40', 'lowest'},
-{'Shadow Covenant', 'area(30,90).heal >= 3 & !debuff(Shadow Covenant)'},
+{'Shadow Covenant', 'area(30,90).heal >= 3 & !debuff(Shadow Covenant) & UI(SC_check) & health <= UI(SC_spin)', 'lowest'},
 {'Power Word: Shield', 'health <= 90 & !buff(Power Word: Shield)', 'lowest'},
 {'Penance', 'player.health <= 65 & player.buff(Atonement) & infront', 'target'},
 {'Shadow Mend', "health <= 65 & {!moving || buff(Norgannon's Foresight)}", 'player'},
