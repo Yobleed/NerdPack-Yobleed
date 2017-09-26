@@ -15,6 +15,7 @@ y = 42,
 center = true},
 --GENERAL
 {type = 'header', text = 'General', align = 'center'},
+{type = 'checkbox', text = 'Auto Ress out of combat', key = 'rezz', width = 55, default = false},
 {type = 'checkbox', text = 'Healing OOC', key = 'ooc_heal', width = 55, default = false},
 {type = 'checkbox', text = 'Mythic+ Healing', key = 'myth_heal', width = 55, default = false},
 {type = 'checkbox', text = 'Attack Fel Explosives', key = 'myth_fel', width = 55, default = false},
@@ -406,6 +407,7 @@ local inCombat = {
 
 local outCombat = {
 {'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
+{'%ressdead(Mass Resurrection)', 'UI(rezz)'},
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
 {'/cast [@player] Angelic Feather', 'movingfor >= 2 & !buff(Angelic Feather) & spell(Angelic Feather).charges >= 1 & UI(m_AF) & !inareaid == 1040', 'player'},
 {'Body and Mind', 'movingfor >= 2 & !buff(Body And Mind) & UI(m_Body) !inareaid == 1040', 'player'},

@@ -457,7 +457,7 @@ local inCombat = {
 local outCombat = {
 {'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
 {'%dispelall', 'toggle(disp) & spell(Purify).cooldown == 0 & !UI(disp_ang)'},
-{'%ressdead(Resurrection)', 'UI(rezz)'},
+{'%ressdead(Mass Resurrection)', 'UI(rezz)'},
 {Beforepull,'pull_timer >= 1'},
 {Keybinds},
 {Moving, 'player.moving & !UI(ato) & !inareaid == 1040'},
