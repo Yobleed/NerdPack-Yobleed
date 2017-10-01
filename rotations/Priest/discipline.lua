@@ -262,6 +262,7 @@ local Solo = {
 {'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & toggle(AOE)', 'enemies'},
 {'Purge the Wicked', 'talent(6,1) & !debuff(Purge the Wicked)', 'target'},
 --Shadow Word: Pain if not on target.
+{'Shadow Word: Pain', '!talent(6,1) & !debuff(Shadow Word: Pain) & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & toggle(AOE) & {{ttd >= 20 & partycheck = 3}||partycheck ~= 3}', 'enemies'},
 {'Shadow Word: Pain', '!talent(6,1) & !debuff(Shadow Word: Pain)', 'target'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', '{target.debuff(Purge the Wicked) || target.debuff(Shadow Word: Pain)} & infront', 'target'},
@@ -280,6 +281,7 @@ local Atonement = {
 {'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & toggle(AOE) & {{ttd >= 20 & partycheck = 3}||partycheck ~= 3}', 'enemies'},
 {'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked)', 'target'},
 --Shadow Word: Pain if not on target.
+{'Shadow Word: Pain', '!talent(6,1) & !debuff(Shadow Word: Pain) & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & toggle(AOE) & {{ttd >= 20 & partycheck = 3}||partycheck ~= 3}', 'enemies'},
 {'Shadow Word: Pain', '!talent(6,1) & !debuff(Shadow Word: Pain)', 'target'},
 --Schism on cooldown.
 {'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
