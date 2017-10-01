@@ -26,6 +26,7 @@ local GUI = {
 
   -- GENERAL
   {type = 'header', text = 'General', align = 'center'},
+  {type = 'checkbox', text = 'Shadow Mend OOC', key = 'shadowmend', default= false},
   {type = 'text', text = 'Mythic +', align = 'center'},
   {type = 'checkbox', text = 'Target Fel Explosives', key = 'myth_fel', default= false},
   {type = 'text', text = 'Before Pull', align = 'center'},
@@ -69,6 +70,8 @@ local GUI = {
   {type = 'checkbox', text = 'Fade', key = 's_F', default= false},
   {type = 'checkbox', text = 'Power Word: Shield', key = 's_PWS', default = false},
   {type = 'spinner', text = '', key = 's_PWSspin', default = 40},
+  {type = 'checkbox', text = 'Shadow Mend', key = 's_mend', default = false},
+  {type = 'spinner', text = '', key = 's_mendspin', default = 40},
   {type = 'checkbox', text = 'Dispersion', key = 's_D', default = false},
   {type = 'spinner', text = '', key = 's_Dspin', align = 'left', default = 20},
   {type = 'checkbox', text = 'Gift of the Naaru', key = 's_GotN', default = false},
@@ -153,6 +156,8 @@ local Survival = {
   {'Fade', 'player.aggro & UI(s_F)'},
   -- Power Word: Shield usage if enabled in UI.
   {'Power Word: Shield', 'player.health <= UI(s_PWSspin) & UI(s_PWS)', 'player'},
+  --Shadow Mend usage if enabled in UI.
+  {'Shadow Mend', 'UI(s_mend) & health <= UI(s_menspin)', 'player'},
   -- Dispersion usage if enabled in UI.
   {'!Dispersion', 'player.health <= UI(s_Dspin) & UI(s_D)'},
   -- Gift of the Naaru usage if enabled in UI.
@@ -334,6 +339,7 @@ local inCombat = {
 
 local outCombat = {
   {'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
+  {'Shadow Mend', 'UI(shadowmend) & health < 90', 'player'},
   -- Potion of Prolonged Power usage before pull if enabled in UI.
   {'#142117', 'pull_timer >= 1 & pull_timer < 4 & UI(s_pull)'},
   -- Mind Blast before Pull.
