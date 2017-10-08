@@ -148,6 +148,14 @@ name = 'Dispell',
 text = 'ON/OFF Dispel All',
 icon = 'Interface\\ICONS\\spell_holy_dispelmagic', --toggle(disp)
 })
+
+
+NeP.Interface:AddToggle({
+key = 'control',
+name = 'Dominant Mind',
+text = 'ON/OFF NPC taming',
+icon = 'Interface\\ICONS\\spell_shadow_charm', --toggle(control)
+})
 end
 
 local Felexplosive = {
@@ -181,6 +189,8 @@ local PWR = {
 }
 
 local Cooldowns = {
+--Mind Control
+{'Mind Control', 'talent(3,3) & !creatureType(Demon) & !creatureType(Mechanical) & !creatureType(Undead) & combat & toggle(control)','enemies'},
 --Automatic Shadowfiend.
 {'!Shadowfiend', 'UI(SF) & !talent(4,3) & player.spell(Light\'s Wrath).cooldown >= 85 || partycheck == 2','target'},
 --Mana up!
