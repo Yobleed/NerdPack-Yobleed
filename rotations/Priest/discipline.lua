@@ -189,8 +189,6 @@ local PWR = {
 }
 
 local Cooldowns = {
---Mind Control
-{'Mind Control', 'talent(3,3) & !creatureType(Demon) & !creatureType(Mechanical) & !creatureType(Undead) & combat & toggle(control)','enemies'},
 --Automatic Shadowfiend.
 {'!Shadowfiend', 'UI(SF) & !talent(4,3) & player.spell(Light\'s Wrath).cooldown >= 85 || partycheck == 2','target'},
 --Mana up!
@@ -302,6 +300,8 @@ local Atonement = {
 {'Power Word: Solace', 'talent(4,1)', 'target'},
 --Divine Star if mobs are 3 or more.
 {'Divine Star', 'talent(6,2) & player.area(24).enemies.infront >= 3 & toggle(AOE)'},
+--Mind Control
+{'Mind Control', 'talent(3,3) & !creatureType(Demon) & !creatureType(Mechanical) & !creatureType(Undead) & !creatureType(Aberration) & combat & toggle(control) & !boss','enemies'},
 --Smite on CD.
 {'Smite', 'infront', 'target'}, --& {{partycheck = 3 & player.buff(Sins of the Many).count >= 5}||partycheck ~= 3}
 

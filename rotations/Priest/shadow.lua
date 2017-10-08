@@ -132,6 +132,13 @@ local exeOnLoad = function()
     icon = 'Interface\\ICONS\\Achievement_boss_generalvezax_01',
   })
 
+  NeP.Interface:AddToggle({
+key = 'control',
+name = 'Dominant Mind',
+text = 'ON/OFF NPC taming',
+icon = 'Interface\\ICONS\\spell_shadow_charm', --toggle(control)
+})
+
 end
 
 local SWP_MASS = {
@@ -317,7 +324,8 @@ local lotv = {
 local inCombat = {
   {'Shadowform', '!player.buff(Voidform) & !player.buff(Shadowform) & !player.lastcast(Shadowform)', 'player'},
   {'!/stopcasting','debuff(Quake).any.duration <= gcd & debuff(Quake).any','player'}, --Quaking 
-  {'Mind Bomb','toggle(abc) & target.area(8).enemies >= 3'},
+  {'Mind Bomb','toggle(abc) & target.area(8).enemies >= 3'},--Mind Control
+  {'Mind Control', 'talent(3,3) & !creatureType(Demon) & !creatureType(Mechanical) & !creatureType(Undead) & !creatureType(Aberration) & combat & toggle(control) & !boss','enemies'},
   {Movement,'player.movingfor >= 1 & !player.buff(Voidform) || {player.buff(Voidform) & !spell(Void Eruption).cooldown == 0}'},
   {SWP_MASS,'toggle(xSWP)'},
   {Surrender},
