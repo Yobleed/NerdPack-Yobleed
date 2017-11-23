@@ -360,7 +360,7 @@ local Lowestpred = {
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 {'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield) & !is(player)', 'lowest'},
 --Penance Emergency Healing if Checked.
-{'Penance', 'health <= UI(Penance_spin) & infront & UI(Penance)', 'lowestp'},
+{'Penance', 'health <= UI(penance_spin) & infront & UI(Penance)', 'lowestp'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'lowestp.health <= UI(l_mend) & lowestp.buff(Atonement) & !lowestp.health <= 30 & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.
@@ -379,7 +379,7 @@ local Lowest = {
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 {'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield) & !is(player)', 'lowest'},
 --Penance Emergency Healing if Checked.
-{'Penance', 'health <= UI(Penance_spin) & infront & UI(Penance)', 'lowest'},
+{'Penance', 'health <= UI(penance_spin) & infront & UI(Penance)', 'lowest'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement) & !lowest.health <= 30 & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.
