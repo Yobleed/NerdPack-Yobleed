@@ -29,7 +29,8 @@ center = true},
 --Healing Options
 {type = 'text', text = 'Healing Options', align = 'center'},
 {type = 'checkspin',text = 'Shadow Covenant', key = 'SC', check = true, spin = 80},
-{type = 'checkbox', text = 'Use Penance Emergency Healing <= 30% health', key = 'Penance', width = 55, default = false},
+{type = 'checkbox', text = 'Use Penance Healing', key = 'Penance', width = 55, default = false},
+{type = 'spinner', text = 'Health <=', key = 'penance_spin', width = 55, step = 5, default = 30},
 {type = 'checkbox', text = 'Auto Power Word: Radiance', key = 'PWR', width = 55, default = false},
 {type = 'checkbox', text = 'Auto Evangelism', key = 'Evang', width = 55, default = false},
 {type = 'spinner', text = 'players <= 70 health', key = 'Evang_spin', width = 55, max = 40, step = 1, default = 5},
@@ -359,7 +360,7 @@ local Lowestpred = {
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 {'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield) & !is(player)', 'lowest'},
 --Penance Emergency Healing if Checked.
-{'Penance', 'health <= 30 & infront & UI(Penance)', 'lowestp'},
+{'Penance', 'health <= UI(Penance_spin) & infront & UI(Penance)', 'lowestp'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'lowestp.health <= UI(l_mend) & lowestp.buff(Atonement) & !lowestp.health <= 30 & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.
@@ -378,7 +379,7 @@ local Lowest = {
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 {'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield) & !is(player)', 'lowest'},
 --Penance Emergency Healing if Checked.
-{'Penance', 'health <= 30 & infront & UI(Penance)', 'lowest'},
+{'Penance', 'health <= UI(Penance_spin) & infront & UI(Penance)', 'lowest'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement) & !lowest.health <= 30 & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.
