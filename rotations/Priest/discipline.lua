@@ -30,7 +30,7 @@ center = true},
 {type = 'text', text = 'Healing Options', align = 'center'},
 {type = 'checkspin',text = 'Shadow Covenant', key = 'SC', check = true, spin = 80},
 {type = 'checkbox', text = 'Use Penance Healing', key = 'Penance', width = 55, default = false},
-{type = 'spinner', text = 'Health <=', key = 'penance_spin', width = 55, step = 5, default = 30},
+{type = 'spinner', text = 'Health <=', key = 'Penance_spin', width = 55, step = 5, default = 30},
 {type = 'checkbox', text = 'Auto Power Word: Radiance', key = 'PWR', width = 55, default = false},
 {type = 'checkbox', text = 'Auto Evangelism', key = 'Evang', width = 55, default = false},
 {type = 'spinner', text = 'players <= 70 health', key = 'Evang_spin', width = 55, max = 40, step = 1, default = 5},
@@ -122,6 +122,15 @@ center = true},
 {type = 'spinner', text = 'Shadow Mend', key = 'l_mend', width = 55, default = 40},
 {type = 'spinner', text = 'Plea', key = 'l_plea', min = 70, max = 90, width = 55, default = 80}, --step = 1
 {type = 'ruler'},{type = 'spacer'},
+
+--ATONEMENT
+{type = 'header', text = 'Atonement Healing', align = 'center'},
+{type = 'spinner', text = 'Penance Lowest Health', key = 'ato_penhealth', width = 55, default = 100},
+{type = 'spinner', text = 'Penance Atonements', key = 'ato_penato', width = 55, default = 3, step = 1, max = 20},
+{type = 'spinner', text = 'Smite Lowest Health', key = 'ato_smitehealth', width = 55, default = 100},
+{type = 'spinner', text = 'Smite Atonements', key = 'ato_smiteato', width = 55, default = 3, step = 1, max = 20},
+{type = 'ruler'},{type = 'spacer'},
+
 }
 
 local exeOnLoad = function()
@@ -296,7 +305,7 @@ local Atonement = {
 --Schism on cooldown.
 {'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
-{'Penance', 'target.debuff(Purge the Wicked)||!talent(6,1)', 'target'},
+{'Penance', '{target.debuff(Purge the Wicked)||!talent(6,1)} & count(Atonement).friendly.buffs >= UI(ato_penato) & lowest.health <= UI(ato_penhealth)', 'target'},
 --Power Word: Solace on cooldown if talent.
 {'Power Word: Solace', 'talent(4,1)', 'target'},
 --Divine Star if mobs are 3 or more.
@@ -304,7 +313,7 @@ local Atonement = {
 --Mind Control
 {'Mind Control', 'talent(3,3) & !creatureType(Demon) & !creatureType(Mechanical) & !creatureType(Undead) & !creatureType(Aberration) & combat & toggle(control) & !boss','enemies'},
 --Smite on CD.
-{'Smite', 'infront', 'target'}, --& {{partycheck = 3 & player.buff(Sins of the Many).count >= 5}||partycheck ~= 3}
+{'Smite', 'infront & count(Atonement).friendly.buffs >= UI(ato_smiteato) & lowest.health <= UI(ato_smitehealth)', 'target'}, --& {{partycheck = 3 & player.buff(Sins of the Many).count >= 5}||partycheck ~= 3}
 
 }
 
@@ -360,7 +369,7 @@ local Lowestpred = {
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 {'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield) & !is(player)', 'lowest'},
 --Penance Emergency Healing if Checked.
-{'Penance', 'health <= UI(penance_spin) & infront & UI(Penance)', 'lowestp'},
+{'Penance', 'health <= UI(Penance_spin) & infront & UI(Penance)', 'lowestp'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'lowestp.health <= UI(l_mend) & lowestp.buff(Atonement) & !lowestp.health <= 30 & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.
@@ -379,7 +388,7 @@ local Lowest = {
 --Power Word: Shield on UI value if Atonement won't make it or if not Atonement.
 {'Power Word: Shield', 'health <= UI(l_PWS) & !buff(Power Word: Shield) & !is(player)', 'lowest'},
 --Penance Emergency Healing if Checked.
-{'Penance', 'health <= UI(penance_spin) & infront & UI(Penance)', 'lowest'},
+{'Penance', 'health <= UI(Penance_spin) & infront & UI(Penance)', 'lowest'},
 --Penance on cooldown if target has Purge the Wicked or Shadow Word: Pain.
 {'Penance', 'lowest.health <= UI(l_mend) & lowest.buff(Atonement) & !lowest.health <= 30 & infront', 'target'},
 --Shadow Mend on UI value if PWS don't make it.
