@@ -125,6 +125,7 @@ center = true},
 
 --ATONEMENT
 {type = 'header', text = 'Atonement Healing', align = 'center'},
+{type = 'spinner', text = 'PtW/SW:P DoT Max', key = 'ato_potw', width = 55, default = 6, step = 1, max = 20},
 {type = 'spinner', text = 'Penance Lowest Health', key = 'ato_penhealth', width = 55, default = 100},
 {type = 'spinner', text = 'Penance Atonements', key = 'ato_penato', width = 55, default = 3, step = 1, max = 20},
 {type = 'spinner', text = 'Smite Lowest Health', key = 'ato_smitehealth', width = 55, default = 100},
@@ -297,10 +298,10 @@ local Solo = {
 
 local Atonement = {
 --Purge the Wicked if talent and not on target.
-{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & toggle(AOE) & {{ttd >= 20 & partycheck = 3}||partycheck ~= 3}', 'enemies'},
+{'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked) & count(Purge the Wicked).enemies.debuffs < UI(ato_potw) & !player.spell(Penance).cooldown == 0 & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & toggle(AOE) & {{ttd >= 20 & partycheck = 3}||partycheck ~= 3}', 'enemies'},
 {'Purge the Wicked', ' talent(6,1) & !debuff(Purge the Wicked)', 'target'},
 --Shadow Word: Pain if not on target.
-{'Shadow Word: Pain', '!talent(6,1) & !debuff(Shadow Word: Pain) & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & toggle(AOE) & {{ttd >= 20 & partycheck = 3}||partycheck ~= 3}', 'enemies'},
+{'Shadow Word: Pain', '!talent(6,1) & !debuff(Shadow Word: Pain) & count(Shadow Word: Pain).enemies.debuffs < UI(ato_potw) & range <= 40 & combat & !player.spell(Penance).cooldown < gcd & toggle(AOE) & {{ttd >= 20 & partycheck = 3}||partycheck ~= 3}', 'enemies'},
 {'Shadow Word: Pain', '!talent(6,1) & !debuff(Shadow Word: Pain)', 'target'},
 --Schism on cooldown.
 {'Schism', "talent(1,3) & {!moving || player.buff(Norgannon's Foresight)}", 'target'},
