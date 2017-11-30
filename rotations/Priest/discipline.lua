@@ -72,7 +72,7 @@ center = true},
 
 --KEYBINDS
 {type = 'header', text = 'Keybinds', align = 'center'},
-{type = 'text', text = 'Left Shift: Power Word: Barrier|Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
+{type = 'text', text = 'Left Shift: PW: Radiance |Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
 {type = 'checkbox', text = 'Power Word: Barrier/ PWR', key = 'k_PWB', width = 55, default = false},
 {type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
 {type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
@@ -231,8 +231,9 @@ local Trinkets = {
 
 local Keybinds = {
 {{
-{'!Power Word: Barrier', nil, 'cursor.ground'},
-{'Power Word: Radiance', '!buff(Atonement) & !player.spell(Power Word: Barrier).cooldown == 0', 'lowest'},
+{'Power Word: Radiance', '!buff(Atonement)', {'lowest','friendly'}},
+{'Power Word: Shield', '!buff(Atonement)',{'lowest','friendly'}},
+{'Plea', '!buff(Atonement)',{'lowest','friendly'}},
 },'keybind(lshift) & UI(k_PWB)'},
 {'!Mass Dispel', 'keybind(lcontrol) & UI(k_MD)', 'mouseover.ground'},
 {'%pause', 'keybind(lalt)& UI(k_P)'},
