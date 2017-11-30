@@ -516,6 +516,6 @@ NeP.CR:Add(256, {
   gui = GUI,
   gui_st = {title='Yobleed\'s Priest Pack: Discipline', width='512', height='256', color='58FAF4'},
   load = exeOnLoad,
-  ids = yobleed.spell_ids
-  blacklist = blacklist,
+  ids = yobleed.spell_ids,
+  blacklist = blacklist
 })
