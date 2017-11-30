@@ -505,9 +505,6 @@ local outCombat = {
 {Mythic, 'partycheck == 2 & UI(myth_heal)'},
 }
 
-local blacklist = {
-     debuff = {"Misery", 1},
-}
 
 NeP.CR:Add(256, {
   name = '|cff58FAF4 [Yobleed]|r Priest - |cff58FAF4Discipline|r',
@@ -517,5 +514,4 @@ NeP.CR:Add(256, {
   gui_st = {title='Yobleed\'s Priest Pack: Discipline', width='512', height='256', color='58FAF4'},
   load = exeOnLoad,
   ids = yobleed.spell_ids,
-  blacklist = blacklist
 })
