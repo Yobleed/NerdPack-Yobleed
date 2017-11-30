@@ -422,7 +422,7 @@ local outCombat = {
 }
 
 local blacklist = {
-    debuff = {{name = "Misery", count = 2},
+    debuff = {name = "Misery"},
 }
 
 NeP.CR:Add(257, {
