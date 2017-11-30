@@ -421,6 +421,9 @@ local outCombat = {
 
 }
 
+local blacklist = {
+    debuff = {{name = "Misery", count = 2},
+}
 
 NeP.CR:Add(257, {
   name = '|cffFACC2E [Yobleed]|r Priest - |cffFACC2EHoly|r',
@@ -430,5 +433,6 @@ NeP.CR:Add(257, {
   gui_st = {title='Yobleed\'s Priest Pack: Holy', width='512', height='256', color='FACC2E'},
   load = exeOnLoad,
   ids = yobleed.spell_ids,
+  blacklist = blacklist
 
 })

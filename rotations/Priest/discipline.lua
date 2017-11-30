@@ -73,7 +73,7 @@ center = true},
 --KEYBINDS
 {type = 'header', text = 'Keybinds', align = 'center'},
 {type = 'text', text = 'Left Shift: PW: Radiance |Left Ctrl: Mass Dispel|Alt: Pause', align = 'center'},
-{type = 'checkbox', text = 'Power Word: Barrier/ PWR', key = 'k_PWB', width = 55, default = false},
+{type = 'checkbox', text = 'PW: Radiance', key = 'k_PWB', width = 55, default = false},
 {type = 'checkbox', text = 'Mass Dispel', key = 'k_MD', width = 55, default = false},
 {type = 'checkbox', text = 'Pause', key = 'k_P', width = 55, default = false},
 {type = 'ruler'},{type = 'spacer'},
@@ -505,6 +505,9 @@ local outCombat = {
 {Mythic, 'partycheck == 2 & UI(myth_heal)'},
 }
 
+local blacklist = {
+     debuff = {name = "Misery", count = 2},
+}
 
 NeP.CR:Add(256, {
   name = '|cff58FAF4 [Yobleed]|r Priest - |cff58FAF4Discipline|r',
@@ -514,4 +517,5 @@ NeP.CR:Add(256, {
   gui_st = {title='Yobleed\'s Priest Pack: Discipline', width='512', height='256', color='58FAF4'},
   load = exeOnLoad,
   ids = yobleed.spell_ids,
+  blacklist = blacklist
 })
